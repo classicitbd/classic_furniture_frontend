@@ -1,11 +1,9 @@
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/Routes";
+import BigSpinner from "./shared/loader/BigSpinner";
 
 function App() {
-
-  return (
-    <>
-      <p>Initial Set Up Done</p>
-    </>
-  )
+  return <RouterProvider router={router} fallbackElement={<BigSpinner />} />;
 }
 
-export default App
+export default App;
