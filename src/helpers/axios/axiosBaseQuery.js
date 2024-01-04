@@ -15,6 +15,7 @@ export const axiosBaseQuery =
       });
       console.log(result);
       return result;
+      // return result;
     } catch (axiosError) {
       let err = axiosError;
       return {

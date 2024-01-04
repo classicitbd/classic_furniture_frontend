@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import "react-phone-input-2/lib/style.css";
-import { useSignUpMutation } from "../../redux/features/auth/authApi";
+import { useSignInMutation } from "../../redux/features/auth/authApi";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
 
@@ -16,7 +16,7 @@ const SignIn = () => {
     reset,
   } = useForm();
   const navigate = useNavigate();
-  const [signIn, { isLoading }] = useSignUpMutation();
+  const [signIn, { isLoading }] = useSignInMutation();
 
   const handleSignUp = async (data) => {
     try {

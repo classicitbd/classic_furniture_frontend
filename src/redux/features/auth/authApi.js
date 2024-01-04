@@ -2,6 +2,7 @@ import { baseApi } from "../../api/baseApi";
 import { tagTypes } from "../../tag-types";
 
 const AUTH_URL = "/userReg";
+const AUTH_LOGIN = "/userlogin";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -14,6 +15,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+
     //user otp verify
     otpVerify: build.mutation({
       query: (data) => ({
@@ -23,6 +25,17 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+
+    //user signin
+    signIn: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_LOGIN}`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+
     //get refeshToken
     refeshToken: build.mutation({
       query: () => ({
@@ -31,6 +44,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+    
     //get refeshToken
     changePassword: build.mutation({
       query: (data) => ({
@@ -43,4 +57,5 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useSignUpMutation, useOtpVerifyMutation } = authApi;
+export const { useSignUpMutation, useOtpVerifyMutation, useSignInMutation } =
+  authApi;
