@@ -1,7 +1,5 @@
 export const tagTypes = {
-  demo: "demo",
+  user: "user",
 };
 
-export const tagTypesList = [
-  tagTypes.demo,
-];
+export const tagTypesList = [tagTypes.user];
