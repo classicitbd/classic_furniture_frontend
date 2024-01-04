@@ -46,6 +46,16 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.user],
     }),
 
+    //for got password
+    forgetPassword: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_LOGIN}/forgetPassword`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+
     //get refeshToken
     refeshToken: build.mutation({
       query: () => ({
@@ -72,4 +82,5 @@ export const {
   useOtpVerifyMutation,
   useSignInMutation,
   useResendOtpMutation,
+  useForgetPasswordMutation,
 } = authApi;
