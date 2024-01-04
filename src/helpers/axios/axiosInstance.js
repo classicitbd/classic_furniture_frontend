@@ -27,9 +27,10 @@ instance.interceptors.response.use(
   function (response) {
     const responseObject = {
       data: response?.data,
-      meta: response?.data?.meta,
+      // meta: response?.data?.meta,
     };
     return responseObject;
+    // return "response";
   },
   function (error) {
     const responseObject = {
@@ -38,6 +39,7 @@ instance.interceptors.response.use(
       errorMessages: error?.response?.data?.message,
     };
     return responseObject;
+    // return "response error";
     // return Promise.reject(error);
   }
 );
