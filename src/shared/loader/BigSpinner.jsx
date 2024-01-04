@@ -1,5 +1,3 @@
-import React from "react";
-
 const BigSpinner = () => {
   return (
     <div className="relative min-h-screen flex justify-center items-center">
