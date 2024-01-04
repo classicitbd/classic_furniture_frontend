@@ -3,7 +3,10 @@ import { getEmail } from "../../utils/get-email";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useOtpVerifyMutation } from "../../redux/features/auth/authApi";
+import {
+  useOtpVerifyMutation,
+  useResendOtpMutation,
+} from "../../redux/features/auth/authApi";
 import { toast } from "react-toastify";
 
 const Verified = () => {
@@ -18,6 +21,7 @@ const Verified = () => {
   const navigate = useNavigate();
 
   const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
+  const [resendOtp,{isLoading: resendLoading}] = useResendOtpMutation();
 
   const email = getEmail(path?.search);
   const handleVerify = async (data) => {
@@ -35,6 +39,21 @@ const Verified = () => {
       console.error("otp verified error", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    try {
+      const data = {
+        email,
+      };
+      const res = await resendOtp(data);
+      if (res?.data?.success) {
+        toast.info(res?.data?.message);
+      }
+      console.log(res);
+    } catch (error) {
+      console.error("resend otp error", error);
     }
   };
   return (
@@ -71,7 +90,12 @@ const Verified = () => {
             )}
           </div>
           <div className="text-[14px] flex justify-end">
-            <button className="text-secondary underline">Resend-OTP</button>
+            <p
+              onClick={handleResend}
+              className="text-secondary underline cursor-pointer"
+            >
+              {resendLoading ? "Resending OTP..." :"Resend-OTP"}
+            </p>
           </div>
 
           <button
