@@ -13,8 +13,8 @@ export const axiosBaseQuery =
           "Content-Type": contentType || "application/json",
         },
       });
-      console.log(result);
-      return { data: result?.data, errorData: result };
+      // console.log(result);
+      return { data: result?.data, errorData: result?.message };
       // return result;
     } catch (axiosError) {
       let err = axiosError;
