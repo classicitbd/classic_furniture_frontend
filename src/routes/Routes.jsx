@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import Home from "../pages/home/Home";
-import Signup from "../pages/signup/Signup";
-import Signin from "../pages/signin/Signin";
+// import Signup from "../pages/signup/Signup";
+// import Signin from "../pages/signin/Signin";
 import DashboardLayout from "../layout/DashboardLayout";
 import HomePage from "../pages/dashboard/homePage/HomePage";
 import Menu from "../pages/dashboard/menu/Menu";
-import Verified from "../pages/verified/Verified";
+// import Verified from "../pages/verified/Verified";
 
 const router = createBrowserRouter([
   {
@@ -22,18 +22,18 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/sign-up",
-    element: <Signup />,
-  },
-  {
-    path: "/verify-user",
-    element: <Verified />,
-  },
-  {
-    path: "/sign-in",
-    element: <Signin />,
-  },
+  // {
+  //   path: "/sign-up",
+  //   element: <Signup />,
+  // },
+  // {
+  //   path: "/verify-user",
+  //   element: <Verified />,
+  // },
+  // {
+  //   path: "/sign-in",
+  //   element: <Signin />,
+  // },
   {
     path: '/dashboard',
     element: <DashboardLayout />,
