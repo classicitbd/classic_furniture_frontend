@@ -20,12 +20,12 @@ const SideNavBar = () => {
                 <div
                     className={
                         pathname === "/dashboard"
-                            ? "nab_item text-black"
+                            ? "nab_item text-[#3EA2FA]"
                             : "text-[#717171] nab_item"
                     }
                 >
                     <div className="flex items-center justify-between text-[18px] font-semibold">
-                        <Link  onClick={() => setIsUserOpen(false)} to="/dashboard" className="hover:text-black flex items-center gap-2">
+                        <Link  onClick={() => setIsUserOpen(false)} to="/dashboard" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <AiFillHome />
                             Home
                         </Link>
@@ -34,7 +34,7 @@ const SideNavBar = () => {
 
                 <div className="text-white nab_item">
                     <div className=" flex items-center justify-between mt-3 text-[18px] font-semibold">
-                        <button onClick={() => setIsUserOpen(!isUserOpen)} className="hover:text-black text-[#717171] flex items-center gap-2">
+                        <button onClick={() => setIsUserOpen(!isUserOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-2">
                             <BiSolidCategory  />Category {isUserOpen ? <FaChevronUp /> : <FaChevronDown />} </button>
                     </div>
                     {
@@ -43,14 +43,14 @@ const SideNavBar = () => {
                             <div
                                 className={
                                     pathname === "/dashboard/menu"
-                                        ? "nab_item text-black"
+                                        ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between text-[18px] font-semibold">
                                     <Link
                                         to="/dashboard/menu"
-                                        className="hover:text-black flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <BiMaleFemale  />
                                         Menu Add
@@ -61,14 +61,14 @@ const SideNavBar = () => {
                             <div
                                 className={
                                     pathname === "/dashboard/category"
-                                        ? "nab_item text-black"
+                                        ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
                                     <Link
                                         to="/dashboard/category"
-                                        className="hover:text-black flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <TbCategoryPlus  />
                                         Category Add
@@ -83,12 +83,12 @@ const SideNavBar = () => {
                 <div
                     className={
                         pathname === "/dashboard/allCustomer"
-                            ? "nab_item text-black"
+                            ? "nab_item text-[#3EA2FA]"
                             : "text-[#717171] nab_item"
                     }
                 >
                     <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
-                        <Link to="/dashboard/allCustomer" className="hover:text-black flex items-center gap-2">
+                        <Link to="/dashboard/allCustomer" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <FaUsers  />
                             All Customer
                         </Link>

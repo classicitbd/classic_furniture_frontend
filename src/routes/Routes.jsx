@@ -6,6 +6,7 @@ import Signin from "../pages/signin/Signin";
 import DashboardLayout from "../layout/DashboardLayout";
 import HomePage from "../pages/dashboard/homePage/HomePage";
 import Menu from "../pages/dashboard/menu/Menu";
+import Verified from "../pages/verified/Verified";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <Signup />,
+  },
+  {
+    path: "/verify-user",
+    element: <Verified />,
   },
   {
     path: "/sign-in",

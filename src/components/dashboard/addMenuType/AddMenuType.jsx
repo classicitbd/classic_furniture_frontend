@@ -1,15 +1,19 @@
 import { useForm } from 'react-hook-form';
 import { MdDeleteForever } from 'react-icons/md';
-import toast from 'react-hot-toast';
 import BigSpinner from '../../../shared/loader/BigSpinner'
+import { useAddMenuMutation, useDeleteMenuMutation, useGetMenuQuery } from '../../../redux/features/menu/menuApi';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import MiniSpinner from '../../../shared/loader/MiniSpinner';
 
 
 const AddMenuType = () => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
+    const [loading, setLoading] = useState(false);
 
-    const [postUserRoleType] = usePostUserRoleTypeMutation();  //post user type
-    const [deleteUserRoleType] = useDeleteUserRoleMutation();  //delete user type
-    const { data: menuRole, isLoading } = useGetUserRoleQuery(undefined, {
+    const [postMenuType] = useAddMenuMutation();  //post user type
+    const [deleteMenuType] = useDeleteMenuMutation();  //delete user type
+    const { data: menuType, isLoading } = useGetMenuQuery(undefined, {
         refetchOnMountOrArgChange: true,
         pollingInterval: 30000,
     }); // get user type
@@ -19,27 +23,27 @@ const AddMenuType = () => {
     }
 
 
-    // post a Menu role
+    // post a Menu 
     const handleDataPost = (data) => {
-        toast.loading('Please Wait', {
-            duration: 1000
-        })
-        postMenuRoleType(data).then(result => {
+        setLoading(true)
+        postMenuType(data).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
-                toast.success(result?.data?.message ? result?.data?.message : "Menu Role Added successfully !");
+                setLoading(false)
+                toast.success(result?.data?.message ? result?.data?.message : "Menu Added successfully !");
                 reset();
             } else {
+                setLoading(false)
                 toast.error(result?.error?.data?.message);
             }
         });
     }
 
-    // delete a Menu rolr
+    // delete a Menu
     const handleDeleteMenuRole = (id) => {
-        toast.loading('Please Wait', {
-            duration: 1000
-        })
-        deleteMenuRoleType(id).then(result => {
+        const data = {
+            _id: id
+        }
+        deleteMenuType(data).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 toast.success(result?.data?.message ? result?.data?.message : "Menu Role Delete successfully !");
                 reset();
@@ -58,9 +62,12 @@ const AddMenuType = () => {
                         <h2 className="font-semibold text-[20px] underline">All menu Type: </h2>
                         <ul className="list-decimal font-semibold ml-[30px] text-[20px] mt-4">
                             {
-                                menuRole?.data?.map((role, index) =>
+                                menuType?.data?.length > 0 ?
+                                menuType?.data?.map((role, index) =>
                                     <li key={index}><p className='flex items-center gap-2 mb-2'> <MdDeleteForever onClick={() =>handleDeleteMenuRole(role?._id)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />{role?.menu}</p></li>
                                 )
+                                :
+                                <p className='text-red-500'>There is no data found</p>
                             }
                         </ul>
                     </div>
@@ -77,7 +84,7 @@ const AddMenuType = () => {
                                 {errors.menu && <p className='text-red-600'>{errors.menu?.message}</p>}
                             </div>
 
-                            <button type="Submit" className="mt-6 px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]">Create Type</button>
+                            <button type="Submit" className="mt-6 px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]">{loading ? <MiniSpinner /> : "Create Now"}</button>
 
                         </form>
                     </div>
@@ -90,3 +97,44 @@ const AddMenuType = () => {
 };
 
 export default AddMenuType;
+
+
+
+// import { baseApi } from "../../api/baseApi";
+// import { tagTypes } from "../../tag-types";
+
+// const MENU_URL = "/menu";
+
+// export const menuApi = baseApi.injectEndpoints({
+//   endpoints: (build) => ({
+//     //add menu
+//     addMenu: build.mutation({
+//       query: (data) => ({
+//         url: `${MENU_URL}`,
+//         method: "POST",
+//         data: data,
+//       }),
+//       invalidatesTags: [tagTypes.menu],
+//     }),
+// //get menu
+//     getMenu: build.query({
+//         query: () => ({
+//             url: `${MENU_URL}`,
+//             providesTags: [tagTypes.menu],
+//           }),
+//     }),
+// //delete menu
+//     deleteMenu: build.mutation({
+//         query: (data) => ({
+//           url: `${MENU_URL}`,
+//           method: "DELETE",
+//           data: data,
+//         }),
+//         invalidatesTags: [tagTypes.menu],
+//       }),
+
+//   }),
+// });
+
+// export const { useAddMenuMutation, useDeleteMenuMutation, useGetMenuQuery } =
+//   menuApi;
