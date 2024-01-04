@@ -6,6 +6,7 @@ import "react-phone-input-2/lib/style.css";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [phone, setPhone] = useState("");
   const {
@@ -20,15 +21,26 @@ const SignUp = () => {
   };
 
   const handleSignUp = async (data) => {
-    if (!isValidPhoneNumber(phone)) {
-      // Handle the case when the phone number is not valid
-      console.error("Invalid phone number");
-      return;
+    try {
+      setLoading(true);
+      const { password, confirm_password } = data;
+      data.phone = phone;
+      if (!isValidPhoneNumber(phone)) {
+        // Handle the case when the phone number is not valid
+        setError("Invalid phone number");
+        return;
+      }
+      if (password !== confirm_password) {
+        setError("Does not match password!");
+        return;
+      }
+    } catch (error) {
+      console.error("sign-up error: ", error);
+    } finally {
+      setLoading(false);
     }
-    data.phone = phone;
     console.log(data);
     // try {
-    //   setLoading(true);
     //   const res = userSignup(data);
     //   console.log(res.data.statusCode);
     //   if (res?.data?.data?.success) {
@@ -44,24 +56,25 @@ const SignUp = () => {
     //   setLoading(false);
     // }
   };
-
+  console.log(isChecked);
   return (
     <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
       <div className="w-full mx-3 md:w-96 px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
           Create a New Account
         </h2>
+        {error && <p className="text-red-600"> {error}</p>}
         <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
           <div className="w-full max-w-xs">
-            <label htmlFor="username" className="label">
+            <label htmlFor="name" className="label">
               <span className="label-text">Full Name</span>
             </label>
             <input
-              id="username"
+              id="name"
               type="text"
-              placeholder="username"
+              placeholder="Enter your name"
               className="border rounded px-3 p-1 w-full max-w-xs"
-              {...register("userName", { required: "Name is required" })}
+              {...register("name", { required: "Name is required" })}
             />
             {errors.userName && (
               <p className="text-red-600"> {errors.userName.message}</p>
@@ -111,7 +124,7 @@ const SignUp = () => {
             </label>
             <input
               id="password"
-              type="password"
+              type={`${isChecked ? "text" : "password"}`}
               placeholder="* * * * *"
               className="border rounded px-3 p-1 w-full max-w-xs"
               {...register("password", {
@@ -132,7 +145,7 @@ const SignUp = () => {
             </label>
             <input
               id="confirm-password"
-              type={`${isChecked ? "text" : "password "}`}
+              type={`${isChecked ? "text" : "password"}`}
               placeholder="* * * * *"
               className="border rounded px-3 p-1 w-full max-w-xs"
               {...register("confirm_password", {
