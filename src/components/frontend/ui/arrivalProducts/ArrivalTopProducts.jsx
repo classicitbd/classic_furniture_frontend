@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/bundle";
 import { productData } from "../../../../data/product-data";
+import { Link } from "react-router-dom";
 
 const ArrivalTopProducts = () => {
   return (
@@ -68,25 +69,30 @@ const ArrivalTopProducts = () => {
         <div>
           {productData.map((product) => (
             <SwiperSlide
-              className="border group rounded-md overflow-hidden"
               key={product?.id}
+              className="border group rounded-md overflow-hidden"
             >
-              <div className="flex">
-                <img
-                  src={product?.thumbnail}
-                  className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
-                  alt={product?.id}
-                />
-                <img
-                  src={product?.thumbnailTwo}
-                  className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
-                  alt={product?.id}
-                />
-              </div>
-              <article>
-                <h2 className="text-center">{product?.title}</h2>
-                <p>{product?.color}</p>
-              </article>
+              <Link to={`/products/details/${product?.id}`}>
+                <div className="flex">
+                  <img
+                    src={product?.thumbnail}
+                    className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
+                    alt={product?.id}
+                  />
+                  <img
+                    src={product?.thumbnailTwo}
+                    className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
+                    alt={product?.id}
+                  />
+                </div>
+                <article className="pb-[10px]">
+                  <h2 className="text-center">{product?.title}</h2>
+                  <p className="text-center py-3 text-bgray-700">
+                    {product?.color}
+                  </p>
+                  <p className="px-4">BDT {product?.price}.00</p>
+                </article>
+              </Link>
             </SwiperSlide>
           ))}
         </div>
