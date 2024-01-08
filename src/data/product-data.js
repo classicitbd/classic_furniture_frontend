@@ -5,7 +5,7 @@ export const productData = [
     price: "3,524",
     color: "Brown",
     thumbnail: "/assets/images/product-1.jpg ",
-    thumbnailTwo: "/assects/images/product-2.jpg",
+    thumbnailTwo: "/assets/images/product-2.jpg",
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export const productData = [
     price: "3,524",
     color: "Brown",
     thumbnail: "/assets/images/product-3.jpg ",
-    thumbnailTwo: "/assects/images/product-4.jpg",
+    thumbnailTwo: "/assets/images/product-4.jpg",
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ export const productData = [
     price: "3,524",
     color: "Brown",
     thumbnail: "/assets/images/product-5.jpg ",
-    thumbnailTwo: "/assects/images/product-6.jpg",
+    thumbnailTwo: "/assets/images/product-6.jpg",
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ export const productData = [
     price: "3,524",
     color: "Brown",
     thumbnail: "/assets/images/product-7.jpg ",
-    thumbnailTwo: "/assects/images/product-8.jpg",
+    thumbnailTwo: "/assets/images/product-8.jpg",
   },
   {
     id: 5,
@@ -37,6 +37,6 @@ export const productData = [
     price: "3,524",
     color: "Brown",
     thumbnail: "/assets/images/product-9.jpg ",
-    thumbnailTwo: "/assects/images/product-10.jpg",
+    thumbnailTwo: "/assets/images/product-10.jpg",
   },
 ];
