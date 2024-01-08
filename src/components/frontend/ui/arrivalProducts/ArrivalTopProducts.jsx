@@ -16,10 +16,12 @@ import { productData } from "../../../../data/product-data";
 
 const ArrivalTopProducts = () => {
   return (
-    <div className="px-[50px] py-[20px]">
+    <div className="px-[5px] lg:px-[50px] py-[20px]">
       <div className="flex items-center justify-between py-[20px]">
-        <div></div>
-        <h2 className="text-2xl font-medium">New Arrival Products</h2>
+        <div className="hidden lg:block"></div>
+        <h2 className="text-xl md:text-2xl font-normal md:font-medium">
+          New Arrival Products
+        </h2>
         <div className="flex gap-[4px]">
           <button className="prev-tp w-10 h-10 z-10 bg-white hover:bg-opacity-50 rounded-full border flex items-center justify-center transition-all duration-300">
             <span>
@@ -35,8 +37,19 @@ const ArrivalTopProducts = () => {
       </div>
       <Swiper
         modules={[Navigation, Scrollbar, A11y, Keyboard, Parallax]}
-        slidesPerView={4}
+        slidesPerView={1}
         spaceBetween={10}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          1024: {
+            slidesPerView: 4,
+          },
+        }}
         speed={600}
         parallax={true}
         navigation={{
