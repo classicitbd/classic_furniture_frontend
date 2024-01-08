@@ -1,36 +1,45 @@
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useOtpVerifyMutation,
+  useResendOtpMutation,
+} from "../../redux/feature/auth/authApi";
 import { getEmail } from "../../utils/get-email";
-import MiniSpinner from "../../shared/loader/MiniSpinner";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { toast } from "react-toastify";
-import { useOtpVerifyMutation, useResendOtpMutation } from "../../redux/feature/auth/authApi";
+import { useForm } from "react-hook-form";
+import MiniSpinner from "../../shared/loader/MiniSpinner";
 
 const Verified = () => {
   const [loading, setLoading] = useState(false);
+  const [timerCount, setTimer] = useState(60);
+  const [OTPinput, setOTPinput] = useState(["0", "0", "0", "0"]);
+  const [disable, setDisable] = useState(true);
   const path = useLocation();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
   const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
-  const [resendOtp,{isLoading: resendLoading}] = useResendOtpMutation();
+  const [resendOtp] = useResendOtpMutation();
 
   const email = getEmail(path?.search);
-  const handleVerify = async (data) => {
+  const handleVerify = async () => {
     try {
       setLoading(true);
-      data.email = email;
+      const otp = OTPinput.join("");
+
+      const data = {
+        email,
+        otp,
+      };
       const res = await otpVeriy(data);
-      console.log(res);
       if (res?.data?.success) {
-        toast.info(res?.data?.message);
+        toast.success(res?.data?.message, {
+          autoClose: 1,
+        });
         navigate(`/sign-in`);
         reset();
+      } else if (res?.error?.status === 400) {
+        toast.error(res?.error?.data?.message);
       }
     } catch (error) {
       console.error("otp verified error", error);
@@ -41,67 +50,99 @@ const Verified = () => {
 
   const handleResend = async () => {
     try {
+      if (disable) return;
       const data = {
         email,
       };
       const res = await resendOtp(data);
-      if (res?.data?.success) {
-        toast.info(res?.data?.message);
+      if (res?.data?.data?.success) {
+        setDisable(true);
+        toast.info(res?.data?.data?.message);
+        setTimer(60);
       }
       console.log(res);
     } catch (error) {
       console.error("resend otp error", error);
     }
   };
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setTimer((lastTimerCount) => {
+        lastTimerCount <= 1 && clearInterval(interval);
+        if (lastTimerCount <= 1) setDisable(false);
+        if (lastTimerCount <= 0) return lastTimerCount;
+        return lastTimerCount - 1;
+      });
+    }, 1000); // each count lasts for a second
+    // cleanup the interval on complete
+    return () => clearInterval(interval);
+  }, [disable]);
+
   return (
-    <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
-      <div className="w-full mx-3 md:w-96 px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
-        <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
-          Verify OTP
-        </h2>
-
-        <form onSubmit={handleSubmit(handleVerify)} className="space-y-4">
-          <div className="w-full max-w-xs sr-only">
-            <label htmlFor="email" className="label">
-              <span className="label-text"></span>
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              disabled
-              className="border rounded px-3 p-1 w-full max-w-xs"
-              {...register("email")}
-            />
-          </div>
-          <div className="w-full max-w-xs">
-            <input
-              id="otp"
-              type="text"
-              placeholder="Enter your OTP"
-              className="border rounded px-3 p-1 w-full max-w-xs"
-              {...register("otp", { required: "OTP must be provide" })}
-            />
-            {errors.otp && (
-              <p className="text-red-600"> {errors.otp.message}</p>
-            )}
-          </div>
-          <div className="text-[14px] flex justify-end">
-            <p
-              onClick={handleResend}
-              className="text-secondary underline cursor-pointer"
-            >
-              {resendLoading ? "Resending OTP..." :"Resend-OTP"}
-            </p>
+    <div className="flex justify-center items-center w-screen h-screen bg-gray-50">
+      <div className="bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-md rounded-2xl">
+        <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
+          <div className="flex flex-col items-center justify-center text-center space-y-2">
+            <div className="font-semibold text-3xl">
+              <p>Email Verification</p>
+            </div>
+            <div className="flex flex-row text-sm font-medium text-gray-400">
+              <p>We have sent a code to your email {email}</p>
+            </div>
           </div>
 
-          <button
-            className="px-10 py-2 text-white bg-green-500 w-full rounded-full"
-            type="submit"
-          >
-            {loading || isLoading ? <MiniSpinner /> : "Verify"}
-          </button>
-        </form>
+          <div>
+            <form onSubmit={handleSubmit(handleVerify)}>
+              <div className="flex flex-col space-y-16">
+                <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="w-16 h-16 ">
+                      <input
+                        maxLength="1"
+                        className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                        type="text"
+                        name=""
+                        id=""
+                        onChange={(e) => {
+                          const newOTPinput = [...OTPinput];
+                          newOTPinput[index] = e.target.value;
+                          setOTPinput(newOTPinput);
+                        }}
+                      ></input>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-col space-y-5">
+                  <div>
+                    <button className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-3 bg-success-300 border-none text-white text-sm shadow-sm">
+                      {loading || isLoading ? (
+                        <MiniSpinner />
+                      ) : (
+                        "Verify Account"
+                      )}
+                    </button>
+                  </div>
+
+                  <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
+                    <p>Did not receive code?</p>{" "}
+                    <a
+                      className={`flex flex-row items-center ${
+                        disable
+                          ? "text-gray-500 cursor-not-allowed"
+                          : "text-secondary cursor-pointer underline"
+                      }`}
+                      onClick={() => handleResend()}
+                    >
+                      {disable ? `Resend OTP in ${timerCount}s` : "Resend OTP"}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );

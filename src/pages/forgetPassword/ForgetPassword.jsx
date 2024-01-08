@@ -5,6 +5,7 @@ import "react-phone-input-2/lib/style.css";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
 import { useForgetPasswordMutation } from "../../redux/feature/auth/authApi";
+import { setToLocalStorage } from "../../utils/local-storage";
 
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -18,14 +19,20 @@ const ForgetPassword = () => {
   const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
 
   const handleForgetPassword = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const res = await forgetPassword(data);
       console.log(res);
       if (res?.data?.success) {
-        toast.info(res?.data?.message);
+        toast.success(res?.data?.message, {
+          autoClose: 2000,
+        });
+        setToLocalStorage('reset-email', data?.email);
         reset();
+      } else if (res?.error?.status === 400) {
+        toast.error(res?.error?.data?.message, {
+          autoClose: 3000,
+        });
       }
     } catch (error) {
       console.error("sign-in error: ", error);
@@ -38,7 +45,7 @@ const ForgetPassword = () => {
     <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
       <div className="w-full mx-3 md:w-96 px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
-          Password Reset
+          Reset Password
         </h2>
 
         <form

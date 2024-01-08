@@ -45,7 +45,9 @@ const SignUp = () => {
       const res = await signUp(data);
       console.log(res);
       if (res?.data?.success) {
-        toast.info(res?.data?.message);
+        toast.info(res?.data?.message, {
+          autoClose: 2000,
+        });
         navigate(`/verify-user?email=${res?.data?.data?.email}`);
         reset();
       }

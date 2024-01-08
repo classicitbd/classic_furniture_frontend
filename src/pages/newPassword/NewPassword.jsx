@@ -4,7 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import "react-phone-input-2/lib/style.css";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
-import { useSignUpMutation } from "../../redux/feature/auth/authApi";
+import { useSetPasswordMutation } from "../../redux/feature/auth/authApi";
+import {
+  getFromLocalStorage,
+  setToLocalStorage,
+} from "../../utils/local-storage";
 
 const NewPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -17,29 +21,35 @@ const NewPassword = () => {
     reset,
   } = useForm();
   const navigate = useNavigate();
-  const [signUp, { isLoading }] = useSignUpMutation();
+  const [setPassword, { isLoading }] = useSetPasswordMutation();
 
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
-  const handleSignUp = async (data) => {
+  const handleSetPassword = async (data) => {
     try {
       setLoading(true);
+      const email = getFromLocalStorage("reset-email");
       const { password, confirm_password } = data;
       if (password !== confirm_password) {
         setError("Does not match password!");
         return;
       }
-      const res = await signUp(data);
+      delete data.confirm_password;
+      data.email = email;
+      const res = await setPassword(data);
       console.log(res);
       if (res?.data?.success) {
         toast.info(res?.data?.message);
-        navigate(`/verify-user?email=${res?.data?.data?.email}`);
+        setToLocalStorage("reset-email", "");
+        navigate(`/sign-in`);
         reset();
+      } else if (res?.error?.status === 400) {
+        toast.error(res?.error?.data?.message);
       }
     } catch (error) {
-      console.error("sign-up error: ", error);
+      console.error("reset-password error: ", error);
     } finally {
       setLoading(false);
     }
@@ -51,7 +61,7 @@ const NewPassword = () => {
           Reset Password
         </h2>
 
-        <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
+        <form onSubmit={handleSubmit(handleSetPassword)} className="space-y-4">
           <div className="form-control w-full max-w-xs">
             <label htmlFor="password" className="label">
               <span className="label-text">Password</span>
@@ -105,7 +115,7 @@ const NewPassword = () => {
             className="px-10 py-2 text-white bg-green-500 w-full rounded-full"
             type="submit"
           >
-            {loading || isLoading ? <MiniSpinner /> : "SignUp"}
+            {loading || isLoading ? <MiniSpinner /> : "Change Password"}
           </button>
         </form>
         <p className="text-[14px] mt-4">

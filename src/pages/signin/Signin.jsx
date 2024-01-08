@@ -24,9 +24,15 @@ const SignIn = () => {
       const res = await signIn(data);
       console.log(res);
       if (res?.data?.success) {
-        toast.info(res?.data?.message);
+        toast.info(res?.data?.message, {
+          autoClose: 2000,
+        });
         navigate(`/`);
         reset();
+      }else if(res.error.status == 400){
+        toast.error(res?.error?.data?.message, {
+          autoClose: 2000,
+        });
       }
     } catch (error) {
       console.error("sign-in error: ", error);
@@ -92,8 +98,8 @@ const SignIn = () => {
           </button>
         </form>
         <p className="text-[14px] mt-4">
-          Are you new Please Create account?
-          <Link to="/sign-in" className="text-secondary">
+          Are you new here Create account?
+          <Link to="/sign-up" className="text-secondary">
             Sign-up
           </Link>
         </p>
