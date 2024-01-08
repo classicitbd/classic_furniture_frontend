@@ -4,10 +4,6 @@ import { useState } from "react";
 
 const Category = () => {
   const [hoveredCategory, setHoveredCategory] = useState(null);
-
-  const handleCategoryHover = (categoryId) => {
-    setHoveredCategory(categoryId);
-  };
   return (
     <section>
       <article className="text-wrap py-[30px]">
