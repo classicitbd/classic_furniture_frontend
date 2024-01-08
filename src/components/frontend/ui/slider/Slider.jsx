@@ -44,21 +44,21 @@ const Slider = () => {
             <SwiperSlide key={slider.id}>
               <img
                 src={slider.img}
-                className="w-full h-[200px] z-0 lg:h-[600px]"
+                className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] xl:h-[90vh]"
                 alt={slider.id}
               />
             </SwiperSlide>
           ))}
         </div>
         <div className="">
-          <button className="prev w-10 h-10 absolute top-[50%] left-[10px] z-10 bg-gray-600 bg-opacity-0 hover:bg-opacity-40 rounded flex items-center justify-center transition-all duration-300">
+          <button className="prev w-10 h-10 absolute top-[43%] left-0 md:left-[10px] z-10 bg-gray-600 bg-opacity-0 hover:bg-opacity-40 rounded flex items-center justify-center transition-all duration-300">
             <span>
-              <FcPrevious className="text-5xl p-1" />
+              <FcPrevious className="text-4xl md:text-5xl p-1 font-light" />
             </span>
           </button>
-          <button className="next w-10 h-10 absolute top-[50%] right-[10px] z-10 bg-gray-600 bg-opacity-0 hover:bg-opacity-40 rounded flex items-center justify-center transition-all duration-300">
+          <button className="next w-10 h-10 absolute top-[43%] right-0 md:right-[10px] z-10 bg-gray-600 bg-opacity-0 hover:bg-opacity-40 rounded flex items-center justify-center transition-all duration-300">
             <span>
-              <FcNext className="text-5xl p-1 font-light" />
+              <FcNext className="text-4xl md:text-5xl p-1 font-light" />
             </span>
           </button>
         </div>
