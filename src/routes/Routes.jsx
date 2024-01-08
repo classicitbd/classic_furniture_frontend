@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
-import Home from "../pages/home/Home";
 import DashboardLayout from "../layout/DashboardLayout";
 import HomePage from "../pages/dashboard/homePage/HomePage";
 import Menu from "../pages/dashboard/menu/Menu";
@@ -10,6 +9,12 @@ import Color from "../pages/dashboard/color/Color";
 import Collection from "../pages/dashboard/collection/Collection";
 import Feature from "../pages/dashboard/feature/Feature";
 import Style from "../pages/dashboard/style/Style";
+import Signup from "../pages/signup/Signup";
+import Signin from "../pages/signin/Signin";
+import Verified from "../pages/verified/Verified";
+import ForgetPassword from "../pages/forgetPassword/ForgetPassword";
+import NewPassword from "../pages/newPassword/NewPassword";
+import Home from "../pages/frontend/home/Home";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +31,27 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/dashboard',
+    path: "/sign-up",
+    element: <Signup />,
+  },
+  {
+    path: "/verify-user",
+    element: <Verified />,
+  },
+  {
+    path: "/sign-in",
+    element: <Signin />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPassword />,
+  },
+  {
+    path: "/reset-password",
+    element: <NewPassword />,
+  },
+  {
+    path: "/dashboard",
     element: <DashboardLayout />,
     errorElement: (
       <p className="text-center min-h-screen">Something went wrong!</p>
@@ -65,7 +90,7 @@ const router = createBrowserRouter([
         element: <Style />
       },
     ],
-  }
+  },
 ]);
 
 export default router;
