@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
-import Home from "../pages/home/Home";
 import Signup from "../pages/signup/Signup";
 import Signin from "../pages/signin/Signin";
 import DashboardLayout from "../layout/DashboardLayout";
@@ -9,6 +8,7 @@ import Menu from "../pages/dashboard/menu/Menu";
 import Verified from "../pages/verified/Verified";
 import ForgetPassword from "../pages/forgetPassword/ForgetPassword";
 import NewPassword from "../pages/newPassword/NewPassword";
+import Home from "../pages/frontend/home/Home";
 
 const router = createBrowserRouter([
   {
