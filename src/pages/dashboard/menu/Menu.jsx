@@ -1,8 +1,21 @@
 import { Link } from "react-router-dom";
 import { PiHouseBold } from "react-icons/pi";
-import AddMenuType from "../../../components/dashboard/addMenuType/AddMenuType";
+import AddMenuType from "../../../components/dashboard/menuType/AddMenuType";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
+import MenuTable from "../../../components/dashboard/menuType/MenuTable";
 
 const Menu = () => {
+
+    const { data: menuTypes = [], isLoading, refetch } = useQuery({
+        queryKey: ['/api/v1/menu'],
+        queryFn: async () => {
+            const res = await fetch(`${BASE_URL}/menu`)
+            const data = await res.json();
+            return data;
+        }
+    }) // get Menu type
+
     return (
         <>
             {/* Menu Page Navbar */}
@@ -16,7 +29,10 @@ const Menu = () => {
             </div>
 
             {/* Add Menu Type */}
-            <AddMenuType />
+            <AddMenuType refetch={refetch} />
+
+            {/* update and delete menu type And Show In Table */}
+            <MenuTable menuTypes={menuTypes} isLoading={isLoading} refetch={refetch} />
 
         </>
     );
