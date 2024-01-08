@@ -5,6 +5,10 @@ import { FaChevronDown, FaChevronUp, FaUsers } from "react-icons/fa";
 import { BiMaleFemale, BiSolidCategory  } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { TbCategoryPlus } from "react-icons/tb";
+import { MdControlPointDuplicate, MdOutlineFeaturedPlayList } from "react-icons/md";
+import { IoColorPaletteOutline } from "react-icons/io5"
+import { MdOutlineCollectionsBookmark } from "react-icons/md"
+import { RxFontStyle } from "react-icons/rx";
 
 
 const SideNavBar = () => {
@@ -72,6 +76,96 @@ const SideNavBar = () => {
                                     >
                                         <TbCategoryPlus  />
                                         Category Add
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div
+                                className={
+                                    pathname === "/dashboard/sub_category"
+                                        ? "nab_item text-[#3EA2FA]"
+                                        : "text-[#717171] nab_item"
+                                }
+                            >
+                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                    <Link
+                                        to="/dashboard/sub_category"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                    >
+                                        <MdControlPointDuplicate />
+                                        Sub Category Add
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div
+                                className={
+                                    pathname === "/dashboard/color"
+                                        ? "nab_item text-[#3EA2FA]"
+                                        : "text-[#717171] nab_item"
+                                }
+                            >
+                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                    <Link
+                                        to="/dashboard/color"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                    >
+                                        <IoColorPaletteOutline />
+                                        Color Add
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div
+                                className={
+                                    pathname === "/dashboard/collection"
+                                        ? "nab_item text-[#3EA2FA]"
+                                        : "text-[#717171] nab_item"
+                                }
+                            >
+                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                    <Link
+                                        to="/dashboard/collection"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                    >
+                                        <MdOutlineCollectionsBookmark  />
+                                        Collection Add
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div
+                                className={
+                                    pathname === "/dashboard/feature"
+                                        ? "nab_item text-[#3EA2FA]"
+                                        : "text-[#717171] nab_item"
+                                }
+                            >
+                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                    <Link
+                                        to="/dashboard/feature"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                    >
+                                        <MdOutlineFeaturedPlayList   />
+                                        Feature Add
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div
+                                className={
+                                    pathname === "/dashboard/style"
+                                        ? "nab_item text-[#3EA2FA]"
+                                        : "text-[#717171] nab_item"
+                                }
+                            >
+                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                    <Link
+                                        to="/dashboard/style"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                    >
+                                        <RxFontStyle />
+                                        Style Add
                                     </Link>
                                 </div>
                             </div>

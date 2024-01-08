@@ -12,7 +12,37 @@ const SideNavbarMenuItem = () => {
             id: 2,
             text: "Menu",
             link: "/dashboartd/menu",
-        }
+        },
+        {
+            id: 3,
+            text: "Category",
+            link: "/dashboartd/category",
+        },
+        {
+            id: 4,
+            text: "Sub Category",
+            link: "/dashboartd/sub_category",
+        },
+        {
+            id: 5,
+            text: "Color",
+            link: "/dashboartd/color",
+        },
+        {
+            id: 6,
+            text: "Collection",
+            link: "/dashboartd/collection",
+        },
+        {
+            id: 7,
+            text: "Feature",
+            link: "/dashboartd/feature",
+        },
+        {
+            id: 8,
+            text: "Style",
+            link: "/dashboartd/style",
+        },
     ];
 
     return (

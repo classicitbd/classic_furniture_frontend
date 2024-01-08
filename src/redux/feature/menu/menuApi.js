@@ -11,6 +11,17 @@ export const menuApi = api.injectEndpoints({
       }),
       invalidatesTags: ['menu'],
     }),
+
+    //update menu
+    updateMenu: build.mutation({
+        query: (data) => ({
+          url: `/menu`,
+          method: "PATCH",
+          body: data,
+        }),
+        invalidatesTags: ['menu'],
+      }),
+
 //delete menu
     deleteMenu: build.mutation({
         query: (data) => ({
@@ -24,5 +35,5 @@ export const menuApi = api.injectEndpoints({
   }),
 });
 
-export const { useAddMenuMutation, useDeleteMenuMutation } =
+export const { useAddMenuMutation, useDeleteMenuMutation, useUpdateMenuMutation } =
   menuApi;

@@ -1,10 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
-import Signup from "../pages/signup/Signup";
-import Signin from "../pages/signin/Signin";
 import DashboardLayout from "../layout/DashboardLayout";
 import HomePage from "../pages/dashboard/homePage/HomePage";
 import Menu from "../pages/dashboard/menu/Menu";
+import Category from "../pages/dashboard/category/Category";
+import SubCategory from "../pages/dashboard/subCategory/SubCategory";
+import Color from "../pages/dashboard/color/Color";
+import Collection from "../pages/dashboard/collection/Collection";
+import Feature from "../pages/dashboard/feature/Feature";
+import Style from "../pages/dashboard/style/Style";
+import Signup from "../pages/signup/Signup";
+import Signin from "../pages/signin/Signin";
 import Verified from "../pages/verified/Verified";
 import ForgetPassword from "../pages/forgetPassword/ForgetPassword";
 import NewPassword from "../pages/newPassword/NewPassword";
@@ -57,7 +63,31 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/menu",
-        element: <Menu />,
+        element: <Menu />
+      },
+      {
+        path: "/dashboard/category",
+        element: <Category />
+      },
+      {
+        path: "/dashboard/sub_category",
+        element: <SubCategory />
+      },
+      {
+        path: "/dashboard/color",
+        element: <Color />
+      },
+      {
+        path: "/dashboard/collection",
+        element: <Collection />
+      },
+      {
+        path: "/dashboard/feature",
+        element: <Feature />
+      },
+      {
+        path: "/dashboard/style",
+        element: <Style />
       },
     ],
   },
