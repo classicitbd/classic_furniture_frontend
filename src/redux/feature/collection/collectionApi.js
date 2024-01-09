@@ -13,6 +13,16 @@ export const collectionApi = api.injectEndpoints({
       invalidatesTags: ['collection'],
     }),
 
+    //update Collection
+    updateCollection: build.mutation({
+        query: (data) => ({
+          url: `/collection`,
+          method: "PATCH",
+          body: data,
+        }),
+        invalidatesTags: ['collection'],
+      }),
+
     //delete Collection
     deleteCollection: build.mutation({
         query: (data) => ({
@@ -26,5 +36,5 @@ export const collectionApi = api.injectEndpoints({
   }),
 });
 
-export const { useAddCollectionMutation, useDeleteCollectionMutation } =
+export const { useAddCollectionMutation, useDeleteCollectionMutation, useUpdateCollectionMutation } =
   collectionApi;

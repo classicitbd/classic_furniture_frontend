@@ -2,8 +2,20 @@ import { PiHouseBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import AddCategory from "../../../components/dashboard/category/AddCategory";
 import CategoryTable from "../../../components/dashboard/category/CategoryTable";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
 
 const Category = () => {
+
+    const { data: categoryTypes = [], isLoading, refetch } = useQuery({
+        queryKey: ['/api/v1/category'],
+        queryFn: async () => {
+            const res = await fetch(`${BASE_URL}/category`)
+            const data = await res.json();
+            return data;
+        }
+    }) // get Category type
+
     return (
         <>
             {/* Category Page Navbar */}
@@ -17,10 +29,10 @@ const Category = () => {
             </div>
 
             {/* Add Category Type*/}
-            <AddCategory />
+            <AddCategory refetch={refetch} isLoading={isLoading} />
 
             {/* delete and update And Show In Table  */}
-            <CategoryTable />
+            <CategoryTable categoryTypes={categoryTypes} isLoading={isLoading} refetch={refetch} />
 
         </>
     );

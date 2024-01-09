@@ -8,6 +8,7 @@ import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useState } from "react";
 import UpdateSubCategory from "./UpdateSubCategory";
 import { FiEdit } from "react-icons/fi";
+import { BASE_URL } from "../../../utils/baseURL";
 
 const SubCategoryTable = ({refetch, isLoading, subCategoryTypes }) => {
 
@@ -52,6 +53,9 @@ const SubCategoryTable = ({refetch, isLoading, subCategoryTypes }) => {
                 Type Name
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                Image
+              </th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                 Menu Name
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
@@ -66,6 +70,9 @@ const SubCategoryTable = ({refetch, isLoading, subCategoryTypes }) => {
               <tr key={subCategory?._id}>
                 <td className="whitespace-nowrap px-4 py-2 font-semibold">
                   {subCategory?.sub_category}
+                </td>
+                <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                  <img src={`${BASE_URL}/subCategoryImages/${subCategory?.sub_category_image}`} alt={subCategory.sub_category} className="w-12 rounded-full" />
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 font-semibold">
                   { subCategory?.menuId?.menu }
@@ -85,7 +92,7 @@ const SubCategoryTable = ({refetch, isLoading, subCategoryTypes }) => {
 :
 <NoDataFound />
 }
-{/* Update menu */}
+{/* Update Sub Category */}
             {
                 subCategoryUpdateModal && <UpdateSubCategory setSubCategoryUpdateModal={setSubCategoryUpdateModal} subCategoryUpdateModalValue={subCategoryUpdateModalValue} refetch={refetch} />
             }

@@ -29,7 +29,7 @@ const SubCategory = () => {
             </div>
 
             {/* Add Sub Category Type And Show In Table */}
-            <AddSubCategory refetch={refetch} />
+            <AddSubCategory refetch={refetch} isLoading={isLoading} />
 
             {/* update delete and show deails in table */}
             <SubCategoryTable subCategoryTypes={subCategoryTypes} isLoading={isLoading} refetch={refetch} />

@@ -57,7 +57,7 @@ const SideNavBar = () => {
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <BiMaleFemale  />
-                                        Menu Add
+                                        Menu
                                     </Link>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@ const SideNavBar = () => {
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <TbCategoryPlus  />
-                                        Category Add
+                                        Category
                                     </Link>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@ const SideNavBar = () => {
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <MdControlPointDuplicate />
-                                        Sub Category Add
+                                        Sub Category
                                     </Link>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@ const SideNavBar = () => {
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <IoColorPaletteOutline />
-                                        Color Add
+                                        Color
                                     </Link>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@ const SideNavBar = () => {
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <MdOutlineCollectionsBookmark  />
-                                        Collection Add
+                                        Collection
                                     </Link>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@ const SideNavBar = () => {
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <MdOutlineFeaturedPlayList   />
-                                        Feature Add
+                                        Feature
                                     </Link>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@ const SideNavBar = () => {
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
                                     >
                                         <RxFontStyle />
-                                        Style Add
+                                        Style
                                     </Link>
                                 </div>
                             </div>

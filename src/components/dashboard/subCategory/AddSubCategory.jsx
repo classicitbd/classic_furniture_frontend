@@ -10,8 +10,9 @@ import { BASE_URL } from '../../../utils/baseURL';
 import { Link } from 'react-router-dom';
 import slugify from 'slugify';
 import { useAddSub_CategoryMutation } from '../../../redux/feature/subCategory/subCategoryApi';
+import { ImageValidate } from '../../../utils/ImageValidation';
 
-const AddSubCategory = ({refetch}) => {
+const AddSubCategory = ({refetch, isLoading}) => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
 
@@ -24,7 +25,7 @@ const AddSubCategory = ({refetch}) => {
         }
     }) // get Category type
 
-    const { data: menuTypes = [], isLoading } = useQuery({
+    const { data: menuTypes = [] } = useQuery({
         queryKey: ['/api/v1/menu'],
         queryFn: async () => {
             const res = await fetch(`${BASE_URL}/menu`)
@@ -42,16 +43,36 @@ const AddSubCategory = ({refetch}) => {
     // post a Sub Category 
     const handleDataPost = (data) => {
         setLoading(true)
-        const sendData = {
-            slug: slugify(data.sub_category, {
+        const formData = new FormData()
+        let errorEncountered = false;
+
+        if (data?.sub_category_image[0]) {
+            const sub_category_image = data?.sub_category_image[0];
+            const result = ImageValidate(sub_category_image, 'sub_category_image');  //check image type
+            if (result == true) {
+                formData.append('sub_category_image', sub_category_image);
+            } else {
+                toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+                errorEncountered = true;
+            }
+        }
+
+        if (errorEncountered == true) {
+            setLoading(false)
+            return;
+        }
+
+        Object.entries(data).forEach(([key, value]) => {
+            if (key !== 'sub_category_image') {
+                formData.append(key, value);
+            }
+        });
+        const slug = slugify(data.sub_category, {
                 lower: true,
                 replacement: '-',
-            } ),
-            sub_category: data.sub_category,
-            categoryId: data.categoryId,
-            menuId: data?.menuId
-        }
-        postSubCategoryType(sendData).then(result => {
+            } )
+        formData.append('slug', slug);
+        postSubCategoryType(formData).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 setLoading(false)
                 toast.success(result?.data?.message ? result?.data?.message : "Sub Category Added successfully !", {
@@ -80,6 +101,11 @@ const AddSubCategory = ({refetch}) => {
                             <div>
                                 <input placeholder="Type Name" {...register("sub_category", { required: 'Type Name is required' })} id="sub_category" type="text" className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl" />
                                 {errors.sub_category && <p className='text-red-600'>{errors.sub_category?.message}</p>}
+                            </div>
+
+                            <div>
+                                <input {...register("sub_category_image", { required: 'Image is required' })} id="sub_category_image" type="file" className="block w-full px-1 py-1 bg-white border border-gray-200 rounded-xl" />
+                                {errors.sub_category_image && <p className='text-red-600'>{errors.sub_category_image?.message}</p>}
                             </div>
 
                             <div>
