@@ -4,7 +4,7 @@ import { collectionData } from "../../../../data/collection-data";
 const CollectionCategory = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3">
-      {collectionData.map((product) => (
+      {collectionData.slice(0, 3).map((product) => (
         <div className="relative group overflow-hidden" key={product?.id}>
           <Link to={`/all?sub_category=${product?.slug}`}>
             <img

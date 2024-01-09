@@ -17,4 +17,10 @@ export const collectionData = [
     slug: "evening",
     thumbnail: "/assets/images/collection-product-3.webp",
   },
+  {
+    id: 4,
+    title: "Groomswear",
+    slug: "groomswear",
+    thumbnail: "/assets/images/collection-product-4.webp",
+  },
 ];
