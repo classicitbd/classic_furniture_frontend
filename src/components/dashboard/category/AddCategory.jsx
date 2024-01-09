@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-irregular-whitespace */
 import { useForm } from 'react-hook-form';
 import BigSpinner from '../../../shared/loader/BigSpinner'
@@ -9,14 +10,15 @@ import { BASE_URL } from '../../../utils/baseURL';
 import { useAddCategoryMutation } from '../../../redux/feature/category/categoryApi';
 import { Link } from 'react-router-dom';
 import slugify from 'slugify';
+import { ImageValidate } from '../../../utils/ImageValidation';
 
 
-const AddCategory = () => {
+const AddCategory = ({refetch, isLoading}) => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const [menuLength, setMenuLength] = useState(1);
 
-    const { data: menuTypes = [], isLoading, refetch } = useQuery({
+    const { data: menuTypes = [] } = useQuery({
         queryKey: ['/api/v1/menu'],
         queryFn: async () => {
             const res = await fetch(`${BASE_URL}/menu`)
@@ -38,22 +40,43 @@ const AddCategory = () => {
     // post a Category 
     const handleDataPost = (data) => {
         setLoading(true)
-        const sendData = {
-            slug: slugify(data.category, {
+         const formData = new FormData()
+        let errorEncountered = false;
+
+        if (data?.category_image[0]) {
+            const category_image = data?.category_image[0];
+            const result = ImageValidate(category_image, 'category_image');  //check image type
+            if (result == true) {
+                formData.append('category_image', category_image);
+            } else {
+                toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+                errorEncountered = true;
+            }
+        }
+
+        if (errorEncountered == true) {
+            setLoading(false)
+            return;
+        }
+
+        Object.entries(data).forEach(([key, value]) => {
+            if (key !== 'category_image') {
+                formData.append(key, value);
+            }
+        });
+        const slug = slugify(data.category, {
                 lower: true,
                 replacement: '-',
-            } ),
-            category: data.category,
-            menuId: data?.menuId
-        }
-        postCategoryType(sendData).then(result => {
+            } )
+        formData.append('slug', slug);
+        postCategoryType(formData).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 setLoading(false)
                 toast.success(result?.data?.message ? result?.data?.message : "Category Added successfully !", {
                     autoClose: 1000
                 });
-                reset();
                 refetch();
+                reset();
             } else {
                 setLoading(false)
                 toast.error(result?.error?.data?.message);
@@ -75,6 +98,11 @@ const AddCategory = () => {
                             <div>
                                 <input placeholder="Type Name" {...register("category", { required: 'Type Name is required' })} id="category" type="text" className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl" />
                                 {errors.category && <p className='text-red-600'>{errors.category?.message}</p>}
+                            </div>
+
+                            <div>
+                                <input {...register("category_image", { required: 'Image is required' })} id="category_image" type="file" className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl" />
+                                {errors.category_image && <p className='text-red-600'>{errors.category_image?.message}</p>}
                             </div>
 
                             <div>

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {RxCross1} from 'react-icons/rx';
 import slugify from "slugify";
 import { useUpdateCategoryMutation } from "../../../redux/feature/category/categoryApi";
+import { ImageValidate } from "../../../utils/ImageValidation";
 
 const UpdateCategory = ({setCategoryUpdateModal, categoryUpdateModalValue, refetch}) => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
@@ -12,6 +13,47 @@ const UpdateCategory = ({setCategoryUpdateModal, categoryUpdateModalValue, refet
 
     // post a User details
     const handleDataPost = (data) => {
+        if (data?.category_image[0]){
+            const formData = new FormData()
+            let errorEncountered = false;
+
+            const category_image = data?.category_image[0];
+            const result = ImageValidate(category_image, 'category_image');  //check image type
+            if (result == true) {
+                formData.append('category_image', category_image);
+            } else {
+                toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+                errorEncountered = true;
+            }
+
+        if (errorEncountered == true) {
+            return;
+        }
+
+        Object.entries(data).forEach(([key, value]) => {
+            if (key !== 'category_image') {
+                formData.append(key, value);
+            }
+        });
+        const slug = slugify(data.category, {
+                lower: true,
+                replacement: '-',
+            } )
+        formData.append('slug', slug);
+        formData.append('_id', categoryUpdateModalValue?._id);
+        updateCategory(formData).then(result => {
+            if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+                toast.success(result?.data?.message ? result?.data?.message : "Category update successfully !", {
+                    autoClose: 1000
+                });
+                refetch();
+                reset();
+                setCategoryUpdateModal(false);
+            } else {
+                toast.error(result?.error?.data?.message);
+            }
+        });
+        }else{
         const sendData = {
             _id: categoryUpdateModalValue?._id,
             category: data?.category,
@@ -33,6 +75,7 @@ const UpdateCategory = ({setCategoryUpdateModal, categoryUpdateModalValue, refet
             }
         });
     }
+    }
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-end bg-black bg-opacity-30">
@@ -53,10 +96,15 @@ const UpdateCategory = ({setCategoryUpdateModal, categoryUpdateModalValue, refet
                         {errors.category && <p className='text-red-600'>{errors.category?.message}</p>}
                     </div>
 
+                    <div className="mt-3">
+                        <label className="font-semibold text-red-500" htmlFor="category_image">If need change image</label>
+                        <input {...register("category_image")} id="category_image" type="file" className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl" />
+                    </div>
+
 
                     <div className="flex justify-end mt-6 gap-4">
                         <button onClick={() => setCategoryUpdateModal(false)} className="btn px-6 py-2.5 transition-colors duration-300 transform bg-white rounded-xl border">Cancel</button>
-                        <button type="Submit" className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]">Create Now</button>
+                        <button type="Submit" className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]">Update</button>
                     </div>
 
 
