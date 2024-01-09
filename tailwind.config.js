@@ -67,6 +67,7 @@ export default {
       },
       transitionDuration: {
         1200: "1200ms",
+        1500: "1500ms",
       },
 
       screens: {
