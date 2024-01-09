@@ -15,13 +15,13 @@ const CollectionTopCategory = () => {
       </div>
 
       {/* Second Section */}
-      <div className="relative group overflow-hidden md:col-span-4 row-span-1 flex flex-col items-center justify-center space-y-2 py-20 md:py-0">
+      <div className="relative group overflow-hidden md:col-span-4 row-span-1 flex flex-col items-center justify-center space-y-5 py-20 md:py-0">
         <article className="text-center uppercase leading-tight space-y-1">
-          <h1 className="text-2xl md:text-5xl font-semibold">Regular Sale</h1>
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold">Regular Sale</h1>
           <p>Select Styles On Sale</p>
         </article>
         <Link
-          className="bg-black text-xl font-medium leading-6 -tracking-normal text-white w-[60vw] md:w-[20vw] py-[10px] md:py-[20px] flex items-center justify-center"
+          className="bg-black text-xl font-medium leading-6 -tracking-normal text-white w-[60vw] md:w-[20vw] py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm"
           to={`/all?discount=true`}
         >
           Shop Now
@@ -36,7 +36,7 @@ const CollectionTopCategory = () => {
         >
           <Link to={`/all?sub_category=${product?.slug}`}>
             <img
-              className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110 object-cover md:h-[400px] w-full"
+              className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110 object-cover md:h-[200px] lg:h-[300px] 2xl:h-[500px] w-full"
               src={product?.thumbnail}
               alt={product?.title}
             />
