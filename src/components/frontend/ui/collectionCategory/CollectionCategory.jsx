@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { subCategoryData } from "../../../../data/sub-category-data";
+import { collectionData } from "../../../../data/collection-data";
 
-const SubCategory = () => {
+const CollectionCategory = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3">
-      {subCategoryData.map((product) => (
+      {collectionData.map((product) => (
         <div className="relative group overflow-hidden" key={product?.id}>
           <Link to={`/all?sub_category=${product?.slug}`}>
             <img
@@ -28,4 +28,4 @@ const SubCategory = () => {
   );
 };
 
-export default SubCategory;
+export default CollectionCategory;
