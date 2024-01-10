@@ -19,6 +19,8 @@ import ShippingInfoModal from "../../../common/modal/shippingInfoModal";
 import ShippingInfo from "../shippingInfo/ShippingInfo";
 import MaterialCareModal from "../../../common/modal/MaterialCareModal";
 import MaterialAndCare from "../materialAndCare/MaterialAndCare";
+import AddToCartModal from "../../../common/modal/AddToCartModal";
+import AddToCart from "../addToCart/AddToCart";
 
 const ProductDetails = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -73,7 +75,10 @@ const ProductDetails = () => {
           <p className="text-xl py-8">
             <strong>Color:</strong> {singleProduct.color}
           </p>
-          <button className="bg-black hover:bg-opacity-80 text-xl font-medium leading-6 -tracking-normal text-white w-full py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm uppercase">
+          <button
+            onClick={() => openModal("addToCart")}
+            className="bg-black hover:bg-opacity-80 text-xl font-medium leading-6 -tracking-normal text-white w-full py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm uppercase"
+          >
             Add To Shopping Bag
           </button>
           <div className="h-[1px] w-full bg-bgray-700 mt-12"></div>
@@ -132,6 +137,21 @@ const ProductDetails = () => {
             <MaterialAndCare />
           </div>
         </MaterialCareModal>
+      )}
+      {modal === "addToCart" && (
+        <AddToCartModal isOpen={isModalOpen} onClose={closeModal}>
+          <div className="p-6">
+            <div className="flex justify-end">
+              <button
+                className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                onClick={closeModal}
+              >
+                <IoCloseOutline className="text-2xl" />
+              </button>
+            </div>
+            <AddToCart />
+          </div>
+        </AddToCartModal>
       )}
     </section>
   );
