@@ -43,6 +43,11 @@ const SideNavbarMenuItem = () => {
             text: "Style",
             link: "/dashboartd/style",
         },
+        {
+            id: 8,
+            text: "Slider",
+            link: "/dashboartd/slider",
+        },
     ];
 
     return (

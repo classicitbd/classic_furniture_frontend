@@ -23,8 +23,18 @@ export const featureApi = api.injectEndpoints({
         invalidatesTags: ['feature'],
       }),
 
+      //update Feature
+    updateFeature: build.mutation({
+        query: (data) => ({
+          url: `/feature`,
+          method: "PATCH",
+          body: data,
+        }),
+        invalidatesTags: ['feature'],
+      }),
+
   }),
 });
 
-export const { useAddFeatureMutation, useDeleteFeatureMutation } =
+export const { useAddFeatureMutation, useDeleteFeatureMutation, useUpdateFeatureMutation } =
   featureApi;

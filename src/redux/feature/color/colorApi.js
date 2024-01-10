@@ -13,6 +13,16 @@ export const colorApi = api.injectEndpoints({
       invalidatesTags: ['color'],
     }),
 
+    //update Color
+    updateColor: build.mutation({
+        query: (data) => ({
+          url: `/color`,
+          method: "PATCH",
+          body: data,
+        }),
+        invalidatesTags: ['color'],
+      }),
+
     //delete Color
     deleteColor: build.mutation({
         query: (data) => ({
@@ -26,5 +36,5 @@ export const colorApi = api.injectEndpoints({
   }),
 });
 
-export const { useAddColorMutation, useDeleteColorMutation } =
+export const { useAddColorMutation, useDeleteColorMutation, useUpdateColorMutation } =
   colorApi;

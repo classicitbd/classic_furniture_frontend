@@ -5,8 +5,14 @@ import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteFeatureMutation } from "../../../redux/feature/feature/feature";
+import { FiEdit } from "react-icons/fi";
+import { useState } from "react";
+import UpdateFeature from "./UpdateFeature";
 
 const FeatureTable = ({refetch, isLoading, features }) => {
+
+  const [featureUpdateModal, setFeatureUpdateModal] = useState(false);
+    const [featureUpdateModalValue, setSubCategoryUpdateModalValue] = useState(false);
 
     const [deleteFeature] = useDeleteFeatureMutation();  //delete Feature type
 
@@ -26,6 +32,11 @@ const FeatureTable = ({refetch, isLoading, features }) => {
                 toast.error(result?.error?.data?.message);
             }
         });
+    }
+
+    const updateColorModal = (feature) =>{
+        setFeatureUpdateModal(true);
+        setSubCategoryUpdateModalValue(feature)
     }
 
     return (
@@ -50,8 +61,9 @@ const FeatureTable = ({refetch, isLoading, features }) => {
                 <td className="whitespace-nowrap px-4 py-2 font-semibold">
                   {feature?.feature}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-end">
+                <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-end gap-4">
                     <MdDeleteForever onClick={() =>handleDeleteFeature(feature)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />
+                    <FiEdit onClick={() =>updateColorModal(feature)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
                 </td>
               </tr>
             ))}
@@ -61,7 +73,10 @@ const FeatureTable = ({refetch, isLoading, features }) => {
 :
 <NoDataFound />
 }
-
+{/* Update Feature */}
+            {
+                featureUpdateModal && <UpdateFeature setFeatureUpdateModal={setFeatureUpdateModal} featureUpdateModalValue={featureUpdateModalValue} refetch={refetch} />
+            }
         </div>
     );
 };

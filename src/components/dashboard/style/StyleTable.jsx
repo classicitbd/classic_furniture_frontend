@@ -5,8 +5,14 @@ import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteStyleMutation } from "../../../redux/feature/style/styleApi";
+import { FiEdit } from "react-icons/fi";
+import { useState } from "react";
+import UpdateStyle from "./UpdateStyle";
 
 const FeatureTable = ({refetch, isLoading, styles }) => {
+
+    const [styleUpdateModal, setStyleUpdateModal] = useState(false);
+    const [styleUpdateModalValue, setStyleUpdateModalValue] = useState(false);
 
     const [deleteStyle] = useDeleteStyleMutation();  //delete Style type
 
@@ -26,6 +32,11 @@ const FeatureTable = ({refetch, isLoading, styles }) => {
                 toast.error(result?.error?.data?.message);
             }
         });
+    }
+
+    const updateColorModal = (feature) =>{
+        setStyleUpdateModal(true);
+        setStyleUpdateModalValue(feature)
     }
 
     return (
@@ -50,8 +61,9 @@ const FeatureTable = ({refetch, isLoading, styles }) => {
                 <td className="whitespace-nowrap px-4 py-2 font-semibold">
                   {style?.style}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-end">
+                <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-end gap-4">
                     <MdDeleteForever onClick={() =>handleDeleteStyle(style)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />
+                    <FiEdit onClick={() =>updateColorModal(style)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
                 </td>
               </tr>
             ))}
@@ -61,7 +73,10 @@ const FeatureTable = ({refetch, isLoading, styles }) => {
 :
 <NoDataFound />
 }
-
+{/* Update Style */}
+            {
+                styleUpdateModal && <UpdateStyle setStyleUpdateModal={setStyleUpdateModal} styleUpdateModalValue={styleUpdateModalValue} refetch={refetch} />
+            }
         </div>
     );
 };

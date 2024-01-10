@@ -1,14 +1,15 @@
 
 import { useState } from "react";
 import { AiFillHome } from "react-icons/ai";
-import { FaChevronDown, FaChevronUp, FaUsers } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaListUl } from "react-icons/fa";
 import { BiMaleFemale, BiSolidCategory  } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { TbCategoryPlus } from "react-icons/tb";
 import { MdControlPointDuplicate, MdOutlineFeaturedPlayList } from "react-icons/md";
-import { IoColorPaletteOutline } from "react-icons/io5"
+import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp } from "react-icons/io5"
 import { MdOutlineCollectionsBookmark } from "react-icons/md"
 import { RxFontStyle } from "react-icons/rx";
+import { PiSlideshowBold } from "react-icons/pi";
 
 
 const SideNavBar = () => {
@@ -16,6 +17,7 @@ const SideNavBar = () => {
     const pathname = usePathname?.pathname;
 
     const [isUserOpen, setIsUserOpen] = useState(false);
+    const [isProductOpen, setIsProductOpen] = useState(false);
 
     const navBar = (
         <>
@@ -176,17 +178,65 @@ const SideNavBar = () => {
 
                 <div
                     className={
-                        pathname === "/dashboard/allCustomer"
+                        pathname === "/dashboard/slider"
                             ? "nab_item text-[#3EA2FA]"
                             : "text-[#717171] nab_item"
                     }
                 >
                     <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
-                        <Link to="/dashboard/allCustomer" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <FaUsers  />
-                            All Customer
+                        <Link to="/dashboard/slider" className="hover:text-[#3EA2FA] flex items-center gap-2">
+                            <PiSlideshowBold  />
+                            Slider
                         </Link>
                     </div>
+                </div>
+
+                <div className="text-white nab_item">
+                    <div className=" flex items-center justify-between mt-3 text-[18px] font-semibold">
+                        <button onClick={() => setIsProductOpen(!isProductOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-2">
+                            <IoCartOutline  />Products {isUserOpen ? <FaChevronUp /> : <FaChevronDown />} </button>
+                    </div>
+                    {
+                        isProductOpen && <div className="p-1 bg-white mt-2">
+
+                            <div
+                                className={
+                                    pathname === "/dashboard/product"
+                                        ? "nab_item text-[#3EA2FA]"
+                                        : "text-[#717171] nab_item"
+                                }
+                            >
+                                <div className="flex items-center justify-between text-[18px] font-semibold">
+                                    <Link
+                                        to="/dashboard/product"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                    >
+                                        <FaListUl   />
+                                        List
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div
+                                className={
+                                    pathname === "/dashboard/product/create"
+                                        ? "nab_item text-[#3EA2FA]"
+                                        : "text-[#717171] nab_item"
+                                }
+                            >
+                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                    <Link
+                                        to="/dashboard/product/create"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                    >
+                                        <IoAddCircleSharp   />
+                                        Create
+                                    </Link>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
                 </div>
                 
             </div>
