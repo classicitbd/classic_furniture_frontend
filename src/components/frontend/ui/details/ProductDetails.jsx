@@ -7,13 +7,32 @@ import {
 } from "swiper/modules";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { singleProduct } from "../../../../data/product-details-data";
+// Import React icons
+import { IoCloseOutline } from "react-icons/io5";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/bundle";
 import Breadcrumb from "../../../common/breadCrumb/BreadCrumb";
+import { useState } from "react";
+import ShippingInfoModal from "../../../common/modal/shippingInfoModal";
+import ShippingInfo from "../shippingInfo/ShippingInfo";
+import MaterialCareModal from "../../../common/modal/MaterialCareModal";
+import MaterialAndCare from "../materialAndCare/MaterialAndCare";
 
 const ProductDetails = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modal, setModal] = useState("");
+
+  const openModal = (value) => {
+    setModalOpen(true);
+    setModal(value);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setModal("");
+  };
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 px-2">
       <Swiper
@@ -51,7 +70,7 @@ const ProductDetails = () => {
             <p className="text-xl font-normal">BDT {singleProduct?.price}.00</p>
           </article>
           <div className="h-[1px] w-full bg-bgray-700 mt-12"></div>
-          <p className="px-4 text-xl py-8">
+          <p className="text-xl py-8">
             <strong>Color:</strong> {singleProduct.color}
           </p>
           <button className="bg-black hover:bg-opacity-80 text-xl font-medium leading-6 -tracking-normal text-white w-full py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm uppercase">
@@ -60,13 +79,60 @@ const ProductDetails = () => {
           <div className="h-[1px] w-full bg-bgray-700 mt-12"></div>
 
           <div className="">
-            <p className="py-7 text-xl font-medium">Products Details</p>
+            <p className="py-7 text-xl font-medium tracking-tight leading-5">
+              Products Details
+            </p>
             <div
               dangerouslySetInnerHTML={{ __html: singleProduct.description }}
             ></div>
           </div>
+          <div className="py-10 space-x-5">
+            <button
+              onClick={() => openModal("shippingInfo")}
+              className="underline text-xl font-medium hover:opacity-100 opacity-85 tracking-tight leading-5"
+            >
+              Materials & Care
+            </button>
+            <span className="h-[12px] w-[2px] bg-bgray-500 inline-block"></span>
+            <button
+              onClick={() => openModal("materialCare")}
+              className="underline text-xl font-medium hover:opacity-100 opacity-85 tracking-tight leading-5"
+            >
+              Shipping Info
+            </button>
+          </div>
         </div>
       </div>
+      {modal === "shippingInfo" && (
+        <ShippingInfoModal isOpen={isModalOpen} onClose={closeModal}>
+          <div className="p-6">
+            <div className="flex justify-end">
+              <button
+                className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                onClick={closeModal}
+              >
+                <IoCloseOutline className="text-2xl" />
+              </button>
+            </div>
+            <ShippingInfo />
+          </div>
+        </ShippingInfoModal>
+      )}
+      {modal === "materialCare" && (
+        <MaterialCareModal isOpen={isModalOpen} onClose={closeModal}>
+          <div className="p-6">
+            <div className="flex justify-end">
+              <button
+                className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                onClick={closeModal}
+              >
+                <IoCloseOutline className="text-2xl" />
+              </button>
+            </div>
+            <MaterialAndCare />
+          </div>
+        </MaterialCareModal>
+      )}
     </section>
   );
 };
