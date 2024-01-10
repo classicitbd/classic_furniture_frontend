@@ -1,7 +1,7 @@
 export const sizeData = [
   {
     size: "40",
-    quantity: 5,
+    quantity: 0,
     price: 0,
     discount_price: 0,
   },

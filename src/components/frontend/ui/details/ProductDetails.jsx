@@ -153,6 +153,7 @@ const ProductDetails = () => {
           </div>
         </AddToCartModal>
       )}
+
     </section>
   );
 };
