@@ -15,6 +15,9 @@ import Verified from "../pages/verified/Verified";
 import ForgetPassword from "../pages/forgetPassword/ForgetPassword";
 import NewPassword from "../pages/newPassword/NewPassword";
 import Home from "../pages/frontend/home/Home";
+import Slider from "../pages/dashboard/slider/Slider";
+import ProductList from "../pages/dashboard/productList/ProductList";
+import ProductCreate from "../pages/dashboard/productCreate/ProductCreate";
 import DetailsPage from "../pages/frontend/details/DetailsPage";
 
 const router = createBrowserRouter([
@@ -93,6 +96,18 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/style",
         element: <Style />,
+      },
+      {
+        path: "/dashboard/slider",
+        element: <Slider />
+      },
+      {
+        path: "/dashboard/product",
+        element: <ProductList />
+      },
+      {
+        path: "/dashboard/product/create",
+        element: <ProductCreate />
       },
     ],
   },

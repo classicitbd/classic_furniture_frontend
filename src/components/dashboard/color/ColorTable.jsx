@@ -5,8 +5,14 @@ import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteColorMutation } from "../../../redux/feature/color/colorApi";
+import { useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import UpdateColor from "./UpdateColor";
 
 const ColorTable = ({refetch, isLoading, colors }) => {
+
+  const [colorUpdateModal, setColorUpdateModal] = useState(false);
+    const [colorUpdateModalValue, setColorUpdateModalValue] = useState(false);
 
     const [deleteColor] = useDeleteColorMutation();  //delete Color type
 
@@ -26,6 +32,11 @@ const ColorTable = ({refetch, isLoading, colors }) => {
                 toast.error(result?.error?.data?.message);
             }
         });
+    }
+
+    const updateColorModal = (collection) =>{
+        setColorUpdateModal(true);
+        setColorUpdateModalValue(collection)
     }
 
     return (
@@ -50,8 +61,9 @@ const ColorTable = ({refetch, isLoading, colors }) => {
                 <td className="whitespace-nowrap px-4 py-2 font-semibold">
                   {color?.color}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-end">
+                <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-end gap-4">
                     <MdDeleteForever onClick={() =>handleDeleteColor(color)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />
+                    <FiEdit onClick={() =>updateColorModal(color)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
                 </td>
               </tr>
             ))}
@@ -61,7 +73,10 @@ const ColorTable = ({refetch, isLoading, colors }) => {
 :
 <NoDataFound />
 }
-
+{/* Update Color */}
+            {
+                colorUpdateModal && <UpdateColor setColorUpdateModal={setColorUpdateModal} colorUpdateModalValue={colorUpdateModalValue} refetch={refetch} />
+            }
         </div>
     );
 };

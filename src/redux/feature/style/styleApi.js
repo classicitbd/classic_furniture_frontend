@@ -23,8 +23,18 @@ export const styleApi = api.injectEndpoints({
         invalidatesTags: ['style'],
       }),
 
+      //update Style
+    updateStyle: build.mutation({
+        query: (data) => ({
+          url: `/style`,
+          method: "PATCH",
+          body: data,
+        }),
+        invalidatesTags: ['style'],
+      }),
+
   }),
 });
 
-export const { useAddStyleMutation, useDeleteStyleMutation } =
+export const { useAddStyleMutation, useDeleteStyleMutation, useUpdateStyleMutation } =
   styleApi;
