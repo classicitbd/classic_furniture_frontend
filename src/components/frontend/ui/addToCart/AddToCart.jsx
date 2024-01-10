@@ -10,8 +10,10 @@ import ConfirmationModal from "../../../common/modal/ConfirmationModal";
 const AddToCart = () => {
   const [sizeVariation, setSizeVariation] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [data, setData] = useState(null);
 
-  const openModal = () => {
+  const openModal = (value) => {
+    setData(value);
     setModalOpen(true);
   };
 
@@ -52,6 +54,13 @@ const AddToCart = () => {
         : item
     );
     setSizeVariation(updatedVariation);
+  };
+
+  const handleConfirm = () => {
+    if (data) {
+      selectSize(data);
+    }
+    setModalOpen(false);
   };
 
   console.log(sizeVariation);
@@ -122,7 +131,7 @@ const AddToCart = () => {
                     (selectedItem) => selectedItem.size === item?.size
                   )?.quantity === 1 && (
                     <button
-                      onClick={openModal}
+                      onClick={() => openModal(item)}
                       className="text-error-200 px-2 py-2 border rounded hover:bg-bgray-300"
                     >
                       <CiTrash />
@@ -180,7 +189,10 @@ const AddToCart = () => {
                 Are you sure you want to remove this item from cart?
               </p>
               <div className="flex justify-end mt-5">
-                <button className="bg-bgray-900 px-7 py-3 text-white font-medium tracking-tight leading-5 rounded">
+                <button
+                  onClick={() => handleConfirm()}
+                  className="bg-bgray-900 px-7 py-3 text-white font-medium tracking-tight leading-5 rounded"
+                >
                   Confirm
                 </button>
               </div>
