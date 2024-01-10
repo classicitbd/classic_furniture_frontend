@@ -22,7 +22,6 @@ const AddToCartModal = ({ isOpen, onClose, children }) => {
         <div className="fixed inset-0 transition-opacity">
           <div
             className="absolute inset-0 bg-gray-500 opacity-75"
-            onClick={onClose}
           ></div>
         </div>
 
