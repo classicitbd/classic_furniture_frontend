@@ -22,3 +22,30 @@ body {
     @apply max-w-full 2xl:max-w-[1560px] mx-auto px-3 lg:px-4 xl:px-24 2xl:px-0;
   }
 }
+
+.menu {
+  position: relative;
+  opacity: 80%;
+  transition: 0.3s;
+  margin: 5px 0;
+  letter-spacing: 0.4px;
+}
+
+.menu::after {
+  content: "";
+  position: absolute;
+  background-color: aliceblue;
+  height: 1.5px;
+  width: 0;
+  left: 0;
+  bottom: -10px;
+  transition: 0.3s;
+}
+
+.menu:hover {
+  opacity: 100%;
+}
+
+.menu:hover::after {
+  width: 100%;
+}

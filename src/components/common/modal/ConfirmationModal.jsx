@@ -5,7 +5,7 @@ const ConfirmationModal = ({ isOpen, onClose, children }) => {
   const modalClasses = isOpen ? "block" : "hidden";
 
   return (
-    <div className={`fixed z-20 inset-0 ${modalClasses}`}>
+    <div className={`fixed z-50 inset-0 ${modalClasses}`}>
       <div className="flex items-end justify-center pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity">
           <div
