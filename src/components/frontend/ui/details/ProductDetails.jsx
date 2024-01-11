@@ -16,9 +16,9 @@ import "swiper/css/bundle";
 import Breadcrumb from "../../../common/breadCrumb/BreadCrumb";
 import { useState } from "react";
 import ShippingInfoModal from "../../../common/modal/shippingInfoModal";
-import ShippingInfo from "../shippingInfo/ShippingInfo";
+import MaterialAndCare from "../materialAndCares/MaterialAndCare";
 import MaterialCareModal from "../../../common/modal/MaterialCareModal";
-import MaterialAndCare from "../materialAndCare/MaterialAndCare";
+import ShippingInfo from "../shippingInfo/ShippingInfo";
 import AddToCartModal from "../../../common/modal/AddToCartModal";
 import AddToCart from "../addToCart/AddToCart";
 
@@ -36,7 +36,8 @@ const ProductDetails = () => {
     setModal("");
   };
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 px-2">
+    <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
+      {/* ------ products details left side content ------ start */}
       <Swiper
         modules={[Parallax, Mousewheel, Pagination, Autoplay, Keyboard]}
         direction={"vertical"}
@@ -52,18 +53,24 @@ const ProductDetails = () => {
         pagination={{ clickable: true }}
         onSwiper={() => {}}
         onSlideChange={() => {}}
-        className="h-[50vh] md:h-[100vh]"
+        className="h-[50vh] md:h-[90vh] w-full"
       >
         {singleProduct?.images?.map((index) => (
-          <SwiperSlide key={index} className="border">
+          <SwiperSlide
+            key={index}
+            className="border w-full flex justify-center items-center"
+          >
             <img
-              className=""
+              className="object-fill h-full w-full"
               src={`/assets/images/product-${index}.jpg`}
               alt={singleProduct?.title}
             />
           </SwiperSlide>
         ))}
       </Swiper>
+      {/* ------ products details left side content ------ end */}
+
+      {/* ------ products details right side content ------ start */}
       <div className="md:px-10 py-5">
         <Breadcrumb product={singleProduct} />
         <div className="md:px-4">
@@ -93,14 +100,14 @@ const ProductDetails = () => {
           </div>
           <div className="py-10 space-x-5">
             <button
-              onClick={() => openModal("shippingInfo")}
+              onClick={() => openModal("materialCare")}
               className="underline text-xl font-medium hover:opacity-100 opacity-85 tracking-tight leading-5"
             >
               Materials & Care
             </button>
             <span className="h-[12px] w-[2px] bg-bgray-500 inline-block"></span>
             <button
-              onClick={() => openModal("materialCare")}
+              onClick={() => openModal("shippingInfo")}
               className="underline text-xl font-medium hover:opacity-100 opacity-85 tracking-tight leading-5"
             >
               Shipping Info
@@ -108,12 +115,16 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      {/* ------ products details right side content ------ end */}
+
+      {/* ------ shipping info ------ start */}
+
       {modal === "shippingInfo" && (
         <ShippingInfoModal isOpen={isModalOpen} onClose={closeModal}>
           <div className="p-6">
             <div className="flex justify-end">
               <button
-                className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                className="text-bgray-900 font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
                 onClick={closeModal}
               >
                 <IoCloseOutline className="text-2xl" />
@@ -123,12 +134,16 @@ const ProductDetails = () => {
           </div>
         </ShippingInfoModal>
       )}
+      {/* ------ shipping info ------ end */}
+
+      {/* ------ material care modal ------ start */}
+
       {modal === "materialCare" && (
         <MaterialCareModal isOpen={isModalOpen} onClose={closeModal}>
           <div className="p-6">
             <div className="flex justify-end">
               <button
-                className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                className="text-bgray-900 font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
                 onClick={closeModal}
               >
                 <IoCloseOutline className="text-2xl" />
@@ -138,22 +153,31 @@ const ProductDetails = () => {
           </div>
         </MaterialCareModal>
       )}
+      {/* ------ material care modal ------ end */}
+
+      {/* ------ add to cart modal ------ start */}
+
       {modal === "addToCart" && (
-        <AddToCartModal isOpen={isModalOpen} onClose={closeModal}>
+        <AddToCartModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          length={length}
+        >
           <div className="p-6">
             <div className="flex justify-end">
               <button
-                className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                className="text-bgray-900 font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
                 onClick={closeModal}
               >
                 <IoCloseOutline className="text-2xl" />
               </button>
             </div>
-            <AddToCart />
+            <AddToCart setModal={setModal} />
           </div>
         </AddToCartModal>
       )}
 
+      {/* ------ add to cart modal ------ end */}
     </section>
   );
 };
