@@ -17,7 +17,7 @@ const Navbar = () => {
           setMenu("");
         }}
       >
-        <nav className="">
+        <nav className="relative">
           <ul className="flex items-center justify-center gap-7 py-2">
             <li>
               <button
@@ -73,9 +73,7 @@ const Navbar = () => {
           </ul>
           <div
             onMouseEnter={() => setIsDropdownOpen(true)}
-            className={`w-full bg-black h-[300px] ${
-              isDropdownOpen ? "block" : "hidden"
-            }`}
+            className={`w-full absolute bg-black h-[300px] ${isDropdownOpen ? "top-10 z-10": ""}`}
           ></div>
         </nav>
       </div>
