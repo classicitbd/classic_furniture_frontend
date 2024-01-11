@@ -1,5 +1,6 @@
 import { PiHouseBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import ProductAdd from "../../../../components/dashboard/product/productCreate/ProductAdd";
 
 const ProductCreate = () => {
     return (
@@ -13,6 +14,10 @@ const ProductCreate = () => {
                     <Link to='/dashboard/product/create'><p className="font-semibold">Product Create</p></Link>
                 </div>
             </div>
+            
+            {/* Create a product */}
+            <ProductAdd />
+
         </>
     );
 };

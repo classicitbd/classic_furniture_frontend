@@ -11,19 +11,16 @@ import { Link } from 'react-router-dom';
 import slugify from 'slugify';
 import { useAddSub_CategoryMutation } from '../../../redux/feature/subCategory/subCategoryApi';
 import { ImageValidate } from '../../../utils/ImageValidation';
+import Select from "react-select"
 
 const AddSubCategory = ({refetch, isLoading}) => {
+
+    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+    const [menuId, setMenuId] = useState(false);
+
+
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
-
-    const { data: categoryTypes = []} = useQuery({
-        queryKey: ['/api/v1/category'],
-        queryFn: async () => {
-            const res = await fetch(`${BASE_URL}/category`)
-            const data = await res.json();
-            return data;
-        }
-    }) // get Category type
 
     const { data: menuTypes = [] } = useQuery({
         queryKey: ['/api/v1/menu'],
@@ -33,6 +30,21 @@ const AddSubCategory = ({refetch, isLoading}) => {
             return data;
         }
     }) // get All Menu type
+
+    const { data: categoryTypes = []} = useQuery({
+        queryKey: [`/api/v1/category/menuId?menuId=${menuId}`],
+        queryFn: async () => {
+            const res = await fetch(`${BASE_URL}/category/menuId?menuId=${menuId}`)
+            const data = await res.json();
+            return data;
+        }
+    }) // get Category type
+
+    const handleSelectChange = (selectedOption) => {
+        setMenuId(selectedOption?._id)
+        setIsCategoryOpen(true);
+    };
+
 
     const [postSubCategoryType] = useAddSub_CategoryMutation();  //post Sub Category type
 
@@ -99,16 +111,34 @@ const AddSubCategory = ({refetch, isLoading}) => {
                         <form onSubmit={handleSubmit(handleDataPost)} className='flex items-center gap-2 md:gap-6 mt-3'>
 
                             <div>
+                                <label  className="font-semibold" htmlFor="sub_category">Sub Category Type</label>
                                 <input placeholder="Type Name" {...register("sub_category", { required: 'Type Name is required' })} id="sub_category" type="text" className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl" />
                                 {errors.sub_category && <p className='text-red-600'>{errors.sub_category?.message}</p>}
                             </div>
 
                             <div>
+                                <label  className="font-semibold" htmlFor="sub_category_image">Sub Category Image</label>
                                 <input {...register("sub_category_image", { required: 'Image is required' })} id="sub_category_image" type="file" className="block w-full px-1 py-1 bg-white border border-gray-200 rounded-xl" />
                                 {errors.sub_category_image && <p className='text-red-600'>{errors.sub_category_image?.message}</p>}
                             </div>
 
                             <div>
+                                <label  className="font-semibold" htmlFor="menuId">Menu Type</label>
+                                <Select
+                                  id="menuId"
+                                  name="menuId"
+                                  aria-label="Select a division"
+                                  options={menuTypes?.data}
+                                  getOptionLabel={(x) => x?.menu}
+                                  getOptionValue={(x) => x?._id}
+                                  onChange={(selectedOption) => handleSelectChange(selectedOption)}
+                                ></Select>
+                                </div>
+
+                                {
+                                    isCategoryOpen &&
+                                    <div>
+                                <label  className="font-semibold" htmlFor="categoryId">Category Type</label>
                                 {
                                     categoryTypes?.data?.length > 0 ?
                                     <>
@@ -124,23 +154,7 @@ const AddSubCategory = ({refetch, isLoading}) => {
                                     ''
                                 }
                                 </div>
-
-                            <div>
-                                {
-                                    menuTypes?.data?.length > 0 ?
-                                    <>
-                                    <select  {...register('menuId', { required: 'Menu type is required' })} id="menuId" className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl">
-                                    {
-                                    menuTypes?.data?.map(menu =>
-                                        <option key={menu?._id} value={menu?._id}>{menu?.menu}</option> )
-                                    }
-                                    </select>
-                                    {errors.menuId && <p className='text-red-600'>{errors.menuId?.message}</p>}
-                                    </>
-                                    :
-                                    ''
                                 }
-                                </div>
 
                                 {
                                     menuTypes?.data?.length === 0 ?
