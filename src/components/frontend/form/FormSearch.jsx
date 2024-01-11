@@ -12,7 +12,7 @@ const FormSearch = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="border border-green-500 flex justify-between font-sans rounded-full"
+        className="border border-bgray-900 flex justify-between font-sans rounded-full"
       >
         <input
           id="search"

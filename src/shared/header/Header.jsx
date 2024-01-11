@@ -11,30 +11,20 @@ import FormSearch from "../../components/frontend/form/FormSearch";
 import ProductNotFound from "../../components/common/productNotFound/ProductNotFound";
 const Header = () => {
   const [scroll, setScroll] = useState(false);
-  const [scrollBtm, setScrollBtm] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [menu, setMenu] = useState("");
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setScroll(window.scrollY > 50);
     });
-    window.addEventListener("scroll", () => {
-      setScrollBtm(window.scrollY > 50);
-    });
   }, []);
+
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const handleHover = (menu) => {
-    setMenu(menu);
-    setIsDropdownOpen(true);
   };
   const products = [];
 
@@ -44,7 +34,6 @@ const Header = () => {
         {/* ------ header top section ------ start */}
 
         <div
-          onMouseEnter={() => setIsDropdownOpen(false)}
           className="border-b pb-3 border-gray-600"
         >
           <div className="container flex items-center justify-between">
@@ -131,12 +120,12 @@ const Header = () => {
 
         {/* ------ navbar with dropdown ------ start */}
 
-        <div
+        {/* <div
           onMouseLeave={() => {
             setIsDropdownOpen(false);
             setMenu("");
           }}
-          className={`${scrollBtm ? "" : "hidden sm:block"}`}
+          className={`${scrollBtm ? "hidden" : "hidden sm:block"}`}
         >
           <nav className="border-b border-gray-600 relative group">
             <ul className="flex items-center justify-center gap-7 py-1">
@@ -199,7 +188,7 @@ const Header = () => {
               }`}
             ></div>
           </nav>
-        </div>
+        </div> */}
 
         {/* ------ navbar with dropdown ------ end */}
 

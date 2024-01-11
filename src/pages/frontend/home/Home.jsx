@@ -7,6 +7,7 @@ import SubCategory from "../../../components/frontend/ui/subCategory/SubCategory
 import CollectionCategory from "../../../components/frontend/ui/collectionCategory/CollectionCategory";
 import CollectionTopCategory from "../../../components/frontend/ui/collectionCategory/CollectionTopCategory";
 import { useEffect } from "react";
+import Navbar from "../../../components/frontend/ui/navbar/Navbar";
 
 const Home = () => {
   useEffect(() => {
@@ -14,6 +15,7 @@ const Home = () => {
   }, []);
   return (
     <main className="">
+      <Navbar />
       <Slider />
       <Category />
       <section>
