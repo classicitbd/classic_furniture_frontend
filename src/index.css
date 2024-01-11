@@ -27,7 +27,7 @@ body {
   position: relative;
   opacity: 80%;
   transition: 0.3s;
-  margin: 5px 0;
+  margin: 2px 0;
   letter-spacing: 0.4px;
 }
 
@@ -38,7 +38,7 @@ body {
   height: 1.5px;
   width: 0;
   left: 0;
-  bottom: -10px;
+  bottom: -1px;
   transition: 0.3s;
 }
 

@@ -11,12 +11,18 @@ import FormSearch from "../../components/frontend/form/FormSearch";
 import ProductNotFound from "../../components/common/productNotFound/ProductNotFound";
 const Header = () => {
   const [scroll, setScroll] = useState(false);
+  const [scrollBtm, setScrollBtm] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [menu, setMenu] = useState("");
+
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setScroll(window.scrollY > 50);
+    });
+    window.addEventListener("scroll", () => {
+      setScrollBtm(window.scrollY > 50);
     });
   }, []);
   const toggleDrawer = () => {
@@ -24,6 +30,11 @@ const Header = () => {
   };
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleHover = (menu) => {
+    setMenu(menu);
+    setIsDropdownOpen(true);
   };
   const products = [];
 
@@ -54,13 +65,13 @@ const Header = () => {
                   <span>
                     <SlPhone />
                   </span>
-                  <span>+88 01796 682951</span>
+                  <span className="font-sans text-sm">+88 01796 682951</span>
                 </p>
                 <p className="flex items-center gap-1">
                   <span>
                     <MdAccessTime />
                   </span>
-                  <span>10:00AM - 10:00PM</span>
+                  <span className="font-sans text-sm">10:00AM - 10:00PM</span>
                 </p>
               </div>
             </div>
@@ -121,38 +132,69 @@ const Header = () => {
         {/* ------ navbar with dropdown ------ start */}
 
         <div
-          onMouseLeave={() => setIsDropdownOpen(false)}
-          className={`hidden md:block`}
+          onMouseLeave={() => {
+            setIsDropdownOpen(false);
+            setMenu("");
+          }}
+          className={`${scrollBtm ? "" : "hidden sm:block"}`}
         >
           <nav className="border-b border-gray-600 relative group">
-            <ul className="flex items-center justify-center gap-7 py-3">
+            <ul className="flex items-center justify-center gap-7 py-1">
               <li className="group">
                 <button
-                  onMouseEnter={() => setIsDropdownOpen(true)}
-                  className="text-2xl menu font-light focus:outline-none"
+                  onMouseEnter={() => handleHover("men")}
+                  className={`text-xl font-light focus:outline-none ${
+                    menu === "men" ? "opacity-80" : ""
+                  } transition-opacity duration-300`}
                 >
                   Men
+                  <span
+                    className={`transition-all duration-500 h-[1px] block bg-white ${
+                      menu === "men" ? "w-full" : "w-0"
+                    }`}
+                  ></span>
                 </button>
               </li>
               <li>
                 <Link className="border-r border-gray-600"></Link>
               </li>
               <li>
-                <button className="text-2xl menu font-light">Women</button>
+                <button
+                  onMouseEnter={() => handleHover("women")}
+                  className={`text-xl font-light focus:outline-none ${
+                    menu === "women" ? "opacity-80" : ""
+                  } transition-opacity duration-300`}
+                >
+                  Women
+                  <span
+                    className={`transition-all duration-500 h-[1px] block bg-white ${
+                      menu === "women" ? "w-full" : "w-0"
+                    }`}
+                  ></span>
+                </button>
               </li>
               <li>
                 <Link className="border-r border-gray-600"></Link>
               </li>
-              <li
-                className="group"
-                onMouseEnter={() => setIsDropdownOpen(true)}
-              >
-                <button className="text-2xl menu font-light">Unisex</button>
+              <li className="group">
+                <button
+                  onMouseEnter={() => handleHover("unisex")}
+                  className={`text-xl font-light focus:outline-none ${
+                    menu === "unisex" ? "opacity-80" : ""
+                  } transition-opacity duration-300 group`}
+                >
+                  Unisex
+                  <span
+                    className={`transition-all duration-500 h-[1px] block bg-white ${
+                      menu === "unisex" ? "w-full" : "w-0"
+                    }`}
+                  ></span>
+                </button>
               </li>
             </ul>
             <div
               onMouseEnter={() => setIsDropdownOpen(true)}
-              className={`absolute top-18 left-0 w-full bg-black h-[300px] ${
+              className={`w-full bg-black h-[300px] ${
                 isDropdownOpen ? "block" : "hidden"
               }`}
             ></div>
@@ -188,6 +230,7 @@ const Header = () => {
         </div>
 
         {/* ------ cart drawer ------ end */}
+
         {/* ------ mobile menu ------ start */}
 
         <div
@@ -197,12 +240,12 @@ const Header = () => {
         >
           <div className="flex items-center justify-end px-5 py-2">
             <button className="text-4xl" onClick={toggleMobileMenu}>
-              <GoArrowRight className="p-1 bg-bgray-100 text-bgray-900 shadow rounded-full rotate-180" />
+              <GoArrowRight className="p-1 border bg-bgray-100 text-bgray-900 shadow rounded-full rotate-180" />
             </button>
           </div>
-          <div className="flex h-screen flex-col justify-between border-e bg-white">
+          <div className="flex h-screen flex-col justify-between border-e">
             <div className="px-4">
-              <ul className="mt-6 space-y-1">
+              <ul className="space-y-1">
                 <li>
                   <Link
                     to=""
@@ -327,29 +370,6 @@ const Header = () => {
                   </details>
                 </li>
               </ul>
-            </div>
-
-            <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
-              <Link
-                href="#"
-                className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50"
-              >
-                <img
-                  alt="Man"
-                  src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  className="h-10 w-10 rounded-full object-cover"
-                />
-
-                <div>
-                  <p className="text-xs">
-                    <strong className="block font-medium">
-                      Eric Frusciante
-                    </strong>
-
-                    <span> eric@frusciante.com </span>
-                  </p>
-                </div>
-              </Link>
             </div>
           </div>
         </div>

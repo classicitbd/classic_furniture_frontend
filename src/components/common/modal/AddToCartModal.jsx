@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
 
-const AddToCartModal = ({ isOpen, children }) => {
+const AddToCartModal = ({ isOpen, children, length }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
