@@ -66,20 +66,28 @@ const Header = () => {
             <div className="block md:hidden">
               <RxHamburgerMenu className="text-2xl" />
             </div>
-            <h1
+            <Link
+              to={"/"}
               className={`${
-                scroll ? "block font-bold text-2xl w-[394px]" : "hidden"
+                scroll
+                  ? "hidden sm:block font-bold text-2xl w-[394px]"
+                  : "hidden"
               }`}
             >
               Classic It
-            </h1>
+            </Link>
             <div>
-              <Link to={"/"}
-                className={`${scroll ? "hidden" : "block font-bold text-2xl"}`}
+              <Link
+                to={"/"}
+                className={`font-bold text-2xl ${
+                  scroll ? "block sm:hidden" : "block"
+                }`}
               >
                 Classic It
               </Link>
-              <div className={`${scroll ? "block" : "hidden"} w-[500px]`}>
+              <div
+                className={`${scroll ? "hidden sm:block" : "hidden"} w-[500px]`}
+              >
                 <FormSearch />
               </div>
             </div>

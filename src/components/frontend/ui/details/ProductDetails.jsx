@@ -36,7 +36,7 @@ const ProductDetails = () => {
     setModal("");
   };
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 px-2">
+    <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
       <Swiper
         modules={[Parallax, Mousewheel, Pagination, Autoplay, Keyboard]}
         direction={"vertical"}
@@ -52,12 +52,12 @@ const ProductDetails = () => {
         pagination={{ clickable: true }}
         onSwiper={() => {}}
         onSlideChange={() => {}}
-        className="h-[50vh] md:h-[100vh]"
+        className="h-[50vh] md:h-[80vh] w-full"
       >
         {singleProduct?.images?.map((index) => (
-          <SwiperSlide key={index} className="border">
+          <SwiperSlide key={index} className="border w-full flex justify-center items-center">
             <img
-              className=""
+              className="object-fill h-full w-full"
               src={`/assets/images/product-${index}.jpg`}
               alt={singleProduct?.title}
             />
