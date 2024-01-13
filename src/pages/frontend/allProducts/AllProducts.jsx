@@ -6,6 +6,7 @@ import { HiOutlineAdjustmentsVertical } from "react-icons/hi2";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
+import { productData } from "../../../data/product-data";
 
 const AllProducts = () => {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
@@ -85,8 +86,8 @@ const AllProducts = () => {
   }, [queryParameters]);
 
   return (
-    <div className="min-h-screen">
-      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[70px]">
+    <div className="min-h-screen bg-white">
+      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[69px] z-20 bg-white">
         <div>
           <h1>all products</h1>
         </div>
@@ -290,6 +291,36 @@ const AllProducts = () => {
           </li>
           {/* ------ sorby section ------ end */}
         </ul>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+        {productData.map((product) => (
+          <div
+            key={product?.id}
+            className="border group rounded overflow-hidden bg-[#F0F0F0]"
+          >
+            <Link to={`/products/details/${product?.id}`}>
+              <div className="flex">
+                <img
+                  src={product?.thumbnail}
+                  className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
+                  alt={product?.id}
+                />
+                <img
+                  src={product?.thumbnailTwo}
+                  className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
+                  alt={product?.id}
+                />
+              </div>
+              <article className="pb-[10px]">
+                <h2 className="text-center">{product?.title}</h2>
+                <p className="text-center py-3 text-bgray-700">
+                  {product?.color}
+                </p>
+                <p className="px-4">BDT {product?.price}.00</p>
+              </article>
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
