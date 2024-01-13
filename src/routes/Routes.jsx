@@ -19,6 +19,7 @@ import Slider from "../pages/dashboard/slider/Slider";
 import DetailsPage from "../pages/frontend/details/DetailsPage";
 import ProductList from "../pages/dashboard/product/productList/ProductList";
 import ProductCreate from "../pages/dashboard/product/productCreate/ProductCreate";
+import AllProducts from "../pages/frontend/allProducts/AllProducts";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/products/details/:id",
         element: <DetailsPage />,
+      },
+      {
+        path: "/all",
+        element: <AllProducts />,
       },
     ],
   },
@@ -99,15 +104,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/slider",
-        element: <Slider />
+        element: <Slider />,
       },
       {
         path: "/dashboard/product",
-        element: <ProductList />
+        element: <ProductList />,
       },
       {
         path: "/dashboard/product/create",
-        element: <ProductCreate />
+        element: <ProductCreate />,
       },
     ],
   },
