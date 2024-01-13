@@ -15,16 +15,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/bundle";
 // import "swiper/css/keyboard";
-import { sliderData } from "../../../../data/slider-data";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 
 const Slider = () => {
-  const {
-    data: sliders = [],
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: sliders = [] } = useQuery({
     queryKey: ["/api/v1/slider"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/slider`);
