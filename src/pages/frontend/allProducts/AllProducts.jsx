@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 // import react icons
 import { HiOutlineAdjustmentsVertical } from "react-icons/hi2";
@@ -10,14 +10,11 @@ import { BASE_URL } from "../../../utils/baseURL";
 const AllProducts = () => {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
+  const [discount, setDiscount] = useState(true);
   const [queryParameters] = useSearchParams();
 
   // get Category type
-  const {
-    data: categoryTypes = [],
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: categoryTypes = [] } = useQuery({
     queryKey: ["/api/v1/category"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/category`);
@@ -70,7 +67,10 @@ const AllProducts = () => {
       return data;
     },
   }); // get Feature type
-  console.log(styles);
+
+  const handleResetFilter = () => {
+    setDiscount(false);
+  };
 
   useEffect(() => {
     // Get all query parameters
@@ -92,7 +92,21 @@ const AllProducts = () => {
         </div>
         <ul className="flex items-center gap-5 text-sm">
           <li>
-            <button>On Sale</button>
+            <Link onClick={handleResetFilter} to={`http://localhost:3000/all`}>
+              Reset Filter
+            </Link>
+          </li>
+          <li>
+            <span className="w-[1px] h-4 bg-bgray-400 text-green inline-block"></span>
+          </li>
+          <li>
+            <Link
+              to={`http://localhost:3000/all?discount=true`}
+              onClick={() => setDiscount(true)}
+              className={`${discount ? "text-error-200" : ""}`}
+            >
+              On Sale
+            </Link>
           </li>
           <li>
             <span className="w-[1px] h-4 bg-bgray-400 inline-block"></span>
