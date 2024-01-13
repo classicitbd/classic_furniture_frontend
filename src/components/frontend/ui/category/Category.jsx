@@ -7,7 +7,7 @@ import { BASE_URL } from "../../../../utils/baseURL";
 const Category = () => {
   const [hoveredCategory, setHoveredCategory] = useState(null);
   // get Category type
-  const { data: categoryTypes = [] } = useQuery({
+  const { data = [] } = useQuery({
     queryKey: ["/api/v1/category"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/category`);
@@ -15,6 +15,8 @@ const Category = () => {
       return data;
     },
   });
+const categoryTypes = [... new Set(data?.data)];
+console.log(categoryTypes);
   return (
     <section>
       <article className="text-wrap py-[30px]">

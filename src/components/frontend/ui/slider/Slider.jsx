@@ -16,13 +16,36 @@ import "swiper/css";
 import "swiper/css/bundle";
 // import "swiper/css/keyboard";
 import { sliderData } from "../../../../data/slider-data";
+import { BASE_URL } from "../../../../utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
 
 const Slider = () => {
+  const {
+    data: sliders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["/api/v1/slider"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/slider`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get all slider
+  console.log(sliders);
   return (
     <div className="main-container">
       <Swiper
         // install Swiper modules
-        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Keyboard, Parallax]}
+        modules={[
+          Navigation,
+          Pagination,
+          Scrollbar,
+          A11y,
+          Autoplay,
+          Keyboard,
+          Parallax,
+        ]}
         slidesPerView={1}
         speed={1000}
         parallax={true}
@@ -40,10 +63,10 @@ const Slider = () => {
         onSlideChange={() => {}}
       >
         <div className="relative" data-swiper-parallax-duration="2000">
-          {sliderData.map((slider) => (
-            <SwiperSlide key={slider.id}>
+          {sliders?.data?.map((slider) => (
+            <SwiperSlide key={slider._id}>
               <img
-                src={slider.img}
+                src={`${BASE_URL}/sliderImages/${slider?.slider}`}
                 className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] xl:h-[90vh]"
                 alt={slider.id}
               />
