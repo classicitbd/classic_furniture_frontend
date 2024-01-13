@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import DashboardLayout from "../layout/DashboardLayout";
-import HomePage from "../pages/dashboard/homePage/HomePage";
+// import HomePage from "../pages/dashboard/homePage/HomePage";
 import Menu from "../pages/dashboard/menu/Menu";
 import Category from "../pages/dashboard/category/Category";
 import SubCategory from "../pages/dashboard/subCategory/SubCategory";
@@ -19,6 +19,7 @@ import Slider from "../pages/dashboard/slider/Slider";
 import DetailsPage from "../pages/frontend/details/DetailsPage";
 import ProductList from "../pages/dashboard/product/productList/ProductList";
 import ProductCreate from "../pages/dashboard/product/productCreate/ProductCreate";
+import Customer from "../pages/dashboard/customer/Customer";
 
 const router = createBrowserRouter([
   {
@@ -65,9 +66,13 @@ const router = createBrowserRouter([
       <p className="text-center min-h-screen">Something went wrong!</p>
     ),
     children: [
+      // {
+      //   path: "/dashboard",
+      //   element: <HomePage />,
+      // },
       {
         path: "/dashboard",
-        element: <HomePage />,
+        element: <Slider />
       },
       {
         path: "/dashboard/menu",
@@ -98,16 +103,16 @@ const router = createBrowserRouter([
         element: <Style />,
       },
       {
-        path: "/dashboard/slider",
-        element: <Slider />
-      },
-      {
         path: "/dashboard/product",
         element: <ProductList />
       },
       {
         path: "/dashboard/product/create",
         element: <ProductCreate />
+      },
+      {
+        path: "/dashboard/customer",
+        element: <Customer />
       },
     ],
   },

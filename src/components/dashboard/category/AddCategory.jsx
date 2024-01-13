@@ -11,12 +11,14 @@ import { useAddCategoryMutation } from '../../../redux/feature/category/category
 import { Link } from 'react-router-dom';
 import slugify from 'slugify';
 import { ImageValidate } from '../../../utils/ImageValidation';
+import Select from 'react-select';
 
 
 const AddCategory = ({refetch, isLoading}) => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const [menuLength, setMenuLength] = useState(1);
+    const [menuId, setMenuId] = useState('');
 
     const { data: menuTypes = [] } = useQuery({
         queryKey: ['/api/v1/menu'],
@@ -69,6 +71,7 @@ const AddCategory = ({refetch, isLoading}) => {
                 replacement: '-',
             } )
         formData.append('slug', slug);
+        formData.append('menuId', menuId);
         postCategoryType(formData).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 setLoading(false)
@@ -108,15 +111,25 @@ const AddCategory = ({refetch, isLoading}) => {
                             <div>
                                 {
                                     menuTypes?.data?.length > 0 ?
-                                    <>
-                                    <select  {...register('menuId', { required: 'Menu type is required' })} id="menuId" className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl">
-                                    {
-                                    menuTypes?.data?.map(menu =>
-                                        <option key={menu?._id} value={menu?._id}>{menu?.menu}</option> )
-                                    }
-                                    </select>
-                                    {errors.menuId && <p className='text-red-600'>{errors.menuId?.message}</p>}
-                                    </>
+                                    // <>
+                                    // <select  {...register('menuId', { required: 'Menu type is required' })} id="menuId" className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl">
+                                    // {
+                                    // menuTypes?.data?.map(menu =>
+                                    //     <option key={menu?._id} value={menu?._id}>{menu?.menu}</option> )
+                                    // }
+                                    // </select>
+                                    // {errors.menuId && <p className='text-red-600'>{errors.menuId?.message}</p>}
+                                    // </>
+                                        <Select
+                                            id="menuId"
+                                            name="menuId"
+                                            required
+                                            aria-label="Select a Menu"
+                                            options={menuTypes?.data}
+                                            getOptionLabel={(x) => x?.menu}
+                                            getOptionValue={(x) => x?._id}
+                                            onChange={(selectedOption) => setMenuId(selectedOption?._id)}
+                                        ></Select>
                                     :
                                     ''
                                 }
