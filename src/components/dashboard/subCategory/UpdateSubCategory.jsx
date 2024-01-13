@@ -41,6 +41,8 @@ const UpdateSubCategory = ({refetch, setSubCategoryUpdateModal, subCategoryUpdat
             } )
         formData.append('slug', slug);
         formData.append('_id', subCategoryUpdateModalValue?._id);
+            formData.append('categoryId', subCategoryUpdateModalValue?.categoryId);
+            formData.append('menuId', subCategoryUpdateModalValue?.menuId);
         updateSubCategory(formData).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 toast.success(result?.data?.message ? result?.data?.message : "Sub Category update successfully !", {
@@ -55,6 +57,8 @@ const UpdateSubCategory = ({refetch, setSubCategoryUpdateModal, subCategoryUpdat
         });
         }else{
         const sendData = {
+            categoryId: subCategoryUpdateModalValue?.categoryId,
+            menuId: subCategoryUpdateModalValue?.menuId,
             _id: subCategoryUpdateModalValue?._id,
             sub_category: data?.sub_category,
             slug: slugify(data.sub_category, {
