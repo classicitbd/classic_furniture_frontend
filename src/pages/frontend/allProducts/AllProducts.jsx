@@ -4,13 +4,18 @@ import { Link, useSearchParams } from "react-router-dom";
 // import react icons
 import { HiOutlineAdjustmentsVertical } from "react-icons/hi2";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { RxReload } from "react-icons/rx";
+import { BiSolidDiscount } from "react-icons/bi";
+
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import { productData } from "../../../data/product-data";
+import { GoArrowRight } from "react-icons/go";
 
 const AllProducts = () => {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [discount, setDiscount] = useState(true);
   const [categoryTypes, setCategoryTypes] = useState([]);
   const [subCategoryTypes, setSubCategoryTypes] = useState([]);
@@ -75,6 +80,10 @@ const AllProducts = () => {
     setDiscount(false);
   };
 
+  const toggleFilter = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
   useEffect(() => {
     // Get all query parameters
     const allQueryParams = {};
@@ -111,14 +120,25 @@ const AllProducts = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[69px] z-20 bg-white">
+      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[61px] sm:top-[69px] z-40 bg-white">
         <div>
           <h1>all products</h1>
         </div>
-        <ul className="flex items-center gap-5 text-sm">
+        <ul className="flex items-center gap-3 sm:gap-5 text-sm">
           <li>
-            <Link onClick={handleResetFilter} to={`http://localhost:3000/all`}>
+            <Link
+              className="hidden sm:block"
+              onClick={handleResetFilter}
+              to={`http://localhost:3000/all`}
+            >
               Reset Filter
+            </Link>
+            <Link
+              onClick={handleResetFilter}
+              to={`http://localhost:3000/all`}
+              className="block sm:hidden"
+            >
+              <RxReload />
             </Link>
           </li>
           <li>
@@ -128,9 +148,16 @@ const AllProducts = () => {
             <Link
               to={`http://localhost:3000/all?discount=true`}
               onClick={() => setDiscount(true)}
-              className={`${discount ? "text-error-200" : ""}`}
+              className={`${discount ? "text-error-200" : ""} hidden sm:block`}
             >
               On Sale
+            </Link>
+            <Link
+              to={`http://localhost:3000/all?discount=true`}
+              onClick={() => setDiscount(true)}
+              className={`${discount ? "text-error-200" : ""} block sm:hidden`}
+            >
+              <BiSolidDiscount />
             </Link>
           </li>
           <li>
@@ -142,10 +169,19 @@ const AllProducts = () => {
                 setFilterDropdownOpen(!filterDropdownOpen);
                 setSortDropdownOpen(false);
               }}
-              className="flex items-center gap-1"
+              className="sm:flex items-center gap-1 hidden"
             >
               <HiOutlineAdjustmentsVertical />
               <span>Filters</span>
+            </button>
+            <button
+              onClick={() => {
+                setSortDropdownOpen(false);
+                toggleFilter(!isFilterOpen);
+              }}
+              className="flex items-center gap-1 sm:hidden"
+            >
+              <HiOutlineAdjustmentsVertical />
             </button>
             <div
               className={`absolute top-[57px] left-0 w-full border bg-[#FFFFFF] ${
@@ -292,7 +328,7 @@ const AllProducts = () => {
               />
             </button>
             <ul
-              className={`absolute top-10 -right-20 w-[160px] border ${
+              className={`absolute top-10 -right-3 sm:-right-20 w-[160px] border ${
                 sortDropdownOpen ? "block" : "hidden"
               }`}
             >
@@ -315,6 +351,240 @@ const AllProducts = () => {
           </li>
           {/* ------ sorby section ------ end */}
         </ul>
+        {/* ------ filter drawer ------ start */}
+
+        <div
+          className={`h-screen w-full fixed inset-y-0 left-0 z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
+            isFilterOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div className="flex items-center justify-end px-5 py-2">
+            <button className="text-4xl" onClick={toggleFilter}>
+              <GoArrowRight className="p-1 border bg-bgray-100 text-bgray-900 shadow rounded-full rotate-180" />
+            </button>
+          </div>
+          <div className="flex h-screen flex-col justify-between border-e">
+            <div className="px-4">
+              <ul className="space-y-1">
+                {/* ------ category section ------ start */}
+                <li>
+                  <details className="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      <span className="text-sm font-medium"> Categories </span>
+
+                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </summary>
+
+                    <ul className="mt-2 space-y-1 px-4">
+                      {categoryTypes?.map((category) => (
+                        <li key={category._id}>
+                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            {category?.category}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+
+                {/* ------ category section ------ end */}
+                {/* ------ sub category section ------ start */}
+                <li>
+                  <details className="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      <span className="text-sm font-medium">
+                        {" "}
+                        Sub Categories{" "}
+                      </span>
+
+                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </summary>
+
+                    <ul className="mt-2 space-y-1 px-4">
+                      {subCategoryTypes?.map((subCategory) => (
+                        <li key={subCategory?._id}>
+                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            {subCategory?.sub_category}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+
+                {/* ------ sub category section ------ end */}
+                {/* ------ collection section ------ start */}
+                <li>
+                  <details className="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      <span className="text-sm font-medium"> Collections</span>
+
+                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </summary>
+
+                    <ul className="mt-2 space-y-1 px-4">
+                      {collections?.data?.map((collection) => (
+                        <li key={collection?._id}>
+                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            {collection?.collection_name}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+
+                {/* ------ collection section ------ end */}
+                {/* ------ styles section ------ start */}
+                <li>
+                  <details className="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      <span className="text-sm font-medium"> Styles</span>
+
+                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </summary>
+
+                    <ul className="mt-2 space-y-1 px-4">
+                      {styles?.data?.map((style) => (
+                        <li key={style?._id}>
+                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            {style?.style}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+
+                {/* ------ styles section ------ end */}
+                {/* ------ colors section ------ start */}
+                <li>
+                  <details className="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      <span className="text-sm font-medium">Colors</span>
+
+                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </summary>
+
+                    <ul className="mt-2 space-y-1 px-4">
+                      {colors?.data?.map((color) => (
+                        <li key={color?._id}>
+                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            {color?.color}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+
+                {/* ------ colors section ------ end */}
+                {/* ------ features section ------ start */}
+                <li>
+                  <details className="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      <span className="text-sm font-medium">Features</span>
+
+                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </summary>
+
+                    <ul className="mt-2 space-y-1 px-4">
+                      {features?.data?.map((feature) => (
+                        <li key={feature?._id}>
+                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            {feature?.feature}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+
+                {/* ------ features section ------ end */}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* ------ filter drawer ------ end */}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
         {productData.map((product) => (
