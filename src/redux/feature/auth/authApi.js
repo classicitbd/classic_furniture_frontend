@@ -84,6 +84,17 @@ export const authApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+
+    // delete a user
+    deleteUser: build.mutation({
+      query: (data) => ({
+        url: `/userReg`,
+        method: "DELETE",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+
   }),
 });
 
@@ -94,4 +105,5 @@ export const {
   useResendOtpMutation,
   useForgetPasswordMutation,
   useSetPasswordMutation,
+  useDeleteUserMutation
 } = authApi;

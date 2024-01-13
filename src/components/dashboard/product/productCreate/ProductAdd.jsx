@@ -111,9 +111,9 @@ const ProductAdd = () => {
     }) // get Category type
 
     const { data: subCategories = [] } = useQuery({
-        queryKey: [`/api/v1/sub_category/menuIdAndSubCategoryId?menuId=${menuIdForCategory}&categoryId=${categoryIdForSubCategory}`],
+        queryKey: [`/api/v1/sub_category/menuIdAndCategoryId?menuId=${menuIdForCategory}&categoryId=${categoryIdForSubCategory}`],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}/sub_category/menuIdAndSubCategoryId?menuId=${menuIdForCategory}&categoryId=${categoryIdForSubCategory}`)
+            const res = await fetch(`${BASE_URL}/sub_category/menuIdAndCategoryId?menuId=${menuIdForCategory}&categoryId=${categoryIdForSubCategory}`)
             const data = await res.json();
             return data;
         }

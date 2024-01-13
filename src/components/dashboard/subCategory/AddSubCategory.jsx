@@ -17,6 +17,7 @@ const AddSubCategory = ({refetch, isLoading}) => {
 
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [menuId, setMenuId] = useState(false);
+    const [categoryId, setcategoryId] = useState('');
 
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
@@ -84,6 +85,8 @@ const AddSubCategory = ({refetch, isLoading}) => {
                 replacement: '-',
             } )
         formData.append('slug', slug);
+        formData.append('categoryId', categoryId);
+        formData.append('menuId', menuId);
         postSubCategoryType(formData).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 setLoading(false)
@@ -108,7 +111,7 @@ const AddSubCategory = ({refetch, isLoading}) => {
                     <div>
                         <h2 className="font-semibold text-[20px]">Add A Sub Category Type: </h2>
 
-                        <form onSubmit={handleSubmit(handleDataPost)} className='flex items-center gap-2 md:gap-6 mt-3'>
+                        <form onSubmit={handleSubmit(handleDataPost)} className='grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 items-center gap-2 md:gap-6 mt-3'>
 
                             <div>
                                 <label  className="font-semibold" htmlFor="sub_category">Sub Category Type</label>
@@ -127,11 +130,12 @@ const AddSubCategory = ({refetch, isLoading}) => {
                                 <Select
                                   id="menuId"
                                   name="menuId"
-                                  aria-label="Select a division"
+                                  required
+                                  aria-label="Select a Menu"
                                   options={menuTypes?.data}
                                   getOptionLabel={(x) => x?.menu}
                                   getOptionValue={(x) => x?._id}
-                                  onChange={(selectedOption) => handleSelectChange(selectedOption)}
+                                    onChange={(selectedOption) => handleSelectChange(selectedOption)}
                                 ></Select>
                                 </div>
 
@@ -141,15 +145,16 @@ const AddSubCategory = ({refetch, isLoading}) => {
                                 <label  className="font-semibold" htmlFor="categoryId">Category Type</label>
                                 {
                                     categoryTypes?.data?.length > 0 ?
-                                    <>
-                                    <select  {...register('categoryId', { required: 'Category type is required' })} id="categoryId" className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl">
-                                    {
-                                    categoryTypes?.data?.map(category =>
-                                        <option key={category?._id} value={category?._id}>{category?.category}</option> )
-                                    }
-                                    </select>
-                                    {errors.categoryId && <p className='text-red-600'>{errors.categoryId?.message}</p>}
-                                    </>
+                                                <Select
+                                                    id="categoryId"
+                                                    name="categoryId"
+                                                    required
+                                                    aria-label="Select a Category"
+                                                    options={categoryTypes?.data}
+                                                    getOptionLabel={(x) => x?.category}
+                                                    getOptionValue={(x) => x?._id}
+                                                    onChange={(selectedOption) => setcategoryId(selectedOption?._id)}
+                                                ></Select>
                                     :
                                     ''
                                 }
@@ -167,7 +172,7 @@ const AddSubCategory = ({refetch, isLoading}) => {
                                     <button type="Submit" className="px-6 py-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-400">Please create a category</button>
                                     </Link>
                                     :
-                                    <button type="Submit" className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]">{loading ? <MiniSpinner /> : "Create"}</button>
+                                    <button type="Submit" className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]">{loading ? <MiniSpinner /> : "Create"}</button>
 
                                 }
                         </form>

@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { AiFillHome } from "react-icons/ai";
-import { FaChevronDown, FaChevronUp, FaListUl } from "react-icons/fa";
+// import { AiFillHome } from "react-icons/ai";
+import { FaChevronDown, FaChevronUp, FaListUl, FaUsers } from "react-icons/fa";
 import { BiMaleFemale, BiSolidCategory  } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { TbCategoryPlus } from "react-icons/tb";
@@ -23,7 +23,7 @@ const SideNavBar = () => {
         <>
             <div className="flex flex-col">
 
-                <div
+                {/* <div
                     className={
                         pathname === "/dashboard"
                             ? "nab_item text-[#3EA2FA]"
@@ -34,6 +34,21 @@ const SideNavBar = () => {
                         <Link  onClick={() => setIsUserOpen(false)} to="/dashboard" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <AiFillHome />
                             Home
+                        </Link>
+                    </div>
+                </div> */}
+
+                <div
+                    className={
+                        pathname === "/dashboard/slider"
+                            ? "nab_item text-[#3EA2FA]"
+                            : "text-[#717171] nab_item"
+                    }
+                >
+                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                        <Link to="/dashboard/slider" className="hover:text-[#3EA2FA] flex items-center gap-2">
+                            <PiSlideshowBold />
+                            Slider
                         </Link>
                     </div>
                 </div>
@@ -176,21 +191,6 @@ const SideNavBar = () => {
                     }
                 </div>
 
-                <div
-                    className={
-                        pathname === "/dashboard/slider"
-                            ? "nab_item text-[#3EA2FA]"
-                            : "text-[#717171] nab_item"
-                    }
-                >
-                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
-                        <Link to="/dashboard/slider" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <PiSlideshowBold  />
-                            Slider
-                        </Link>
-                    </div>
-                </div>
-
                 <div className="text-white nab_item">
                     <div className=" flex items-center justify-between mt-3 text-[18px] font-semibold">
                         <button onClick={() => setIsProductOpen(!isProductOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-2">
@@ -237,6 +237,21 @@ const SideNavBar = () => {
 
                         </div>
                     }
+                </div>
+
+                <div
+                    className={
+                        pathname === "/dashboard/customer"
+                            ? "nab_item text-[#3EA2FA]"
+                            : "text-[#717171] nab_item"
+                    }
+                >
+                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                        <Link to="/dashboard/customer" className="hover:text-[#3EA2FA] flex items-center gap-2">
+                            <FaUsers />
+                            Customer
+                        </Link>
+                    </div>
                 </div>
                 
             </div>
