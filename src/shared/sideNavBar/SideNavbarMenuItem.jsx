@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 
 const SideNavbarMenuItem = () => {
     const menuItems = [
+        // {
+        //     id: 1,
+        //     text: "Home",
+        //     link: "/dashboard",
+        // },
         {
             id: 1,
-            text: "Home",
-            link: "/dashboard",
+            text: "Slider",
+            link: "/dashboartd/slider",
         },
         {
             id: 2,
@@ -43,11 +48,7 @@ const SideNavbarMenuItem = () => {
             text: "Style",
             link: "/dashboartd/style",
         },
-        {
-            id: 8,
-            text: "Slider",
-            link: "/dashboartd/slider",
-        },
+        
     ];
 
     return (
