@@ -12,10 +12,12 @@ const AllProducts = () => {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [discount, setDiscount] = useState(true);
+  const [categoryTypes, setCategoryTypes] = useState([]);
+  const [subCategoryTypes, setSubCategoryTypes] = useState([]);
   const [queryParameters] = useSearchParams();
 
   // get Category type
-  const { data: categoryTypes = [] } = useQuery({
+  const { data = [] } = useQuery({
     queryKey: ["/api/v1/category"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/category`);
@@ -24,7 +26,7 @@ const AllProducts = () => {
     },
   });
 
-  const { data: subCategoryTypes = [] } = useQuery({
+  const { data: subData = [] } = useQuery({
     queryKey: ["/api/v1/sub_category"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/sub_category`);
@@ -85,6 +87,28 @@ const AllProducts = () => {
     // You can perform any other logic based on all query parameters here
   }, [queryParameters]);
 
+  useEffect(() => {
+    const uniqueMap = new Map();
+    subData?.data?.forEach((item) => {
+      uniqueMap.set(item.sub_category, item);
+    });
+
+    // Convert Map values back to an array
+    const uniqueData = Array.from(uniqueMap.values());
+    setSubCategoryTypes(uniqueData);
+  }, [subData]);
+
+  useEffect(() => {
+    const uniqueMap = new Map();
+    data?.data?.forEach((item) => {
+      uniqueMap.set(item.category, item);
+    });
+
+    // Convert Map values back to an array
+    const uniqueData = Array.from(uniqueMap.values());
+    setCategoryTypes(uniqueData);
+  }, [data]);
+
   return (
     <div className="min-h-screen bg-white">
       <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[69px] z-20 bg-white">
@@ -135,7 +159,7 @@ const AllProducts = () => {
                     <li className="text-lg font-medium tracking-normal mb-2">
                       <button>Categories</button>
                     </li>
-                    {categoryTypes?.data?.map((category) => (
+                    {categoryTypes?.map((category) => (
                       <li key={category._id}>
                         <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
                           {category?.category}
@@ -152,7 +176,7 @@ const AllProducts = () => {
                     <li className="text-lg font-medium tracking-normal mb-2">
                       <button>Sub Categories</button>
                     </li>
-                    {subCategoryTypes?.data?.map((subCategory) => (
+                    {subCategoryTypes?.map((subCategory) => (
                       <li key={subCategory?._id}>
                         <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
                           {subCategory?.sub_category}

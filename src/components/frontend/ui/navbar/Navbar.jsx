@@ -73,21 +73,21 @@ const Navbar = () => {
           >
             {/* ------ category section ------ start */}
             <div className="border-r px-4 py-[5px]">
-              <ul className="space-y-1 flex gap-5 py-10 container">
+              <ul className="flex gap-5 py-10 container">
                 {category?.data?.map((category) => (
-                  <li className="w-[150px]" key={category?.category?._id}>
+                  <li className="w-[200px]" key={category?.category?._id}>
                     <Link
                       to={`/all?category=${category?.category?.slug}`}
-                      className="text-white py-1 px-2 w-full text-left rounded-sm text-base"
+                      className="text-white py-1 px-2 w-full text-left rounded-sm text-base font-medium opacity-80 hover:opacity-100"
                     >
                       {category?.category?.category}
                     </Link>
-                    <ul>
+                    <ul className="space-y-[2px] mt-2">
                       {category?.subcategories?.map((subItem) => (
                         <li key={subItem?._id}>
                           <Link
                             to={`/all?category=${category?.category?.slug}&subcategory=${subItem?.slug}`}
-                            className="text-white py-1 px-2 w-full text-left rounded-sm text-sm font-light tracking-tight"
+                            className=" text-white py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-80 hover:opacity-100"
                           >
                             {subItem?.sub_category}
                           </Link>
