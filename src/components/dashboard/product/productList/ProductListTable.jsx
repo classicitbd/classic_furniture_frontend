@@ -12,6 +12,7 @@ import Pagination from "../../../../shared/pagination/Pagination";
 import { IoEyeOutline } from "react-icons/io5";
 import ProductView from "./ProductView";
 import ProductDelete from "./ProductDelete";
+import ProductUpdate from "./ProductUpdate";
 
 const ProductListTable = () => {
 
@@ -21,6 +22,8 @@ const ProductListTable = () => {
   const [isViewData, setIsViewData] = useState({});
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleteData, setIsDeleteData] = useState({});
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [updateModalValue, setUpdateModalValue] = useState(false);
 
   const { data: products = [], isLoading, refetch } = useQuery({
     queryKey: [`/api/v1/product?page=${page}&limit=${rows}`],
@@ -33,6 +36,11 @@ const ProductListTable = () => {
 
   if (isLoading) {
     <BigSpinner />
+  }
+
+  const handleUpdate = (data) => {
+    setUpdateModalValue(data)
+    setIsUpdateModalOpen(true)
   }
 
   // open view modal
@@ -108,7 +116,7 @@ const ProductListTable = () => {
 
                     <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                       <IoEyeOutline onClick={() => handleView(product)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
-                      <FiEdit className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
+                      <FiEdit onClick={() => handleUpdate(product)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
                       <MdDeleteForever onClick={() => handleDelete(product)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />
                     </td>
                   </tr>
@@ -135,6 +143,12 @@ const ProductListTable = () => {
       {
         isDeleteOpen &&
         <ProductDelete setIsDeleteOpen={setIsDeleteOpen} isDeleteData={isDeleteData} refetch={refetch} />
+      }
+
+      {/* Handle open update modal */}
+      {
+        isUpdateModalOpen &&
+        <ProductUpdate setIsUpdateModalOpen={setIsUpdateModalOpen} updateModalValue={updateModalValue} refetch={refetch} />
       }
 
     </div>

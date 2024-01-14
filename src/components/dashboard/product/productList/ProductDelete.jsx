@@ -4,6 +4,7 @@ import { useDeleteProductMutation } from "../../../../redux/feature/product/prod
 import { toast } from "react-toastify";
 
 const ProductDelete = ({ setIsDeleteOpen, isDeleteData, refetch }) => {
+
     const [deleteProduct] = useDeleteProductMutation();  //delete Product
 
     const handleDelete = () =>{
