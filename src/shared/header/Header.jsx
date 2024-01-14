@@ -223,7 +223,7 @@ const Header = () => {
         {/* ------ mobile menu ------ start */}
 
         <div
-          className={`h-screen w-full fixed inset-y-0 left-0 z-30 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
+          className={`h-screen w-full fixed inset-y-0 left-0 z-50 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

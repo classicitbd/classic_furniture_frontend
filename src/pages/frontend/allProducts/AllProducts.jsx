@@ -120,7 +120,7 @@ const AllProducts = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[61px] sm:top-[69px] z-40 bg-white">
+      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[61px] sm:top-[69px] z-30 bg-white">
         <div>
           <h1>all products</h1>
         </div>
@@ -289,13 +289,11 @@ const AllProducts = () => {
                 </div>
                 {/* ------ features section ------ end */}
               </div>
-              <div className="flex justify-center py-2">
-                <button
-                  onClick={() => setFilterDropdownOpen(false)}
-                  className="text-center"
-                >
-                  Hide Filter
-                </button>
+              <div
+                onClick={() => setFilterDropdownOpen(false)}
+                className="flex justify-center py-2 cursor-pointer"
+              >
+                <button className="text-center">Hide Filter</button>
               </div>
             </div>
           </li>
@@ -354,7 +352,7 @@ const AllProducts = () => {
         {/* ------ filter drawer ------ start */}
 
         <div
-          className={`h-screen w-full fixed inset-y-0 left-0 z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
+          className={`h-screen w-full fixed inset-y-0 left-0 top-[69px] z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
             isFilterOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
