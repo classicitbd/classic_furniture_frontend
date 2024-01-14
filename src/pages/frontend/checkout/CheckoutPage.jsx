@@ -8,18 +8,28 @@ import { getUserInfo } from "../../../service/Auth.service";
 import { Link } from "react-router-dom";
 import UserInfo from "./UserInfo";
 import Recipient from "./Recipient";
+import { useState } from "react";
+import Payment from "./Payment";
 
 const CheckoutPage = () => {
+  const [addressUpdate, setAddressUpdate] = useState(false);
   const { email } = getUserInfo();
   return (
-    <div className="min-h-screen container py-5">
+    <div className="container py-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <section className="overflow-y-auto space-y-5">
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
             <UserInfo email={email} />
           </div>
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
-            <Recipient email={email} />
+            <Recipient
+              email={email}
+              addressUpdate={addressUpdate}
+              setAddressUpdate={setAddressUpdate}
+            />
+          </div>
+          <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
+            <Payment />
           </div>
         </section>
         <section className="bg-white px-10 p-5 w-3/4 mx-auto rounded sticky">

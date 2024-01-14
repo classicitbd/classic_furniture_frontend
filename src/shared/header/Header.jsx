@@ -34,62 +34,78 @@ const Header = () => {
         {/* ------ header top section ------ start */}
 
         <div className="border-b pb-3 border-gray-600">
-          <div className="container flex items-center justify-between">
-            <div
-              className={`${
-                scroll ? "hidden" : "hidden md:flex items-center gap-3"
-              } `}
-            >
-              <div className="w-[40px] h-[40px] rounded-full border border-white bg-white">
-                <img
-                  src={bdLogo}
-                  alt="bd-logo"
-                  className="w-full h-full rounded-full"
-                />
+          <div className="container grid grid-cols-3 items-center justify-between">
+            {/* ------ header left side ------ start */}
+            <div>
+              <div
+                className={`${
+                  scroll ? "hidden" : "hidden md:flex items-center gap-3"
+                } `}
+              >
+                <div className="w-[40px] h-[40px] rounded-full border border-white bg-white">
+                  <img
+                    src={bdLogo}
+                    alt="bd-logo"
+                    className="w-full h-full rounded-full"
+                  />
+                </div>
+                <div className="flex flex-col lg:flex-row items-center gap-x-[10px]">
+                  <p className="flex items-center gap-1">
+                    <span>
+                      <SlPhone />
+                    </span>
+                    <span className="font-sans text-sm">+88 01796 682951</span>
+                  </p>
+                  <p className="flex items-center gap-1">
+                    <span>
+                      <MdAccessTime />
+                    </span>
+                    <span className="font-sans text-sm">10:00AM - 10:00PM</span>
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col lg:flex-row items-center gap-x-[10px]">
-                <p className="flex items-center gap-1">
-                  <span>
-                    <SlPhone />
-                  </span>
-                  <span className="font-sans text-sm">+88 01796 682951</span>
-                </p>
-                <p className="flex items-center gap-1">
-                  <span>
-                    <MdAccessTime />
-                  </span>
-                  <span className="font-sans text-sm">10:00AM - 10:00PM</span>
-                </p>
+              <button onClick={toggleMobileMenu} className="block md:hidden">
+                <RxHamburgerMenu className="text-2xl" />
+              </button>
+              <div
+                className={`w-[394px] ${
+                  scroll
+                    ? "hidden sm:block font-bold text-2xl h-[46px]"
+                    : "hidden"
+                }`}
+              >
+                <Link to={"/"} className={``}>
+                  <img
+                    src="/assets/images/logo/logo.png"
+                    alt=""
+                    className="h-[46px] object-contain"
+                  />
+                </Link>
               </div>
             </div>
-            <button onClick={toggleMobileMenu} className="block md:hidden">
-              <RxHamburgerMenu className="text-2xl" />
-            </button>
-            <Link
-              to={"/"}
-              className={`${
-                scroll
-                  ? "hidden sm:block font-bold text-2xl w-[394px]"
-                  : "hidden"
-              }`}
-            >
-              Classic It
-            </Link>
+            {/* ------ header left side ------ start */}
+            {/* ------ header middle side ------ start */}
+
             <div>
               <Link
                 to={"/"}
-                className={`font-bold text-2xl ${
+                className={`font-bold text-2xl h-[40px] sm:h-[46px] sm:w-[394px] flex justify-start ${
                   scroll ? "block sm:hidden" : "block"
                 }`}
               >
-                Classic It
+                <img
+                  src="/assets/images/logo/logo.png"
+                  alt=""
+                  className="w-full h-full object-contain"
+                />
               </Link>
-              <div
-                className={`${scroll ? "hidden sm:block" : "hidden"} w-[500px]`}
-              >
+              <div className={`${scroll ? "hidden sm:block" : "hidden"}`}>
                 <FormSearch />
               </div>
             </div>
+            {/* ------ header middle side ------ end */}
+            {/* ------ header right side ------ start */}
+
             <div className="flex items-center justify-end gap-4 lg:w-[394px]">
               <Link
                 to="#"
@@ -111,6 +127,7 @@ const Header = () => {
                 </span>
               </Link>
             </div>
+            {/* ------ header right side ------ end */}
           </div>
         </div>
 
