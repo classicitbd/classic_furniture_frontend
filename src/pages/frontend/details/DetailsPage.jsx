@@ -10,7 +10,7 @@ const DetailsPage = () => {
   return (
     <main className="bg-white pb-10">
       <ProductDetails />
-      <section className="py-10 bg-[#F0F0F0] rounded-lg border sm:mt-20 mb-10 sm:mx-5">
+      <section className="py-10 bg-[#F0F0F0] rounded-lg border mb-10 sm:mx-5">
         <RelatedProducts />
       </section>
       <section className="py-10 bg-[#F0F0F0] rounded-lg border mt-20 mb-10 mx-5">
