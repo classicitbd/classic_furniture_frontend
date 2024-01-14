@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import "react-phone-input-2/lib/style.css";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
 import { useSignInMutation } from "../../redux/feature/auth/authApi";
+import { setCookie } from "../../utils/cookie-storage";
+import { authKey } from "../../constants/storageKey";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState("");
   const {
     register,
     handleSubmit,
@@ -18,18 +18,19 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [signIn, { isLoading }] = useSignInMutation();
 
-  const handleSignUp = async (data) => {
+  const handleSignIn = async (data) => {
     try {
       setLoading(true);
       const res = await signIn(data);
       console.log(res);
       if (res?.data?.success) {
+        setCookie(authKey, res?.data?.data?.token);
         toast.info(res?.data?.message, {
           autoClose: 2000,
         });
         navigate(`/`);
         reset();
-      }else if(res.error.status == 400){
+      } else if (res.error.status == 400) {
         toast.error(res?.error?.data?.message, {
           autoClose: 2000,
         });
@@ -48,7 +49,7 @@ const SignIn = () => {
           Login
         </h2>
 
-        <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
+        <form onSubmit={handleSubmit(handleSignIn)} className="space-y-4">
           <div className="form-control w-full max-w-xs">
             <label htmlFor="email" className="label">
               <span className="label-text">Email</span>
@@ -86,7 +87,10 @@ const SignIn = () => {
             )}
           </div>
           <div className="text-[14px] flex justify-end">
-            <Link to={"/forget-password"} className="text-secondary underline cursor-pointer">
+            <Link
+              to={"/forget-password"}
+              className="text-secondary underline cursor-pointer"
+            >
               Forget Password
             </Link>
           </div>

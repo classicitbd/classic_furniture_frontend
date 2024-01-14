@@ -1,6 +1,7 @@
 export const productData = [
   {
     id: 1,
+    size: 40,
     title: "Croc Fixed Sole Half Shoe Cocoa",
     price: "3,524",
     color: "Brown",
@@ -9,6 +10,7 @@ export const productData = [
   },
   {
     id: 2,
+    size: 41,
     title: "Croc Fixed Sole Half Shoe Cocoa",
     price: "3,524",
     color: "Brown",
@@ -17,6 +19,7 @@ export const productData = [
   },
   {
     id: 3,
+    size: 42,
     title: "Croc Fixed Sole Half Shoe Cocoa",
     price: "3,524",
     color: "Brown",
@@ -25,6 +28,7 @@ export const productData = [
   },
   {
     id: 4,
+    size: 43,
     title: "Croc Fixed Sole Half Shoe Cocoa",
     price: "3,524",
     color: "Brown",
@@ -33,6 +37,7 @@ export const productData = [
   },
   {
     id: 5,
+    size: 44,
     title: "Croc Fixed Sole Half Shoe Cocoa",
     price: "3,524",
     color: "Brown",

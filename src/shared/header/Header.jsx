@@ -26,16 +26,14 @@ const Header = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  const products = [];
+  const products = [{ id: 1, title: "Cocoa Loufer", price: 2000 }];
 
   return (
     <>
       <section className="bg-black text-white pt-2">
         {/* ------ header top section ------ start */}
 
-        <div
-          className="border-b pb-3 border-gray-600"
-        >
+        <div className="border-b pb-3 border-gray-600">
           <div className="container flex items-center justify-between">
             <div
               className={`${
@@ -201,7 +199,7 @@ const Header = () => {
         >
           <div className="flex items-center justify-between px-5 py-5">
             <button className="text-4xl" onClick={toggleDrawer}>
-              <GoArrowRight className="p-1 bg-bgray-900 shadow rounded-full" />
+              <GoArrowRight className="p-1 bg-bgray-50 text-black shadow rounded-full" />
             </button>
             <p>
               <strong>Total:</strong> <span className="text-orange">{10}৳</span>
@@ -210,7 +208,13 @@ const Header = () => {
           <div className="py-1 px-4">
             {products?.length > 0 ? (
               <div className="flex flex-col gap-y-1 bg-white">
-                <h1>products</h1>
+                <Link
+                  onClick={toggleDrawer}
+                  to={`/checkout`}
+                  className="w-full text-center py-3 bg-black hover:bg-opacity-70 rounded"
+                >
+                  Proceed to Checkout
+                </Link>
               </div>
             ) : (
               <ProductNotFound />
