@@ -22,6 +22,7 @@ import ProductCreate from "../pages/dashboard/product/productCreate/ProductCreat
 import Customer from "../pages/dashboard/customer/Customer";
 import AllProducts from "../pages/frontend/allProducts/AllProducts";
 import Order from "../pages/dashboard/order/Order";
+import CheckoutPage from "../pages/frontend/checkout/CheckoutPage";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/all",
         element: <AllProducts />,
+      },
+      {
+        path: "/checkout",
+        element: <CheckoutPage />,
       },
     ],
   },
