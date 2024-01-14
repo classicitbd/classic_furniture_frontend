@@ -44,4 +44,22 @@ export const productData = [
     thumbnail: "/assets/images/product-9.jpg ",
     thumbnailTwo: "/assets/images/product-10.jpg",
   },
+  {
+    id: 6,
+    size: 44,
+    title: "Croc Fixed Sole Half Shoe Cocoa",
+    price: "3,524",
+    color: "Brown",
+    thumbnail: "/assets/images/product-9.jpg ",
+    thumbnailTwo: "/assets/images/product-10.jpg",
+  },
+  {
+    id: 7,
+    size: 44,
+    title: "Croc Fixed Sole Half Shoe Cocoa",
+    price: "3,524",
+    color: "Brown",
+    thumbnail: "/assets/images/product-9.jpg ",
+    thumbnailTwo: "/assets/images/product-10.jpg",
+  },
 ];

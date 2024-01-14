@@ -1,16 +1,10 @@
 /* eslint-disable react/prop-types */
 // import react icons
-import Select from "react-select";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Payment = ({ email }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
     data.email = email;
@@ -32,59 +26,46 @@ const Payment = ({ email }) => {
           <div>
             <input
               className="peer sr-only"
-              id="option1"
+              id="online"
               type="radio"
               tabIndex="-1"
               name="option"
             />
 
             <label
-              htmlFor="option1"
-              className="block w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-black peer-checked:bg-black peer-checked:text-white"
+              htmlFor="online"
+              className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
               tabIndex="0"
             >
-              <span className="text-sm"> Option 1 </span>
+              <span className="text-sm"> Pay With SSL Commerz </span>
+              <img
+                src={`/assets/images/payment-gateways.png`}
+                alt=""
+                className="h-[30px]"
+              />
             </label>
           </div>
 
           <div>
             <input
               className="peer sr-only"
-              id="option2"
+              id="cod"
               type="radio"
               tabIndex="-1"
               name="option"
             />
 
             <label
-              htmlFor="option2"
-              className="block w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-black peer-checked:bg-black peer-checked:text-white"
+              htmlFor="cod"
+              className="block w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400"
               tabIndex="0"
             >
-              <span className="text-sm"> Option 2 </span>
-            </label>
-          </div>
-
-          <div>
-            <input
-              className="peer sr-only"
-              id="option3"
-              type="radio"
-              tabIndex="-1"
-              name="option"
-            />
-
-            <label
-              htmlFor="option3"
-              className="block w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-black peer-checked:bg-black peer-checked:text-white"
-              tabIndex="0"
-            >
-              <span className="text-sm"> Option 3 </span>
+              <span className="text-sm"> Cash On Delivery </span>
             </label>
           </div>
         </div>
       </form>
-      <p className="text-xs">
+      <p className="text-xs mt-2">
         By making this purchase you agree to our
         <span className="text-blue-500"> terms and conditions.</span>
       </p>
@@ -92,8 +73,13 @@ const Payment = ({ email }) => {
         to={`/all`}
         className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
       >
-        Shop More
+        Place Order
       </Link>
+
+      <p className="text-xs mt-5">
+        I agree that placing the order places me under an obligation to make a
+        payment in accordance with the General Terms and Conditions.
+      </p>
     </div>
   );
 };

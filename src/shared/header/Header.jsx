@@ -3,12 +3,15 @@ import { MdAccessTime } from "react-icons/md";
 import { GiBeachBag } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { GoArrowRight } from "react-icons/go";
+import { GoArrowRight, GoPlus } from "react-icons/go";
 import bdLogo from "/assets/images/bd-logo.png";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FormSearch from "../../components/frontend/form/FormSearch";
 import ProductNotFound from "../../components/common/productNotFound/ProductNotFound";
+import { productData } from "../../data/product-data";
+import { CiTrash } from "react-icons/ci";
+import { FiMinus } from "react-icons/fi";
 const Header = () => {
   const [scroll, setScroll] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -26,7 +29,18 @@ const Header = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  const products = [{ id: 1, title: "Cocoa Loufer", price: 2000 }];
+
+  useEffect(() => {
+    if (isDrawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isDrawerOpen]);
 
   return (
     <>
@@ -210,7 +224,7 @@ const Header = () => {
         {/* ------ cart drawer ------ start */}
 
         <div
-          className={`min-h-screen w-[100vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] 2xl:w-[20vw] fixed inset-y-0 right-0 z-50 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
+          className={`min-h-screen scrollbar-hide overflow-y-scroll w-[100vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] 2xl:w-[20vw] fixed inset-y-0 right-0 z-50 bg-bgray-50 transition-transform duration-500 transform pb-10 ${
             isDrawerOpen ? "-translate-x-0" : "translate-x-full"
           }`}
         >
@@ -223,16 +237,128 @@ const Header = () => {
             </p>
           </div>
           <div className="py-1 px-4">
-            {products?.length > 0 ? (
-              <div className="flex flex-col gap-y-1 bg-white">
-                <Link
-                  onClick={toggleDrawer}
-                  to={`/checkout`}
-                  className="w-full text-center py-3 bg-black hover:bg-opacity-70 rounded"
-                >
-                  Proceed to Checkout
-                </Link>
-              </div>
+            {productData?.length > 0 ? (
+              <section className="bg-white text-black mx-auto rounded sticky">
+                <div className="space-y-2 overflow-y-scroll max-h-[80vh] scrollbar-thin">
+                  {productData.map((product) => (
+                    <div
+                      className="flex items-center gap-2 border-b pb-3"
+                      key={product?.id}
+                    >
+                      <div className="w-[70px] h-[70px] border rounded mr-3">
+                        <img
+                          src={product?.thumbnail}
+                          alt={product?.title}
+                          className="object-fill rounded"
+                        />
+                      </div>
+                      <div className="flex flex-col flex-1 space-y-2">
+                        <h2 className="text-sm tracking-tight leading-5">
+                          {product?.title}
+                        </h2>
+                        <p className="flex gap-2 items-center">
+                          <span className="text-sm tracking-tight leading-5">
+                            {product?.color}
+                          </span>
+                          <span className="text-sm tracking-tight leading-5">
+                            {product?.size}
+                          </span>
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm">BDT {product?.price}.00</p>
+                        <div
+                          className={`flex items-center justify-center border rounded-md px-2`}
+                        >
+                          <button className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300 hidden">
+                            <CiTrash />
+                          </button>
+
+                          <button className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300">
+                            <FiMinus />
+                          </button>
+                          <span className="px-2 py-1">1</span>
+                          <button className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300">
+                            <GoPlus />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <Link
+                    to={`/all`}
+                    onClick={toggleDrawer}
+                    className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
+                  >
+                    Shop More
+                  </Link>
+                </div>
+
+                <div className="overflow-x-auto mt-5">
+                  <table className="min-w-1/2 ml-auto divide-y-2 divide-gray-200 bg-white text-sm">
+                    <tbody className="divide-y divide-gray-200">
+                      <tr>
+                        <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
+                          Sub-Total
+                        </td>
+                        <td className="whitespace-nowrap px-4 py- text-gray-700">
+                          BDT
+                        </td>
+                        <td className="whitespace-nowrap px-4 py- text-gray-700">
+                          ৳120,000
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td className="whitespace-nowrap px-4 py- font-medium text-gray-900 uppercase">
+                          Vat 5%
+                        </td>
+
+                        <td className="whitespace-nowrap px-4 py- text-gray-700">
+                          BDT
+                        </td>
+                        <td className="whitespace-nowrap px-4 py- text-gray-700">
+                          ৳100,000
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
+                          Delivery Charge
+                        </td>
+
+                        <td className="whitespace-nowrap px-4 py- text-gray-700">
+                          BDT
+                        </td>
+                        <td className="whitespace-nowrap px-4 py- text-gray-700">
+                          ৳20,000
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
+                          Total
+                        </td>
+
+                        <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
+                          BDT
+                        </td>
+                        <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
+                          ৳20,000
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="flex flex-col gap-y-1 bg-white">
+                  <Link
+                    onClick={toggleDrawer}
+                    to={`/checkout`}
+                    className="w-full text-center py-3 bg-black text-white rounded"
+                  >
+                    Proceed to Checkout
+                  </Link>
+                </div>
+              </section>
             ) : (
               <ProductNotFound />
             )}
