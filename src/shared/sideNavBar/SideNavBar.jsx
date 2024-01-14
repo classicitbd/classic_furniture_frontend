@@ -10,6 +10,7 @@ import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp } from "react-ic
 import { MdOutlineCollectionsBookmark } from "react-icons/md"
 import { RxFontStyle } from "react-icons/rx";
 import { PiSlideshowBold } from "react-icons/pi";
+import { TbShoppingCartPause } from "react-icons/tb";
 
 
 const SideNavBar = () => {
@@ -194,7 +195,7 @@ const SideNavBar = () => {
                 <div className="text-white nab_item">
                     <div className=" flex items-center justify-between mt-3 text-[18px] font-semibold">
                         <button onClick={() => setIsProductOpen(!isProductOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-2">
-                            <IoCartOutline  />Products {isUserOpen ? <FaChevronUp /> : <FaChevronDown />} </button>
+                            <IoCartOutline />Products {isProductOpen ? <FaChevronUp /> : <FaChevronDown />} </button>
                     </div>
                     {
                         isProductOpen && <div className="p-1 bg-white mt-2">
@@ -237,6 +238,21 @@ const SideNavBar = () => {
 
                         </div>
                     }
+                </div>
+
+                <div
+                    className={
+                        pathname === "/dashboard/order"
+                            ? "nab_item text-[#3EA2FA]"
+                            : "text-[#717171] nab_item"
+                    }
+                >
+                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                        <Link to="/dashboard/order" className="hover:text-[#3EA2FA] flex items-center gap-2">
+                            <TbShoppingCartPause />
+                            Order
+                        </Link>
+                    </div>
                 </div>
 
                 <div

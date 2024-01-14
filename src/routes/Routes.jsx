@@ -21,6 +21,7 @@ import ProductList from "../pages/dashboard/product/productList/ProductList";
 import ProductCreate from "../pages/dashboard/product/productCreate/ProductCreate";
 import Customer from "../pages/dashboard/customer/Customer";
 import AllProducts from "../pages/frontend/allProducts/AllProducts";
+import Order from "../pages/dashboard/order/Order";
 
 const router = createBrowserRouter([
   {
@@ -122,6 +123,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/customer",
         element: <Customer />
+      },
+      {
+        path: "/dashboard/order",
+        element: <Order />
       },
     ],
   },
