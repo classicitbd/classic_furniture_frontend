@@ -22,7 +22,7 @@ const Navbar = () => {
     queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
     queryFn: async () => {
       if (menu !== "") {
-        const res = await fetch(`${BASE_URL}/category/menuId?menuId=${menu}`);
+        const res = await fetch(`${BASE_URL}/menu/${menu}`);
         const data = await res.json();
         return data;
       } else {
@@ -35,7 +35,7 @@ const Navbar = () => {
     setMenu(menu);
     setIsDropdownOpen(true);
   };
-  console.log(category);
+  console.log(category?.data);
   return (
     <div className="bg-black text-white hidden sm:block">
       {/* ------ navbar with dropdown ------ start */}
@@ -46,12 +46,12 @@ const Navbar = () => {
         }}
       >
         <nav className="relative">
-          <ul className="flex items-center justify-center gap-7 py-2">
+          <ul className="flex items-center justify-center gap-16 py-2">
             {menuTypes?.data?.map((menuItem) => (
-              <li key={menu?._id}>
+              <li key={menuItem?._id}>
                 <button
                   onMouseEnter={() => handleHover(menuItem?._id)}
-                  className={`text-xl font-light focus:outline-none ${
+                  className={`text-lg font-light focus:outline-none uppercase ${
                     menu === menuItem?._id ? "opacity-80" : ""
                   } transition-opacity duration-300`}
                 >
@@ -73,12 +73,27 @@ const Navbar = () => {
           >
             {/* ------ category section ------ start */}
             <div className="border-r px-4 py-[5px]">
-              <ul className="space-y-1 flex items-center gap-5">
+              <ul className="flex gap-5 py-10 container">
                 {category?.data?.map((category) => (
-                  <li key={category._id}>
-                    <button className="text-white py-1 px-2 w-full text-left rounded-sm">
-                      {category?.category}
-                    </button>
+                  <li className="w-[200px]" key={category?.category?._id}>
+                    <Link
+                      to={`/all?category=${category?.category?.slug}`}
+                      className="text-white py-1 px-2 w-full text-left rounded-sm text-base font-medium opacity-80 hover:opacity-100"
+                    >
+                      {category?.category?.category}
+                    </Link>
+                    <ul className="space-y-[2px] mt-2">
+                      {category?.subcategories?.map((subItem) => (
+                        <li key={subItem?._id}>
+                          <Link
+                            to={`/all?category=${category?.category?.slug}&subcategory=${subItem?.slug}`}
+                            className=" text-white py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-80 hover:opacity-100"
+                          >
+                            {subItem?.sub_category}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </li>
                 ))}
               </ul>

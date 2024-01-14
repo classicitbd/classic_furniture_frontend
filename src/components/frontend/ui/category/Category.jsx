@@ -1,9 +1,31 @@
 import { Link } from "react-router-dom";
-import { categoryData } from "../../../../data/category-data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../../utils/baseURL";
 
 const Category = () => {
   const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [categoryTypes, setCategoryTypes] = useState([]);
+  // get Category type
+  const { data = [] } = useQuery({
+    queryKey: ["/api/v1/category"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/category`);
+      const data = await res.json();
+      return data;
+    },
+  });
+  useEffect(() => {
+    const uniqueMap = new Map();
+    data?.data?.forEach((item) => {
+      uniqueMap.set(item.category, item);
+    });
+
+    // Convert Map values back to an array
+    const uniqueData = Array.from(uniqueMap.values());
+    setCategoryTypes(uniqueData);
+  }, [data]);
+  console.log(categoryTypes);
   return (
     <section>
       <article className="text-wrap py-[30px]">
@@ -14,11 +36,12 @@ const Category = () => {
       </article>
       <nav className="py-[40px] bg-[#000000]">
         <ul className="flex flex-col md:flex-row items-center justify-between gap-[10px] md:gap-[20px] text-lg md:text-xl lga:text-2xl max-w-4xl px-[20px] mx-auto">
-          {categoryData.map((item, i) => (
-            <li key={item.id}>
+          {categoryTypes?.map((item, i) => (
+            <li key={item._id}>
               <Link
+              to={`/all?category=${item?.slug}`}
                 className={`${
-                  categoryData.length === item.id && "text-error-300"
+                  categoryTypes?.length === i && "text-error-300"
                 } uppercase text-white`}
                 style={{
                   opacity: hoveredCategory === i ? 1 : 0.75,
@@ -31,6 +54,11 @@ const Category = () => {
               </Link>
             </li>
           ))}
+          <li>
+            <Link to={`/all?discount=true`} className={`text-error-200 hover:text-error-300 uppercase`}>
+              Discount Section
+            </Link>
+          </li>
         </ul>
       </nav>
     </section>
