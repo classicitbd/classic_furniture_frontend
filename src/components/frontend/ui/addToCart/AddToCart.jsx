@@ -7,12 +7,18 @@ import { FiMinus } from "react-icons/fi";
 import { IoCheckmarkCircleOutline, IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import ConfirmationModal from "../../../common/modal/ConfirmationModal";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../../../redux/feature/cart/cartSlice";
 
 const AddToCart = ({ setModal }) => {
+  const sizeType = sizeData;
   const [sizeVariation, setSizeVariation] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sizeGuide, setSizeGuide] = useState(false);
   const [data, setData] = useState(null);
+  const dispatch = useDispatch();
+  const carts = useSelector((state) => state.cart.products);
+  console.log(carts);
 
   const openModal = (value) => {
     setData(value);
@@ -24,7 +30,8 @@ const AddToCart = ({ setModal }) => {
     setModal("");
   };
 
-  const selectSize = (value) => {
+  const selectSize = (value, id) => {
+    dispatch(addToCart({ ...value, id }));
     const existingSize = sizeVariation.find((item) => item.size === value.size);
 
     if (existingSize) {
@@ -114,7 +121,7 @@ const AddToCart = ({ setModal }) => {
             </article>
           </div>
           <div>
-            {sizeData.map((item) => (
+            {sizeType?.size_variation?.map((item) => (
               <div
                 key={item?.size}
                 className={`my-3 ${
@@ -140,10 +147,12 @@ const AddToCart = ({ setModal }) => {
                 ) : (
                   <div className="relative">
                     <div
-                      onClick={() => selectSize(item)}
+                      onClick={() => selectSize(item, sizeType.id)}
                       className={`flex cursor-pointer justify-center items-center py-3 border rounded-md px-3 relative ${
-                        sizeVariation.some(
-                          (selectedItem) => selectedItem.size === item?.size
+                        carts.some(
+                          (selectedItem) =>
+                            selectedItem.size === item?.size &&
+                            selectedItem.id === sizeType.id
                         )
                           ? "border-green-500"
                           : ""
@@ -154,9 +163,10 @@ const AddToCart = ({ setModal }) => {
                         <span>
                           <IoCheckmarkCircleOutline
                             className={`text-success-300 text-xl ${
-                              sizeVariation.some(
+                              carts.some(
                                 (selectedItem) =>
-                                  selectedItem.size === item?.size
+                                  selectedItem.size === item?.size &&
+                                  selectedItem.id === sizeType.id
                               )
                                 ? "visible"
                                 : "invisible"
@@ -167,14 +177,16 @@ const AddToCart = ({ setModal }) => {
                     </div>
                     <div
                       className={`flex items-center border rounded-md px-2 ${
-                        sizeVariation.some(
-                          (selectedItem) => selectedItem.size === item?.size
+                        carts.some(
+                          (selectedItem) =>
+                            selectedItem.size === item?.size &&
+                            selectedItem.id === sizeType.id
                         )
                           ? "absolute top-2 right-2"
                           : "hidden"
                       }`}
                     >
-                      {sizeVariation.find(
+                      {carts.find(
                         (selectedItem) => selectedItem.size === item?.size
                       )?.quantity === 1 && (
                         <button
@@ -184,7 +196,7 @@ const AddToCart = ({ setModal }) => {
                           <CiTrash />
                         </button>
                       )}
-                      {sizeVariation.find(
+                      {carts.find(
                         (selectedItem) => selectedItem.size === item?.size
                       )?.quantity > 1 && (
                         <button
@@ -195,7 +207,7 @@ const AddToCart = ({ setModal }) => {
                         </button>
                       )}
                       <span className="px-3 py-2">
-                        {sizeVariation.find(
+                        {carts.find(
                           (selectedItem) => selectedItem.size === item?.size
                         )?.quantity || 1}
                       </span>

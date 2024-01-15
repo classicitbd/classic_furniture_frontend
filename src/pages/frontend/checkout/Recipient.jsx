@@ -72,7 +72,6 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
     data.email = email;
     data.city = city;
     data.country = country;
-    console.log(data);
   };
   return (
     <div className="px-10">

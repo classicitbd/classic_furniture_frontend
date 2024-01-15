@@ -8,7 +8,6 @@ const Payment = ({ email }) => {
 
   const onSubmit = (data) => {
     data.email = email;
-    console.log(data);
   };
   return (
     <div className="px-10">

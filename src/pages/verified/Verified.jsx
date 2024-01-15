@@ -60,7 +60,6 @@ const Verified = () => {
         toast.info(res?.data?.data?.message);
         setTimer(60);
       }
-      console.log(res);
     } catch (error) {
       console.error("resend otp error", error);
     }

@@ -39,7 +39,6 @@ const NewPassword = () => {
       delete data.confirm_password;
       data.email = email;
       const res = await setPassword(data);
-      console.log(res);
       if (res?.data?.success) {
         toast.info(res?.data?.message);
         setToLocalStorage("reset-email", "");
