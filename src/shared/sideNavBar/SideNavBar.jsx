@@ -41,13 +41,13 @@ const SideNavBar = () => {
 
                 <div
                     className={
-                        pathname === "/dashboard/slider"
+                        pathname === "/dashboard"
                             ? "nab_item text-[#3EA2FA]"
                             : "text-[#717171] nab_item"
                     }
                 >
                     <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
-                        <Link to="/dashboard/slider" className="hover:text-[#3EA2FA] flex items-center gap-2">
+                        <Link to="/dashboard" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <PiSlideshowBold />
                             Slider
                         </Link>
