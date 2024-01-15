@@ -16,7 +16,7 @@ const localstorageMiddleware = (store) => (next) => (action) => {
     action.type === decrementQuantity.type
   ) {
     localStorage.setItem("cart", JSON.stringify(store.getState()));
-  }
+  } else localStorage.setItem("cart", "");
 
   return result;
 };

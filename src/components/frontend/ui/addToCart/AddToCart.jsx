@@ -17,7 +17,6 @@ import {
 
 const AddToCart = ({ setModal }) => {
   const sizeType = sizeData;
-  const [sizeVariation, setSizeVariation] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sizeGuide, setSizeGuide] = useState(false);
   const [data, setData] = useState(null);
@@ -45,6 +44,9 @@ const AddToCart = ({ setModal }) => {
     setModalOpen(false);
   };
 
+  const demoData = carts.filter(item => item.id);
+  console.log(demoData);
+
   const selectedSizes = carts
     .map((item) => `${item.size} (${item.quantity})`)
     .join(", ")
@@ -63,6 +65,7 @@ const AddToCart = ({ setModal }) => {
             className="w-3/4 mx-auto"
           />
           <div>
+            carts
             <button onClick={() => setSizeGuide(false)} className="underline">
               Size Selection
             </button>
@@ -72,7 +75,7 @@ const AddToCart = ({ setModal }) => {
         <div className="">
           <div>
             <article className="text-center leading-6">
-              {sizeVariation.length > 0 ? (
+              {selectedSizes.length > 0 ? (
                 <h2 className="font-medium text-lg tracking-normal">
                   Selected Size : {selectedSizes}
                 </h2>
@@ -97,9 +100,7 @@ const AddToCart = ({ setModal }) => {
               <div
                 key={item?.size}
                 className={`my-3 ${
-                  sizeVariation.some(
-                    (selectedItem) => selectedItem.size === item?.size
-                  )
+                  carts.some((selectedItem) => selectedItem.size === item?.size)
                     ? "border-green-500"
                     : ""
                 }`}
@@ -264,9 +265,9 @@ const AddToCart = ({ setModal }) => {
               Continue Shipping
             </button>
             <button
-              disabled={sizeVariation?.length === 0}
+              disabled={carts?.length === 0}
               className={`py-3 px-5 text-center text-white ${
-                sizeVariation?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"
+                carts?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"
               }`}
             >
               Proceed To Checkout
