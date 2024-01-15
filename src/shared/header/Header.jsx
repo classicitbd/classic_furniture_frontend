@@ -6,16 +6,36 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { GoArrowRight, GoPlus } from "react-icons/go";
 import bdLogo from "/assets/images/bd-logo.png";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormSearch from "../../components/frontend/form/FormSearch";
 import ProductNotFound from "../../components/common/productNotFound/ProductNotFound";
 import { productData } from "../../data/product-data";
 import { CiTrash } from "react-icons/ci";
 import { FiMinus } from "react-icons/fi";
+import { isLoggedin } from "../../service/Auth.service";
+import { eraseCookie } from "../../utils/cookie-storage";
+import { authKey } from "../../constants/storageKey";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  decrementQuantity,
+  incrementQuantity,
+} from "../../redux/feature/cart/cartSlice";
 const Header = () => {
   const [scroll, setScroll] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const carts = useSelector((state) => state.cart.products);
+  const dispatch = useDispatch();
+  const isUser = isLoggedin();
+  console.log(carts);
+
+  const handleLogOut = () => {
+    eraseCookie(authKey);
+    navigate("/sign-in");
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -121,25 +141,64 @@ const Header = () => {
             {/* ------ header right side ------ start */}
 
             <div className="flex items-center justify-end gap-4 lg:w-[394px]">
-              <Link
-                to="#"
+              <button
                 onClick={toggleDrawer}
                 className="relative inline-flex items-center justify-center p-2 md:p-3 md:overflow-hidden font-medium transition duration-300 ease-out rounded-full shadow ring-1 ring-purple-500"
               >
                 <GiBeachBag className="w-6 h-6 text-white" />
                 <span className="absolute z-20 top-1/2 right-1/2 bg-error-300 w-5 h-5 flex items-center justify-center text-white rounded-full">
-                  {1}
+                  {carts?.length}
                 </span>
-              </Link>
-              <Link
-                to="/sign-in"
-                className="flex items-center gap-2 rounded-full border px-1 py-1 md:px-2 md:py-2"
-              >
-                <span className="hidden md:block">sign in</span>
-                <span className="w-7 h-7 flex items-center justify-center rounded-full bg-white">
-                  <FaRegUser className="w-5 h-5 text-black" />
-                </span>
-              </Link>
+              </button>
+              {isUser ? (
+                <div className="relative">
+                  <div className="inline-flex items-center overflow-hidden">
+                    <button
+                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      className="flex items-center gap-2 rounded-full border px-1 py-1 md:px-2 md:py-2"
+                    >
+                      <span className="hidden md:block">Sign Out</span>
+                      <span className="w-7 h-7 flex items-center justify-center rounded-full bg-white">
+                        <FaRegUser className="w-5 h-5 text-black" />
+                      </span>
+                    </button>
+                  </div>
+                  {isDropdownOpen && (
+                    <div
+                      className="absolute w-40 end-0 z-10 mt-2 rounded-md border border-gray-100 bg-white shadow-lg"
+                      role="menu"
+                    >
+                      <div className="p-2">
+                        <Link
+                          href="#"
+                          className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          role="menuitem"
+                        >
+                          My Profile
+                        </Link>
+                        <button
+                          type="submit"
+                          className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                          role="menuitem"
+                          onClick={handleLogOut}
+                        >
+                          Log Out
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  to="/sign-in"
+                  className="flex items-center gap-2 rounded-full border px-1 py-1 md:px-2 md:py-2"
+                >
+                  <span className="hidden md:block">sign in</span>
+                  <span className="w-7 h-7 flex items-center justify-center rounded-full bg-white">
+                    <FaRegUser className="w-5 h-5 text-black" />
+                  </span>
+                </Link>
+              )}
             </div>
             {/* ------ header right side ------ end */}
           </div>
@@ -240,14 +299,14 @@ const Header = () => {
             {productData?.length > 0 ? (
               <section className="bg-white text-black mx-auto rounded sticky">
                 <div className="space-y-2 overflow-y-scroll max-h-[80vh] scrollbar-thin">
-                  {productData.map((product) => (
+                  {carts.map((product, i) => (
                     <div
                       className="flex items-center gap-2 border-b pb-3"
-                      key={product?.id}
+                      key={i}
                     >
                       <div className="w-[70px] h-[70px] border rounded mr-3">
                         <img
-                          src={product?.thumbnail}
+                          src={product?.thumbnail_image}
                           alt={product?.title}
                           className="object-fill rounded"
                         />
@@ -270,15 +329,37 @@ const Header = () => {
                         <div
                           className={`flex items-center justify-center border rounded-md px-2`}
                         >
-                          <button className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300 hidden">
-                            <CiTrash />
-                          </button>
-
-                          <button className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300">
-                            <FiMinus />
-                          </button>
-                          <span className="px-2 py-1">1</span>
-                          <button className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300">
+                          {carts.find(
+                            (selectedItem) =>
+                              selectedItem.size === product?.size &&
+                              selectedItem.productId === product?.productId
+                          )?.quantity === 1 && (
+                            <button
+                              onClick={() => dispatch(addToCart(product))}
+                              className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
+                            >
+                              <CiTrash />
+                            </button>
+                          )}
+                          {carts.find(
+                            (selectedItem) =>
+                              selectedItem.size === product?.size &&
+                              selectedItem.productId === product?.productId
+                          )?.quantity > 1 && (
+                            <button
+                              onClick={() =>
+                                dispatch(decrementQuantity(product))
+                              }
+                              className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
+                            >
+                              <FiMinus />
+                            </button>
+                          )}
+                          <span className="px-2 py-1">{product?.quantity}</span>
+                          <button
+                            onClick={() => dispatch(incrementQuantity(product))}
+                            className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
+                          >
                             <GoPlus />
                           </button>
                         </div>

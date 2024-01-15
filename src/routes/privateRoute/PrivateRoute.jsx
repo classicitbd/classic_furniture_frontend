@@ -5,19 +5,17 @@ import { Navigate, useLocation } from "react-router-dom";
 import BigSpinner from "../../shared/loader/BigSpinner";
 
 const PrivateRoute = ({ children }) => {
-    const { user, loading } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
+  console.log(user);
+  const location = useLocation();
+  if (loading) {
+    return <BigSpinner />;
+  }
 
-    const location = useLocation();
-
-    if (loading){
-        return <BigSpinner />
-    }
-
-
-    if (user) {
-        return children
-    }
-    return <Navigate to='/sign-in' state={{ from: location }} replace></Navigate>
+  if (user) {
+    return children;
+  }
+  return <Navigate to="/sign-in" state={{ from: location }} replace></Navigate>;
 };
 
 export default PrivateRoute;
