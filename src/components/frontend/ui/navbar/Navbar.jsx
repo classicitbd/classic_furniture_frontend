@@ -35,7 +35,6 @@ const Navbar = () => {
     setMenu(menu);
     setIsDropdownOpen(true);
   };
-  console.log(category?.data);
   return (
     <div className="bg-black text-white hidden sm:block">
       {/* ------ navbar with dropdown ------ start */}

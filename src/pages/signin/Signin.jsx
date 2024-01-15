@@ -22,7 +22,6 @@ const SignIn = () => {
     try {
       setLoading(true);
       const res = await signIn(data);
-      console.log(res);
       if (res?.data?.success) {
         setCookie(authKey, res?.data?.data?.token);
         toast.info(res?.data?.message, {

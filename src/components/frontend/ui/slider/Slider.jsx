@@ -27,7 +27,6 @@ const Slider = () => {
       return data;
     },
   }); // get all slider
-  console.log(sliders);
   return (
     <div className="main-container">
       <Swiper
