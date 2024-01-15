@@ -8,11 +8,12 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    
     // add to cart
     addToCart: (state, action) => {
       const existingIndex = state.products.findIndex(
         (product) =>
-          product.id === action.payload.id &&
+          product.size_variationId === action.payload.size_variationId &&
           product.size === action.payload.size
       );
 
@@ -29,11 +30,12 @@ const cartSlice = createSlice({
         state.products.push({ ...action.payload, quantity: 1 });
       }
     },
+
     // remove from cart
     removeFromCart: (state, action) => {
       const indexToRemove = state.products.findIndex(
         (product) =>
-          product.id === action.payload.id &&
+          product.size_variationId === action.payload.size_variationId &&
           product.size === action.payload.size
       );
 
@@ -42,11 +44,12 @@ const cartSlice = createSlice({
         state.products.splice(indexToRemove, 1);
       }
     },
+
     // increment quantity
     incrementQuantity: (state, action) => {
       const existingProduct = state.products.find(
         (product) =>
-          product.id === action.payload.id &&
+          product.size_variationId === action.payload.size_variationId &&
           product.size === action.payload.size
       );
 
@@ -55,11 +58,12 @@ const cartSlice = createSlice({
         existingProduct.quantity += 1;
       }
     },
+
     // decrement quantity
     decrementQuantity: (state, action) => {
       const existingProduct = state.products.find(
         (product) =>
-          product.id === action.payload.id &&
+          product.size_variationId === action.payload.size_variationId &&
           product.size === action.payload.size
       );
 
@@ -70,7 +74,7 @@ const cartSlice = createSlice({
         // If quantity is 1, remove the product from the cart
         const indexToRemove = state.products.findIndex(
           (product) =>
-            product.id === action.payload.id &&
+            product.size_variationId === action.payload.size_variationId &&
             product.size === action.payload.size
         );
 
