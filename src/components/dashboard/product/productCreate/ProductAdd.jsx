@@ -3,14 +3,17 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import BigSpinner from "../../../../shared/loader/BigSpinner";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import Select from "react-select"
 import { toast } from "react-toastify";
 import ImageUploader from "./ImageUploader";
 import slugify from "slugify";
 import { useAddProductMutation } from "../../../../redux/feature/product/productApi";
+import { AuthContext } from "../../../../context/AuthProvider";
 
 const ProductAdd = () => {
+
+  const {user} = useContext(AuthContext)
 
   // select field data
   const [colorName, setColorName] = useState('');
@@ -279,7 +282,7 @@ const ProductAdd = () => {
     const slug = colorName + " " + data?.title
 
     const sendData = {
-      email: "nazmul@gmail.com",
+      email: user,
       title: data?.title,
       related: slugify(data.title, {
         lower: true,
@@ -306,13 +309,23 @@ const ProductAdd = () => {
       colorId: colorId,
       subCategoryId: subcategory,
       menuId: menuIdForCategory,
-      categoryId: categoryIdForSubCategory,
-      collectionId: collection,
-      styleId: style,
-      featureId: feature
+      categoryId: categoryIdForSubCategory
+    }
+
+    if (collection.trim() !== '') {
+      sendData.collectionId = collection;
+    }
+
+    if (style.trim() !== '') {
+      sendData.styleId = style;
+    }
+
+    if (feature.trim() !== '') {
+      sendData.featureId = feature;
     }
 
     addProduct(sendData).then(result => {
+      console.log(result)
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
         toast.success(result?.data?.message ? result?.data?.message : "Product Added successfully !", {
           autoClose: 1000

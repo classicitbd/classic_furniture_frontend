@@ -1,0 +1,122 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.page {
+    background-color: white;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; */
+    height: 100%;
+}
+
+.page[size="A4"] {
+    width: 21cm;
+    height: 29.7cm;
+    position: relative;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.customer__info ul li {
+    float: left;
+    margin-bottom: 0;
+    width: 50%;
+}
+
+.customer__info {
+    padding: 35px 45px;
+}
+
+
+.table__space {
+    padding: 40px;
+}
+
+@media print {
+    .subtotal__amount table {
+        margin-left: 350px !important;
+    }
+
+
+    .najmul table tr th:nth-child(2),
+    .najmul table tr td:nth-child(2) {
+        display: none;
+    }
+
+    .table__space table tr th:first-child {
+        width: 2% !important;
+    }
+
+    .table__space.subtotal__amount table tr th {
+        width: 200px !important;
+    }
+
+    .table__space.subtotal__amount table tr td {
+        width: 50px !important;
+    }
+
+    .table__space.subtotal__amount {
+        margin-left: 60px !important;
+        text-align: start !important;
+        display: inline-block !important;
+        width: auto !important;
+    }
+
+    .table__space.subtotal__amount table tr th,
+    .table__space.subtotal__amount table tr td {
+        width: 200px !important;
+    }
+
+    .total__subtotal {
+        width: 650px !important;
+    }
+}
+
+.customer__info ul li h4 {
+    font-size: 15px;
+}
+
+.table__space.subtotal__amount table tr th,
+.table__space.subtotal__amount table tr td {
+    width: 200px !important;
+}
+
+/* .table__space.subtotal__amount table tr td {
+    width: 100px !important;
+} */
+
+.table__space.najmul table tr td:nth-child(4),
+.table__space.najmul table tr td:nth-child(5),
+.table__space.najmul table tr td:nth-child(6),
+.table__space.najmul table tr td:nth-child(7),
+.table__space.najmul table tr td:nth-child(8) {
+    padding-left: 20px;
+}
+
+
+.total__subtotal {
+    width: 300px;
+}
+
+.table__space.subtotal__amount {
+    display: block;
+    width: 100%;
+    text-align: -moz-right;
+    text-align: -ms-right;
+    text-align: -o-right;
+    text-align: -webkit-right;
+}
