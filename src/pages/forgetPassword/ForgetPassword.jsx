@@ -22,7 +22,6 @@ const ForgetPassword = () => {
     try {
       setLoading(true);
       const res = await forgetPassword(data);
-      console.log(res);
       if (res?.data?.success) {
         toast.success(res?.data?.message, {
           autoClose: 2000,

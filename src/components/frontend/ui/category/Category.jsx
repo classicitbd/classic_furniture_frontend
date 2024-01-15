@@ -25,7 +25,6 @@ const Category = () => {
     const uniqueData = Array.from(uniqueMap.values());
     setCategoryTypes(uniqueData);
   }, [data]);
-  console.log(categoryTypes);
   return (
     <section>
       <article className="text-wrap py-[30px]">
