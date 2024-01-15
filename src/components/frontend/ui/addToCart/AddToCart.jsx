@@ -8,20 +8,23 @@ import { IoCheckmarkCircleOutline, IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import ConfirmationModal from "../../../common/modal/ConfirmationModal";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../../../redux/feature/cart/cartSlice";
+import {
+  addToCart,
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+} from "../../../../redux/feature/cart/cartSlice";
 
 const AddToCart = ({ setModal }) => {
   const sizeType = sizeData;
-  const [sizeVariation, setSizeVariation] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sizeGuide, setSizeGuide] = useState(false);
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.cart.products);
-  console.log(carts);
 
-  const openModal = (value) => {
-    setData(value);
+  const openModal = (value, id) => {
+    setData({ ...value, size_variationId: id });
     setModalOpen(true);
   };
 
@@ -30,50 +33,21 @@ const AddToCart = ({ setModal }) => {
     setModal("");
   };
 
-  const selectSize = (value, id) => {
-    dispatch(addToCart({ ...value, id }));
-    const existingSize = sizeVariation.find((item) => item.size === value.size);
-
-    if (existingSize) {
-      const updatedVariation = sizeVariation.filter(
-        (item) => item.size !== value.size
-      );
-      setSizeVariation(updatedVariation);
-    } else {
-      const newData = {
-        size: value.size,
-        quantity: 1,
-        price: value.price ? value.price : 0,
-      };
-      const newVariation = [...sizeVariation, newData];
-      setSizeVariation(newVariation);
-    }
-  };
-
-  const increaseQuantity = (size) => {
-    const updatedVariation = sizeVariation.map((item) =>
-      item.size === size ? { ...item, quantity: item.quantity + 1 } : item
-    );
-    setSizeVariation(updatedVariation);
-  };
-
-  const decreaseQuantity = (size) => {
-    const updatedVariation = sizeVariation.map((item) =>
-      item.size === size && item.quantity > 1
-        ? { ...item, quantity: item.quantity - 1 }
-        : item
-    );
-    setSizeVariation(updatedVariation);
+  const closeConfirmModal = () => {
+    setModalOpen(false);
   };
 
   const handleConfirm = () => {
     if (data) {
-      selectSize(data);
+      dispatch(removeFromCart(data));
     }
     setModalOpen(false);
   };
 
-  const selectedSizes = sizeVariation
+  const demoData = carts.filter(item => item.id);
+  console.log(demoData);
+
+  const selectedSizes = carts
     .map((item) => `${item.size} (${item.quantity})`)
     .join(", ")
     .replace(/,([^,]*)$/, " & $1");
@@ -91,6 +65,7 @@ const AddToCart = ({ setModal }) => {
             className="w-3/4 mx-auto"
           />
           <div>
+            carts
             <button onClick={() => setSizeGuide(false)} className="underline">
               Size Selection
             </button>
@@ -100,7 +75,7 @@ const AddToCart = ({ setModal }) => {
         <div className="">
           <div>
             <article className="text-center leading-6">
-              {sizeVariation.length > 0 ? (
+              {selectedSizes.length > 0 ? (
                 <h2 className="font-medium text-lg tracking-normal">
                   Selected Size : {selectedSizes}
                 </h2>
@@ -125,9 +100,7 @@ const AddToCart = ({ setModal }) => {
               <div
                 key={item?.size}
                 className={`my-3 ${
-                  sizeVariation.some(
-                    (selectedItem) => selectedItem.size === item?.size
-                  )
+                  carts.some((selectedItem) => selectedItem.size === item?.size)
                     ? "border-green-500"
                     : ""
                 }`}
@@ -147,12 +120,16 @@ const AddToCart = ({ setModal }) => {
                 ) : (
                   <div className="relative">
                     <div
-                      onClick={() => selectSize(item, sizeType.id)}
+                      onClick={() =>
+                        dispatch(
+                          addToCart({ ...item, size_variationId: sizeType.id })
+                        )
+                      }
                       className={`flex cursor-pointer justify-center items-center py-3 border rounded-md px-3 relative ${
                         carts.some(
                           (selectedItem) =>
                             selectedItem.size === item?.size &&
-                            selectedItem.id === sizeType.id
+                            selectedItem.size_variationId === sizeType.id
                         )
                           ? "border-green-500"
                           : ""
@@ -166,7 +143,7 @@ const AddToCart = ({ setModal }) => {
                               carts.some(
                                 (selectedItem) =>
                                   selectedItem.size === item?.size &&
-                                  selectedItem.id === sizeType.id
+                                  selectedItem.size_variationId === sizeType.id
                               )
                                 ? "visible"
                                 : "invisible"
@@ -180,27 +157,40 @@ const AddToCart = ({ setModal }) => {
                         carts.some(
                           (selectedItem) =>
                             selectedItem.size === item?.size &&
-                            selectedItem.id === sizeType.id
+                            selectedItem.size_variationId === sizeType.id
                         )
                           ? "absolute top-2 right-2"
                           : "hidden"
                       }`}
                     >
                       {carts.find(
-                        (selectedItem) => selectedItem.size === item?.size
+                        (selectedItem) =>
+                          selectedItem.size === item?.size &&
+                          selectedItem.size_variationId === sizeType.id
                       )?.quantity === 1 && (
                         <button
-                          onClick={() => openModal(item)}
+                          onClick={() => {
+                            openModal(item, sizeType.id);
+                          }}
                           className="text-error-200 px-2 py-2 border rounded hover:bg-bgray-300"
                         >
                           <CiTrash />
                         </button>
                       )}
                       {carts.find(
-                        (selectedItem) => selectedItem.size === item?.size
+                        (selectedItem) =>
+                          selectedItem.size === item?.size &&
+                          selectedItem.size_variationId === sizeType.id
                       )?.quantity > 1 && (
                         <button
-                          onClick={() => decreaseQuantity(item?.size)}
+                          onClick={() =>
+                            dispatch(
+                              decrementQuantity({
+                                ...item,
+                                size_variationId: sizeType.id,
+                              })
+                            )
+                          }
                           className="text-bgray-700 px-2 py-2 border rounded hover:bg-bgray-300"
                         >
                           <FiMinus />
@@ -208,13 +198,15 @@ const AddToCart = ({ setModal }) => {
                       )}
                       <span className="px-3 py-2">
                         {carts.find(
-                          (selectedItem) => selectedItem.size === item?.size
+                          (selectedItem) =>
+                            selectedItem.size === item?.size &&
+                            selectedItem.size_variationId === sizeType.id
                         )?.quantity || 1}
                       </span>
                       <button
                         onClick={() => {
                           if (
-                            sizeVariation.some(
+                            carts.some(
                               (selectedItem) =>
                                 selectedItem?.quantity === item?.quantity
                             )
@@ -225,7 +217,13 @@ const AddToCart = ({ setModal }) => {
                                 autoClose: 3000,
                               }
                             );
-                          } else increaseQuantity(item?.size);
+                          } else
+                            dispatch(
+                              incrementQuantity({
+                                ...item,
+                                size_variationId: sizeType.id,
+                              })
+                            );
                         }}
                         className="text-bgray-700 px-2 py-2 border rounded hover:bg-bgray-300"
                       >
@@ -241,7 +239,7 @@ const AddToCart = ({ setModal }) => {
                 <div className="flex justify-end">
                   <button
                     className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
-                    onClick={closeModal}
+                    onClick={closeConfirmModal}
                   >
                     <IoCloseOutline className="text-2xl" />
                   </button>
@@ -267,9 +265,9 @@ const AddToCart = ({ setModal }) => {
               Continue Shipping
             </button>
             <button
-              disabled={sizeVariation?.length === 0}
+              disabled={carts?.length === 0}
               className={`py-3 px-5 text-center text-white ${
-                sizeVariation?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"
+                carts?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"
               }`}
             >
               Proceed To Checkout
