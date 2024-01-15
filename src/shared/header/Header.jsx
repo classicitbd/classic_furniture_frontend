@@ -20,9 +20,14 @@ import {
   addToCart,
   decrementQuantity,
   incrementQuantity,
+  removeFromCart,
 } from "../../redux/feature/cart/cartSlice";
+import ConfirmationModal from "../../components/common/modal/ConfirmationModal";
+import { IoCloseOutline } from "react-icons/io5";
 const Header = () => {
   const [scroll, setScroll] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [data, setData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -35,6 +40,26 @@ const Header = () => {
   const handleLogOut = () => {
     eraseCookie(authKey);
     navigate("/sign-in");
+  };
+
+  const openModal = (product) => {
+    setData(product);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleConfirm = () => {
+    if (data) {
+      dispatch(removeFromCart(data));
+    }
+    setModalOpen(false);
+  };
+
+  const closeConfirmModal = () => {
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -289,14 +314,14 @@ const Header = () => {
         >
           <div className="flex items-center justify-between px-5 py-5">
             <button className="text-4xl" onClick={toggleDrawer}>
-              <GoArrowRight className="p-1 bg-bgray-50 text-black shadow rounded-full" />
+              <GoArrowRight className="p-1 bg-bgray-50 text-black shadow rounded-full text-3xl" />
             </button>
             <p>
               <strong>Total:</strong> <span className="text-orange">{10}৳</span>
             </p>
           </div>
           <div className="py-1 px-4">
-            {productData?.length > 0 ? (
+            {carts?.length > 0 ? (
               <section className="bg-white text-black mx-auto rounded sticky">
                 <div className="space-y-2 overflow-y-scroll max-h-[80vh] scrollbar-thin">
                   {carts.map((product, i) => (
@@ -335,7 +360,9 @@ const Header = () => {
                               selectedItem.productId === product?.productId
                           )?.quantity === 1 && (
                             <button
-                              onClick={() => dispatch(addToCart(product))}
+                              onClick={() => {
+                                openModal(product);
+                              }}
                               className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
                             >
                               <CiTrash />
@@ -592,6 +619,35 @@ const Header = () => {
         </div>
 
         {/* ------ mobile menu ------ end */}
+        {/* ------ confirm modal ------ start */}
+
+        <ConfirmationModal isOpen={isModalOpen} onClose={closeModal}>
+          <div className="p-6">
+            <div className="flex justify-end">
+              <button
+                className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                onClick={closeConfirmModal}
+              >
+                <IoCloseOutline className="text-2xl" />
+              </button>
+            </div>
+            <div>
+              <p className="border-b pb-4 text-black">
+                Are you sure you want to remove this item from cart?
+              </p>
+              <div className="flex justify-end mt-5">
+                <button
+                  onClick={() => handleConfirm()}
+                  className="bg-bgray-900 px-7 py-3 text-white font-medium tracking-tight leading-5 rounded"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        </ConfirmationModal>
+
+        {/* ------ confirm modal ------ end */}
       </section>
     </>
   );
