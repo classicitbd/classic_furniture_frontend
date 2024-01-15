@@ -5,7 +5,7 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import BigSpinner from "../../../../shared/loader/BigSpinner";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import Select from "react-select"
 import { toast } from "react-toastify";
 import slugify from "slugify";
@@ -13,8 +13,11 @@ import { useUpdateProductMutation } from "../../../../redux/feature/product/prod
 import ImageUploader from "../productCreate/ImageUploader";
 import { RxCross1 } from "react-icons/rx";
 import { MdDeleteForever } from "react-icons/md";
+import { AuthContext } from "../../../../context/AuthProvider";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
+
+    const { user } = useContext(AuthContext)
 
     const [oldVariation, setOldVariation] = useState(updateModalValue?.size_variation)
     // select field data
@@ -289,7 +292,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         const slug = colorName + " " + (data?.title ? data?.title : updateModalValue?.title)
 
         const sendData = {
-            email: "nazmul@gmail.com",
+            email: user,
             title: data?.title ? data?.title : updateModalValue?.title,
             related: slugify(data?.title ? data?.title : updateModalValue?.title, {
                 lower: true,

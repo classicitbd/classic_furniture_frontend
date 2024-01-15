@@ -167,7 +167,7 @@ const ProductListTable = () => {
                                 {product?.menuId?.menu}
                               </td>
 
-                              <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
+                              <td className="whitespace-nowrap px-4 py-2 flex items-center justify-center gap-4">
                                 <IoEyeOutline onClick={() => handleView(product)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
                                 <FiEdit onClick={() => handleUpdate(product)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
                                 <MdDeleteForever onClick={() => handleDelete(product)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />
@@ -225,11 +225,12 @@ const ProductListTable = () => {
                     <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                       {product?.menuId?.menu}
                     </td>
-
-                    <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
-                      <IoEyeOutline onClick={() => handleView(product)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
-                      <FiEdit onClick={() => handleUpdate(product)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
-                      <MdDeleteForever onClick={() => handleDelete(product)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />
+                    <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
+                      <div className="flex items-center justify-center gap-4">
+                        <IoEyeOutline onClick={() => handleView(product)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
+                        <FiEdit onClick={() => handleUpdate(product)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
+                        <MdDeleteForever onClick={() => handleDelete(product)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />
+                      </div>
                     </td>
                   </tr>
                 ))}
