@@ -1,24 +1,36 @@
+import { authKey } from "../../../constants/storageKey";
+import { getCookie } from "../../../utils/cookie-storage";
 import { api } from "../../api/apiSlice";
 
+const token = getCookie(authKey);
+
 export const sliderApi = api.injectEndpoints({
+  
   endpoints: (build) => ({
 
-    //add Slider
     addSlider: build.mutation({
       query: (data) => ({
         url: `/slider`,
         method: "POST",
-        body: data,
+        headers: {
+        authorization: `Bearer ${token}`,
+        },
+          body: data,
+        }),
+        invalidatesTags: ['slider'],
       }),
-      invalidatesTags: ['slider'],
-    }),
+ 
 
     //delete Slider
     deleteSlider: build.mutation({
         query: (data) => ({
-          url: `/slider`,
+            url: `/slider`,
           method: "DELETE",
+          headers: {
+          authorization: `Bearer ${token}`,
+          },
           body: data,
+          
         }),
         invalidatesTags: ['slider'],
       }),
@@ -28,6 +40,9 @@ export const sliderApi = api.injectEndpoints({
         query: (data) => ({
           url: `/slider`,
           method: "PATCH",
+          headers: {
+        authorization: `Bearer ${token}`,
+        },
           body: data,
         }),
         invalidatesTags: ['slider'],

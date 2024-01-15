@@ -1,4 +1,8 @@
+import { authKey } from "../../../constants/storageKey";
+import { getCookie } from "../../../utils/cookie-storage";
 import { api } from "../../api/apiSlice";
+
+const token = getCookie(authKey);
 
 export const sub_categoryApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -7,6 +11,9 @@ export const sub_categoryApi = api.injectEndpoints({
       query: (data) => ({
         url: `/sub_category`,
         method: "POST",
+        headers: {
+        authorization: `Bearer ${token}`,
+        },
         body: data,
       }),
       invalidatesTags: ['sub_category'],
@@ -17,6 +24,9 @@ export const sub_categoryApi = api.injectEndpoints({
         query: (data) => ({
           url: `/sub_category`,
           method: "PATCH",
+          headers: {
+        authorization: `Bearer ${token}`,
+        },
           body: data,
         }),
         invalidatesTags: ['sub_category'],
@@ -27,6 +37,9 @@ export const sub_categoryApi = api.injectEndpoints({
         query: (data) => ({
           url: `/sub_category`,
           method: "DELETE",
+          headers: {
+        authorization: `Bearer ${token}`,
+        },
           body: data,
         }),
         invalidatesTags: ['sub_category'],

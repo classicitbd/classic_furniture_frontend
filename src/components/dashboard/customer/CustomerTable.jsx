@@ -8,6 +8,8 @@ import { useState } from "react";
 import CustomerDeleteModal from "./CustomerDeleteModal";
 import Pagination from "../../../shared/pagination/Pagination";
 import Select from "react-select";
+import { getCookie } from "../../../utils/cookie-storage";
+import { authKey } from "../../../constants/storageKey";
 
 const CustomerTable = () => {
     const [rows, setRows] = useState(10);
@@ -20,11 +22,19 @@ const CustomerTable = () => {
     const { data: users = [], isLoading, refetch } = useQuery({
         queryKey: [`/api/v1/userReg?page=${page}&limit=${rows}`],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}/userReg?page=${page}&limit=${rows}`)
+            const token = getCookie(authKey); // Assuming you have a function to get the token from cookies
+
+            const res = await fetch(`${BASE_URL}/userReg?page=${page}&limit=${rows}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    // Add other headers as needed
+                },
+            });
+
             const data = await res.json();
             return data;
-        }
-    }) // get All Product
+        },
+    }) // get All User
 
     if (isLoading) {
         <BigSpinner />

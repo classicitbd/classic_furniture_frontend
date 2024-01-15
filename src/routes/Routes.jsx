@@ -23,6 +23,9 @@ import Customer from "../pages/dashboard/customer/Customer";
 import AllProducts from "../pages/frontend/allProducts/AllProducts";
 import Order from "../pages/dashboard/order/Order";
 import CheckoutPage from "../pages/frontend/checkout/CheckoutPage";
+import PrivateRoute from "./privateRoute/PrivateRoute";
+import NotFound from "../shared/notFound/NotFound";
+import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
 
 const router = createBrowserRouter([
   {
@@ -72,9 +75,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: <PrivateRoute><PrivateDashboardRoute><DashboardLayout /></PrivateDashboardRoute></PrivateRoute>,
     errorElement: (
-      <p className="text-center min-h-screen">Something went wrong!</p>
+      <NotFound />
     ),
     children: [
       // {

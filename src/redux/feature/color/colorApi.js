@@ -1,4 +1,8 @@
+import { authKey } from "../../../constants/storageKey";
+import { getCookie } from "../../../utils/cookie-storage";
 import { api } from "../../api/apiSlice";
+
+const token = getCookie(authKey);
 
 export const colorApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -8,6 +12,9 @@ export const colorApi = api.injectEndpoints({
       query: (data) => ({
         url: `/color`,
         method: "POST",
+        headers: {
+        authorization: `Bearer ${token}`,
+        },
         body: data,
       }),
       invalidatesTags: ['color'],
@@ -18,6 +25,9 @@ export const colorApi = api.injectEndpoints({
         query: (data) => ({
           url: `/color`,
           method: "PATCH",
+          headers: {
+        authorization: `Bearer ${token}`,
+        },
           body: data,
         }),
         invalidatesTags: ['color'],
@@ -28,6 +38,9 @@ export const colorApi = api.injectEndpoints({
         query: (data) => ({
           url: `/color`,
           method: "DELETE",
+          headers: {
+        authorization: `Bearer ${token}`,
+        },
           body: data,
         }),
         invalidatesTags: ['color'],

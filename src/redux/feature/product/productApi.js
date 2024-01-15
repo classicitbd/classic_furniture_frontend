@@ -1,4 +1,8 @@
+import { authKey } from "../../../constants/storageKey";
+import { getCookie } from "../../../utils/cookie-storage";
 import { api } from "../../api/apiSlice";
+
+const token = getCookie(authKey);
 
 export const productApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -8,6 +12,9 @@ export const productApi = api.injectEndpoints({
       query: (data) => ({
         url: `/product`,
         method: "POST",
+        headers: {
+        authorization: `Bearer ${token}`,
+        },
         body: data,
       }),
       invalidatesTags: ['product'],
@@ -18,6 +25,9 @@ export const productApi = api.injectEndpoints({
         query: (data) => ({
           url: `/product`,
           method: "DELETE",
+          headers: {
+        authorization: `Bearer ${token}`,
+        },
           body: data,
         }),
         invalidatesTags: ['product'],
@@ -28,6 +38,9 @@ export const productApi = api.injectEndpoints({
         query: (data) => ({
           url: `/product`,
           method: "PATCH",
+          headers: {
+        authorization: `Bearer ${token}`,
+        },
           body: data,
         }),
         invalidatesTags: ['product'],

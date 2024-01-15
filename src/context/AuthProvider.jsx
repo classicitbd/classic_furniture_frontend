@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
     const [userName, setUserName] = useState(null);
     const [userRole, setUserRole] = useState(null);
     const [userPhone, setUserPhone] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const token = (getCookie(authKey));
 
@@ -25,21 +26,26 @@ const AuthProvider = ({ children }) => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
                     if (data?.statusCode == 200 && data?.success == true) {
                         setUser(data?.data?.email);
                         setUserName(data?.data?.name);
                         setUserRole(data?.data?.role);
                         setUserPhone(data?.data?.phone)
+                        setLoading(false)
                     } else {
                         setUser(null);
                         setUserName(null);
                         setUserPhone(null);
                         setUserRole(null);
+                        setLoading(false)
                     }
                 })
         } else {
             setUser(null);
+            setUserName(null);
+            setUserPhone(null);
+            setUserRole(null);
+            setLoading(false)
         }
     }, [token])
 
@@ -47,8 +53,10 @@ const AuthProvider = ({ children }) => {
         user,
         userName,
         userRole,
-        userPhone
+        userPhone,
+        loading
     }
+
     return (
         <AuthContext.Provider value={info}>
             {children}
