@@ -22,6 +22,7 @@ import {
 } from "../../redux/feature/cart/cartSlice";
 import ConfirmationModal from "../../components/common/modal/ConfirmationModal";
 import { IoCloseOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
 const Header = () => {
   const [scroll, setScroll] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -31,12 +32,13 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const carts = useSelector((state) => state.cart.products);
+  const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
   const isUser = isLoggedin();
 
   const handleLogOut = () => {
     eraseCookie(authKey);
-    navigate("/sign-in");
+    navigate("/");
   };
 
   const openModal = (product) => {
@@ -383,8 +385,22 @@ const Header = () => {
                           )}
                           <span className="px-2 py-1">{product?.quantity}</span>
                           <button
-                            onClick={() => dispatch(incrementQuantity(product))}
-                            className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
+                            onClick={() => {
+                              if (
+                                carts.some(
+                                  (selectedItem) =>
+                                    selectedItem?.quantity === product?.quantity
+                                )
+                              ) {
+                                toast.error(
+                                  "Max Stock Selected/Shortage of Stock",
+                                  {
+                                    autoClose: 3000,
+                                  }
+                                );
+                              } else dispatch(incrementQuantity(product));
+                            }}
+                            className="text-bgray-700 px-2 py-2 border rounded hover:bg-bgray-300"
                           >
                             <GoPlus />
                           </button>
@@ -412,20 +428,7 @@ const Header = () => {
                           BDT
                         </td>
                         <td className="whitespace-nowrap px-4 py- text-gray-700">
-                          ৳120,000
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td className="whitespace-nowrap px-4 py- font-medium text-gray-900 uppercase">
-                          Vat 5%
-                        </td>
-
-                        <td className="whitespace-nowrap px-4 py- text-gray-700">
-                          BDT
-                        </td>
-                        <td className="whitespace-nowrap px-4 py- text-gray-700">
-                          ৳100,000
+                          ৳{subTotal}.00
                         </td>
                       </tr>
 
@@ -438,19 +441,19 @@ const Header = () => {
                           BDT
                         </td>
                         <td className="whitespace-nowrap px-4 py- text-gray-700">
-                          ৳20,000
+                          to be calculated
                         </td>
                       </tr>
                       <tr>
                         <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
-                          Total
+                          Estimated Total
                         </td>
 
                         <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
                           BDT
                         </td>
                         <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
-                          ৳20,000
+                          ৳{subTotal}.00
                         </td>
                       </tr>
                     </tbody>

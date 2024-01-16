@@ -2,13 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
+  subtotal: 0,
+  vat: 0,
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    
     // add to cart
     addToCart: (state, action) => {
       const existingIndex = state.products.findIndex(
@@ -29,6 +30,10 @@ const cartSlice = createSlice({
         // If the product doesn't exist, add it to the cart with quantity 1
         state.products.push({ ...action.payload, quantity: 1 });
       }
+
+      // Recalculate subtotal
+      state.subtotal = calculateSubtotal(state.products);
+      state.vat = calculateVAT(state.subtotal);
     },
 
     // remove from cart
@@ -43,6 +48,10 @@ const cartSlice = createSlice({
         // Remove the product from the cart
         state.products.splice(indexToRemove, 1);
       }
+
+      // Recalculate subtotal
+      state.subtotal = calculateSubtotal(state.products);
+      state.vat = calculateVAT(state.subtotal);
     },
 
     // increment quantity
@@ -57,6 +66,10 @@ const cartSlice = createSlice({
         // Increment the quantity of the existing product
         existingProduct.quantity += 1;
       }
+
+      // Recalculate subtotal
+      state.subtotal = calculateSubtotal(state.products);
+      state.vat = calculateVAT(state.subtotal);
     },
 
     // decrement quantity
@@ -82,9 +95,24 @@ const cartSlice = createSlice({
           state.products.splice(indexToRemove, 1);
         }
       }
+
+      // Recalculate subtotal
+      state.subtotal = calculateSubtotal(state.products);
+      state.vat = calculateVAT(state.subtotal);
     },
   },
 });
+
+const calculateSubtotal = (products) => {
+  return products.reduce((total, product) => {
+    return total + product.price * product.quantity;
+  }, 0);
+};
+
+const calculateVAT = (subtotal) => {
+  // Assuming VAT is 5%
+  return subtotal * 0.05;
+};
 
 export const {
   addToCart,
