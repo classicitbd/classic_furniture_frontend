@@ -9,7 +9,6 @@ import { BiSolidDiscount } from "react-icons/bi";
 
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
-import { productData } from "../../../data/product-data";
 import { GoArrowRight } from "react-icons/go";
 
 const AllProducts = () => {
