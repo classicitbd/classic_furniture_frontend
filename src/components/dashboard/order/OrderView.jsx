@@ -209,7 +209,15 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                                                             </table>
                                                                         </div>
 
-                                                                        <h2 className="text-xl font-semibold text-sky-500 text-end mb-3">Total Price: {isViewData?.order?.reduce((prev, next) => prev + parseInt(next.price), 0)}</h2>
+                                                                        <h2 className="text-xl font-semibold text-sky-500 text-end mb-3">
+                                                                            Total Price: {
+                                                                                isViewData?.order?.reduce(
+                                                                                    (prev, next) => prev + parseInt(next.price) * parseInt(next.quantity),
+                                                                                    0
+                                                                                )
+                                                                            }
+                                                                        </h2>
+
 
                                                                         <h2 style={{ textAlign: 'center' }}>Thank You !</h2>
                                                                     </div>
