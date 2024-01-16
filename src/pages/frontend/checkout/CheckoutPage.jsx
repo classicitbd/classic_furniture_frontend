@@ -3,17 +3,63 @@ import { CiTrash } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 
-import { productData } from "../../../data/product-data";
 import { getUserInfo } from "../../../service/Auth.service";
 import { Link } from "react-router-dom";
 import UserInfo from "./UserInfo";
 import Recipient from "./Recipient";
 import { useState } from "react";
 import Payment from "./Payment";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+} from "../../../redux/feature/cart/cartSlice";
+import ConfirmationModal from "../../../components/common/modal/ConfirmationModal";
+import { IoCloseOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
 
 const CheckoutPage = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [data, setData] = useState(null);
+  const carts = useSelector((state) => state.cart.products);
+  const subTotal = useSelector((state) => state.cart.subtotal);
+  const vat = useSelector((state) => state.cart.vat);
+  const total = (subTotal + vat + 160).toFixed(2);
+  const dispatch = useDispatch();
   const [addressUpdate, setAddressUpdate] = useState(false);
   const { email } = getUserInfo();
+
+  const { data: products = [] } = useQuery({
+    queryKey: [`/api/v1/product`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/product`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get All Product
+  const openModal = (product) => {
+    setData(product);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleConfirm = () => {
+    if (data) {
+      dispatch(removeFromCart(data));
+    }
+    setModalOpen(false);
+  };
+
+  const closeConfirmModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="container py-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -37,14 +83,11 @@ const CheckoutPage = () => {
             Order Summary
           </h2>
           <div className="space-y-2 border-t pt-3">
-            {productData.map((product) => (
-              <div
-                className="flex items-center gap-2 border-b pb-3"
-                key={product?.id}
-              >
+            {carts.map((product, i) => (
+              <div className="flex items-center gap-2 border-b pb-3" key={i}>
                 <div className="w-[70px] h-[70px] border rounded mr-3">
                   <img
-                    src={product?.thumbnail}
+                    src={product?.thumbnail_image}
                     alt={product?.title}
                     className="object-fill rounded"
                   />
@@ -67,15 +110,52 @@ const CheckoutPage = () => {
                   <div
                     className={`flex items-center justify-center border rounded-md px-2`}
                   >
-                    <button className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300 hidden">
-                      <CiTrash />
-                    </button>
-
-                    <button className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300">
-                      <FiMinus />
-                    </button>
-                    <span className="px-2 py-1">1</span>
-                    <button className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300">
+                    {carts.find(
+                      (selectedItem) =>
+                        selectedItem.size === product?.size &&
+                        selectedItem.productId === product?.productId
+                    )?.quantity === 1 && (
+                      <button
+                        onClick={() => {
+                          openModal(product);
+                        }}
+                        className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
+                      >
+                        <CiTrash />
+                      </button>
+                    )}
+                    {carts.find(
+                      (selectedItem) =>
+                        selectedItem.size === product?.size &&
+                        selectedItem.productId === product?.productId
+                    )?.quantity > 1 && (
+                      <button
+                        onClick={() => dispatch(decrementQuantity(product))}
+                        className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
+                      >
+                        <FiMinus />
+                      </button>
+                    )}
+                    <span className="px-2 py-1">{product?.quantity}</span>
+                    <button
+                      onClick={() => {
+                        if (
+                          products?.data
+                            ?.find(
+                              (singleProduct) =>
+                                singleProduct?._id === product?.productId
+                            )
+                            .size_variation.find(
+                              (sizeItem) => sizeItem.size === product?.size
+                            ).quantity === product?.quantity
+                        ) {
+                          toast.error("Max Stock Selected/Shortage of Stock", {
+                            autoClose: 3000,
+                          });
+                        } else dispatch(incrementQuantity(product));
+                      }}
+                      className="text-bgray-700 px-2 py-2 border rounded hover:bg-bgray-300"
+                    >
                       <GoPlus />
                     </button>
                   </div>
@@ -100,7 +180,7 @@ const CheckoutPage = () => {
                     BDT
                   </td>
                   <td className="whitespace-nowrap px-4 py- text-gray-700">
-                    ৳120,000
+                    ৳{subTotal}.00
                   </td>
                 </tr>
 
@@ -113,7 +193,7 @@ const CheckoutPage = () => {
                     BDT
                   </td>
                   <td className="whitespace-nowrap px-4 py- text-gray-700">
-                    ৳100,000
+                    ৳{vat.toFixed(2)}
                   </td>
                 </tr>
 
@@ -126,7 +206,7 @@ const CheckoutPage = () => {
                     BDT
                   </td>
                   <td className="whitespace-nowrap px-4 py- text-gray-700">
-                    ৳20,000
+                    ৳160.00
                   </td>
                 </tr>
                 <tr>
@@ -138,7 +218,7 @@ const CheckoutPage = () => {
                     BDT
                   </td>
                   <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
-                    ৳20,000
+                    ৳{total}
                   </td>
                 </tr>
               </tbody>
@@ -150,6 +230,35 @@ const CheckoutPage = () => {
           </p>
         </section>
       </div>
+      {/* ------ confirm modal ------ start */}
+
+      <ConfirmationModal isOpen={isModalOpen} onClose={closeModal}>
+        <div className="p-6">
+          <div className="flex justify-end">
+            <button
+              className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+              onClick={closeConfirmModal}
+            >
+              <IoCloseOutline className="text-2xl" />
+            </button>
+          </div>
+          <div>
+            <p className="border-b pb-4 text-black">
+              Are you sure you want to remove this item from cart?
+            </p>
+            <div className="flex justify-end mt-5">
+              <button
+                onClick={() => handleConfirm()}
+                className="bg-bgray-900 px-7 py-3 text-white font-medium tracking-tight leading-5 rounded"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </ConfirmationModal>
+
+      {/* ------ confirm modal ------ end */}
     </div>
   );
 };

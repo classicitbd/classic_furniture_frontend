@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { sizeData } from "../../../../data/size-data";
 import { CiTrash } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
@@ -16,7 +15,6 @@ import {
 } from "../../../../redux/feature/cart/cartSlice";
 
 const AddToCart = ({ setModal, sizeType, id, product }) => {
-  console.log(sizeType);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sizeGuide, setSizeGuide] = useState(false);
   const [data, setData] = useState(null);
@@ -52,9 +50,6 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
     }
     setModalOpen(false);
   };
-
-  const demoData = carts.filter((item) => item.id);
-  console.log(demoData);
 
   const selectedSizes = carts
     .map((item) => `${item.size} (${item.quantity})`)
@@ -176,7 +171,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
                             selectedItem.size === item?.size &&
                             selectedItem.productId === id
                         )
-                          ? "absolute top-0 right-2"
+                          ? "absolute top-1 right-2"
                           : "hidden"
                       }`}
                     >

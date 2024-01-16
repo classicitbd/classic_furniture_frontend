@@ -41,6 +41,9 @@ export const authApi = api.injectEndpoints({
       query: (data) => ({
         url: `${AUTH_LOGIN}`,
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: data,
       }),
       invalidatesTags: [tagTypes.user],
@@ -94,7 +97,6 @@ export const authApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
-
   }),
 });
 
@@ -105,5 +107,5 @@ export const {
   useResendOtpMutation,
   useForgetPasswordMutation,
   useSetPasswordMutation,
-  useDeleteUserMutation
+  useDeleteUserMutation,
 } = authApi;
