@@ -14,6 +14,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const token = getCookie(authKey);
+  console.log(token)
 
   useEffect(() => {
     if (token) {
