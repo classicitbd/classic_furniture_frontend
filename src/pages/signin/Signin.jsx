@@ -30,6 +30,7 @@ const SignIn = () => {
         } else {
           navigate("/");
         }
+
         setCookie(authKey, res?.data?.data?.token);
         toast.success(res?.data?.message, {
           autoClose: 2000,

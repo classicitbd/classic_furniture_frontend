@@ -16,7 +16,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/bundle";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
-import { BASE_URL } from "../../../utils/baseURL";
 // import "swiper/css/keyboard";
 
 const SliderImage = ({ sliders }) => {
@@ -54,7 +53,7 @@ const SliderImage = ({ sliders }) => {
             {sliders?.data?.map((slider) => (
               <SwiperSlide key={slider.id}>
                 <img
-                  src={`${BASE_URL}/sliderImages/${slider?.slider}`}
+                  src={slider?.slider}
                   className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh]"
                   alt={slider.id}
                 />

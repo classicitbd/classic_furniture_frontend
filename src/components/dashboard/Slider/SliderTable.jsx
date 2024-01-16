@@ -7,7 +7,6 @@ import { FiEdit } from "react-icons/fi";
 import { CiSquarePlus } from "react-icons/ci";
 import { useState } from "react";
 import AddSlider from "./AddSlider";
-import { BASE_URL } from "../../../utils/baseURL";
 import { useDeleteSliderMutation } from "../../../redux/feature/slider/sliderApi";
 import { toast } from "react-toastify";
 import UpdateSlider from "./UpdateSlider";
@@ -69,7 +68,7 @@ const SliderTable = ({ sliders, refetch }) => {
             >
               <img
                 className="object-cover w-full h-64"
-                src={`${BASE_URL}/sliderImages/${slider?.slider}`}
+                src={slider?.slider}
                 alt="slider"
               />
 
