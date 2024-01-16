@@ -15,6 +15,7 @@ const Category = () => {
       return data;
     },
   });
+
   useEffect(() => {
     const uniqueMap = new Map();
     data?.data?.forEach((item) => {
@@ -24,7 +25,7 @@ const Category = () => {
     // Convert Map values back to an array
     const uniqueData = Array.from(uniqueMap.values());
     setCategoryTypes(uniqueData);
-  }, [data]);
+  }, [data?.data]);
   return (
     <section>
       <article className="text-wrap py-[30px]">
@@ -38,7 +39,7 @@ const Category = () => {
           {categoryTypes?.map((item, i) => (
             <li key={item._id}>
               <Link
-              to={`/all?category=${item?.slug}`}
+                to={`/all?category=${item?.slug}`}
                 className={`${
                   categoryTypes?.length === i && "text-error-300"
                 } uppercase text-white`}
@@ -54,7 +55,10 @@ const Category = () => {
             </li>
           ))}
           <li>
-            <Link to={`/all?discount=true`} className={`text-error-200 hover:text-error-300 uppercase`}>
+            <Link
+              to={`/all?discount=true`}
+              className={`text-error-200 hover:text-error-300 uppercase`}
+            >
               Discount Section
             </Link>
           </li>

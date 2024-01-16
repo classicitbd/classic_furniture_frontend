@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
       setUserName(null);
       setUserPhone(null);
       setUserRole(null);
-      setLoading(false)
+      setLoading(false);
     }
   }, [token]);
 
