@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
 import { useSignInMutation } from "../../redux/feature/auth/authApi";
 import { setCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
-import { getToken } from "../../service/Auth.service";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -18,14 +17,19 @@ const SignIn = () => {
   } = useForm();
   const location = useLocation();
   const form = location?.state?.from?.pathname || "/";
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [signIn, { isLoading }] = useSignInMutation();
-  const token = getToken();
   const handleSignIn = async (data) => {
     try {
       setLoading(true);
       const res = await signIn(data);
       if (res?.data?.success) {
+        console.log("location", form);
+        if (form === "/dashboard") {
+          navigate("/dashboard");
+        } else {
+          navigate("/");
+        }
         setCookie(authKey, res?.data?.data?.token);
         toast.success(res?.data?.message, {
           autoClose: 2000,
@@ -42,10 +46,6 @@ const SignIn = () => {
       setLoading(false);
     }
   };
-
-  if (token) {
-    return Navigate(form, { replace: true });
-  }
 
   return (
     <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">

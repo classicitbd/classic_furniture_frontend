@@ -120,7 +120,7 @@ const AllProducts = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[61px] sm:top-[69px] z-30 bg-white">
+      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[61px] sm:top-[64px] z-30 bg-white">
         <div>
           <h1>all products</h1>
         </div>

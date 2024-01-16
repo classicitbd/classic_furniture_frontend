@@ -20,7 +20,7 @@ import { BASE_URL } from "../../../../utils/baseURL";
 const ArrivalBottomProducts = () => {
   const [rows, setRows] = useState(10);
   const [page, setPage] = useState(1);
-  const { data: products = [], isLoading } = useQuery({
+  const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product?page=${page}&limit=${rows}`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/product?page=${page}&limit=${rows}`);
@@ -28,7 +28,6 @@ const ArrivalBottomProducts = () => {
       return data;
     },
   }); // get All Product
-  console.log(products.data);
   return (
     <div className="px-[5px] lg:px-[50px] pb-[20px] pt-[5px]">
       <Swiper

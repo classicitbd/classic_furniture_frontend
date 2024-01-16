@@ -33,7 +33,6 @@ const Header = () => {
   const carts = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
   const isUser = isLoggedin();
-  console.log(carts);
 
   const handleLogOut = () => {
     eraseCookie(authKey);

@@ -27,6 +27,7 @@ const Slider = () => {
       return data;
     },
   }); // get all slider
+  console.log(sliders.data);
   return (
     <div className="main-container">
       <Swiper
@@ -60,7 +61,7 @@ const Slider = () => {
           {sliders?.data?.map((slider) => (
             <SwiperSlide key={slider._id}>
               <img
-                src={`${BASE_URL}/sliderImages/${slider?.slider}`}
+                src={slider?.slider}
                 className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] xl:h-[90vh]"
                 alt={slider.id}
               />

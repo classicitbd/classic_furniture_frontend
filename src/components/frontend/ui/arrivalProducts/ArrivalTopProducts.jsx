@@ -28,7 +28,6 @@ const ArrivalTopProducts = () => {
       return data;
     },
   }); // get All Product
-  console.log(products.data);
   return (
     <div className="px-[5px] lg:px-[50px] pt-[20px] pb-[5px]">
       <div className="flex items-center justify-between py-[20px]">
