@@ -13,7 +13,7 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       const existingIndex = state.products.findIndex(
         (product) =>
-          product.size_variationId === action.payload.size_variationId &&
+          product.productId === action.payload.productId &&
           product.size === action.payload.size
       );
 
@@ -35,7 +35,7 @@ const cartSlice = createSlice({
     removeFromCart: (state, action) => {
       const indexToRemove = state.products.findIndex(
         (product) =>
-          product.size_variationId === action.payload.size_variationId &&
+          product.productId === action.payload.productId &&
           product.size === action.payload.size
       );
 
@@ -49,7 +49,7 @@ const cartSlice = createSlice({
     incrementQuantity: (state, action) => {
       const existingProduct = state.products.find(
         (product) =>
-          product.size_variationId === action.payload.size_variationId &&
+          product.productId === action.payload.productId &&
           product.size === action.payload.size
       );
 
@@ -63,7 +63,7 @@ const cartSlice = createSlice({
     decrementQuantity: (state, action) => {
       const existingProduct = state.products.find(
         (product) =>
-          product.size_variationId === action.payload.size_variationId &&
+          product.productId === action.payload.productId &&
           product.size === action.payload.size
       );
 
@@ -74,7 +74,7 @@ const cartSlice = createSlice({
         // If quantity is 1, remove the product from the cart
         const indexToRemove = state.products.findIndex(
           (product) =>
-            product.size_variationId === action.payload.size_variationId &&
+            product.productId === action.payload.productId &&
             product.size === action.payload.size
         );
 

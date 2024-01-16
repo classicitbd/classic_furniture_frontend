@@ -15,16 +15,25 @@ import {
   removeFromCart,
 } from "../../../../redux/feature/cart/cartSlice";
 
-const AddToCart = ({ setModal }) => {
-  const sizeType = sizeData;
+const AddToCart = ({ setModal, sizeType, id, product }) => {
+  console.log(sizeType);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sizeGuide, setSizeGuide] = useState(false);
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.cart.products);
 
-  const openModal = (value, id) => {
-    setData({ ...value, size_variationId: id });
+  const openModal = (value) => {
+    delete value._id;
+    setData({
+      ...value,
+      size_validationId: value?._id,
+      price: product?.price,
+      title: product?.title,
+      color: product?.colorId?.color,
+      thumbnail_image: product?.thumbnail_image,
+      productId: id,
+    });
     setModalOpen(true);
   };
 
@@ -44,7 +53,7 @@ const AddToCart = ({ setModal }) => {
     setModalOpen(false);
   };
 
-  const demoData = carts.filter(item => item.id);
+  const demoData = carts.filter((item) => item.id);
   console.log(demoData);
 
   const selectedSizes = carts
@@ -96,7 +105,7 @@ const AddToCart = ({ setModal }) => {
             </article>
           </div>
           <div>
-            {sizeType?.size_variation?.map((item) => (
+            {sizeType?.map((item) => (
               <div
                 key={item?.size}
                 className={`my-3 ${
@@ -122,14 +131,22 @@ const AddToCart = ({ setModal }) => {
                     <div
                       onClick={() =>
                         dispatch(
-                          addToCart({ ...item, size_variationId: sizeType.id })
+                          addToCart({
+                            size: item?.size,
+                            size_validationId: item?._id,
+                            price: product?.price,
+                            title: product?.title,
+                            color: product?.colorId?.color,
+                            thumbnail_image: product?.thumbnail_image,
+                            productId: id,
+                          })
                         )
                       }
                       className={`flex cursor-pointer justify-center items-center py-3 border rounded-md px-3 relative ${
                         carts.some(
                           (selectedItem) =>
                             selectedItem.size === item?.size &&
-                            selectedItem.size_variationId === sizeType.id
+                            selectedItem.productId === id
                         )
                           ? "border-green-500"
                           : ""
@@ -143,7 +160,7 @@ const AddToCart = ({ setModal }) => {
                               carts.some(
                                 (selectedItem) =>
                                   selectedItem.size === item?.size &&
-                                  selectedItem.size_variationId === sizeType.id
+                                  selectedItem.productId === id
                               )
                                 ? "visible"
                                 : "invisible"
@@ -157,7 +174,7 @@ const AddToCart = ({ setModal }) => {
                         carts.some(
                           (selectedItem) =>
                             selectedItem.size === item?.size &&
-                            selectedItem.size_variationId === sizeType.id
+                            selectedItem.productId === id
                         )
                           ? "absolute top-2 right-2"
                           : "hidden"
@@ -166,11 +183,11 @@ const AddToCart = ({ setModal }) => {
                       {carts.find(
                         (selectedItem) =>
                           selectedItem.size === item?.size &&
-                          selectedItem.size_variationId === sizeType.id
+                          selectedItem.productId === id
                       )?.quantity === 1 && (
                         <button
                           onClick={() => {
-                            openModal(item, sizeType.id);
+                            openModal(item);
                           }}
                           className="text-error-200 px-2 py-2 border rounded hover:bg-bgray-300"
                         >
@@ -180,14 +197,14 @@ const AddToCart = ({ setModal }) => {
                       {carts.find(
                         (selectedItem) =>
                           selectedItem.size === item?.size &&
-                          selectedItem.size_variationId === sizeType.id
+                          selectedItem.productId === id
                       )?.quantity > 1 && (
                         <button
                           onClick={() =>
                             dispatch(
                               decrementQuantity({
                                 ...item,
-                                size_variationId: sizeType.id,
+                                productId: id,
                               })
                             )
                           }
@@ -200,7 +217,7 @@ const AddToCart = ({ setModal }) => {
                         {carts.find(
                           (selectedItem) =>
                             selectedItem.size === item?.size &&
-                            selectedItem.size_variationId === sizeType.id
+                            selectedItem.productId === id
                         )?.quantity || 1}
                       </span>
                       <button
@@ -221,7 +238,7 @@ const AddToCart = ({ setModal }) => {
                             dispatch(
                               incrementQuantity({
                                 ...item,
-                                size_variationId: sizeType.id,
+                                productId: id,
                               })
                             );
                         }}

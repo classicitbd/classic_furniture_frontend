@@ -21,8 +21,20 @@ import MaterialCareModal from "../../../common/modal/MaterialCareModal";
 import ShippingInfo from "../shippingInfo/ShippingInfo";
 import AddToCartModal from "../../../common/modal/AddToCartModal";
 import AddToCart from "../addToCart/AddToCart";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../../utils/baseURL";
 
 const ProductDetails = () => {
+  const { slug } = useParams();
+  const { data: product = [], isLoading } = useQuery({
+    queryKey: [`/api/v1/product/${slug}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/product/${slug}`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get All Product
   const [isModalOpen, setModalOpen] = useState(false);
   const [modal, setModal] = useState("");
 
@@ -35,6 +47,7 @@ const ProductDetails = () => {
     setModalOpen(false);
     setModal("");
   };
+
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
       {/* ------ products details left side content ------ start */}
@@ -55,15 +68,15 @@ const ProductDetails = () => {
         onSlideChange={() => {}}
         className="h-[50vh] md:h-[90vh] w-full"
       >
-        {singleProduct?.images?.map((index) => (
+        {product?.data?.images?.map((image, i) => (
           <SwiperSlide
-            key={index}
+            key={i}
             className="border w-full flex justify-center items-center"
           >
             <img
               className="object-fill h-full w-full"
-              src={`/assets/images/product-${index}.jpg`}
-              alt={singleProduct?.title}
+              src={image?.image}
+              alt={image}
             />
           </SwiperSlide>
         ))}
@@ -75,12 +88,12 @@ const ProductDetails = () => {
         <Breadcrumb product={singleProduct} />
         <div className="md:px-4">
           <article className="space-y-5 mt-8 border-bgray-500">
-            <h1 className="text-xl font-semibold">{singleProduct.title}</h1>
-            <p className="text-xl font-normal">BDT {singleProduct?.price}.00</p>
+            <h1 className="text-xl font-semibold">{product?.data?.title}</h1>
+            <p className="text-xl font-normal">BDT {product?.data?.price}.00</p>
           </article>
           <div className="h-[1px] w-full bg-bgray-700 mt-12"></div>
           <p className="text-xl py-8">
-            <strong>Color:</strong> {singleProduct.color}
+            <strong>Color:</strong> {product?.data?.colorId?.color}
           </p>
           <button
             onClick={() => openModal("addToCart")}
@@ -94,9 +107,9 @@ const ProductDetails = () => {
             <p className="py-7 text-xl font-medium tracking-tight leading-5">
               Products Details
             </p>
-            <div
+            {/* <div
               dangerouslySetInnerHTML={{ __html: singleProduct.description }}
-            ></div>
+            ></div> */}
           </div>
           <div className="py-10 space-x-5">
             <button
@@ -172,7 +185,12 @@ const ProductDetails = () => {
                 <IoCloseOutline className="text-2xl" />
               </button>
             </div>
-            <AddToCart setModal={setModal} />
+            <AddToCart
+              sizeType={product?.data?.size_variation}
+              id={product?.data?._id}
+              product={product?.data}
+              setModal={setModal}
+            />
           </div>
         </AddToCartModal>
       )}

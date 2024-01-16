@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
 import { useSignInMutation } from "../../redux/feature/auth/authApi";
@@ -15,19 +15,20 @@ const SignIn = () => {
     formState: { errors },
     reset,
   } = useForm();
+  const location = useLocation();
+  const form = location?.state?.from?.pathname || "/";
   const navigate = useNavigate();
   const [signIn, { isLoading }] = useSignInMutation();
-
   const handleSignIn = async (data) => {
     try {
       setLoading(true);
       const res = await signIn(data);
       if (res?.data?.success) {
+        navigate(form, { replace: true });
         setCookie(authKey, res?.data?.data?.token);
-        toast.info(res?.data?.message, {
+        toast.success(res?.data?.message, {
           autoClose: 2000,
         });
-        navigate(`/`);
         reset();
       } else if (res.error.status == 400) {
         toast.error(res?.error?.data?.message, {
