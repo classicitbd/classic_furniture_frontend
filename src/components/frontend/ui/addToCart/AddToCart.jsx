@@ -176,7 +176,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
                             selectedItem.size === item?.size &&
                             selectedItem.productId === id
                         )
-                          ? "absolute top-2 right-2"
+                          ? "absolute top-0 right-2"
                           : "hidden"
                       }`}
                     >

@@ -24,7 +24,6 @@ const SignIn = () => {
       setLoading(true);
       const res = await signIn(data);
       if (res?.data?.success) {
-        console.log(form)
         navigate(form, { replace: true });
         setCookie(authKey, res?.data?.data?.token);
         toast.success(res?.data?.message, {

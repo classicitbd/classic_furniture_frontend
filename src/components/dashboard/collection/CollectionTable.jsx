@@ -5,7 +5,6 @@ import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteCollectionMutation } from "../../../redux/feature/collection/collectionApi";
-import { BASE_URL } from "../../../utils/baseURL";
 import { useState } from "react";
 import UpdateCollection from "./UpdateCollection";
 import { FiEdit } from "react-icons/fi";
@@ -66,7 +65,7 @@ const CollectionTable = ({refetch, isLoading, collections }) => {
                   {collection?.collection_name}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                  <img src={`${BASE_URL}/collectionImages/${collection?.collection_image}`} alt={collection.collection_name} className="w-12 rounded-full" />
+                  <img src={collection?.collection_image} alt={collection.collection_name} className="w-12 rounded-full" />
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                     <MdDeleteForever onClick={() =>handleDeleteCollection(collection)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />

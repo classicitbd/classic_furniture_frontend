@@ -14,7 +14,6 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const token = getCookie(authKey);
-  console.log(token)
 
   useEffect(() => {
     if (token) {
@@ -45,7 +44,7 @@ const AuthProvider = ({ children }) => {
       setUserName(null);
       setUserPhone(null);
       setUserRole(null);
-      setLoading(false)
+      setLoading(false);
     }
   }, [token]);
 

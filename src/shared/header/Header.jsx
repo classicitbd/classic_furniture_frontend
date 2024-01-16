@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormSearch from "../../components/frontend/form/FormSearch";
 import ProductNotFound from "../../components/common/productNotFound/ProductNotFound";
-import { productData } from "../../data/product-data";
 import { CiTrash } from "react-icons/ci";
 import { FiMinus } from "react-icons/fi";
 import { isLoggedin } from "../../service/Auth.service";
@@ -17,7 +16,6 @@ import { eraseCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addToCart,
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
@@ -201,14 +199,16 @@ const Header = () => {
                         >
                           My Profile
                         </Link>
-                        <button
-                          type="submit"
-                          className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-                          role="menuitem"
-                          onClick={handleLogOut}
-                        >
-                          Log Out
-                        </button>
+                        <form>
+                          <button
+                            type="submit"
+                            className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                            role="menuitem"
+                            onClick={handleLogOut}
+                          >
+                            Log Out
+                          </button>
+                        </form>
                       </div>
                     </div>
                   )}
