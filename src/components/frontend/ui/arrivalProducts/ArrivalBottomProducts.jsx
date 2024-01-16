@@ -64,7 +64,7 @@ const ArrivalBottomProducts = () => {
         <div>
           {products?.data?.map((product) => (
             <SwiperSlide
-              key={product?.id}
+              key={product?._id}
               className="border group rounded-md overflow-hidden"
             >
               <Link to={`/products/details/${product?.slug}`}>
