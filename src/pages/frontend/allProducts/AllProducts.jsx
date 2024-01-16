@@ -21,6 +21,16 @@ const AllProducts = () => {
   const [subCategoryTypes, setSubCategoryTypes] = useState([]);
   const [queryParameters] = useSearchParams();
 
+  // get all products
+  const { data: products = [] } = useQuery({
+    queryKey: ["/api/v1/product"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/product`);
+      const data = await res.json();
+      return data;
+    },
+  });
+
   // get Category type
   const { data = [] } = useQuery({
     queryKey: ["/api/v1/category"],
@@ -118,12 +128,15 @@ const AllProducts = () => {
     setCategoryTypes(uniqueData);
   }, [data]);
 
+  console.log(products);
+
   return (
     <div className="min-h-screen bg-white">
       <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[61px] sm:top-[64px] z-30 bg-white">
         <div>
-          <h1>all products</h1>
+          <h1>Products {products?.data?.length}</h1>
         </div>
+
         <ul className="flex items-center gap-3 sm:gap-5 text-sm">
           <li>
             <Link
@@ -585,28 +598,30 @@ const AllProducts = () => {
         {/* ------ filter drawer ------ end */}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-        {productData.map((product) => (
+        {products?.data?.map((product) => (
           <div
-            key={product?.id}
+            key={product?._id}
             className="border group rounded overflow-hidden bg-[#F0F0F0]"
           >
-            <Link to={`/products/details/${product?.id}`}>
+            <Link to={`/products/details/${product?.slug}`}>
               <div className="flex">
                 <img
-                  src={product?.thumbnail}
+                  src={product?.thumbnail_image}
                   className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
                   alt={product?.id}
                 />
                 <img
-                  src={product?.thumbnailTwo}
+                  src={product?.hover_image}
                   className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
                   alt={product?.id}
                 />
               </div>
               <article className="pb-[10px]">
-                <h2 className="text-center">{product?.title}</h2>
+                <h2 className="text-center">
+                  {product?.title} {product?.colorId?.color}
+                </h2>
                 <p className="text-center py-3 text-bgray-700">
-                  {product?.color}
+                  {product?.colorId?.color}
                 </p>
                 <p className="px-4">BDT {product?.price}.00</p>
               </article>

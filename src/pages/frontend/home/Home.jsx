@@ -8,14 +8,11 @@ import CollectionCategory from "../../../components/frontend/ui/collectionCatego
 import CollectionTopCategory from "../../../components/frontend/ui/collectionCategory/CollectionTopCategory";
 import { useEffect } from "react";
 import Navbar from "../../../components/frontend/ui/navbar/Navbar";
-import useUser from "../../../hooks/useUser";
 
 const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [user, loading] = useUser();
-  console.log(user);
   return (
     <main className="">
       <Navbar />
