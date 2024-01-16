@@ -41,7 +41,7 @@ const UpdateCategory = ({setCategoryUpdateModal, categoryUpdateModalValue, refet
             } )
         formData.append('slug', slug);
         formData.append('_id', categoryUpdateModalValue?._id);
-        formData.append('menuId', categoryUpdateModalValue?.menuId);
+        formData.append('menuId', categoryUpdateModalValue?.menuId?._id);
         updateCategory(formData).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 toast.success(result?.data?.message ? result?.data?.message : "Category update successfully !", {

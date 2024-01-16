@@ -8,7 +8,6 @@ import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useState } from "react";
 import UpdateSubCategory from "./UpdateSubCategory";
 import { FiEdit } from "react-icons/fi";
-import { BASE_URL } from "../../../utils/baseURL";
 
 const SubCategoryTable = ({ refetch, isLoading, subCategoryTypes }) => {
   const [subCategoryUpdateModal, setSubCategoryUpdateModal] = useState(false);
@@ -77,7 +76,7 @@ const SubCategoryTable = ({ refetch, isLoading, subCategoryTypes }) => {
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
                     <img
-                      src={`${BASE_URL}/subCategoryImages/${subCategory?.sub_category_image}`}
+                      src={subCategory?.sub_category_image}
                       alt={subCategory.sub_category}
                       className="w-12 rounded-full"
                     />

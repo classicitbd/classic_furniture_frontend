@@ -8,7 +8,6 @@ import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useState } from "react";
 import UpdateCategory from "./UpdateCategory";
 import { FiEdit } from "react-icons/fi";
-import { BASE_URL } from "../../../utils/baseURL";
 
 const CategoryTable = ({refetch, isLoading, categoryTypes}) => {
 
@@ -70,7 +69,7 @@ const CategoryTable = ({refetch, isLoading, categoryTypes}) => {
                   {category?.category}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                  <img src={`${BASE_URL}/categoryImages/${category?.category_image}`} alt={category.category} className="w-12 rounded-full" />
+                  <img src={category?.category_image} alt={category.category} className="w-12 rounded-full" />
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 font-semibold">
                   {category?.menuId?.menu}

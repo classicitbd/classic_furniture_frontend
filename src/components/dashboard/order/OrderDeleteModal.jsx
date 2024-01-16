@@ -11,6 +11,7 @@ const OrderDeleteModal = ({ setIsDeleteOpen, isDeleteData, refetch }) => {
         const sendData = {
             transactionId: isDeleteData?.transactionId,
             status: isDeleteData?.status,
+            type: isDeleteData?.type,
             _id: isDeleteData?._id
         }
         deleteOrder(sendData).then(result => {
