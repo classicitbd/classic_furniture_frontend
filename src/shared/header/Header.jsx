@@ -20,9 +20,12 @@ import {
   incrementQuantity,
   removeFromCart,
 } from "../../redux/feature/cart/cartSlice";
+
 import ConfirmationModal from "../../components/common/modal/ConfirmationModal";
 import { IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
 const Header = () => {
   const [scroll, setScroll] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -35,6 +38,15 @@ const Header = () => {
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
   const isUser = isLoggedin();
+
+  const { data: products = [] } = useQuery({
+    queryKey: [`/api/v1/product`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/product`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get All Product
 
   const handleLogOut = () => {
     eraseCookie(authKey);
@@ -387,10 +399,15 @@ const Header = () => {
                           <button
                             onClick={() => {
                               if (
-                                carts.some(
-                                  (selectedItem) =>
-                                    selectedItem?.quantity === product?.quantity
-                                )
+                                products?.data
+                                  ?.find(
+                                    (singleProduct) =>
+                                      singleProduct?._id === product?.productId
+                                  )
+                                  .size_variation.find(
+                                    (sizeItem) =>
+                                      sizeItem.size === product?.size
+                                  ).quantity === product?.quantity
                               ) {
                                 toast.error(
                                   "Max Stock Selected/Shortage of Stock",

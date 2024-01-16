@@ -18,6 +18,8 @@ import {
 import ConfirmationModal from "../../../components/common/modal/ConfirmationModal";
 import { IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
 
 const CheckoutPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -29,6 +31,15 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const [addressUpdate, setAddressUpdate] = useState(false);
   const { email } = getUserInfo();
+
+  const { data: products = [] } = useQuery({
+    queryKey: [`/api/v1/product`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/product`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get All Product
   const openModal = (product) => {
     setData(product);
     setModalOpen(true);
@@ -129,10 +140,14 @@ const CheckoutPage = () => {
                     <button
                       onClick={() => {
                         if (
-                          carts.some(
-                            (selectedItem) =>
-                              selectedItem?.quantity === product?.quantity
-                          )
+                          products?.data
+                            ?.find(
+                              (singleProduct) =>
+                                singleProduct?._id === product?.productId
+                            )
+                            .size_variation.find(
+                              (sizeItem) => sizeItem.size === product?.size
+                            ).quantity === product?.quantity
                         ) {
                           toast.error("Max Stock Selected/Shortage of Stock", {
                             autoClose: 3000,
