@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 // import react icons
 import { HiOutlineAdjustmentsVertical } from "react-icons/hi2";
@@ -18,13 +18,17 @@ const AllProducts = () => {
   const [discount, setDiscount] = useState(true);
   const [categoryTypes, setCategoryTypes] = useState([]);
   const [subCategoryTypes, setSubCategoryTypes] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  // Add similar state variables for collection, color, features, and styles
   const [queryParameters] = useSearchParams();
+  const navigate = useNavigate();
 
   // get all products
   const { data: products = [] } = useQuery({
     queryKey: ["/api/v1/product"],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product`);
+      const res = await fetch(`${BASE_URL}/all?`);
       const data = await res.json();
       return data;
     },
@@ -40,6 +44,7 @@ const AllProducts = () => {
     },
   });
 
+  // get Sub Category type
   const { data: subData = [] } = useQuery({
     queryKey: ["/api/v1/sub_category"],
     queryFn: async () => {
@@ -47,8 +52,9 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Sub Category type
+  });
 
+  // get Collection type
   const { data: collections = [] } = useQuery({
     queryKey: ["/api/v1/collection"],
     queryFn: async () => {
@@ -56,8 +62,9 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Collection type
+  });
 
+  // get Style type
   const { data: styles = [] } = useQuery({
     queryKey: ["/api/v1/style"],
     queryFn: async () => {
@@ -65,8 +72,9 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Style type
+  });
 
+  // get Color type
   const { data: colors = [] } = useQuery({
     queryKey: ["/api/v1/color"],
     queryFn: async () => {
@@ -74,8 +82,9 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Color type
+  });
 
+  // get Feature type
   const { data: features = [] } = useQuery({
     queryKey: ["/api/v1/feature"],
     queryFn: async () => {
@@ -83,7 +92,30 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Feature type
+  });
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("category", category);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+
+  const handleSubCategoryClick = (subCategory) => {
+    setSelectedSubCategory(subCategory);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("subCategory", subCategory);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+  // Add similar functions for collection, color, features, and styles
 
   const handleResetFilter = () => {
     setDiscount(false);
@@ -100,7 +132,7 @@ const AllProducts = () => {
       allQueryParams[key] = value;
     }
 
-    // console.log("All Query Parameters:", allQueryParams);
+    console.log("All Query Parameters:", allQueryParams);
 
     // You can perform any other logic based on all query parameters here
   }, [queryParameters]);
@@ -194,12 +226,29 @@ const AllProducts = () => {
               <HiOutlineAdjustmentsVertical />
             </button>
             <div
-              className={`absolute top-[57px] left-0 w-full border bg-[#FFFFFF] ${
+              className={`absolute top-[50px] left-0 w-full border bg-[#FFFFFF] ${
                 filterDropdownOpen ? "block" : "hidden"
               }`}
             >
               <div className="grid grid-cols-6 min-h-[460px] border-b">
                 {/* ------ category section ------ start */}
+                {/* <div className="border-r px-4 py-[5px]">
+                  <ul className="space-y-1">
+                    <li className="text-lg font-medium tracking-normal mb-2">
+                      <button>Categories</button>
+                    </li>
+                    {categoryTypes?.map((category) => (
+                      <li key={category._id}>
+                        <Link
+                          to={`/all?category=${category?.slug}`}
+                          className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm"
+                        >
+                          {category?.category}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div> */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
                     <li className="text-lg font-medium tracking-normal mb-2">
@@ -207,7 +256,16 @@ const AllProducts = () => {
                     </li>
                     {categoryTypes?.map((category) => (
                       <li key={category._id}>
-                        <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
+                        <button
+                          onClick={() =>
+                            handleCategoryClick(category?.slug)
+                          }
+                          className={`${
+                            selectedCategory === category?.category
+                              ? "bg-bgray-100"
+                              : ""
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                        >
                           {category?.category}
                         </button>
                       </li>
@@ -215,8 +273,24 @@ const AllProducts = () => {
                   </ul>
                 </div>
                 {/* ------ category section ------ end */}
-
                 {/* ------ sub category section ------ start */}
+                {/* <div className="border-r px-4 py-[5px]">
+                  <ul className="space-y-1">
+                    <li className="text-lg font-medium tracking-normal mb-2">
+                      <button>Sub Categories</button>
+                    </li>
+                    {subCategoryTypes?.map((subCategory) => (
+                      <li key={subCategory?._id}>
+                        <Link
+                          to={`/`}
+                          className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm"
+                        >
+                          {subCategory?.sub_category}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div> */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
                     <li className="text-lg font-medium tracking-normal mb-2">
@@ -224,7 +298,16 @@ const AllProducts = () => {
                     </li>
                     {subCategoryTypes?.map((subCategory) => (
                       <li key={subCategory?._id}>
-                        <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
+                        <button
+                          onClick={() =>
+                            handleSubCategoryClick(subCategory?.slug)
+                          }
+                          className={`${
+                            selectedSubCategory === subCategory?.sub_category
+                              ? "bg-bgray-100"
+                              : ""
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                        >
                           {subCategory?.sub_category}
                         </button>
                       </li>
@@ -232,7 +315,6 @@ const AllProducts = () => {
                   </ul>
                 </div>
                 {/* ------ sub category section ------ end */}
-
                 {/* ------ collections section ------ start */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
@@ -249,7 +331,6 @@ const AllProducts = () => {
                   </ul>
                 </div>
                 {/* ------ collections section ------ end */}
-
                 {/* ------ styles section ------ start */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
