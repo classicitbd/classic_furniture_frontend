@@ -28,10 +28,12 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
           } else {
             setUser({});
+            setLoading(false);
           }
         });
     } else {
       setUser({});
+      setLoading(false);
     }
   }, []);
 
