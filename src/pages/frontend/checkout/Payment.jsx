@@ -3,18 +3,26 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
+import { useOrderMutation } from "../../../redux/feature/payment/paymentApi";
+import { toast } from "react-toastify";
+import { cartKey } from "../../../constants/cartKey";
 
 const Payment = ({ total, user }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
+  const [order, { isLoading }] = useOrderMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      if (user?.address) {
-        const data = {
+      let data = {};
+      if (!payBy) {
+        return toast.error("select your payment method");
+      }
+      if (user && user?.address) {
+        data = {
           userInfo: user?._id,
           email: user?.email,
           status: "pending",
@@ -22,8 +30,15 @@ const Payment = ({ total, user }) => {
           payment_type: payBy,
           order: carts,
         };
-        console.log(data);
       }
+      console.log(data);
+      const res = await order(data);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+        localStorage.removeItem(cartKey);
+        window.location.reload();
+      }
+      console.log(res);
     } catch (error) {
       console.error(error);
     } finally {
@@ -92,7 +107,7 @@ const Payment = ({ total, user }) => {
           type="submit"
           className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
         >
-          {loading ? <MiniSpinner /> : "Place Order"}
+          {loading || isLoading ? <MiniSpinner /> : "Place Order"}
         </button>
       </form>
 

@@ -23,10 +23,10 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
   const carts = useSelector((state) => state.cart.products);
 
   const openModal = (value) => {
-    delete value._id;
+    console.log(value);
     setData({
       ...value,
-      size_validationId: value?._id,
+      size_variationId: value?._id,
       price: product?.price,
       title: product?.title,
       color: product?.colorId?.color,
@@ -129,7 +129,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
                         dispatch(
                           addToCart({
                             size: item?.size,
-                            size_validationId: item?._id,
+                            size_variationId: item?._id,
                             price: product?.price,
                             title: product?.title,
                             color: product?.colorId?.color,
