@@ -5,7 +5,6 @@ import { SlPhone } from "react-icons/sl";
 import { AiOutlineMail } from "react-icons/ai";
 
 const UserInfo = ({ user }) => {
-  console.log(user);
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">

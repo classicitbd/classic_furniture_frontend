@@ -34,7 +34,6 @@ const CheckoutPage = () => {
   const [addressUpdate, setAddressUpdate] = useState(false);
   const { email } = getUserInfo();
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -44,6 +43,15 @@ const CheckoutPage = () => {
       return data;
     },
   }); // get All Product
+
+  const { data: informations = [], refetch } = useQuery({
+    queryKey: [`/api/v1/getMe/${user?.email}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/getMe/${user?.email}`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get USER INFO
 
   const openModal = (product) => {
     setData(product);
@@ -70,17 +78,18 @@ const CheckoutPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <section className="overflow-y-auto space-y-5">
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
-            <UserInfo email={email} user={user} />
+            <UserInfo email={email} user={informations?.data} />
           </div>
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
             <Recipient
               user={user}
+              refetch={refetch}
               addressUpdate={addressUpdate}
               setAddressUpdate={setAddressUpdate}
             />
           </div>
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
-            <Payment />
+            <Payment user={user} total={total} />
           </div>
         </section>
         <section className="bg-white px-10 p-5 w-3/4 mx-auto rounded sticky">

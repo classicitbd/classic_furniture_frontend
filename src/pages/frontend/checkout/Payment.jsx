@@ -1,13 +1,34 @@
 /* eslint-disable react/prop-types */
 // import react icons
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
-const Payment = ({ email }) => {
-  const { register, handleSubmit } = useForm();
+const Payment = ({ total, user }) => {
+  const [payBy, setPayBy] = useState("");
+  const [loading, setLoading] = useState(false);
+  const carts = useSelector((state) => state.cart.products);
 
-  const onSubmit = (data) => {
-    data.email = email;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      if (user?.address) {
+        const data = {
+          userInfo: user?._id,
+          email: user?.email,
+          status: "pending",
+          type: "unpaid",
+          payment_type: payBy,
+          order: carts,
+        };
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="px-10">
@@ -19,16 +40,16 @@ const Payment = ({ email }) => {
           Payment
         </h2>
       </div>
-      <p className="py-5 font-normal tracking-tight">BDT 10,000.00</p>
-      <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+      <p className="py-5 font-normal tracking-tight">BDT {total}</p>
+      <form className="space-y-5" onSubmit={handleSubmit}>
         <div className="space-y-2 text-center">
-          <div>
+          <div onClick={() => setPayBy("online")}>
             <input
               className="peer sr-only"
               id="online"
               type="radio"
               tabIndex="-1"
-              name="option"
+              name="online"
             />
 
             <label
@@ -45,13 +66,13 @@ const Payment = ({ email }) => {
             </label>
           </div>
 
-          <div>
+          <div onClick={() => setPayBy("cod")}>
             <input
               className="peer sr-only"
               id="cod"
               type="radio"
               tabIndex="-1"
-              name="option"
+              name="cod"
             />
 
             <label
@@ -63,17 +84,17 @@ const Payment = ({ email }) => {
             </label>
           </div>
         </div>
+        <p className="text-xs mt-2">
+          By making this purchase you agree to our
+          <span className="text-blue-500"> terms and conditions.</span>
+        </p>
+        <button
+          type="submit"
+          className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
+        >
+          {loading ? <MiniSpinner /> : "Place Order"}
+        </button>
       </form>
-      <p className="text-xs mt-2">
-        By making this purchase you agree to our
-        <span className="text-blue-500"> terms and conditions.</span>
-      </p>
-      <Link
-        to={`/all`}
-        className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
-      >
-        Place Order
-      </Link>
 
       <p className="text-xs mt-5">
         I agree that placing the order places me under an obligation to make a
