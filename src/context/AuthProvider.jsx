@@ -7,10 +7,7 @@ import { BASE_URL } from "../utils/baseURL";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [userName, setUserName] = useState(null);
-  const [userRole, setUserRole] = useState(null);
-  const [userPhone, setUserPhone] = useState(null);
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 
   
@@ -27,33 +24,22 @@ const AuthProvider = ({ children }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data?.statusCode == 200 && data?.success == true) {
-            setUser(data?.data?.email);
-            setUserName(data?.data?.name);
-            setUserRole(data?.data?.role);
-            setUserPhone(data?.data?.phone);
+            setUser(data?.data);
             setLoading(false);
           } else {
-            setUser(null);
-            setUserName(null);
-            setUserPhone(null);
-            setUserRole(null);
+            setUser({});
           }
         });
     } else {
-      setUser(null);
-      setUserName(null);
-      setUserPhone(null);
-      setUserRole(null);
-      setLoading(false);
+      setUser({});
     }
   }, []);
 
+  console.log( "Fromn auth provider,", user)
+
   const info = {
     user,
-    userName,
-    userRole,
-    userPhone,
-    loading,
+    loading
   };
 
   return <AuthContext.Provider value={info}>{children}</AuthContext.Provider>;
