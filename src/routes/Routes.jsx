@@ -86,6 +86,10 @@ const router = createBrowserRouter([
       // },
       {
         path: "/dashboard",
+        element: <Order />
+      },
+      {
+        path: "/dashboard/slider",
         element: <Slider />
       },
       {
@@ -131,10 +135,6 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/customer",
         element: <Customer />
-      },
-      {
-        path: "/dashboard/order",
-        element: <Order />
       },
     ],
   },

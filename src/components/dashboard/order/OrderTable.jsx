@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 // import { BiSearch } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { BiSearch } from "react-icons/bi";
 import OrderDeleteModal from "./OrderDeleteModal";
@@ -10,12 +10,16 @@ import OrderView from "./OrderView";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { BASE_URL } from "../../../utils/baseURL";
 import Pagination from "../../../shared/pagination/Pagination";
-
+import { GrCompliance } from "react-icons/gr";
+import { CgSandClock } from "react-icons/cg";
 import axios from 'axios';
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import BigSpinner from "../../../shared/loader/BigSpinner";
+import { FaCartPlus, FaMoneyBillAlt } from "react-icons/fa";
 
 const OrderTable = () => {
 
@@ -34,6 +38,9 @@ const OrderTable = () => {
     const [endDate, setEndDate] = useState(new Date());
     const [totalData, setTotalData] = useState(0);
 
+    const [calendarVisible, setCalendarVisible] = useState(false);
+    const calendarRef = useRef(null);
+
     useEffect(() => {
         axios.get(`${BASE_URL}/order?page=${page}&limit=${rows}`)
             .then((response) => {
@@ -43,6 +50,23 @@ const OrderTable = () => {
             })
 
     }, [page, rows])
+
+    const toggleCalendar = () => {
+        setCalendarVisible(!calendarVisible);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+                setCalendarVisible(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     const handleSelect = (date) => {
         // console.log(date)
@@ -77,6 +101,8 @@ const OrderTable = () => {
         }
     }
 
+    const formattedDateRange = `${selectionRange?.startDate?.toLocaleDateString() ?? ''} - ${selectionRange?.endDate?.toLocaleDateString() ?? ''}`;
+
     useEffect(() => {
         if (searchTerm != '') {
             fetch(
@@ -105,6 +131,19 @@ const OrderTable = () => {
         return formattedDate;
     };
 
+    const { data: totalOrderInfo = [], isLoading, refetch } = useQuery({
+        queryKey: ['/api/v1/order/totalOrder'],
+        queryFn: async () => {
+            const res = await fetch(`${BASE_URL}/order/totalOrder`)
+            const data = await res.json();
+            return data;
+        }
+    }) // get Total order info type
+
+    if (isLoading) {
+        return <BigSpinner />
+    }
+
     // open view modal
     const handleView = (data) => {
         setIsViewData(data)
@@ -120,20 +159,83 @@ const OrderTable = () => {
     return (
         <div>
 
-            <DateRangePicker
-                ranges={[selectionRange]}
-                onChange={handleSelect}
-            />
+            {/* Order info tabs */}
+            <div className="grid lg:grid-cols-4 grid-cols-2 mt-6 gap-3">
 
-            <div className="flex items-center justify-end mb-4">
-                <div className="flex items-center gap-2 rounded-xl border border-[#E7E7E7] bg-gray-50 px-[5px] py-2 mt-[24px]">
-                    <BiSearch className="text-[#717171]" size={20} />
+                <div className="bg-[#D4F3FB] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+                    <div>
+                        <p className="w-[30px] h-[30px] bg-[#00B7E9] rounded-full"><FaCartPlus size={20} color="#FFFFFF" className="relative left-1 top-2"/></p>
+                    </div>
+                    <div>
+                        <p className="text-end">Total</p>
+                        <h2 className="font-medium text-[24px]">{totalOrderInfo?.data?.totalOrder}</h2>
+                    </div>
+                </div>
+
+                <div className="bg-[#DEF6EE] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+                    <div>
+                        <p className="w-[30px] h-[30px] bg-[#3EC99E] rounded-full"><CgSandClock size={20} color="#FFFFFF" className="relative left-1 top-2"/></p>
+                    </div>
+                    <div>
+                        <p className="text-end">Pending</p>
+                        <h2 className="font-medium text-[24px]">{totalOrderInfo?.data?.pendingOrder}</h2>
+                    </div>
+                </div>
+
+                <div className="bg-[#EAE9FE] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+                    <div>
+                        <p className="w-[30px] h-[30px] bg-[#837DFB] rounded-full"><GrCompliance size={18} color="#FFFFFF" className="relative left-1 top-2"/></p>
+                    </div>
+                    <div>
+                        <p className="text-end">Success</p>
+                        <h2 className="font-medium text-[24px]">{totalOrderInfo?.data?.successOrder}</h2>
+                    </div>
+                </div>
+
+                <div className="bg-teal-100 rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+                    <div>
+                        <p className="w-[30px] h-[30px] bg-teal-500 rounded-full"><FaMoneyBillAlt size={20} color="#FFFFFF" className="relative left-1 top-2"/></p>
+                    </div>
+                    <div>
+                        <p className="text-end">Revenue</p>
+                        <h2 className="font-medium text-[24px]">$ {totalOrderInfo?.data?.totalPrice}</h2>
+                    </div>
+                </div>
+
+            </div>
+
+            {/* Date and search field */}
+
+            <div className="flex items-center justify-between gap-1">
+                <div ref={calendarRef}>
                     <input
-                        onKeyDown={(e) => handleSearch(e)}
                         type="text"
-                        placeholder="Search..."
-                        className="bg-gray-50 bg-none w-full outline-none text-[14px] font-semibold placeholder-[#717171]"
+                        value={formattedDateRange}
+                        className="border p-2 rounded-md"
+                        onClick={toggleCalendar}
                     />
+                    {calendarVisible && (
+
+                        <div style={{ position: 'absolute', zIndex: 1 }}>
+                            <DateRangePicker
+                                ranges={[selectionRange]}
+                                onChange={handleSelect}
+                            />
+                        </div>
+
+                    )}
+                </div>
+
+                <div className="flex items-center justify-end mb-4">
+                    <div className="flex items-center gap-2 rounded-xl border border-[#E7E7E7] bg-gray-50 px-[5px] py-2 mt-[16px]">
+                        <BiSearch className="text-[#717171]" size={20} />
+                        <input
+                            onKeyDown={(e) => handleSearch(e)}
+                            type="text"
+                            placeholder="Search..."
+                            className="bg-gray-50 bg-none w-full outline-none text-[14px] font-semibold placeholder-[#717171]"
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -227,7 +329,7 @@ const OrderTable = () => {
             {/* Handle open delete modal */}
             {
                 isDeleteOpen &&
-                <OrderDeleteModal setIsDeleteOpen={setIsDeleteOpen} isDeleteData={isDeleteData} />
+                <OrderDeleteModal setIsDeleteOpen={setIsDeleteOpen} isDeleteData={isDeleteData} refetch={refetch} />
             }
 
         </div>

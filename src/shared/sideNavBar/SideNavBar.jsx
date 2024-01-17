@@ -39,6 +39,7 @@ const SideNavBar = () => {
                     </div>
                 </div> */}
 
+
                 <div
                     className={
                         pathname === "/dashboard"
@@ -48,8 +49,8 @@ const SideNavBar = () => {
                 >
                     <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
                         <Link to="/dashboard" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <PiSlideshowBold />
-                            Slider
+                            <TbShoppingCartPause />
+                            Order
                         </Link>
                     </div>
                 </div>
@@ -242,15 +243,15 @@ const SideNavBar = () => {
 
                 <div
                     className={
-                        pathname === "/dashboard/order"
+                        pathname === "/dashboard/slider"
                             ? "nab_item text-[#3EA2FA]"
                             : "text-[#717171] nab_item"
                     }
                 >
                     <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
-                        <Link to="/dashboard/order" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <TbShoppingCartPause />
-                            Order
+                        <Link to="/dashboard/slider" className="hover:text-[#3EA2FA] flex items-center gap-2">
+                            <PiSlideshowBold />
+                            Slider
                         </Link>
                     </div>
                 </div>

@@ -397,7 +397,7 @@ const ProductAdd = () => {
             <div className="mt-10 border p-5 border-gray-300 rounded-md">
               <label className="font-semibold" htmlFor="ads_topBadge">Size Variations: </label>
               {fields.map((variation, index) => (
-                <div key={variation.id} className="grid grid-cols-2 gap-4">
+                <div key={variation.id} className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-2">
                   <Controller
                     name={`size_variation[${index}].size`}
                     control={control}
@@ -418,12 +418,12 @@ const ProductAdd = () => {
                     control={control}
                     render={({ field }) => <input {...field} type="number" placeholder="Discount Price..." className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl" />}
                   />
-                  <button type="button" className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]" onClick={() => append({})}>
-                    Add Variation
+                  <button type="button" className="mt-2 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]" onClick={() => append({})}>
+                    +
                   </button>
                   {index > 0 && (
-                    <button type="button" className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-600" onClick={() => remove(index)}>
-                      Remove Variation
+                    <button type="button" className="mt-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-600" onClick={() => remove(index)}>
+                      -
                     </button>
                   )}
                 </div>
