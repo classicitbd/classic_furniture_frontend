@@ -292,7 +292,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         const slug = colorName + " " + (data?.title ? data?.title : updateModalValue?.title)
 
         const sendData = {
-            email: user,
+            email: user?.email,
             title: data?.title ? data?.title : updateModalValue?.title,
             related: slugify(data?.title ? data?.title : updateModalValue?.title, {
                 lower: true,
