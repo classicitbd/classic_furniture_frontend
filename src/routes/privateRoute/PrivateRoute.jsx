@@ -6,8 +6,9 @@ import BigSpinner from "../../shared/loader/BigSpinner";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
+
   const location = useLocation();
-  if (!user && loading) {
+  if (loading) {
     return <BigSpinner />;
   }
 

@@ -49,7 +49,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <CheckoutPage />,
+        element: (
+          <PrivateRoute>
+            <CheckoutPage />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -75,10 +79,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><PrivateDashboardRoute><DashboardLayout /></PrivateDashboardRoute></PrivateRoute>,
-    errorElement: (
-      <NotFound />
+    element: (
+      <PrivateRoute>
+        <PrivateDashboardRoute>
+          <DashboardLayout />
+        </PrivateDashboardRoute>
+      </PrivateRoute>
     ),
+    errorElement: <NotFound />,
     children: [
       // {
       //   path: "/dashboard",
@@ -86,11 +94,11 @@ const router = createBrowserRouter([
       // },
       {
         path: "/dashboard",
-        element: <Order />
+        element: <Order />,
       },
       {
         path: "/dashboard/slider",
-        element: <Slider />
+        element: <Slider />,
       },
       {
         path: "/dashboard/menu",
@@ -134,7 +142,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/customer",
-        element: <Customer />
+        element: <Customer />,
       },
     ],
   },
