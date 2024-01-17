@@ -5,7 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import BigSpinner from "../../shared/loader/BigSpinner";
 
 const PrivateDashboardRoute = ({ children }) => {
-    const { user, loading, userRole } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
 
     const location = useLocation();
 
@@ -14,7 +14,7 @@ const PrivateDashboardRoute = ({ children }) => {
     }
 
 
-    if (user && userRole == 'admin') {
+    if (user.email && user.role == 'admin') {
         return children
     }
     return <Navigate to='/sign-in' state={{ from: location }} replace></Navigate>
