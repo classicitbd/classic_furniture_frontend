@@ -59,7 +59,7 @@ const options = [
   // Add more cities as needed
 ];
 
-const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
+const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
   const [country, setCountry] = useState("Bangladesh");
   const [city, setCity] = useState("Bangladesh");
   const {
@@ -69,10 +69,11 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
   } = useForm();
 
   const onSubmit = (data) => {
-    data.email = email;
+    data.email = user?.email;
     data.city = city;
     data.country = country;
   };
+
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">
@@ -85,24 +86,28 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
       </div>
       <div className="flex justify-between">
         <p className="py-5 font-semibold tracking-tight">Delivery Address</p>
-        {addressUpdate ? (
-          <button
-            onClick={() => setAddressUpdate(!addressUpdate)}
-            className="flex items-center gap-1 text-[#549AFC]"
-          >
-            <span>Cancel</span>
-          </button>
-        ) : (
-          <button
-            onClick={() => setAddressUpdate(!addressUpdate)}
-            className="flex items-center gap-1 text-[#549AFC]"
-          >
-            <CiEdit />
-            <span>Edit</span>
-          </button>
+        {user?.address && (
+          <div>
+            {addressUpdate ? (
+              <button
+                onClick={() => setAddressUpdate(!addressUpdate)}
+                className="flex items-center gap-1 text-[#549AFC]"
+              >
+                <span>Cancel</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => setAddressUpdate(!addressUpdate)}
+                className="flex items-center gap-1 text-[#549AFC]"
+              >
+                <CiEdit />
+                <span>Edit</span>
+              </button>
+            )}
+          </div>
         )}
       </div>
-      {addressUpdate ? (
+      {!user?.address && !addressUpdate ? (
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control w-full">
             <label htmlFor="address" className="label">
@@ -164,9 +169,14 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
               {...register("country")}
             />
           </div>
-          <button className="flex justify-end gap-1 text-[#549AFC]">
-            <span>Save</span>
-          </button>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="flex justify-end gap-1 text-[#549AFC] mb-5"
+            >
+              <span>Save</span>
+            </button>
+          </div>
         </form>
       ) : (
         <div>
