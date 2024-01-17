@@ -13,9 +13,9 @@ const AuthProvider = ({ children }) => {
   const [userPhone, setUserPhone] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const token = getCookie(authKey);
-
+  
   useEffect(() => {
+    const token = getCookie(authKey);
     if (token) {
       fetch(`${BASE_URL}/getMe`, {
         method: "GET",
@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
       setUserRole(null);
       setLoading(false);
     }
-  }, [token]);
+  }, []);
 
   const info = {
     user,
