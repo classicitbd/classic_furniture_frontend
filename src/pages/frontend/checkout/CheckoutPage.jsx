@@ -7,7 +7,7 @@ import { getUserInfo } from "../../../service/Auth.service";
 import { Link } from "react-router-dom";
 import UserInfo from "./UserInfo";
 import Recipient from "./Recipient";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Payment from "./Payment";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,6 +20,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
+import { AuthContext } from "../../../context/AuthProvider";
 
 const CheckoutPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -31,6 +32,8 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const [addressUpdate, setAddressUpdate] = useState(false);
   const { email } = getUserInfo();
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -40,6 +43,7 @@ const CheckoutPage = () => {
       return data;
     },
   }); // get All Product
+
   const openModal = (product) => {
     setData(product);
     setModalOpen(true);
@@ -65,11 +69,11 @@ const CheckoutPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <section className="overflow-y-auto space-y-5">
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
-            <UserInfo email={email} />
+            <UserInfo email={email} user={user} />
           </div>
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
             <Recipient
-              email={email}
+              user={user}
               addressUpdate={addressUpdate}
               setAddressUpdate={setAddressUpdate}
             />

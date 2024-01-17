@@ -4,7 +4,8 @@ import { CiUser } from "react-icons/ci";
 import { SlPhone } from "react-icons/sl";
 import { AiOutlineMail } from "react-icons/ai";
 
-const UserInfo = ({ email }) => {
+const UserInfo = ({ user }) => {
+  console.log(user);
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">
@@ -24,7 +25,7 @@ const UserInfo = ({ email }) => {
                 <CiUser />
               </td>
               <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                Masud Rana
+                {user?.name}
               </td>
             </tr>
 
@@ -34,7 +35,7 @@ const UserInfo = ({ email }) => {
               </td>
 
               <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                +88 01796682951
+                {user?.phone ? user?.phone : "N/A"}
               </td>
             </tr>
 
@@ -44,7 +45,7 @@ const UserInfo = ({ email }) => {
               </td>
 
               <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                masud@gmail.com
+                {user?.email}
               </td>
             </tr>
           </tbody>
