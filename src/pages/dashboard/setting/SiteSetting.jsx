@@ -1,11 +1,33 @@
 import { PiHouseBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import LogoVidio from "../../../components/dashboard/setting/LogoVidio";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
+import BigSpinner from "../../../shared/loader/BigSpinner";
+import StoreDetails from "../../../components/dashboard/setting/StoreDetails";
+import AboutUs from "../../../components/dashboard/setting/AboutUs";
 
 const SiteSetting = () => {
+
+    const { data: settings = [], isLoading, refetch } = useQuery({
+        queryKey: [`/api/v1/siteSetting`],
+        queryFn: async () => {
+            const res = await fetch(`${BASE_URL}/siteSetting`)
+            const data = await res.json();
+            return data;
+        }
+    }) // get Site Settings
+
+    const initialData = settings?.data[0]
+
+    if (isLoading){
+        <BigSpinner />
+    }
+
     return (
         <>
 
-        {/* Site setting navbar */}
+            {/* Site setting navbar */}
 
             <div className="flex items-center justify-between bg-white p-4 rounded-xl">
                 <h3 className="text-[20px] font-semibold">Site Seeting</h3>
@@ -15,7 +37,31 @@ const SiteSetting = () => {
                     <Link to='/dashboard/seeting'><p className="font-semibold">Site Seeting</p></Link>
                 </div>
             </div>
-        
+
+            <div className="md:mt-10 mt-8 bg-white">
+                <div className="p-5">
+                    <h4 className="font-semibold text-[20px] mt-2">Software Information</h4>
+                    <hr className="mt-2 mb-4" />
+                    <LogoVidio refetch={refetch} initialData={initialData} />
+                </div>
+            </div>
+
+            <div className="md:mt-10 mt-8 bg-white">
+                <div className="p-5">
+                    <h4 className="font-semibold text-[20px] mt-2">Store Information</h4>
+                    <hr className="mt-2 mb-4" />
+                    <StoreDetails refetch={refetch} initialData={initialData} />
+                </div>
+            </div>
+
+            <div className="md:mt-10 mt-8 bg-white mb-8">
+                <div className="p-5">
+                    <h4 className="font-semibold text-[20px] mt-2">About Us</h4>
+                    <hr className="mt-2 mb-4" />
+                    <AboutUs refetch={refetch} initialData={initialData} />
+                </div>
+            </div>
+
         </>
     );
 };

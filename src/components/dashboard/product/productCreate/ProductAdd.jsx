@@ -325,7 +325,6 @@ const ProductAdd = () => {
     }
 
     addProduct(sendData).then(result => {
-      console.log(result)
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
         toast.success(result?.data?.message ? result?.data?.message : "Product Added successfully !", {
           autoClose: 1000
