@@ -1,13 +1,29 @@
 // import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const FormSearch = () => {
   const [value, setValue] = useState("");
+  // const [selectedValue, setSelectedValue] = useState(null);
+  const [queryParameters] = useSearchParams();
+  const navigate = useNavigate();
+
+  const handleDiscountClick = (text) => {
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("keyword", text);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
   // const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
+    handleDiscountClick(value);
+    setValue("");
   };
+
   return (
     <>
       <form

@@ -206,41 +206,26 @@ const AllProducts = () => {
     }
 
     console.log("All Query Parameters:", allQueryParams);
-    setQuery(allQueryParams);
+
+    const queryString = Object.keys(allQueryParams)
+      .filter((key) => allQueryParams[key] !== undefined)
+      .map((key) => `${key}=${allQueryParams[key]}`)
+      .join("&");
+    return queryString.length > 0
+      ? setQuery(`all?${queryString}`)
+      : setQuery("all");
 
     // You can perform any other logic based on all query parameters here
   }, [queryParameters]);
 
-  const constructQueryString = (queryParams) => {
-    console.log({ queryParams });
-    const queryString = Object.keys(queryParams)
-      .filter((key) => queryParams[key] !== undefined)
-      .map((key) => `${key}=${queryParams[key]}`)
-      .join("&");
-
-    return queryString.length > 0 ? `${queryString}` : "/";
-  };
-
-  console.log(constructQueryString(query));
-
   useEffect(() => {
-    fetch(`${BASE_URL}/all?${constructQueryString(queryParameters)}`)
+    fetch(`${BASE_URL}/${query}`)
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => setProducts(data?.data))
       .catch((error) => console.error(error));
-  }, [queryParameters]);
-
-  // // get all products
-  // const { data: products = [] } = useQuery({
-  //   queryKey: [constructQueryString(query)],
-  //   queryFn: async () => {
-  //     const res = await fetch(
-  //       `${BASE_URL}/all?${constructQueryString(queryParameters)}`
-  //     );
-  //     const data = await res.json();
-  //     return data;
-  //   },
-  // });
+    setFilterDropdownOpen(false);
+    setSortDropdownOpen(false);
+  }, [query]);
 
   // unique sub category
   useEffect(() => {
