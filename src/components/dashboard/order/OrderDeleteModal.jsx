@@ -9,10 +9,10 @@ const OrderDeleteModal = ({ setIsDeleteOpen, isDeleteData, refetch }) => {
 
     const handleDelete = () => {
         const sendData = {
-            transactionId: isDeleteData?.transactionId,
             status: isDeleteData?.status,
             type: isDeleteData?.type,
-            _id: isDeleteData?._id
+            _id: isDeleteData?._id,
+            allData: isDeleteData
         }
         deleteOrder(sendData).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -21,6 +21,7 @@ const OrderDeleteModal = ({ setIsDeleteOpen, isDeleteData, refetch }) => {
                 });
                 refetch();
                 setIsDeleteOpen(false)
+                window.location.reload();
             } else {
                 toast.error(result?.error?.data?.message);
             }

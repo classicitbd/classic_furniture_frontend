@@ -1,10 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { FaBars, FaUserCircle } from 'react-icons/fa';
-import {  useRef, useState } from 'react';
+import {  useContext, useRef, useState } from 'react';
 import logo from "../../assets/dashboard/logo.png";
 import SideNavbarMenuItem from '../sideNavBar/sideNavbarMenuItem';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider';
 
 const DashboardNavbar = () => {
+
+    const {user} = useContext(AuthContext);
 
     const [sidebarShow, setSidebarShow] = useState(false);
     const sidebarRef = useRef(null);
@@ -39,7 +43,7 @@ const DashboardNavbar = () => {
 
                     {/* Logo  hidden in mobile device*/}
                     <div className="hidden md:flex items-center">
-                        <img src={logo} alt="Logo" />
+                        <Link to='/'><img src={logo} alt="Logo" /></Link>
                     </div>
 
                         {/* profile */}
@@ -51,9 +55,9 @@ const DashboardNavbar = () => {
                             </div>
                             <div className="w-[170px] h-[40px] hidden lg:block">
                                 <h2 className="text-white text-sm font-semibold">
-                                    Sk Murad Hosain
+                                {user?.name}
                                 </h2>
-                                <p className="text-white text-sm font-normal">muradhosain22@gmail.com</p>
+                            <p className="text-white text-sm font-normal">{user?.email}</p>
                             </div>
                         </div>
 

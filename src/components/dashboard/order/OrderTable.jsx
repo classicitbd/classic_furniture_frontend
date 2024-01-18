@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import BigSpinner from "../../../shared/loader/BigSpinner";
 import { FaCartPlus, FaMoneyBillAlt } from "react-icons/fa";
+import OrderCompleteModal from "./OrderCompleteModal";
 
 const OrderTable = () => {
 
@@ -31,6 +32,9 @@ const OrderTable = () => {
     const [isViewData, setIsViewData] = useState({});
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [isDeleteData, setIsDeleteData] = useState({});
+
+    const [isCompleteOpen, setIsCompleteOpen] = useState(false);
+    const [isCompleteData, setIsCompleteData] = useState('');
 
     const [products, setProducts] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
@@ -154,6 +158,13 @@ const OrderTable = () => {
     const handleDelete = (data) => {
         setIsDeleteData(data)
         setIsDeleteOpen(true)
+    }
+
+
+    // open complete modal
+    const handleOrderComplete = (data) => {
+        setIsCompleteData(data)
+        setIsCompleteOpen(true)
     }
 
     return (
@@ -291,7 +302,7 @@ const OrderTable = () => {
                                             {formatDate(order?.createdAt)}
                                         </td>
                                         <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                                            {order?.transactionId}
+                                            {order?.transactionId || "N/A" }
                                         </td>
 
                                         <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
@@ -304,6 +315,12 @@ const OrderTable = () => {
 
                                         <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                                             <IoEyeOutline onClick={() => handleView(order)} className='cursor-pointer text-gray-500 hover:text-gray-300' size={25} />
+                                            {
+                                                order?.status == 'complete' && order?.type == 'paid' ?
+                                                    <button className="btn bg-green-500 hover:bg-green-400 border border-gray-300 rounded-md text-sm text-white p-2 btn-sm">Completed</button>
+                                                    :
+                                                    <button onClick={() => handleOrderComplete(order)} className="btn bg-blue-500 hover:bg-blue-400 border border-gray-300 rounded-md text-sm text-white p-2 btn-sm">Complete?</button>
+                                            }
                                             <MdDeleteForever onClick={() => handleDelete(order)} className='cursor-pointer text-red-500 hover:text-red-300' size={25} />
                                         </td>
                                     </tr>
@@ -324,6 +341,12 @@ const OrderTable = () => {
             {
                 isViewOpen &&
                 <OrderView setIsViewOpen={setIsViewOpen} isViewData={isViewData} />
+            }
+
+            {/* Handle open Complete modal */}
+            {
+                isCompleteOpen &&
+                <OrderCompleteModal setIsCompleteOpen={setIsCompleteOpen} isCompleteData={isCompleteData} refetch={refetch} />
             }
 
             {/* Handle open delete modal */}

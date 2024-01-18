@@ -25,7 +25,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
     const [colorId, setColorId] = useState(updateModalValue?.colorId?._id);
     const [subcategory, setSubCategory] = useState(updateModalValue?.subCategoryId?._id);
     const [collection, setCollection] = useState(updateModalValue?.collectionId?._id);
-    const [style, setStyle] = useState(updateModalValue?.styleId._id);
+    const [style, setStyle] = useState(updateModalValue?.styleId?._id);
     const [feature, setFeature] = useState(updateModalValue?.featureId?._id);
 
     const [menuIdForCategory, setMenuIdForCategory] = useState(updateModalValue?.menuId?._id);

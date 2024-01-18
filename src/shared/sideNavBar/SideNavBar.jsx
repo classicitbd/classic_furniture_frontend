@@ -6,7 +6,7 @@ import { BiMaleFemale, BiSolidCategory  } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { TbCategoryPlus } from "react-icons/tb";
 import { MdControlPointDuplicate, MdOutlineFeaturedPlayList } from "react-icons/md";
-import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp } from "react-icons/io5"
+import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp, IoSettingsOutline } from "react-icons/io5"
 import { MdOutlineCollectionsBookmark } from "react-icons/md"
 import { RxFontStyle } from "react-icons/rx";
 import { PiSlideshowBold } from "react-icons/pi";
@@ -23,22 +23,6 @@ const SideNavBar = () => {
     const navBar = (
         <>
             <div className="flex flex-col">
-
-                {/* <div
-                    className={
-                        pathname === "/dashboard"
-                            ? "nab_item text-[#3EA2FA]"
-                            : "text-[#717171] nab_item"
-                    }
-                >
-                    <div className="flex items-center justify-between text-[18px] font-semibold">
-                        <Link  onClick={() => setIsUserOpen(false)} to="/dashboard" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <AiFillHome />
-                            Home
-                        </Link>
-                    </div>
-                </div> */}
-
 
                 <div
                     className={
@@ -267,6 +251,21 @@ const SideNavBar = () => {
                         <Link to="/dashboard/customer" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <FaUsers />
                             Customer
+                        </Link>
+                    </div>
+                </div>
+
+                <div
+                    className={
+                        pathname === "/dashboard/setting"
+                            ? "nab_item text-[#3EA2FA]"
+                            : "text-[#717171] nab_item"
+                    }
+                >
+                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                        <Link to="/dashboard/setting" className="hover:text-[#3EA2FA] flex items-center gap-2">
+                            <IoSettingsOutline />
+                            Setting
                         </Link>
                     </div>
                 </div>
