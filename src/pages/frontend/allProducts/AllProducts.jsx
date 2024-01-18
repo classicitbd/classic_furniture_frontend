@@ -10,6 +10,7 @@ import { BiSolidDiscount } from "react-icons/bi";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import { GoArrowRight } from "react-icons/go";
+import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 
 const AllProducts = () => {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
@@ -28,6 +29,7 @@ const AllProducts = () => {
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [selectedDiscount, setSelectedDiscount] = useState(null);
   const [selectedSort, setSelectedSort] = useState(null);
+  const [products, setProducts] = useState([]);
   // const [queryParameters, setQueryParameters] = useState({});
 
   // Add similar state variables for collection, color, features, and styles
@@ -204,35 +206,27 @@ const AllProducts = () => {
       allQueryParams[key] = value;
     }
 
-    console.log("All Query Parameters:", allQueryParams);
-    setQuery(allQueryParams);
+    // console.log("All Query Parameters:", allQueryParams);
+
+    const queryString = Object.keys(allQueryParams)
+      .filter((key) => allQueryParams[key] !== undefined)
+      .map((key) => `${key}=${allQueryParams[key]}`)
+      .join("&");
+    return queryString.length > 0
+      ? setQuery(`all?${queryString}`)
+      : setQuery("all");
 
     // You can perform any other logic based on all query parameters here
   }, [queryParameters]);
 
-  const constructQueryString = (queryParams) => {
-    console.log({ queryParams });
-    const queryString = Object.keys(queryParams)
-      .filter((key) => queryParams[key] !== undefined)
-      .map((key) => `${key}=${queryParams[key]}`)
-      .join("&");
-
-    return queryString.length > 0 ? `${queryString}` : "/";
-  };
-
-  console.log(constructQueryString(query));
-
-  // get all products
-  const { data: products = [] } = useQuery({
-    queryKey: [constructQueryString(query)],
-    queryFn: async () => {
-      const res = await fetch(
-        `${BASE_URL}/all?${constructQueryString(queryParameters)}`
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
+  useEffect(() => {
+    fetch(`${BASE_URL}/${query}`)
+      .then((res) => res.json())
+      .then((data) => setProducts(data?.data))
+      .catch((error) => console.error(error));
+    setFilterDropdownOpen(false);
+    setSortDropdownOpen(false);
+  }, [query]);
 
   // unique sub category
   useEffect(() => {
@@ -260,9 +254,9 @@ const AllProducts = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[61px] sm:top-[64px] z-30 bg-white">
+      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[58px] sm:top-[64px] z-30 bg-white">
         <div>
-          <h1>Products {products?.data?.length}</h1>
+          <h1>Products {products?.length}</h1>
         </div>
 
         <ul className="flex items-center gap-3 sm:gap-5 text-sm">
@@ -288,17 +282,15 @@ const AllProducts = () => {
           <li>
             <button
               onClick={() => handleDiscountClick("true")}
-              className={`${
-                selectedDiscount === "true" ? "text-error-200" : ""
-              } hidden sm:block`}
+              className={`${selectedDiscount === "true" ? "text-error-200" : ""
+                } hidden sm:block`}
             >
               On Sale
             </button>
             <button
               onClick={() => handleDiscountClick("true")}
-              className={`${
-                selectedDiscount ? "text-error-200" : ""
-              } block sm:hidden`}
+              className={`${selectedDiscount ? "text-error-200" : ""
+                } block sm:hidden`}
             >
               <BiSolidDiscount />
             </button>
@@ -327,29 +319,11 @@ const AllProducts = () => {
               <HiOutlineAdjustmentsVertical />
             </button>
             <div
-              className={`absolute top-[50px] left-0 w-full border bg-[#FFFFFF] ${
-                filterDropdownOpen ? "block" : "hidden"
-              }`}
+              className={`absolute top-[50px] left-0 w-full border bg-[#FFFFFF] ${filterDropdownOpen ? "block" : "hidden"
+                }`}
             >
               <div className="grid grid-cols-6 min-h-[460px] border-b">
                 {/* ------ category section ------ start */}
-                {/* <div className="border-r px-4 py-[5px]">
-                  <ul className="space-y-1">
-                    <li className="text-lg font-medium tracking-normal mb-2">
-                      <button>Categories</button>
-                    </li>
-                    {categoryTypes?.map((category) => (
-                      <li key={category._id}>
-                        <Link
-                          to={`/all?category=${category?.slug}`}
-                          className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm"
-                        >
-                          {category?.category}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div> */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
                     <li className="text-lg font-medium tracking-normal mb-2">
@@ -359,11 +333,10 @@ const AllProducts = () => {
                       <li key={category._id}>
                         <button
                           onClick={() => handleCategoryClick(category?.slug)}
-                          className={`${
-                            selectedCategory === category?.slug
+                          className={`${selectedCategory === category?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {category?.category}
                         </button>
@@ -373,23 +346,6 @@ const AllProducts = () => {
                 </div>
                 {/* ------ category section ------ end */}
                 {/* ------ sub category section ------ start */}
-                {/* <div className="border-r px-4 py-[5px]">
-                  <ul className="space-y-1">
-                    <li className="text-lg font-medium tracking-normal mb-2">
-                      <button>Sub Categories</button>
-                    </li>
-                    {subCategoryTypes?.map((subCategory) => (
-                      <li key={subCategory?._id}>
-                        <Link
-                          to={`/`}
-                          className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm"
-                        >
-                          {subCategory?.sub_category}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div> */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
                     <li className="text-lg font-medium tracking-normal mb-2">
@@ -401,11 +357,10 @@ const AllProducts = () => {
                           onClick={() =>
                             handleSubCategoryClick(subCategory?.slug)
                           }
-                          className={`${
-                            selectedSubCategory === subCategory?.slug
+                          className={`${selectedSubCategory === subCategory?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {subCategory?.sub_category}
                         </button>
@@ -426,11 +381,10 @@ const AllProducts = () => {
                           onClick={() =>
                             handleCollectionClick(collection?.slug)
                           }
-                          className={`${
-                            selectedCollection === collection?.slug
+                          className={`${selectedCollection === collection?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {collection?.collection_name}
                         </button>
@@ -449,11 +403,10 @@ const AllProducts = () => {
                       <li key={style?._id}>
                         <button
                           onClick={() => handleStyleClick(style?.slug)}
-                          className={`${
-                            selectedStyle === style?.slug
+                          className={`${selectedStyle === style?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {style?.style}
                         </button>
@@ -472,11 +425,10 @@ const AllProducts = () => {
                       <li key={color?._id}>
                         <button
                           onClick={() => handleColorsClick(color?.slug)}
-                          className={`${
-                            selectedColor === color?.slug
+                          className={`${selectedColor === color?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {color?.color}
                         </button>
@@ -495,11 +447,10 @@ const AllProducts = () => {
                       <li key={feature?._id}>
                         <button
                           onClick={() => handleFeatureClick(feature?.slug)}
-                          className={`${
-                            selectedFeature === feature?.slug
+                          className={`${selectedFeature === feature?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {feature?.feature}
                         </button>
@@ -537,18 +488,16 @@ const AllProducts = () => {
                     : "text-bgray-700 font-medium"
                 }
               >
-                Sort by:
+                Sort by: {selectedSort}
               </span>
               <RiArrowDropDownLine
-                className={`text-xl ${
-                  sortDropdownOpen ? "rotate-180" : ""
-                } transition-all duration-300`}
+                className={`text-xl ${sortDropdownOpen ? "rotate-180" : ""
+                  } transition-all duration-300`}
               />
             </button>
             <ul
-              className={`absolute top-10 -right-3 sm:-right-20 w-[160px] border ${
-                sortDropdownOpen ? "block" : "hidden"
-              }`}
+              className={`absolute top-10 -right-3 sm:-right-20 w-[160px] border ${sortDropdownOpen ? "block" : "hidden"
+                }`}
             >
               <li className="bg-bgray-300 hover:bg-bgray-400 py-1 px-2">
                 <button onClick={() => handleSortClick("new")}>Newest</button>
@@ -567,16 +516,16 @@ const AllProducts = () => {
           </li>
           {/* ------ sorby section ------ end */}
         </ul>
+
         {/* ------ filter drawer ------ start */}
 
         <div
-          className={`h-screen w-full fixed inset-y-0 left-0 top-[69px] z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
-            isFilterOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`h-screen w-full fixed inset-y-0 left-0 top-[60px] z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${isFilterOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           <div className="flex items-center justify-end px-5 py-2">
-            <button className="text-4xl" onClick={toggleFilter}>
-              <GoArrowRight className="p-1 border bg-bgray-100 text-bgray-900 shadow rounded-full rotate-180" />
+            <button className="" onClick={toggleFilter}>
+              <GoArrowRight className="p-1 text-4xl border bg-bgray-100 text-bgray-900 shadow rounded-full rotate-180" />
             </button>
           </div>
           <div className="flex h-screen flex-col justify-between border-e">
@@ -607,7 +556,16 @@ const AllProducts = () => {
                     <ul className="mt-2 space-y-1 px-4">
                       {categoryTypes?.map((category) => (
                         <li key={category._id}>
-                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                          <button
+                            onClick={() => {
+                              toggleFilter();
+                              handleCategoryClick(category?.slug);
+                            }}
+                            className={`${selectedCategory === category?.slug
+                                ? "bg-bgray-100 border"
+                                : ""
+                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          >
                             {category?.category}
                           </button>
                         </li>
@@ -645,7 +603,16 @@ const AllProducts = () => {
                     <ul className="mt-2 space-y-1 px-4">
                       {subCategoryTypes?.map((subCategory) => (
                         <li key={subCategory?._id}>
-                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                          <button
+                            onClick={() => {
+                              toggleFilter();
+                              handleSubCategoryClick(subCategory?.slug);
+                            }}
+                            className={`${selectedSubCategory === subCategory?.slug
+                                ? "bg-bgray-100 border"
+                                : ""
+                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          >
                             {subCategory?.sub_category}
                           </button>
                         </li>
@@ -680,7 +647,16 @@ const AllProducts = () => {
                     <ul className="mt-2 space-y-1 px-4">
                       {collections?.data?.map((collection) => (
                         <li key={collection?._id}>
-                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                          <button
+                            onClick={() => {
+                              toggleFilter();
+                              handleCollectionClick(collection?.slug);
+                            }}
+                            className={`${selectedCollection === collection?.slug
+                                ? "bg-bgray-100 border"
+                                : ""
+                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          >
                             {collection?.collection_name}
                           </button>
                         </li>
@@ -715,7 +691,16 @@ const AllProducts = () => {
                     <ul className="mt-2 space-y-1 px-4">
                       {styles?.data?.map((style) => (
                         <li key={style?._id}>
-                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                          <button
+                            onClick={() => {
+                              toggleFilter();
+                              handleStyleClick(style?.slug);
+                            }}
+                            className={`${selectedStyle === style?.slug
+                                ? "bg-bgray-100 border"
+                                : ""
+                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          >
                             {style?.style}
                           </button>
                         </li>
@@ -750,7 +735,16 @@ const AllProducts = () => {
                     <ul className="mt-2 space-y-1 px-4">
                       {colors?.data?.map((color) => (
                         <li key={color?._id}>
-                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                          <button
+                            onClick={() => {
+                              toggleFilter();
+                              handleColorsClick(color?.slug);
+                            }}
+                            className={`${selectedColor === color?.slug
+                                ? "bg-bgray-100 border"
+                                : ""
+                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          >
                             {color?.color}
                           </button>
                         </li>
@@ -785,7 +779,16 @@ const AllProducts = () => {
                     <ul className="mt-2 space-y-1 px-4">
                       {features?.data?.map((feature) => (
                         <li key={feature?._id}>
-                          <button className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                          <button
+                            onClick={() => {
+                              toggleFilter();
+                              handleFeatureClick(feature?.slug);
+                            }}
+                            className={`${selectedFeature === feature?.slug
+                                ? "bg-bgray-100 border"
+                                : ""
+                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          >
                             {feature?.feature}
                           </button>
                         </li>
@@ -799,41 +802,59 @@ const AllProducts = () => {
             </div>
           </div>
         </div>
-
         {/* ------ filter drawer ------ end */}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-        {products?.data?.map((product) => (
-          <div
-            key={product?._id}
-            className="border group rounded overflow-hidden bg-[#F0F0F0]"
-          >
-            <Link to={`/products/details/${product?.slug}`}>
-              <div className="flex">
-                <img
-                  src={product?.thumbnail_image}
-                  className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
-                  alt={product?.id}
-                />
-                <img
-                  src={product?.hover_image}
-                  className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
-                  alt={product?.id}
-                />
-              </div>
-              <article className="pb-[10px]">
-                <h2 className="text-center">
-                  {product?.title} {product?.colorId?.color}
-                </h2>
-                <p className="text-center py-3 text-bgray-700">
-                  {product?.colorId?.color}
-                </p>
-                <p className="px-4">BDT {product?.price}.00</p>
-              </article>
-            </Link>
-          </div>
-        ))}
-      </div>
+
+      {/* ------ all products ------ start */}
+      {products?.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+          {products?.map((product) => (
+            <div
+              key={product?._id}
+              className="border group rounded overflow-hidden bg-[#F0F0F0]"
+            >
+              <Link to={`/products/details/${product?.slug}`}>
+                <div className="flex">
+                  <img
+                    src={product?.thumbnail_image}
+                    className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
+                    alt={product?.id}
+                  />
+                  <img
+                    src={product?.hover_image}
+                    className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
+                    alt={product?.id}
+                  />
+                </div>
+                <article className="pb-[10px]">
+                  <h2 className="text-center">
+                    {product?.title} {product?.colorId?.color}
+                  </h2>
+                  <p className="text-center py-3 text-bgray-700">
+                    {product?.colorId?.color}
+                  </p>
+                  <p>
+                    <span
+                      className={`px-4 ${product?.discount_price ? "line-through" : ""
+                        }`}
+                    >
+                      BDT {product?.price}.00
+                    </span>
+                    {product?.discount_price && (
+                      <span className="text-error-300">
+                        BDT {product?.discount_price}.00
+                      </span>
+                    )}
+                  </p>
+                </article>
+              </Link>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <ProductNotFound />
+      )}
+      {/* ------ all products ------ end */}
     </div>
   );
 };
