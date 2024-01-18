@@ -3,50 +3,65 @@ import { Link } from 'react-router-dom';
 
 const SideNavbarMenuItem = () => {
     const menuItems = [
-        // {
-        //     id: 1,
-        //     text: "Home",
-        //     link: "/dashboard",
-        // },
         {
             id: 1,
-            text: "Slider",
-            link: "/dashboartd/slider",
+            text: "Order",
+            link: "/dashboard",
         },
         {
             id: 2,
-            text: "Menu",
-            link: "/dashboartd/menu",
+            text: "Customer",
+            link: "/dashboard/customer",
         },
         {
             id: 3,
-            text: "Category",
-            link: "/dashboartd/category",
+            text: "Product",
+            link: "/dashboard/product",
         },
         {
             id: 4,
-            text: "Sub Category",
-            link: "/dashboartd/sub_category",
+            text: "Slider",
+            link: "/dashboard/slider",
+        },
+        {
+            id: 3,
+            text: "Menu",
+            link: "/dashboard/menu",
+        },
+        {
+            id: 4,
+            text: "Category",
+            link: "/dashboard/category",
         },
         {
             id: 5,
-            text: "Color",
-            link: "/dashboartd/color",
+            text: "Sub Category",
+            link: "/dashboard/sub_category",
         },
         {
             id: 6,
-            text: "Collection",
-            link: "/dashboartd/collection",
+            text: "Color",
+            link: "/dashboard/color",
         },
         {
             id: 7,
-            text: "Feature",
-            link: "/dashboartd/feature",
+            text: "Collection",
+            link: "/dashboard/collection",
         },
         {
             id: 8,
+            text: "Feature",
+            link: "/dashboard/feature",
+        },
+        {
+            id: 9,
             text: "Style",
-            link: "/dashboartd/style",
+            link: "/dashboard/style",
+        },
+        {
+            id: 9,
+            text: "Setting",
+            link: "/dashboard/setting",
         },
         
     ];

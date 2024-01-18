@@ -11,7 +11,17 @@ export const orderApi = api.injectEndpoints({
         }),
         invalidatesTags: ['order'],
       }),
+
+    //update Order
+    updateOrder: build.mutation({
+        query: (data) => ({
+          url: `/order`,
+          method: "PATCH",
+          body: data,
+        }),
+        invalidatesTags: ['order'],
+      }),
   }),
 });
 
-export const { useDeleteOrderMutation } = orderApi;
+export const { useDeleteOrderMutation, useUpdateOrderMutation } = orderApi;

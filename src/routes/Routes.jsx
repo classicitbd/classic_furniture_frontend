@@ -26,6 +26,7 @@ import CheckoutPage from "../pages/frontend/checkout/CheckoutPage";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import NotFound from "../shared/notFound/NotFound";
 import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
+import SiteSetting from "../pages/dashboard/setting/SiteSetting";
 
 const router = createBrowserRouter([
   {
@@ -88,10 +89,6 @@ const router = createBrowserRouter([
     ),
     errorElement: <NotFound />,
     children: [
-      // {
-      //   path: "/dashboard",
-      //   element: <HomePage />,
-      // },
       {
         path: "/dashboard",
         element: <Order />,
@@ -143,6 +140,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/customer",
         element: <Customer />,
+      },
+      {
+        path: "/dashboard/setting",
+        element: <SiteSetting />,
       },
     ],
   },
