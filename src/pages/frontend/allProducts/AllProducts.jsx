@@ -28,6 +28,7 @@ const AllProducts = () => {
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [selectedDiscount, setSelectedDiscount] = useState(null);
   const [selectedSort, setSelectedSort] = useState(null);
+  const [products, setProducts] = useState([]);
   // const [queryParameters, setQueryParameters] = useState({});
 
   // Add similar state variables for collection, color, features, and styles
@@ -222,17 +223,24 @@ const AllProducts = () => {
 
   console.log(constructQueryString(query));
 
-  // get all products
-  const { data: products = [] } = useQuery({
-    queryKey: [constructQueryString(query)],
-    queryFn: async () => {
-      const res = await fetch(
-        `${BASE_URL}/all?${constructQueryString(queryParameters)}`
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
+  useEffect(() => {
+    fetch(`${BASE_URL}/all?${constructQueryString(queryParameters)}`)
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  }, [queryParameters]);
+
+  // // get all products
+  // const { data: products = [] } = useQuery({
+  //   queryKey: [constructQueryString(query)],
+  //   queryFn: async () => {
+  //     const res = await fetch(
+  //       `${BASE_URL}/all?${constructQueryString(queryParameters)}`
+  //     );
+  //     const data = await res.json();
+  //     return data;
+  //   },
+  // });
 
   // unique sub category
   useEffect(() => {
@@ -537,7 +545,7 @@ const AllProducts = () => {
                     : "text-bgray-700 font-medium"
                 }
               >
-                Sort by:
+                Sort by: {selectedSort}
               </span>
               <RiArrowDropDownLine
                 className={`text-xl ${
@@ -803,7 +811,7 @@ const AllProducts = () => {
         {/* ------ filter drawer ------ end */}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-        {products?.data?.map((product) => (
+        {products?.map((product) => (
           <div
             key={product?._id}
             className="border group rounded overflow-hidden bg-[#F0F0F0]"
