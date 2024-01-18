@@ -6,12 +6,15 @@ import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useOrderMutation } from "../../../redux/feature/payment/paymentApi";
 import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
+import { useNavigate } from "react-router-dom";
 
 const Payment = ({ total, user }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
   const [order, { isLoading }] = useOrderMutation();
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +39,8 @@ const Payment = ({ total, user }) => {
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         localStorage.removeItem(cartKey);
-        window.location.reload();
+        navigate("/payment-success");
+        // window.location.reload();
       }
       console.log(res);
     } catch (error) {
