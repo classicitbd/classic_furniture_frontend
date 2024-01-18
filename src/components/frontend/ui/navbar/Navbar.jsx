@@ -85,7 +85,7 @@ const Navbar = () => {
                       {category?.subcategories?.map((subItem) => (
                         <li key={subItem?._id}>
                           <Link
-                            to={`/all?gender=${gender}&category=${category?.category?.slug}&subcategory=${subItem?.slug}`}
+                            to={`/all?gender=${gender}&category=${category?.category?.slug}&sub_category=${subItem?.slug}`}
                             className=" text-white py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-80 hover:opacity-100"
                           >
                             {subItem?.sub_category}
