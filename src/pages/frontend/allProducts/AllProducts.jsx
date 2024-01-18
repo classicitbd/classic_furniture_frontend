@@ -255,7 +255,7 @@ const AllProducts = () => {
     <div className="min-h-screen bg-white">
       <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[61px] sm:top-[64px] z-30 bg-white">
         <div>
-          <h1>Products {products?.data?.length}</h1>
+          <h1>Products {products?.length}</h1>
         </div>
 
         <ul className="flex items-center gap-3 sm:gap-5 text-sm">
@@ -821,7 +821,20 @@ const AllProducts = () => {
                 <p className="text-center py-3 text-bgray-700">
                   {product?.colorId?.color}
                 </p>
-                <p className="px-4">BDT {product?.price}.00</p>
+                <p>
+                  <span
+                    className={`px-4 ${
+                      product?.discount_price ? "line-through" : ""
+                    }`}
+                  >
+                    BDT {product?.price}.00
+                  </span>
+                  {product?.discount_price && (
+                    <span className="text-error-300">
+                      BDT {product?.discount_price}.00
+                    </span>
+                  )}
+                </p>
               </article>
             </Link>
           </div>

@@ -89,7 +89,20 @@ const ProductDetails = () => {
         <div className="md:px-4">
           <article className="space-y-5 mt-8 border-bgray-500">
             <h1 className="text-xl font-semibold">{product?.data?.title}</h1>
-            <p className="text-xl font-normal">BDT {product?.data?.price}.00</p>
+            <p className="space-x-4">
+              <span
+                className={`text-xl font-normal ${
+                  product?.data?.discount_price ? "line-through" : ""
+                }`}
+              >
+                BDT {product?.data?.price}.00
+              </span>
+              {
+                <span className={`text-xl font-normal text-error-300`}>
+                  BDT {product?.data?.discount_price}.00
+                </span>
+              }
+            </p>
           </article>
           <div className="h-[1px] w-full bg-bgray-700 mt-12"></div>
           <p className="text-xl py-8">

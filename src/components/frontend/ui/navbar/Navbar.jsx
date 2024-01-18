@@ -27,7 +27,7 @@ const Navbar = () => {
         return { data: [] };
       }
     },
-  }); // get Menu type
+  }); // get category and sub category
 
   const handleHover = (menu) => {
     setGender(menu?.slug);

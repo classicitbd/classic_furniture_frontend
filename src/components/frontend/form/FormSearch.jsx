@@ -17,6 +17,7 @@ const FormSearch = () => {
     // Update the URL using navigate
     navigate(`/all?${queryParams.toString()}`);
   };
+  
   // const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
