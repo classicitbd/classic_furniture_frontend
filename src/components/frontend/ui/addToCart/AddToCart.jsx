@@ -23,7 +23,6 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
   const carts = useSelector((state) => state.cart.products);
 
   const openModal = (value) => {
-    console.log(value);
     setData({
       ...value,
       size_variationId: value?._id,

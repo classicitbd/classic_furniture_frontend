@@ -27,6 +27,7 @@ const AllProducts = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [selectedDiscount, setSelectedDiscount] = useState(null);
+  const [selectedSort, setSelectedSort] = useState(null);
   // const [queryParameters, setQueryParameters] = useState({});
 
   // Add similar state variables for collection, color, features, and styles
@@ -98,7 +99,7 @@ const AllProducts = () => {
 
     // Update the query parameters
     const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("discount", discount);
+    queryParams.set("discount_price", discount);
 
     // Update the URL using navigate
     navigate(`/all?${queryParams.toString()}`);
@@ -169,6 +170,17 @@ const AllProducts = () => {
     // Update the URL using navigate
     navigate(`/all?${queryParams.toString()}`);
   };
+
+  const handleSortClick = (sort) => {
+    setSelectedSort(sort);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("sort", sort);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
   // Add similar functions for collection, color, features, and styles
 
   // reset function
@@ -205,7 +217,7 @@ const AllProducts = () => {
       .map((key) => `${key}=${queryParams[key]}`)
       .join("&");
 
-    return queryString.length > 0 ? `all?${queryString}` : "all";
+    return queryString.length > 0 ? `${queryString}` : "/";
   };
 
   console.log(constructQueryString(query));
@@ -215,7 +227,7 @@ const AllProducts = () => {
     queryKey: [constructQueryString(query)],
     queryFn: async () => {
       const res = await fetch(
-        `${BASE_URL}/${constructQueryString(queryParameters)}`
+        `${BASE_URL}/all?${constructQueryString(queryParameters)}`
       );
       const data = await res.json();
       return data;
@@ -539,17 +551,15 @@ const AllProducts = () => {
               }`}
             >
               <li className="bg-bgray-300 hover:bg-bgray-400 py-1 px-2">
-                <button onClick={() => setSortDropdownOpen(false)}>
-                  Newest
-                </button>
+                <button onClick={() => handleSortClick("new")}>Newest</button>
               </li>
               <li className="bg-bgray-200 hover:bg-bgray-400 py-1 px-2">
-                <button onClick={() => setSortDropdownOpen(false)}>
+                <button onClick={() => handleSortClick("asc")}>
                   Price Low to high
                 </button>
               </li>
               <li className="bg-bgray-300 hover:bg-bgray-400 py-1 px-2">
-                <button onClick={() => setSortDropdownOpen(false)}>
+                <button onClick={() => handleSortClick("desc")}>
                   Price High to Low
                 </button>
               </li>
