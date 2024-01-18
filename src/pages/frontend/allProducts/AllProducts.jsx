@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -18,7 +19,7 @@ const AllProducts = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [categoryTypes, setCategoryTypes] = useState([]);
   const [subCategoryTypes, setSubCategoryTypes] = useState([]);
-  const [query, setQuery] = useState({});
+  const [query, setQuery] = useState("all");
 
   // selected options
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -206,7 +207,7 @@ const AllProducts = () => {
       allQueryParams[key] = value;
     }
 
-    // console.log("All Query Parameters:", allQueryParams);
+    console.log("All Query Parameters:", allQueryParams);
 
     const queryString = Object.keys(allQueryParams)
       .filter((key) => allQueryParams[key] !== undefined)
@@ -252,6 +253,11 @@ const AllProducts = () => {
     setCategoryTypes(uniqueData);
   }, [data]);
 
+  // get to top page all products page
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[58px] sm:top-[64px] z-30 bg-white">
@@ -282,15 +288,17 @@ const AllProducts = () => {
           <li>
             <button
               onClick={() => handleDiscountClick("true")}
-              className={`${selectedDiscount === "true" ? "text-error-200" : ""
-                } hidden sm:block`}
+              className={`${
+                selectedDiscount === "true" ? "text-error-200" : ""
+              } hidden sm:block`}
             >
               On Sale
             </button>
             <button
               onClick={() => handleDiscountClick("true")}
-              className={`${selectedDiscount ? "text-error-200" : ""
-                } block sm:hidden`}
+              className={`${
+                selectedDiscount ? "text-error-200" : ""
+              } block sm:hidden`}
             >
               <BiSolidDiscount />
             </button>
@@ -319,8 +327,9 @@ const AllProducts = () => {
               <HiOutlineAdjustmentsVertical />
             </button>
             <div
-              className={`absolute top-[50px] left-0 w-full border bg-[#FFFFFF] ${filterDropdownOpen ? "block" : "hidden"
-                }`}
+              className={`absolute top-[50px] left-0 w-full border bg-[#FFFFFF] ${
+                filterDropdownOpen ? "block" : "hidden"
+              }`}
             >
               <div className="grid grid-cols-6 min-h-[460px] border-b">
                 {/* ------ category section ------ start */}
@@ -333,10 +342,11 @@ const AllProducts = () => {
                       <li key={category._id}>
                         <button
                           onClick={() => handleCategoryClick(category?.slug)}
-                          className={`${selectedCategory === category?.slug
+                          className={`${
+                            selectedCategory === category?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {category?.category}
                         </button>
@@ -357,10 +367,11 @@ const AllProducts = () => {
                           onClick={() =>
                             handleSubCategoryClick(subCategory?.slug)
                           }
-                          className={`${selectedSubCategory === subCategory?.slug
+                          className={`${
+                            selectedSubCategory === subCategory?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {subCategory?.sub_category}
                         </button>
@@ -381,10 +392,11 @@ const AllProducts = () => {
                           onClick={() =>
                             handleCollectionClick(collection?.slug)
                           }
-                          className={`${selectedCollection === collection?.slug
+                          className={`${
+                            selectedCollection === collection?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {collection?.collection_name}
                         </button>
@@ -403,10 +415,11 @@ const AllProducts = () => {
                       <li key={style?._id}>
                         <button
                           onClick={() => handleStyleClick(style?.slug)}
-                          className={`${selectedStyle === style?.slug
+                          className={`${
+                            selectedStyle === style?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {style?.style}
                         </button>
@@ -425,10 +438,11 @@ const AllProducts = () => {
                       <li key={color?._id}>
                         <button
                           onClick={() => handleColorsClick(color?.slug)}
-                          className={`${selectedColor === color?.slug
+                          className={`${
+                            selectedColor === color?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {color?.color}
                         </button>
@@ -447,10 +461,11 @@ const AllProducts = () => {
                       <li key={feature?._id}>
                         <button
                           onClick={() => handleFeatureClick(feature?.slug)}
-                          className={`${selectedFeature === feature?.slug
+                          className={`${
+                            selectedFeature === feature?.slug
                               ? "bg-bgray-100 border"
                               : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                         >
                           {feature?.feature}
                         </button>
@@ -491,13 +506,15 @@ const AllProducts = () => {
                 Sort by: {selectedSort}
               </span>
               <RiArrowDropDownLine
-                className={`text-xl ${sortDropdownOpen ? "rotate-180" : ""
-                  } transition-all duration-300`}
+                className={`text-xl ${
+                  sortDropdownOpen ? "rotate-180" : ""
+                } transition-all duration-300`}
               />
             </button>
             <ul
-              className={`absolute top-10 -right-3 sm:-right-20 w-[160px] border ${sortDropdownOpen ? "block" : "hidden"
-                }`}
+              className={`absolute top-10 -right-3 sm:-right-20 w-[160px] border ${
+                sortDropdownOpen ? "block" : "hidden"
+              }`}
             >
               <li className="bg-bgray-300 hover:bg-bgray-400 py-1 px-2">
                 <button onClick={() => handleSortClick("new")}>Newest</button>
@@ -520,8 +537,9 @@ const AllProducts = () => {
         {/* ------ filter drawer ------ start */}
 
         <div
-          className={`h-screen w-full fixed inset-y-0 left-0 top-[60px] z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${isFilterOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
+          className={`h-screen w-full fixed inset-y-0 left-0 top-[60px] z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
+            isFilterOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
         >
           <div className="flex items-center justify-end px-5 py-2">
             <button className="" onClick={toggleFilter}>
@@ -561,10 +579,11 @@ const AllProducts = () => {
                               toggleFilter();
                               handleCategoryClick(category?.slug);
                             }}
-                            className={`${selectedCategory === category?.slug
+                            className={`${
+                              selectedCategory === category?.slug
                                 ? "bg-bgray-100 border"
                                 : ""
-                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                           >
                             {category?.category}
                           </button>
@@ -608,10 +627,11 @@ const AllProducts = () => {
                               toggleFilter();
                               handleSubCategoryClick(subCategory?.slug);
                             }}
-                            className={`${selectedSubCategory === subCategory?.slug
+                            className={`${
+                              selectedSubCategory === subCategory?.slug
                                 ? "bg-bgray-100 border"
                                 : ""
-                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                           >
                             {subCategory?.sub_category}
                           </button>
@@ -652,10 +672,11 @@ const AllProducts = () => {
                               toggleFilter();
                               handleCollectionClick(collection?.slug);
                             }}
-                            className={`${selectedCollection === collection?.slug
+                            className={`${
+                              selectedCollection === collection?.slug
                                 ? "bg-bgray-100 border"
                                 : ""
-                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                           >
                             {collection?.collection_name}
                           </button>
@@ -696,10 +717,11 @@ const AllProducts = () => {
                               toggleFilter();
                               handleStyleClick(style?.slug);
                             }}
-                            className={`${selectedStyle === style?.slug
+                            className={`${
+                              selectedStyle === style?.slug
                                 ? "bg-bgray-100 border"
                                 : ""
-                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                           >
                             {style?.style}
                           </button>
@@ -740,10 +762,11 @@ const AllProducts = () => {
                               toggleFilter();
                               handleColorsClick(color?.slug);
                             }}
-                            className={`${selectedColor === color?.slug
+                            className={`${
+                              selectedColor === color?.slug
                                 ? "bg-bgray-100 border"
                                 : ""
-                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                           >
                             {color?.color}
                           </button>
@@ -784,10 +807,11 @@ const AllProducts = () => {
                               toggleFilter();
                               handleFeatureClick(feature?.slug);
                             }}
-                            className={`${selectedFeature === feature?.slug
+                            className={`${
+                              selectedFeature === feature?.slug
                                 ? "bg-bgray-100 border"
                                 : ""
-                              } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
                           >
                             {feature?.feature}
                           </button>
@@ -835,8 +859,9 @@ const AllProducts = () => {
                   </p>
                   <p>
                     <span
-                      className={`px-4 ${product?.discount_price ? "line-through" : ""
-                        }`}
+                      className={`px-4 ${
+                        product?.discount_price ? "line-through" : ""
+                      }`}
                     >
                       BDT {product?.price}.00
                     </span>

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 
 const CollectionTopCategory = () => {
-  const { data: collections = [], isLoading } = useQuery({
+  const { data: collections = [] } = useQuery({
     queryKey: [`/api/v1/collection?collection`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/collection`);
@@ -15,7 +15,7 @@ const CollectionTopCategory = () => {
     <div className="grid grid-cols-1 md:grid-cols-7 grid-rows-1 md:grid-rows-2">
       {/* First Section */}
       <div className="relative group overflow-hidden md:col-span-3 md:row-span-2">
-        <Link to={`/all?collection=FW302`} className="block w-full h-full">
+        <Link to={`/all?collection=dress`} className="block w-full h-full">
           <video className="w-full h-full object-cover" autoPlay muted loop>
             <source src="/assets/video/shoe.mp4" type="video/mp4" />
             {/* Your browser does not support the video tag. */}
@@ -33,7 +33,7 @@ const CollectionTopCategory = () => {
         </article>
         <Link
           className="bg-black text-xl font-medium leading-6 -tracking-normal text-white w-[60vw] md:w-[20vw] py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm"
-          to={`/all?discount=true`}
+          to={`/all?discount_price=true`}
         >
           Shop Now
         </Link>

@@ -6,7 +6,6 @@ import {
   Parallax,
 } from "swiper/modules";
 import { SwiperSlide, Swiper } from "swiper/react";
-import { singleProduct } from "../../../../data/product-details-data";
 // Import React icons
 import { IoCloseOutline } from "react-icons/io5";
 // Import Swiper styles
@@ -27,7 +26,7 @@ import { BASE_URL } from "../../../../utils/baseURL";
 
 const ProductDetails = () => {
   const { slug } = useParams();
-  const { data: product = [], isLoading } = useQuery({
+  const { data: product = [] } = useQuery({
     queryKey: [`/api/v1/product/${slug}`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/product/${slug}`);
@@ -47,6 +46,8 @@ const ProductDetails = () => {
     setModalOpen(false);
     setModal("");
   };
+
+  console.log(product);
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
@@ -85,7 +86,7 @@ const ProductDetails = () => {
 
       {/* ------ products details right side content ------ start */}
       <div className="md:px-10 py-5">
-        <Breadcrumb product={singleProduct} />
+        <Breadcrumb product={product?.data} />
         <div className="md:px-4">
           <article className="space-y-5 mt-8 border-bgray-500">
             <h1 className="text-xl font-semibold">{product?.data?.title}</h1>
