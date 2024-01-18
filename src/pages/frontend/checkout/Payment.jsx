@@ -12,7 +12,7 @@ const Payment = ({ total, user }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
-  const [order, { isLoading }] = useOrderMutation();
+  const [order, { isLoading, isError }] = useOrderMutation();
 
   const navigate = useNavigate();
 
@@ -34,21 +34,24 @@ const Payment = ({ total, user }) => {
           order: carts,
         };
       }
-      console.log(data);
       const res = await order(data);
-      if (res?.data?.success) {
-        toast.success(res?.data?.message);
-        localStorage.removeItem(cartKey);
-        navigate("/payment-success");
-        // window.location.reload();
-      }
       console.log(res);
+      if (res?.data?.success) {
+        localStorage.removeItem(cartKey);
+        toast.success(res?.data?.message);
+        window.location.reload();
+        navigate("/payment-success");
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
+  if (isLoading && isError) {
+    return <p className="text-error-300">There is an error!</p>;
+  }
+
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">
