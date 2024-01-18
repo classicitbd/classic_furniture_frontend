@@ -69,6 +69,16 @@ export const authApi = api.injectEndpoints({
       invalidatesTags: [tagTypes.user],
     }),
 
+    //set password
+    updateUser: build.mutation({
+      query: (data) => ({
+        url: `/getMe`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+
     //get refeshToken
     refeshToken: build.mutation({
       query: () => ({
@@ -108,4 +118,5 @@ export const {
   useForgetPasswordMutation,
   useSetPasswordMutation,
   useDeleteUserMutation,
+  useUpdateUserMutation,
 } = authApi;

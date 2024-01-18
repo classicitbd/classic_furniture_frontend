@@ -13,6 +13,7 @@ import {
   incrementQuantity,
   removeFromCart,
 } from "../../../../redux/feature/cart/cartSlice";
+import { Link } from "react-router-dom";
 
 const AddToCart = ({ setModal, sizeType, id, product }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -22,10 +23,10 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
   const carts = useSelector((state) => state.cart.products);
 
   const openModal = (value) => {
-    delete value._id;
+    console.log(value);
     setData({
       ...value,
-      size_validationId: value?._id,
+      size_variationId: value?._id,
       price: product?.price,
       title: product?.title,
       color: product?.colorId?.color,
@@ -128,7 +129,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
                         dispatch(
                           addToCart({
                             size: item?.size,
-                            size_validationId: item?._id,
+                            size_variationId: item?._id,
                             price: product?.price,
                             title: product?.title,
                             color: product?.colorId?.color,
@@ -276,14 +277,15 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
             <button onClick={closeModal} className="underline">
               Continue Shipping
             </button>
-            <button
+            <Link
+              to={"/checkout"}
               disabled={carts?.length === 0}
               className={`py-3 px-5 text-center text-white ${
                 carts?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"
               }`}
             >
               Proceed To Checkout
-            </button>
+            </Link>
           </div>
         </div>
       )}

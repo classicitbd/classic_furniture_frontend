@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import { AuthContext } from "../../../context/AuthProvider";
+import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 
 const CheckoutPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -33,7 +34,6 @@ const CheckoutPage = () => {
   const [addressUpdate, setAddressUpdate] = useState(false);
   const { email } = getUserInfo();
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -43,6 +43,15 @@ const CheckoutPage = () => {
       return data;
     },
   }); // get All Product
+
+  const { data: informations = [], refetch } = useQuery({
+    queryKey: [`/api/v1/getMe/${user?.email}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/getMe/${user?.email}`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get USER INFO
 
   const openModal = (product) => {
     setData(product);
@@ -69,104 +78,112 @@ const CheckoutPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <section className="overflow-y-auto space-y-5">
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
-            <UserInfo email={email} user={user} />
+            <UserInfo email={email} user={informations?.data} />
           </div>
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
             <Recipient
               user={user}
+              refetch={refetch}
               addressUpdate={addressUpdate}
               setAddressUpdate={setAddressUpdate}
             />
           </div>
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
-            <Payment />
+            <Payment user={user} total={total} />
           </div>
         </section>
         <section className="bg-white px-10 p-5 w-3/4 mx-auto rounded sticky">
           <h2 className="text-center mb-10 tracking-normal leading-5 text-lg font-medium">
             Order Summary
           </h2>
-          <div className="space-y-2 border-t pt-3">
-            {carts.map((product, i) => (
-              <div className="flex items-center gap-2 border-b pb-3" key={i}>
-                <div className="w-[70px] h-[70px] border rounded mr-3">
-                  <img
-                    src={product?.thumbnail_image}
-                    alt={product?.title}
-                    className="object-fill rounded"
-                  />
-                </div>
-                <div className="flex flex-col flex-1 space-y-2">
-                  <h2 className="text-sm tracking-tight leading-5">
-                    {product?.title}
-                  </h2>
-                  <p className="flex gap-2 items-center">
-                    <span className="text-sm tracking-tight leading-5">
-                      {product?.color}
-                    </span>
-                    <span className="text-sm tracking-tight leading-5">
-                      {product?.size}
-                    </span>
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm">BDT {product?.price}.00</p>
-                  <div
-                    className={`flex items-center justify-center border rounded-md px-2`}
-                  >
-                    {carts.find(
-                      (selectedItem) =>
-                        selectedItem.size === product?.size &&
-                        selectedItem.productId === product?.productId
-                    )?.quantity === 1 && (
+          {carts.length > 0 ? (
+            <div className="space-y-2 border-t pt-3">
+              {carts.map((product, i) => (
+                <div className="flex items-center gap-2 border-b pb-3" key={i}>
+                  <div className="w-[70px] h-[70px] border rounded mr-3">
+                    <img
+                      src={product?.thumbnail_image}
+                      alt={product?.title}
+                      className="object-fill rounded"
+                    />
+                  </div>
+                  <div className="flex flex-col flex-1 space-y-2">
+                    <h2 className="text-sm tracking-tight leading-5">
+                      {product?.title}
+                    </h2>
+                    <p className="flex gap-2 items-center">
+                      <span className="text-sm tracking-tight leading-5">
+                        {product?.color}
+                      </span>
+                      <span className="text-sm tracking-tight leading-5">
+                        {product?.size}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm">BDT {product?.price}.00</p>
+                    <div
+                      className={`flex items-center justify-center border rounded-md px-2`}
+                    >
+                      {carts.find(
+                        (selectedItem) =>
+                          selectedItem.size === product?.size &&
+                          selectedItem.productId === product?.productId
+                      )?.quantity === 1 && (
+                        <button
+                          onClick={() => {
+                            openModal(product);
+                          }}
+                          className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
+                        >
+                          <CiTrash />
+                        </button>
+                      )}
+                      {carts.find(
+                        (selectedItem) =>
+                          selectedItem.size === product?.size &&
+                          selectedItem.productId === product?.productId
+                      )?.quantity > 1 && (
+                        <button
+                          onClick={() => dispatch(decrementQuantity(product))}
+                          className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
+                        >
+                          <FiMinus />
+                        </button>
+                      )}
+                      <span className="px-2 py-1">{product?.quantity}</span>
                       <button
                         onClick={() => {
-                          openModal(product);
+                          if (
+                            products?.data
+                              ?.find(
+                                (singleProduct) =>
+                                  singleProduct?._id === product?.productId
+                              )
+                              .size_variation.find(
+                                (sizeItem) => sizeItem.size === product?.size
+                              ).quantity === product?.quantity
+                          ) {
+                            toast.error(
+                              "Max Stock Selected/Shortage of Stock",
+                              {
+                                autoClose: 3000,
+                              }
+                            );
+                          } else dispatch(incrementQuantity(product));
                         }}
-                        className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
+                        className="text-bgray-700 px-2 py-2 border rounded hover:bg-bgray-300"
                       >
-                        <CiTrash />
+                        <GoPlus />
                       </button>
-                    )}
-                    {carts.find(
-                      (selectedItem) =>
-                        selectedItem.size === product?.size &&
-                        selectedItem.productId === product?.productId
-                    )?.quantity > 1 && (
-                      <button
-                        onClick={() => dispatch(decrementQuantity(product))}
-                        className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
-                      >
-                        <FiMinus />
-                      </button>
-                    )}
-                    <span className="px-2 py-1">{product?.quantity}</span>
-                    <button
-                      onClick={() => {
-                        if (
-                          products?.data
-                            ?.find(
-                              (singleProduct) =>
-                                singleProduct?._id === product?.productId
-                            )
-                            .size_variation.find(
-                              (sizeItem) => sizeItem.size === product?.size
-                            ).quantity === product?.quantity
-                        ) {
-                          toast.error("Max Stock Selected/Shortage of Stock", {
-                            autoClose: 3000,
-                          });
-                        } else dispatch(incrementQuantity(product));
-                      }}
-                      className="text-bgray-700 px-2 py-2 border rounded hover:bg-bgray-300"
-                    >
-                      <GoPlus />
-                    </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <ProductNotFound />
+          )}
           <Link
             to={`/all`}
             className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"

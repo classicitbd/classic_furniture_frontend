@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  console.log( "Fromn auth provider,", user)
+  // console.log( "Fromn auth provider,", user)
 
   const info = {
     user,

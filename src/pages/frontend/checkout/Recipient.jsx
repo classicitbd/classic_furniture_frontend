@@ -6,6 +6,8 @@ import { PiAddressBook } from "react-icons/pi";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useUpdateUserMutation } from "../../../redux/feature/auth/authApi";
+import { toast } from "react-toastify";
 
 const options = [
   { value: "dhaka", label: "Dhaka" },
@@ -59,20 +61,36 @@ const options = [
   // Add more cities as needed
 ];
 
-const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
+const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
+  const [loading, setLoading] = useState(false);
   const [country, setCountry] = useState("Bangladesh");
-  const [city, setCity] = useState("Bangladesh");
+  const [city, setCity] = useState(user?.city);
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    data.email = email;
-    data.city = city;
-    data.country = country;
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      data.city = city;
+      data.country = country;
+      data.email = user?.email;
+      const res = await updateUser(data);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+        window.location.reload();
+        setAddressUpdate(!addressUpdate);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">
@@ -85,24 +103,28 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
       </div>
       <div className="flex justify-between">
         <p className="py-5 font-semibold tracking-tight">Delivery Address</p>
-        {addressUpdate ? (
-          <button
-            onClick={() => setAddressUpdate(!addressUpdate)}
-            className="flex items-center gap-1 text-[#549AFC]"
-          >
-            <span>Cancel</span>
-          </button>
-        ) : (
-          <button
-            onClick={() => setAddressUpdate(!addressUpdate)}
-            className="flex items-center gap-1 text-[#549AFC]"
-          >
-            <CiEdit />
-            <span>Edit</span>
-          </button>
+        {user?.address && (
+          <div>
+            {addressUpdate ? (
+              <button
+                onClick={() => setAddressUpdate(!addressUpdate)}
+                className="flex items-center gap-1 text-[#549AFC]"
+              >
+                <span>Cancel</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => setAddressUpdate(!addressUpdate)}
+                className="flex items-center gap-1 text-[#549AFC]"
+              >
+                <CiEdit />
+                <span>Edit</span>
+              </button>
+            )}
+          </div>
         )}
       </div>
-      {addressUpdate ? (
+      {!user?.address || addressUpdate ? (
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control w-full">
             <label htmlFor="address" className="label">
@@ -112,6 +134,7 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
             <input
               id="address"
               type="text"
+              defaultValue={user?.address}
               placeholder="your delivery address"
               className="border rounded px-3 py-2 w-full"
               {...register("address", { required: "Address is required" })}
@@ -124,14 +147,15 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
             <div className="w-full">
               <label htmlFor="city" className="label">
                 <span className="label-text">City</span>
-                <span className="text-error-300">*</span>
+                <span className="text-error-300">* {user?.city}</span>
               </label>
               <Select
                 className="basic-single"
                 name="city"
                 options={options}
+                defaultValue={city}
                 onChange={(e) => setCity(e.value)}
-                required
+                required={!user?.address}
               />
               {errors.city && (
                 <p className="text-red-600"> {errors.city.message}</p>
@@ -144,9 +168,10 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
               <input
                 id="zipcode"
                 type="text"
+                defaultValue={user?.zip_code}
                 placeholder="zipcode"
                 className="border rounded px-3 py-2 w-full"
-                {...register("zipcode")}
+                {...register("zip_code")}
               />
             </div>
           </div>
@@ -158,15 +183,24 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
               id="country"
               type="text"
               placeholder="country"
-              defaultValue={country}
+              defaultValue={user?.country ? user?.country : country}
               className="border rounded px-3 py-2 w-full"
               disabled
               {...register("country")}
             />
           </div>
-          <button className="flex justify-end gap-1 text-[#549AFC]">
-            <span>Save</span>
-          </button>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="flex justify-end gap-1 text-[#549AFC] mb-5"
+            >
+              {!loading || !isLoading ? (
+                <span>Save</span>
+              ) : (
+                <span>loading...</span>
+              )}
+            </button>
+          </div>
         </form>
       ) : (
         <div>
@@ -178,7 +212,7 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
                   <span> Address</span>
                 </td>
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  Uttara, Dhaka
+                  {user?.address}
                 </td>
               </tr>
 
@@ -189,7 +223,7 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
                 </td>
 
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  1207
+                  {user?.zip_code}
                 </td>
               </tr>
 
@@ -200,7 +234,7 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
                 </td>
 
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  Dhaka
+                  {user?.city}
                 </td>
               </tr>
               <tr>
@@ -210,7 +244,7 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
                 </td>
 
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  Bangladesh
+                  {user.country}
                 </td>
               </tr>
             </tbody>
@@ -219,7 +253,7 @@ const Recipient = ({ email, addressUpdate, setAddressUpdate }) => {
       )}
       <p className="text-sm">
         For urgent delivery, please contact{" "}
-        <span className="text-blue-500">+8801777010116</span> (11AM-10PM) or
+        <span className="text-blue-500">+88*********16</span> (11AM-10PM) or
         reach to our social media platform{" "}
         <span className="text-blue-500">Facebook/ Instagram</span>
       </p>

@@ -14,6 +14,7 @@ const loadState = () => {
     return undefined;
   }
 };
+
 const preloadedState = loadState();
 const store = configureStore({
   reducer: {
