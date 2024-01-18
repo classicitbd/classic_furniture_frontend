@@ -5,12 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [gender, setGender] = useState("");
   const [menu, setMenu] = useState("");
-  const {
-    data: menuTypes = [],
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: menuTypes = [] } = useQuery({
     queryKey: ["/api/v1/menu"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/menu`);
@@ -31,10 +28,13 @@ const Navbar = () => {
       }
     },
   }); // get Menu type
+
   const handleHover = (menu) => {
-    setMenu(menu);
+    setGender(menu?.slug);
+    setMenu(menu?._id);
     setIsDropdownOpen(true);
   };
+
   return (
     <div className="bg-black text-white hidden sm:block">
       {/* ------ navbar with dropdown ------ start */}
@@ -49,7 +49,7 @@ const Navbar = () => {
             {menuTypes?.data?.map((menuItem) => (
               <li key={menuItem?._id}>
                 <button
-                  onMouseEnter={() => handleHover(menuItem?._id)}
+                  onMouseEnter={() => handleHover(menuItem)}
                   className={`text-lg font-light focus:outline-none uppercase ${
                     menu === menuItem?._id ? "opacity-80" : ""
                   } transition-opacity duration-300`}
@@ -76,7 +76,7 @@ const Navbar = () => {
                 {category?.data?.map((category) => (
                   <li className="w-[200px]" key={category?.category?._id}>
                     <Link
-                      to={`/all?category=${category?.category?.slug}`}
+                      to={`/all?gender=${gender}&category=${category?.category?.slug}`}
                       className="text-white py-1 px-2 w-full text-left rounded-sm text-base font-medium opacity-80 hover:opacity-100"
                     >
                       {category?.category?.category}
@@ -85,7 +85,7 @@ const Navbar = () => {
                       {category?.subcategories?.map((subItem) => (
                         <li key={subItem?._id}>
                           <Link
-                            to={`/all?category=${category?.category?.slug}&subcategory=${subItem?.slug}`}
+                            to={`/all?gender=${gender}&category=${category?.category?.slug}&sub_category=${subItem?.slug}`}
                             className=" text-white py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-80 hover:opacity-100"
                           >
                             {subItem?.sub_category}

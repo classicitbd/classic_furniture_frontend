@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 // import react icons
 import { HiOutlineAdjustmentsVertical } from "react-icons/hi2";
@@ -15,20 +15,23 @@ const AllProducts = () => {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [discount, setDiscount] = useState(true);
   const [categoryTypes, setCategoryTypes] = useState([]);
   const [subCategoryTypes, setSubCategoryTypes] = useState([]);
-  const [queryParameters] = useSearchParams();
+  const [query, setQuery] = useState({});
 
-  // get all products
-  const { data: products = [] } = useQuery({
-    queryKey: ["/api/v1/product"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product`);
-      const data = await res.json();
-      return data;
-    },
-  });
+  // selected options
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [selectedCollection, setSelectedCollection] = useState(null);
+  const [selectedStyle, setSelectedStyle] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedFeature, setSelectedFeature] = useState(null);
+  const [selectedDiscount, setSelectedDiscount] = useState(null);
+  // const [queryParameters, setQueryParameters] = useState({});
+
+  // Add similar state variables for collection, color, features, and styles
+  const [queryParameters] = useSearchParams();
+  const navigate = useNavigate();
 
   // get Category type
   const { data = [] } = useQuery({
@@ -40,6 +43,7 @@ const AllProducts = () => {
     },
   });
 
+  // get Sub Category type
   const { data: subData = [] } = useQuery({
     queryKey: ["/api/v1/sub_category"],
     queryFn: async () => {
@@ -47,8 +51,9 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Sub Category type
+  });
 
+  // get Collection type
   const { data: collections = [] } = useQuery({
     queryKey: ["/api/v1/collection"],
     queryFn: async () => {
@@ -56,8 +61,9 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Collection type
+  });
 
+  // get Style type
   const { data: styles = [] } = useQuery({
     queryKey: ["/api/v1/style"],
     queryFn: async () => {
@@ -65,8 +71,9 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Style type
+  });
 
+  // get Color type
   const { data: colors = [] } = useQuery({
     queryKey: ["/api/v1/color"],
     queryFn: async () => {
@@ -74,8 +81,9 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Color type
+  });
 
+  // get Feature type
   const { data: features = [] } = useQuery({
     queryKey: ["/api/v1/feature"],
     queryFn: async () => {
@@ -83,10 +91,94 @@ const AllProducts = () => {
       const data = await res.json();
       return data;
     },
-  }); // get Feature type
+  });
 
+  const handleDiscountClick = (discount) => {
+    setSelectedDiscount(discount);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("discount", discount);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("category", category);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+
+  const handleSubCategoryClick = (subCategory) => {
+    setSelectedSubCategory(subCategory);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("sub_category", subCategory);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+
+  const handleCollectionClick = (collection) => {
+    setSelectedCollection(collection);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("collection", collection);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+
+  const handleStyleClick = (style) => {
+    setSelectedStyle(style);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("style", style);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+
+  const handleColorsClick = (color) => {
+    setSelectedColor(color);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("color", color);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+
+  const handleFeatureClick = (feature) => {
+    setSelectedFeature(feature);
+
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("feature", feature);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+  // Add similar functions for collection, color, features, and styles
+
+  // reset function
   const handleResetFilter = () => {
-    setDiscount(false);
+    setSelectedCategory(null);
+    setSelectedSubCategory(null);
+    setSelectedCollection(null);
+    setSelectedColor(null);
+    setSelectedFeature(null);
+    setSelectedStyle(null);
   };
 
   const toggleFilter = () => {
@@ -100,11 +192,37 @@ const AllProducts = () => {
       allQueryParams[key] = value;
     }
 
-    // console.log("All Query Parameters:", allQueryParams);
+    console.log("All Query Parameters:", allQueryParams);
+    setQuery(allQueryParams);
 
     // You can perform any other logic based on all query parameters here
   }, [queryParameters]);
 
+  const constructQueryString = (queryParams) => {
+    console.log({ queryParams });
+    const queryString = Object.keys(queryParams)
+      .filter((key) => queryParams[key] !== undefined)
+      .map((key) => `${key}=${queryParams[key]}`)
+      .join("&");
+
+    return queryString.length > 0 ? `all?${queryString}` : "all";
+  };
+
+  console.log(constructQueryString(query));
+
+  // get all products
+  const { data: products = [] } = useQuery({
+    queryKey: [constructQueryString(query)],
+    queryFn: async () => {
+      const res = await fetch(
+        `${BASE_URL}/${constructQueryString(queryParameters)}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  // unique sub category
   useEffect(() => {
     const uniqueMap = new Map();
     subData?.data?.forEach((item) => {
@@ -116,6 +234,7 @@ const AllProducts = () => {
     setSubCategoryTypes(uniqueData);
   }, [subData]);
 
+  // unique category
   useEffect(() => {
     const uniqueMap = new Map();
     data?.data?.forEach((item) => {
@@ -155,20 +274,22 @@ const AllProducts = () => {
             <span className="w-[1px] h-4 bg-bgray-400 text-green inline-block"></span>
           </li>
           <li>
-            <Link
-              to={`http://localhost:3000/all?discount=true`}
-              onClick={() => setDiscount(true)}
-              className={`${discount ? "text-error-200" : ""} hidden sm:block`}
+            <button
+              onClick={() => handleDiscountClick("true")}
+              className={`${
+                selectedDiscount === "true" ? "text-error-200" : ""
+              } hidden sm:block`}
             >
               On Sale
-            </Link>
-            <Link
-              to={`http://localhost:3000/all?discount=true`}
-              onClick={() => setDiscount(true)}
-              className={`${discount ? "text-error-200" : ""} block sm:hidden`}
+            </button>
+            <button
+              onClick={() => handleDiscountClick("true")}
+              className={`${
+                selectedDiscount ? "text-error-200" : ""
+              } block sm:hidden`}
             >
               <BiSolidDiscount />
-            </Link>
+            </button>
           </li>
           <li>
             <span className="w-[1px] h-4 bg-bgray-400 inline-block"></span>
@@ -194,12 +315,29 @@ const AllProducts = () => {
               <HiOutlineAdjustmentsVertical />
             </button>
             <div
-              className={`absolute top-[57px] left-0 w-full border bg-[#FFFFFF] ${
+              className={`absolute top-[50px] left-0 w-full border bg-[#FFFFFF] ${
                 filterDropdownOpen ? "block" : "hidden"
               }`}
             >
               <div className="grid grid-cols-6 min-h-[460px] border-b">
                 {/* ------ category section ------ start */}
+                {/* <div className="border-r px-4 py-[5px]">
+                  <ul className="space-y-1">
+                    <li className="text-lg font-medium tracking-normal mb-2">
+                      <button>Categories</button>
+                    </li>
+                    {categoryTypes?.map((category) => (
+                      <li key={category._id}>
+                        <Link
+                          to={`/all?category=${category?.slug}`}
+                          className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm"
+                        >
+                          {category?.category}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div> */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
                     <li className="text-lg font-medium tracking-normal mb-2">
@@ -207,7 +345,14 @@ const AllProducts = () => {
                     </li>
                     {categoryTypes?.map((category) => (
                       <li key={category._id}>
-                        <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
+                        <button
+                          onClick={() => handleCategoryClick(category?.slug)}
+                          className={`${
+                            selectedCategory === category?.slug
+                              ? "bg-bgray-100 border"
+                              : ""
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                        >
                           {category?.category}
                         </button>
                       </li>
@@ -215,8 +360,24 @@ const AllProducts = () => {
                   </ul>
                 </div>
                 {/* ------ category section ------ end */}
-
                 {/* ------ sub category section ------ start */}
+                {/* <div className="border-r px-4 py-[5px]">
+                  <ul className="space-y-1">
+                    <li className="text-lg font-medium tracking-normal mb-2">
+                      <button>Sub Categories</button>
+                    </li>
+                    {subCategoryTypes?.map((subCategory) => (
+                      <li key={subCategory?._id}>
+                        <Link
+                          to={`/`}
+                          className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm"
+                        >
+                          {subCategory?.sub_category}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div> */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
                     <li className="text-lg font-medium tracking-normal mb-2">
@@ -224,7 +385,16 @@ const AllProducts = () => {
                     </li>
                     {subCategoryTypes?.map((subCategory) => (
                       <li key={subCategory?._id}>
-                        <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
+                        <button
+                          onClick={() =>
+                            handleSubCategoryClick(subCategory?.slug)
+                          }
+                          className={`${
+                            selectedSubCategory === subCategory?.slug
+                              ? "bg-bgray-100 border"
+                              : ""
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                        >
                           {subCategory?.sub_category}
                         </button>
                       </li>
@@ -232,7 +402,6 @@ const AllProducts = () => {
                   </ul>
                 </div>
                 {/* ------ sub category section ------ end */}
-
                 {/* ------ collections section ------ start */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
@@ -241,7 +410,16 @@ const AllProducts = () => {
                     </li>
                     {collections?.data?.map((collection) => (
                       <li key={collection?._id}>
-                        <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
+                        <button
+                          onClick={() =>
+                            handleCollectionClick(collection?.slug)
+                          }
+                          className={`${
+                            selectedCollection === collection?.slug
+                              ? "bg-bgray-100 border"
+                              : ""
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                        >
                           {collection?.collection_name}
                         </button>
                       </li>
@@ -249,7 +427,6 @@ const AllProducts = () => {
                   </ul>
                 </div>
                 {/* ------ collections section ------ end */}
-
                 {/* ------ styles section ------ start */}
                 <div className="border-r px-4 py-[5px]">
                   <ul className="space-y-1">
@@ -258,7 +435,14 @@ const AllProducts = () => {
                     </li>
                     {styles?.data?.map((style) => (
                       <li key={style?._id}>
-                        <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
+                        <button
+                          onClick={() => handleStyleClick(style?.slug)}
+                          className={`${
+                            selectedStyle === style?.slug
+                              ? "bg-bgray-100 border"
+                              : ""
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                        >
                           {style?.style}
                         </button>
                       </li>
@@ -274,7 +458,14 @@ const AllProducts = () => {
                     </li>
                     {colors?.data?.map((color) => (
                       <li key={color?._id}>
-                        <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
+                        <button
+                          onClick={() => handleColorsClick(color?.slug)}
+                          className={`${
+                            selectedColor === color?.slug
+                              ? "bg-bgray-100 border"
+                              : ""
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                        >
                           {color?.color}
                         </button>
                       </li>
@@ -290,7 +481,14 @@ const AllProducts = () => {
                     </li>
                     {features?.data?.map((feature) => (
                       <li key={feature?._id}>
-                        <button className="bg-bgray-100 hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm">
+                        <button
+                          onClick={() => handleFeatureClick(feature?.slug)}
+                          className={`${
+                            selectedFeature === feature?.slug
+                              ? "bg-bgray-100 border"
+                              : ""
+                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
+                        >
                           {feature?.feature}
                         </button>
                       </li>

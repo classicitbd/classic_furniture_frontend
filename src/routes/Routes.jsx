@@ -27,6 +27,7 @@ import PrivateRoute from "./privateRoute/PrivateRoute";
 import NotFound from "../shared/notFound/NotFound";
 import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
 import SiteSetting from "../pages/dashboard/setting/SiteSetting";
+import SuccessPage from "../components/frontend/ui/successPage/SuccessPage";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             <CheckoutPage />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/payment-success",
+        element: <SuccessPage />,
       },
     ],
   },
