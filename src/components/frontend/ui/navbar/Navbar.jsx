@@ -14,7 +14,9 @@ const Navbar = () => {
       const data = await res.json();
       return data;
     },
+    suspense: false
   }); // get Menu type
+
   const { data: category = [] } = useQuery({
     queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
     queryFn: async () => {
@@ -27,6 +29,7 @@ const Navbar = () => {
         return { data: [] };
       }
     },
+    suspense: false
   }); // get category and sub category
 
   const handleHover = (menu) => {

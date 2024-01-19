@@ -14,12 +14,17 @@ import { GoArrowRight } from "react-icons/go";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 
 const AllProducts = () => {
+  // get to top page all products page
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [categoryTypes, setCategoryTypes] = useState([]);
   const [subCategoryTypes, setSubCategoryTypes] = useState([]);
-  const [query, setQuery] = useState("all");
+  const [query, setQuery] = useState("");
 
   // selected options
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -252,11 +257,6 @@ const AllProducts = () => {
     const uniqueData = Array.from(uniqueMap.values());
     setCategoryTypes(uniqueData);
   }, [data]);
-
-  // get to top page all products page
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <div className="min-h-screen bg-white">

@@ -35,12 +35,11 @@ const Payment = ({ total, user }) => {
         };
       }
       const res = await order(data);
-      console.log(res);
       if (res?.data?.success) {
         localStorage.removeItem(cartKey);
         toast.success(res?.data?.message);
-        window.location.reload();
         navigate("/payment-success");
+        window.location.reload();
       }
     } catch (error) {
       console.error(error);
