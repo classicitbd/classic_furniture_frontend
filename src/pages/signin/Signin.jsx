@@ -45,13 +45,13 @@ const SignIn = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
-      <div className="w-full mx-3 md:w-96 px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
+      <div className="w-full mx-3 md:w-[400px] px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
           Login
         </h2>
 
         <form onSubmit={handleSubmit(handleSignIn)} className="space-y-4">
-          <div className="form-control w-full max-w-xs">
+          <div className="form-control w-full">
             <label htmlFor="email" className="label">
               <span className="label-text">Email</span>
             </label>
@@ -59,14 +59,14 @@ const SignIn = () => {
               id="email"
               type="email"
               placeholder="example@gmail.com"
-              className="border rounded px-3 p-1 w-full max-w-xs"
+              className="border rounded px-3 py-2 w-full"
               {...register("email", { required: "Email is required" })}
             />
             {errors.email && (
               <p className="text-red-600"> {errors.email.message}</p>
             )}
           </div>
-          <div className="form-control w-full max-w-xs">
+          <div className="form-control w-full">
             <label htmlFor="password" className="label">
               <span className="label-text">Password</span>
             </label>
@@ -74,7 +74,7 @@ const SignIn = () => {
               id="password"
               type="password"
               placeholder="* * * * *"
-              className="border rounded px-3 p-1 w-full max-w-xs"
+              className="border rounded px-3 py-2 w-full"
               {...register("password", {
                 required: "Password is required",
                 minLength: {
@@ -103,9 +103,8 @@ const SignIn = () => {
           </button>
         </form>
         <p className="text-[14px] mt-4">
-          Are you new here Create account?
           <Link to="/sign-up" className="text-secondary">
-            Sign-up
+            Create account?
           </Link>
         </p>
       </div>

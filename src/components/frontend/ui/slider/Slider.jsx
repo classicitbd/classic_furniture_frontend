@@ -61,7 +61,7 @@ const Slider = () => {
             <SwiperSlide key={slider._id}>
               <img
                 src={slider?.slider}
-                className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] xl:h-[90vh]"
+                className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] xl:h-[90vh] object-fill"
                 alt={slider.id}
               />
             </SwiperSlide>

@@ -259,8 +259,8 @@ const AllProducts = () => {
   }, [data]);
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container flex justify-between py-4 border-b border-bgray-500 sticky top-[58px] sm:top-[64px] z-30 bg-white">
+    <div className="min-h-screen">
+      <div className="flex justify-between py-4 sticky top-[58px] sm:top-[64px] z-30 bg-white px-4 sm:px-10 md:px-16 lg:px-20 xl:px-24 2xl:px-48 shadow-sm border-b border-bgray-500">
         <div>
           <h1>Products {products?.length}</h1>
         </div>
@@ -270,13 +270,13 @@ const AllProducts = () => {
             <Link
               className="hidden sm:block"
               onClick={handleResetFilter}
-              to={`http://localhost:3000/all`}
+              to={`/all`}
             >
               Reset Filter
             </Link>
             <Link
               onClick={handleResetFilter}
-              to={`http://localhost:3000/all`}
+              to={`/all`}
               className="block sm:hidden"
             >
               <RxReload />
