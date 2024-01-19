@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 
 const CollectionCategory = () => {
-  const { data: collections = [], isLoading } = useQuery({
+  const { data: collections = [] } = useQuery({
     queryKey: [`/api/v1/collection?collection`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/collection`);
