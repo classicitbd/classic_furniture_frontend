@@ -30,14 +30,13 @@ import SiteSetting from "../pages/dashboard/setting/SiteSetting";
 import SuccessPage from "../components/frontend/ui/successPage/SuccessPage";
 import FailPage from "../components/frontend/ui/failPage/FailPage";
 import HomePage from "../pages/dashboard/homePage/HomePage";
+import UserDashboard from "../pages/frontend/userDashboard/UserDashboard";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    errorElement: (
-      <p className="text-center min-h-screen">Something went wrong!</p>
-    ),
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
@@ -65,7 +64,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/payment-fail/:tnx-id",
-        element: <FailPage />,
+        element: <FailPage />
+      },
+      {
+        path: "/user-profile",
+        element: <UserDashboard />,
       },
     ],
   },

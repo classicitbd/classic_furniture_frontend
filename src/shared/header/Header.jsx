@@ -106,7 +106,7 @@ const Header = () => {
         {/* ------ header top section ------ start */}
 
         <div className="border-b pb-3 border-gray-600">
-          <div className="container grid grid-cols-3 items-center justify-between">
+          <div className="container grid grid-cols-3 items-center">
             {/* ------ header left side ------ start */}
             <div>
               <div
@@ -161,7 +161,7 @@ const Header = () => {
             <div>
               <Link
                 to={"/"}
-                className={`font-bold text-2xl h-[40px] sm:h-[46px] sm:w-[394px] flex justify-start ${
+                className={`font-bold text-2xl h-[40px] sm:h-[46px] sm:w-[394px] mx-auto flex justify-start ${
                   scroll ? "block sm:hidden" : "block"
                 }`}
               >
@@ -178,7 +178,7 @@ const Header = () => {
             {/* ------ header middle side ------ end */}
             {/* ------ header right side ------ start */}
 
-            <div className="flex items-center justify-end gap-4 lg:w-[394px]">
+            <div className="flex items-center justify-end gap-4">
               <button
                 onClick={toggleDrawer}
                 className="relative inline-flex items-center justify-center p-2 md:p-3 md:overflow-hidden font-medium transition duration-300 ease-out rounded-full shadow ring-1 ring-purple-500"
@@ -208,7 +208,8 @@ const Header = () => {
                     >
                       <div className="p-2">
                         <Link
-                          href="#"
+                          to="/user-profile"
+                          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                           className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                           role="menuitem"
                         >

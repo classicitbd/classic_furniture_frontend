@@ -41,6 +41,7 @@ const Payment = ({ total, user }) => {
         };
       }
       const res = await order(data);
+<<<<<<< HEAD
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         setLoading(false)
         if (res?.data?.data?.GatewayPageURL){
@@ -54,6 +55,13 @@ const Payment = ({ total, user }) => {
       } else {
         setLoading(false)
         toast.error(res?.error?.data?.message);
+=======
+      if (res?.data?.success) {
+        localStorage.removeItem(cartKey);
+        toast.success(res?.data?.message);
+        navigate("/payment-success");
+        window.location.reload();
+>>>>>>> 4c7f4698b75d63b923d1a71b00e7a7516d85a758
       }
     } catch (error) {
       console.log(error)

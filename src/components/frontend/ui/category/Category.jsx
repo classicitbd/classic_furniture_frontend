@@ -56,7 +56,7 @@ const Category = () => {
           ))}
           <li>
             <Link
-              to={`/all?discount=true`}
+              to={`/all?discount_price=true`}
               className={`text-error-200 hover:text-error-300 uppercase`}
             >
               Discount Section

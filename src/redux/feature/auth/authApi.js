@@ -91,9 +91,9 @@ export const authApi = api.injectEndpoints({
     // change password
     changePassword: build.mutation({
       query: (data) => ({
-        url: `${AUTH_URL}/setNewPassword`,
+        url: `${AUTH_LOGIN}`,
         method: "PATCH",
-        body: data.body,
+        body: data,
       }),
       invalidatesTags: [tagTypes.user],
     }),
@@ -119,4 +119,5 @@ export const {
   useSetPasswordMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
+  useChangePasswordMutation,
 } = authApi;
