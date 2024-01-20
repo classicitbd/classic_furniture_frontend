@@ -28,21 +28,43 @@ const Payment = ({ total, user }) => {
         data = {
           userInfo: user?._id,
           email: user?.email,
-          status: "pending",
-          type: "unpaid",
+          name: user?.name,
+          phone: user?.phone || "01885107155",
           payment_type: payBy,
           order: carts,
+          price: total,
+          address: user?.address,
+          city: user?.city,
+          zip_code: user?.zip_code,
+          country: user?.country,
+          shipping_price: 60
         };
       }
       const res = await order(data);
+<<<<<<< HEAD
+      if (res?.data?.statusCode == 200 && res?.data?.success == true) {
+        setLoading(false)
+        if (res?.data?.data?.GatewayPageURL){
+          window.location.replace(res?.data?.data?.GatewayPageURL);
+        }else{
+          localStorage.removeItem(cartKey);
+          toast.success(res?.data?.message);
+          navigate("/payment-success");
+          window.location.reload();
+        }
+      } else {
+        setLoading(false)
+        toast.error(res?.error?.data?.message);
+=======
       if (res?.data?.success) {
         localStorage.removeItem(cartKey);
         toast.success(res?.data?.message);
         navigate("/payment-success");
         window.location.reload();
+>>>>>>> 4c7f4698b75d63b923d1a71b00e7a7516d85a758
       }
     } catch (error) {
-      console.error(error);
+      console.log(error)
     } finally {
       setLoading(false);
     }

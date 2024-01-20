@@ -28,6 +28,8 @@ import NotFound from "../shared/notFound/NotFound";
 import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
 import SiteSetting from "../pages/dashboard/setting/SiteSetting";
 import SuccessPage from "../components/frontend/ui/successPage/SuccessPage";
+import FailPage from "../components/frontend/ui/failPage/FailPage";
+import HomePage from "../pages/dashboard/homePage/HomePage";
 import UserDashboard from "../pages/frontend/userDashboard/UserDashboard";
 
 const router = createBrowserRouter([
@@ -57,8 +59,12 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/payment-success",
+        path: "/payment-success/:tnx-id",
         element: <SuccessPage />,
+      },
+      {
+        path: "/payment-fail/:tnx-id",
+        element: <FailPage />
       },
       {
         path: "/user-profile",
@@ -99,6 +105,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
+        element: <HomePage />,
+      },
+      {
+        path: "/dashboard/order",
         element: <Order />,
       },
       {

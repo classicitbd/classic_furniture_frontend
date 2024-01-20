@@ -11,6 +11,7 @@ import { MdOutlineCollectionsBookmark } from "react-icons/md"
 import { RxFontStyle } from "react-icons/rx";
 import { PiSlideshowBold } from "react-icons/pi";
 import { TbShoppingCartPause } from "react-icons/tb";
+import { GoHomeFill } from "react-icons/go";
 
 
 const SideNavBar = () => {
@@ -22,7 +23,7 @@ const SideNavBar = () => {
 
     const navBar = (
         <>
-            <div className="flex flex-col">
+            <div className="flex flex-col mt-6">
 
                 <div
                     className={
@@ -31,8 +32,23 @@ const SideNavBar = () => {
                             : "text-[#717171] nab_item"
                     }
                 >
-                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                         <Link to="/dashboard" className="hover:text-[#3EA2FA] flex items-center gap-2">
+                            <GoHomeFill />
+                            Dashboard
+                        </Link>
+                    </div>
+                </div>
+
+                <div
+                    className={
+                        pathname === "/dashboard/order"
+                            ? "nab_item text-[#3EA2FA]"
+                            : "text-[#717171] nab_item"
+                    }
+                >
+                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
+                        <Link to="/dashboard/order" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <TbShoppingCartPause />
                             Order
                         </Link>
@@ -40,12 +56,12 @@ const SideNavBar = () => {
                 </div>
 
                 <div className="text-white nab_item">
-                    <div className=" flex items-center justify-between mt-3 text-[18px] font-semibold">
+                    <div className=" flex items-center justify-between mt-3 text-[14px] font-semibold">
                         <button onClick={() => setIsUserOpen(!isUserOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-2">
                             <BiSolidCategory  />Category {isUserOpen ? <FaChevronUp /> : <FaChevronDown />} </button>
                     </div>
                     {
-                        isUserOpen && <div className="p-1 bg-white mt-2">
+                        isUserOpen && <div className="p-1 bg-white mt-2 ml-2">
 
                             <div
                                 className={
@@ -54,7 +70,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold">
+                                <div className="flex items-center justify-between text-[24px] font-semibold">
                                     <Link
                                         to="/dashboard/menu"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -72,7 +88,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                                     <Link
                                         to="/dashboard/category"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -90,7 +106,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                                     <Link
                                         to="/dashboard/sub_category"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -108,7 +124,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                                     <Link
                                         to="/dashboard/color"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -126,7 +142,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                                     <Link
                                         to="/dashboard/collection"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -144,7 +160,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                                     <Link
                                         to="/dashboard/feature"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -162,7 +178,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                                     <Link
                                         to="/dashboard/style"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -178,12 +194,12 @@ const SideNavBar = () => {
                 </div>
 
                 <div className="text-white nab_item">
-                    <div className=" flex items-center justify-between mt-3 text-[18px] font-semibold">
+                    <div className=" flex items-center justify-between mt-3 text-[14px] font-semibold">
                         <button onClick={() => setIsProductOpen(!isProductOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-2">
                             <IoCartOutline />Products {isProductOpen ? <FaChevronUp /> : <FaChevronDown />} </button>
                     </div>
                     {
-                        isProductOpen && <div className="p-1 bg-white mt-2">
+                        isProductOpen && <div className="p-1 bg-white mt-2 ml-2">
 
                             <div
                                 className={
@@ -192,7 +208,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold">
+                                <div className="flex items-center justify-between text-[24px] font-semibold">
                                     <Link
                                         to="/dashboard/product"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -210,7 +226,7 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                                     <Link
                                         to="/dashboard/product/create"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2"
@@ -232,7 +248,7 @@ const SideNavBar = () => {
                             : "text-[#717171] nab_item"
                     }
                 >
-                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                         <Link to="/dashboard/slider" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <PiSlideshowBold />
                             Slider
@@ -247,7 +263,7 @@ const SideNavBar = () => {
                             : "text-[#717171] nab_item"
                     }
                 >
-                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                         <Link to="/dashboard/customer" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <FaUsers />
                             Customer
@@ -262,7 +278,7 @@ const SideNavBar = () => {
                             : "text-[#717171] nab_item"
                     }
                 >
-                    <div className="flex items-center justify-between text-[18px] font-semibold mt-2">
+                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
                         <Link to="/dashboard/setting" className="hover:text-[#3EA2FA] flex items-center gap-2">
                             <IoSettingsOutline />
                             Setting
