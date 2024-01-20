@@ -15,6 +15,7 @@ import {
   incrementQuantity,
   removeFromCart,
 } from "../../../redux/feature/cart/cartSlice";
+
 import ConfirmationModal from "../../../components/common/modal/ConfirmationModal";
 import { IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
