@@ -25,9 +25,16 @@ const Pagination = ({ rows, page, setPage, setRows, totalData }) => {
                 <FaChevronLeft />
             </button>
 
-            <button onClick={lastArrow != page ? () => setPage(page + 1) : null} className="border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white">
+            {
+                totalData > 10 ?
+                <button onClick={lastArrow != page ? () => setPage(page + 1) : null} className="border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white">
                 <FaChevronRight />
-            </button>
+                </button>
+                :
+                 <button disabled className="border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white">
+                    <FaChevronRight />
+                 </button>
+            }
         </div>
     );
 };
