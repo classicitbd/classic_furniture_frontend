@@ -47,7 +47,6 @@ const ProductDetails = () => {
     setModal("");
   };
 
-  console.log(product);
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">

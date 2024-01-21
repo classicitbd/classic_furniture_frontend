@@ -40,9 +40,7 @@ const Payment = ({ total, user }) => {
           shipping_price: 60,
         };
       }
-      console.log("data", data);
       const res = await order(data);
-      console.log(res);
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         setLoading(false);
         if (res?.data?.data?.GatewayPageURL) {

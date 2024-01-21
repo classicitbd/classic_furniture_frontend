@@ -16,7 +16,6 @@ const OrderTab = () => {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isViewData, setIsViewData] = useState({});
   const { user, loading: isLoading } = useContext(AuthContext);
-  console.log(user?.email);
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +38,6 @@ const OrderTab = () => {
     setIsViewData(data);
     setIsViewOpen(true);
   };
-  console.log(products);
 
   const orderPending = products.filter(
     (product) => product.status === "pending"

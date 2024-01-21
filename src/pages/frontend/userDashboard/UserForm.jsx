@@ -89,8 +89,6 @@ const UserForm = ({ user, refetch }) => {
         reset();
         refetch();
       }
-      console.log("res", res);
-      console.log(data);
     } catch (error) {
       console.error(error);
     } finally {

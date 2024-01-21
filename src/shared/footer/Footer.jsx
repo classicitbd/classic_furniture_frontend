@@ -8,7 +8,7 @@ const portfilioLinks = [
   { path: "#", label: "Youtube" },
 ];
 
-const quickLinks = [{ path: "#", label: "Our Story" }];
+const quickLinks = [{ path: "/about-us", label: "Our Story" }];
 
 const helpfulLinks = [
   {

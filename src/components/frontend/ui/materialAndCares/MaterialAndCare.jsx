@@ -18,7 +18,7 @@ const MaterialAndCare = () => {
       <div
         className="mt-10"
         dangerouslySetInnerHTML={{
-          __html: materail?.data[0]?.shipping_info,
+          __html: materail?.data[0]?.material_care,
         }}
       ></div>
     </div>
