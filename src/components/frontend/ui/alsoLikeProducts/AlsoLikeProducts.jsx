@@ -12,10 +12,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/bundle";
-import { productData } from "../../../../data/product-data";
-import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../../utils/baseURL";
+import ProductCard from "../../../common/card/ProductCard";
 
 const AlsoLikeProducts = () => {
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/product?page=${1}&limit=${10}`);
+      const data = res.json();
+      return data;
+    },
+  });
+
   return (
     <div className="px-[5px] lg:px-[50px] pt-[5px]">
       <h1 className="text-3xl text-center font-normal tracking-normal leading-6 mb-5 sm:mb-10 uppercase">
@@ -53,34 +63,12 @@ const AlsoLikeProducts = () => {
           onSlideChange={() => {}}
         >
           <div>
-            {productData.map((product) => (
+            {products?.data?.map((product) => (
               <SwiperSlide
-                key={product?.id}
+                key={product?._id}
                 className="border hover:border-bgray-400 group rounded-md overflow-hidden shadow-2xl shadow-white"
               >
-                <Link className="" to={`/products/details/${product?.id}`}>
-                  <div className="flex">
-                    <img
-                      src={product?.thumbnail}
-                      className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
-                      alt={product?.id}
-                    />
-                    <img
-                      src={product?.thumbnailTwo}
-                      className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
-                      alt={product?.id}
-                    />
-                  </div>
-                  <article className="pb-[10px]">
-                    <h2 className="text-center">{product?.title}</h2>
-                    <p className="text-center py-3 text-bgray-700">
-                      {product?.color}
-                    </p>
-                    <p className="px-4 text-lg font-normal">
-                      BDT {product?.price}.00
-                    </p>
-                  </article>
-                </Link>
+                <ProductCard product={product} loading={isLoading} />
               </SwiperSlide>
             ))}
           </div>

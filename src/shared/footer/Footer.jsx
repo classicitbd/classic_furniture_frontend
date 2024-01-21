@@ -22,7 +22,6 @@ const Footer = () => {
       return data;
     },
   });
-  console.log(footerData);
   return (
     <section className="bg-[#000000] text-[#A9A9A9] border-t-[2px] border-[#A9A9A9]">
       <div className="container pt-10">
