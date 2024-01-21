@@ -1,8 +1,8 @@
 
 import { useState } from "react";
 // import { AiFillHome } from "react-icons/ai";
-import { FaChevronDown, FaChevronUp, FaListUl, FaUsers } from "react-icons/fa";
-import { BiMaleFemale, BiSolidCategory  } from "react-icons/bi";
+import { FaChevronDown, FaListUl, FaUsers } from "react-icons/fa";
+import { BiMaleFemale, BiSolidCategory } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { TbCategoryPlus } from "react-icons/tb";
 import { MdControlPointDuplicate, MdOutlineFeaturedPlayList } from "react-icons/md";
@@ -10,8 +10,7 @@ import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp, IoSettingsOutli
 import { MdOutlineCollectionsBookmark } from "react-icons/md"
 import { RxFontStyle } from "react-icons/rx";
 import { PiSlideshowBold } from "react-icons/pi";
-import { TbShoppingCartPause } from "react-icons/tb";
-import { GoHomeFill } from "react-icons/go";
+import { FcBarChart, FcPieChart } from "react-icons/fc";
 
 
 const SideNavBar = () => {
@@ -25,43 +24,35 @@ const SideNavBar = () => {
         <>
             <div className="flex flex-col mt-6">
 
-                <div
-                    className={
-                        pathname === "/dashboard"
-                            ? "nab_item text-[#3EA2FA]"
-                            : "text-[#717171] nab_item"
-                    }
-                >
-                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
-                        <Link to="/dashboard" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <GoHomeFill />
-                            Dashboard
-                        </Link>
+                <Link className={
+                    pathname === "/dashboard"
+                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
+                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
+                } to="/dashboard">
+                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
+                        <FcPieChart size={30} />
+                        Dashboard
                     </div>
-                </div>
+                </Link>
 
-                <div
-                    className={
-                        pathname === "/dashboard/order"
-                            ? "nab_item text-[#3EA2FA]"
-                            : "text-[#717171] nab_item"
-                    }
-                >
-                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
-                        <Link to="/dashboard/order" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <TbShoppingCartPause />
-                            Order
-                        </Link>
+                <Link className={
+                    pathname === "/dashboard/order"
+                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
+                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
+                } to="/dashboard/order">
+                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
+                        <FcBarChart size={30} />
+                        Order
                     </div>
-                </div>
+                </Link>
 
-                <div className="text-white nab_item">
-                    <div className=" flex items-center justify-between mt-3 text-[14px] font-semibold">
-                        <button onClick={() => setIsUserOpen(!isUserOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-2">
-                            <BiSolidCategory  />Category {isUserOpen ? <FaChevronUp /> : <FaChevronDown />} </button>
+                <div className="text-white nab_item xl:mt-1 lg:mt-3">
+                    <div className=" flex items-center justify-between font-semibold xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2">
+                        <button onClick={() => setIsUserOpen(!isUserOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-4 lg:text-[18px]">
+                            <BiSolidCategory size={25} className="text-blue-500" />Category <FaChevronDown className={`${isUserOpen ? "rotate-180 transition-all duration-300" : "transition-all duration-300"}`} size={20} /> </button>
                     </div>
                     {
-                        isUserOpen && <div className="p-1 bg-white mt-2 ml-2">
+                        isUserOpen && <div className="p-1 bg-white mt-2 ml-4">
 
                             <div
                                 className={
@@ -70,12 +61,12 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold">
+                                <div className="flex items-center justify-between font-semibold">
                                     <Link
                                         to="/dashboard/menu"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
-                                        <BiMaleFemale  />
+                                        <BiMaleFemale />
                                         Menu
                                     </Link>
                                 </div>
@@ -88,12 +79,12 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
+                                <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
                                         to="/dashboard/category"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
-                                        <TbCategoryPlus  />
+                                        <TbCategoryPlus />
                                         Category
                                     </Link>
                                 </div>
@@ -106,10 +97,10 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
+                                <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
                                         to="/dashboard/sub_category"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <MdControlPointDuplicate />
                                         Sub Category
@@ -124,10 +115,10 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
+                                <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
                                         to="/dashboard/color"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <IoColorPaletteOutline />
                                         Color
@@ -142,12 +133,12 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
+                                <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
                                         to="/dashboard/collection"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
-                                        <MdOutlineCollectionsBookmark  />
+                                        <MdOutlineCollectionsBookmark />
                                         Collection
                                     </Link>
                                 </div>
@@ -160,12 +151,12 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
+                                <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
                                         to="/dashboard/feature"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
-                                        <MdOutlineFeaturedPlayList   />
+                                        <MdOutlineFeaturedPlayList />
                                         Feature
                                     </Link>
                                 </div>
@@ -178,10 +169,10 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
+                                <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
                                         to="/dashboard/style"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <RxFontStyle />
                                         Style
@@ -193,13 +184,13 @@ const SideNavBar = () => {
                     }
                 </div>
 
-                <div className="text-white nab_item">
-                    <div className=" flex items-center justify-between mt-3 text-[14px] font-semibold">
-                        <button onClick={() => setIsProductOpen(!isProductOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-2">
-                            <IoCartOutline />Products {isProductOpen ? <FaChevronUp /> : <FaChevronDown />} </button>
+                <div className="text-white nab_item xl:mt-1 lg:mt-3">
+                    <div className=" flex items-center justify-between xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 font-semibold">
+                        <button onClick={() => setIsProductOpen(!isProductOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-4 lg:text-[18px]">
+                            <IoCartOutline size={25} className="text-green-500" />Products <FaChevronDown className={`${isProductOpen ? "rotate-180 transition-all duration-300" : "transition-all duration-300"}`} size={20} /> </button>
                     </div>
                     {
-                        isProductOpen && <div className="p-1 bg-white mt-2 ml-2">
+                        isProductOpen && <div className="p-1 bg-white mt-2 ml-4">
 
                             <div
                                 className={
@@ -208,12 +199,12 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold">
+                                <div className="flex items-center justify-between font-semibold">
                                     <Link
                                         to="/dashboard/product"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
-                                        <FaListUl   />
+                                        <FaListUl />
                                         List
                                     </Link>
                                 </div>
@@ -226,12 +217,12 @@ const SideNavBar = () => {
                                         : "text-[#717171] nab_item"
                                 }
                             >
-                                <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
+                                <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
                                         to="/dashboard/product/create"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2"
+                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
-                                        <IoAddCircleSharp   />
+                                        <IoAddCircleSharp />
                                         Create
                                     </Link>
                                 </div>
@@ -241,51 +232,39 @@ const SideNavBar = () => {
                     }
                 </div>
 
-                <div
-                    className={
-                        pathname === "/dashboard/slider"
-                            ? "nab_item text-[#3EA2FA]"
-                            : "text-[#717171] nab_item"
-                    }
-                >
-                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
-                        <Link to="/dashboard/slider" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <PiSlideshowBold />
-                            Slider
-                        </Link>
+                <Link className={
+                    pathname === "/dashboard/slider"
+                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
+                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
+                } to="/dashboard/slider">
+                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
+                        <PiSlideshowBold size={30} className="text-sky-500" />
+                        Slider
                     </div>
-                </div>
+                </Link>
 
-                <div
-                    className={
-                        pathname === "/dashboard/customer"
-                            ? "nab_item text-[#3EA2FA]"
-                            : "text-[#717171] nab_item"
-                    }
-                >
-                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
-                        <Link to="/dashboard/customer" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <FaUsers />
-                            Customer
-                        </Link>
+                <Link className={
+                    pathname === "/dashboard/customer"
+                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
+                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
+                } to="/dashboard/customer">
+                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
+                        <FaUsers size={25} className="text-yellow-500" />
+                        Customer
                     </div>
-                </div>
+                </Link>
 
-                <div
-                    className={
-                        pathname === "/dashboard/setting"
-                            ? "nab_item text-[#3EA2FA]"
-                            : "text-[#717171] nab_item"
-                    }
-                >
-                    <div className="flex items-center justify-between text-[24px] font-semibold mt-2">
-                        <Link to="/dashboard/setting" className="hover:text-[#3EA2FA] flex items-center gap-2">
-                            <IoSettingsOutline />
-                            Setting
-                        </Link>
+                <Link className={
+                    pathname === "/dashboard/setting"
+                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
+                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
+                } to="/dashboard/setting">
+                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
+                        <IoSettingsOutline className="text-red-500" size={25} />
+                        Setting
                     </div>
-                </div>
-                
+                </Link>
+
             </div>
         </>
     );
@@ -293,7 +272,7 @@ const SideNavBar = () => {
     return (
         <div className="hidden lg:block pl-5">
 
-                <div>{navBar}</div>
+            <div>{navBar}</div>
 
         </div>
     );
