@@ -34,7 +34,7 @@ const Tabs = ({ tabs }) => {
                     <p className="w-[30px] h-[30px] bg-[#837DFB] rounded-full"><CgToday size={18} color="#FFFFFF" className="relative left-1 top-2" /></p>
                 </div>
                 <div>
-                    <p className="text-end">Today Sell</p>
+                    <p className="text-end">Today Order</p>
                     <h2 className="font-medium text-[24px]">{tabs?.todaySellCount}</h2>
                 </div>
             </div>
@@ -44,7 +44,7 @@ const Tabs = ({ tabs }) => {
                     <p className="w-[30px] h-[30px] bg-teal-500 rounded-full"><MdOutlineCalendarMonth size={20} color="#FFFFFF" className="relative left-1 top-2" /></p>
                 </div>
                 <div>
-                    <p className="text-end">Month Sell</p>
+                    <p className="text-end">Month Order</p>
                     <h2 className="font-medium text-[24px]">{tabs?.thisMonthSellCount}</h2>
                 </div>
             </div>

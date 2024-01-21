@@ -26,16 +26,23 @@ const YearSell = ({ thisYearSellData }) => {
         labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         datasets: [
             {
-                label: "Total Sell Count",
-                data: Array(12).fill(0), // Ensure the length is 12
+                label: "Total Order Count",
+                data: Array(12).fill(0),
                 backgroundColor: "#EFADF3",
                 borderRadius: 8,
-                barThickness: 32,
+                barThickness: 16,
+                hoverBackgroundColor: "#837DFB",
+            },
+            {
+                label: "Total Sell Count",
+                data: Array(12).fill(0),
+                backgroundColor: "#BB33FF",
+                borderRadius: 8,
+                barThickness: 16,
                 hoverBackgroundColor: "#837DFB",
             },
         ],
     });
-    console.log(chartData)
 
 
     const [chartOptions] = useState({
@@ -65,19 +72,24 @@ const YearSell = ({ thisYearSellData }) => {
     });
 
     useEffect(() => {
-        // Initialize an array to store the total product count for each month
+        // Initialize arrays to store the total sell count and total order count for each month
         const monthlySellData = Array(12).fill(0);
+        const monthlyOrderCountData = Array(12).fill(0);
 
-        // Update the total product count for each month
+        // Update the total sell count and total order count for each month
         thisYearSellData.forEach((order) => {
             const month = new Date(order.createdAt).getMonth();
-            monthlySellData[month] += order.order.length;
+            monthlySellData[month] += 1; // Assuming each order contributes to the sell count
+            monthlyOrderCountData[month] += order.order.length;
         });
 
         // Update the chart data only if it has changed
         if (
             !chartData.datasets[0].data.every(
                 (value, index) => value === monthlySellData[index]
+            ) ||
+            !chartData.datasets[1].data.every(
+                (value, index) => value === monthlyOrderCountData[index]
             )
         ) {
             setChartData({
@@ -87,10 +99,15 @@ const YearSell = ({ thisYearSellData }) => {
                         ...chartData.datasets[0],
                         data: monthlySellData,
                     },
+                    {
+                        ...chartData.datasets[1],
+                        data: monthlyOrderCountData,
+                    },
                 ],
             });
         }
     }, [thisYearSellData, chartData]);
+
 
 
 

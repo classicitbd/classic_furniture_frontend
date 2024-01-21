@@ -21,16 +21,24 @@ ChartJS.register(
 );
 
 const WeekSell = ({ thisWeekSellData }) => {
-    
+
     const [chartData, setChartData] = useState({
         labels: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         datasets: [
             {
-                label: "Total Sell Count",
+                label: "Total Order Count",
                 data: Array(7).fill(0),
                 backgroundColor: "#EFADF3",
                 borderRadius: 8,
-                barThickness: 32,
+                barThickness: 16,
+                hoverBackgroundColor: "#837DFB",
+            },
+            {
+                label: "Total Sell Count",
+                data: Array(7).fill(0),
+                backgroundColor: "#BB33FF",
+                borderRadius: 8,
+                barThickness: 16,
                 hoverBackgroundColor: "#837DFB",
             },
         ],
@@ -63,27 +71,42 @@ const WeekSell = ({ thisWeekSellData }) => {
     });
 
     useEffect(() => {
-        // Update total product count for each day
-        const updatedData = Array(7).fill(0);
+        // Initialize arrays to store the total sell count and total order count for each day
+        const dailySellData = Array(7).fill(0);
+        const dailyOrderCountData = Array(7).fill(0);
 
+        // Update the total sell count and total order count for each day
         thisWeekSellData.forEach((order) => {
             const dayOfWeek = new Date(order.createdAt).getDay();
-            updatedData[dayOfWeek] += order.order.length;
+            dailySellData[dayOfWeek] += 1; // Assuming each order contributes to the sell count
+            dailyOrderCountData[dayOfWeek] += order.order.length;
         });
 
         // Update the chart data only if it has changed
-        if (!chartData.datasets[0].data.every((value, index) => value === updatedData[index])) {
+        if (
+            !chartData.datasets[0].data.every(
+                (value, index) => value === dailySellData[index]
+            ) ||
+            !chartData.datasets[1].data.every(
+                (value, index) => value === dailyOrderCountData[index]
+            )
+        ) {
             setChartData({
                 ...chartData,
                 datasets: [
                     {
                         ...chartData.datasets[0],
-                        data: updatedData,
+                        data: dailySellData,
+                    },
+                    {
+                        ...chartData.datasets[1],
+                        data: dailyOrderCountData,
                     },
                 ],
             });
         }
     }, [thisWeekSellData, chartData]);
+
 
 
     return (
