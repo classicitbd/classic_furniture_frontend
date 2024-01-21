@@ -1,20 +1,12 @@
 import { Link } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
 import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
-
-const portfilioLinks = [
-  { path: "#", label: "Facebook" },
-  { path: "#", label: "Instagram" },
-  { path: "#", label: "Youtube" },
-];
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../utils/baseURL";
 
 const quickLinks = [{ path: "/about-us", label: "Our Story" }];
 
 const helpfulLinks = [
-  {
-    path: "https://maps.app.goo.gl/rWVd8iWAUsEqU2gj7",
-    label: "Store Locator",
-  },
   { path: "/contact", label: "Contact Us" },
   { path: "/shipping-info", label: "Shipping Info" },
   { path: "/return-exchange", label: "Return & Exchange" },
@@ -22,8 +14,15 @@ const helpfulLinks = [
 ];
 
 const Footer = () => {
-  const year = new Date().getFullYear();
-
+  const { data: footerData = [] } = useQuery({
+    queryKey: ["socialMedia"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`);
+      const data = res.json();
+      return data;
+    },
+  });
+  console.log(footerData);
   return (
     <section className="bg-[#000000] text-[#A9A9A9] border-t-[2px] border-[#A9A9A9]">
       <div className="container pt-10">
@@ -38,6 +37,16 @@ const Footer = () => {
               >
                 Need Help?
               </h2>
+            </li>
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={footerData?.data[0]?.location}
+                target="_blank"
+                className="flex flex-col text-[15px] hover:decoration-primaryColor"
+              >
+                Store Locator
+              </Link>
             </li>
             {helpfulLinks.map((item, index) => (
               <li
@@ -81,7 +90,7 @@ const Footer = () => {
             ))}
           </ul>
 
-          {/* social media link */}
+          {/* ------ social media link ------ start */}
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px]">
               <h2
@@ -91,21 +100,41 @@ const Footer = () => {
                 Find Us On
               </h2>
             </li>
-            {portfilioLinks.map((item, index) => (
-              <li
-                key={index}
-                className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1"
+
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.facebook}`}
+                target="_blank"
+                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
               >
-                <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-                <Link
-                  to={item.path}
-                  className="flex flex-col  text-[15px] hover:decoration-primaryColor"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+                FaceBook
+              </Link>
+            </li>
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.instagram}`}
+                target="_blank"
+                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
+              >
+                Instagram
+              </Link>
+            </li>
+
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.youTube}`}
+                target="_blank"
+                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
+              >
+                Youtube
+              </Link>
+            </li>
           </ul>
+
+          {/* ------ social media link ------ end */}
 
           {/* payment gateway */}
           <div className="md:col-span-2 pr-10">
@@ -129,18 +158,7 @@ const Footer = () => {
         {/* footer bottom */}
         <div className="border-t mt-5 border-bgray-400 flex flex-col md:flex-row justify-center items-center pt-5 md:pb-16 lg:pb-5 gap-3">
           <p className="text-[16px] text-center md:text-left leading-7 font-[400]">
-            copyright &#169; {year} developed by
-            <strong>
-              <a
-                rel="noreferrer"
-                href="https://classicit.com.bd"
-                target="_blank"
-                className="text-[#0861F2] underline hover:decoration-primaryColor"
-              >
-                <span> Classic It</span>
-              </a>
-            </strong>{" "}
-            || All right reserved
+            {footerData?.data[0]?.copyRight}
           </p>
         </div>
       </div>
