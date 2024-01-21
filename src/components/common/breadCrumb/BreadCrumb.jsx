@@ -23,7 +23,7 @@ const Breadcrumb = ({ product }) => {
         {breadcrumbData.map((item, i) => (
           <li key={item.label} className="flex items-center">
             <Link
-              to={`http://localhost:300/all?${item?.link}`}
+              to={`/all?${item?.link}`}
               className={`text-bgray-900 hover:text-bgray-500 text-xl px-4 ${
                 i === breadcrumbData?.length - 1 ? "underline" : ""
               }`}

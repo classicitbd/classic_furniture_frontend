@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Autoplay,
   Keyboard,
@@ -20,20 +21,8 @@ import MaterialCareModal from "../../../common/modal/MaterialCareModal";
 import ShippingInfo from "../shippingInfo/ShippingInfo";
 import AddToCartModal from "../../../common/modal/AddToCartModal";
 import AddToCart from "../addToCart/AddToCart";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../../../../utils/baseURL";
 
-const ProductDetails = () => {
-  const { slug } = useParams();
-  const { data: product = [] } = useQuery({
-    queryKey: [`/api/v1/product/${slug}`],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product/${slug}`);
-      const data = await res.json();
-      return data;
-    },
-  }); // get All Product
+const ProductDetails = ({ product }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modal, setModal] = useState("");
 
@@ -46,8 +35,6 @@ const ProductDetails = () => {
     setModalOpen(false);
     setModal("");
   };
-
-
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
       {/* ------ products details left side content ------ start */}
@@ -97,16 +84,19 @@ const ProductDetails = () => {
               >
                 BDT {product?.data?.price}.00
               </span>
-              {
+              {product?.data?.discount_price && (
                 <span className={`text-xl font-normal text-error-300`}>
                   BDT {product?.data?.discount_price}.00
                 </span>
-              }
+              )}
             </p>
           </article>
           <div className="h-[1px] w-full bg-bgray-700 mt-12"></div>
-          <p className="text-xl py-8">
-            <strong>Color:</strong> {product?.data?.colorId?.color}
+          <p className="py-8">
+            <strong className="text-lg">Color:</strong>{" "}
+            <span className="text-lg ml-2">
+              {product?.data?.colorId?.color}
+            </span>
           </p>
           <button
             onClick={() => openModal("addToCart")}
