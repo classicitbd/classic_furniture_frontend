@@ -29,7 +29,7 @@ const Payment = ({ total, user }) => {
           userInfo: user?._id,
           email: user?.email,
           name: user?.name,
-          phone: user?.phone || "01885107155",
+          phone: user?.phone,
           payment_type: payBy,
           order: carts,
           price: total,
@@ -37,26 +37,26 @@ const Payment = ({ total, user }) => {
           city: user?.city,
           zip_code: user?.zip_code,
           country: user?.country,
-          shipping_price: 60
+          shipping_price: 60,
         };
       }
       const res = await order(data);
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
-        setLoading(false)
-        if (res?.data?.data?.GatewayPageURL){
+        setLoading(false);
+        if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
-        }else{
+        } else {
           localStorage.removeItem(cartKey);
           toast.success(res?.data?.message);
-          navigate("/payment-success");
+          navigate(`/payment-success/${res?.data?.transactionId}`);
           window.location.reload();
         }
       } else {
-        setLoading(false)
+        setLoading(false);
         toast.error(res?.error?.data?.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
       setLoading(false);
     }

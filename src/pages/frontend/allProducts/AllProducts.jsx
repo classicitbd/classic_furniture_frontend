@@ -212,7 +212,6 @@ const AllProducts = () => {
       allQueryParams[key] = value;
     }
 
-    console.log("All Query Parameters:", allQueryParams);
 
     const queryString = Object.keys(allQueryParams)
       .filter((key) => allQueryParams[key] !== undefined)

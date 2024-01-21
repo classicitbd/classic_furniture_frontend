@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 
 const Breadcrumb = ({ product }) => {
-  console.log(product);
   const breadcrumbData = [
     {
       label: product?.menuId?.menu,

@@ -72,7 +72,6 @@ const OrderTable = () => {
   }, []);
 
   const handleSelect = (date) => {
-    // console.log(date)
     const startdate = new Date(date.selection.startDate);
     const enddate = new Date(date.selection.endDate);
 
@@ -111,7 +110,6 @@ const OrderTable = () => {
       fetch(`${BASE_URL}/order/searchOrder/${searchTerm}`)
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
           if (result?.statusCode == 200 && result?.success == true) {
             setProducts(result?.data);
             setAllProducts(result?.data);
