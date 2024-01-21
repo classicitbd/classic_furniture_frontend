@@ -11,13 +11,24 @@ const CollectionTopCategory = () => {
       return data;
     },
   }); // get All collection
+
+  //get video this api
+  const { data: video = [] } = useQuery({
+    queryKey: ["/api/v1/siteSetting"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`);
+      const data = res.json();
+      return data;
+    },
+  });
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-7 grid-rows-1 md:grid-rows-2">
       {/* First Section */}
       <div className="relative group overflow-hidden md:col-span-3 md:row-span-2">
-        <Link to={`/all?collection=dress`} className="block w-full h-full">
+        <Link to={`/all`} className="block w-full h-full">
           <video className="w-full h-full object-cover" autoPlay muted loop>
-            <source src="/assets/video/shoe.mp4" type="video/mp4" />
+            <source src={video?.data[0]?.video} type="video/mp4" />
             {/* Your browser does not support the video tag. */}
           </video>
         </Link>

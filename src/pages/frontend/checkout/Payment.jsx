@@ -77,48 +77,53 @@ const Payment = ({ total, user }) => {
       </div>
       <p className="py-5 font-normal tracking-tight">BDT {total}</p>
       <form className="space-y-5" onSubmit={handleSubmit}>
-        <div className="space-y-2 text-center">
-          <div onClick={() => setPayBy("online")}>
-            <input
-              className="peer sr-only"
-              id="online"
-              type="radio"
-              tabIndex="-1"
-              name="online"
-            />
+        <fieldset className="space-y-4">
+          <legend className="sr-only">Delivery</legend>
 
-            <label
-              htmlFor="online"
-              className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
-              tabIndex="0"
-            >
-              <span className="text-sm"> Pay With SSL Commerz </span>
-              <img
-                src={`/assets/images/payment-gateways.png`}
-                alt=""
-                className="h-[30px]"
+          <div className="space-y-2 text-center">
+            <div onClick={() => setPayBy("online")}>
+              <input
+                className="peer sr-only"
+                id="online"
+                type="radio"
+                tabIndex="-1"
+                name="payment"
               />
-            </label>
-          </div>
 
-          <div onClick={() => setPayBy("cod")}>
-            <input
-              className="peer sr-only"
-              id="cod"
-              type="radio"
-              tabIndex="-1"
-              name="cod"
-            />
+              <label
+                htmlFor="online"
+                className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
+                tabIndex="0"
+              >
+                <span className="text-sm"> Pay With SSL Commerz </span>
+                <img
+                  src={`/assets/images/payment-gateways.png`}
+                  alt=""
+                  className="h-[30px]"
+                />
+              </label>
+            </div>
 
-            <label
-              htmlFor="cod"
-              className="block w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400"
-              tabIndex="0"
-            >
-              <span className="text-sm"> Cash On Delivery </span>
-            </label>
+            <div onClick={() => setPayBy("cod")}>
+              <input
+                className="peer sr-only"
+                id="cod"
+                type="radio"
+                tabIndex="-1"
+                name="payment"
+              />
+
+              <label
+                htmlFor="cod"
+                className="block w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 py-4"
+                tabIndex="0"
+              >
+                <span className="text-sm"> Cash On Delivery </span>
+              </label>
+            </div>
           </div>
-        </div>
+        </fieldset>
+
         <p className="text-xs mt-2">
           By making this purchase you agree to our
           <span className="text-blue-500"> terms and conditions.</span>

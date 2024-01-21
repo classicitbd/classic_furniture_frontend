@@ -29,12 +29,11 @@ const CheckoutPage = () => {
   const [data, setData] = useState(null);
   const carts = useSelector((state) => state.cart.products);
   const subTotal = useSelector((state) => state.cart.subtotal);
-  const vat = useSelector((state) => state.cart.vat);
-  const total = (subTotal + vat + 160).toFixed(2);
   const dispatch = useDispatch();
   const [addressUpdate, setAddressUpdate] = useState(false);
-  const { email } = getUserInfo();
   const { user } = useContext(AuthContext);
+
+  const { email } = getUserInfo();
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -73,6 +72,9 @@ const CheckoutPage = () => {
   const closeConfirmModal = () => {
     setModalOpen(false);
   };
+
+  let total = (subTotal + 160).toFixed(2);
+  console.log(total);
 
   return (
     <div className="container py-5">
@@ -206,7 +208,7 @@ const CheckoutPage = () => {
                   </td>
                 </tr>
 
-                <tr>
+                {/* <tr>
                   <td className="whitespace-nowrap px-4 py- font-medium text-gray-900 uppercase">
                     Vat 5%
                   </td>
@@ -217,7 +219,7 @@ const CheckoutPage = () => {
                   <td className="whitespace-nowrap px-4 py- text-gray-700">
                     ৳{vat.toFixed(2)}
                   </td>
-                </tr>
+                </tr> */}
 
                 <tr>
                   <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">

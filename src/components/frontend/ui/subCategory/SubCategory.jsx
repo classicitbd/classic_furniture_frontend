@@ -3,7 +3,7 @@ import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 
 const SubCategory = () => {
-  const { data: subCategories = [], isLoading } = useQuery({
+  const { data: subCategories = [] } = useQuery({
     queryKey: [`/api/v1/sub_category`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/sub_category`);
@@ -14,7 +14,7 @@ const SubCategory = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3">
-      {subCategories?.data?.map((subCategory) => (
+      {subCategories?.data?.slice(0, 3)?.map((subCategory) => (
         <div className="relative group overflow-hidden" key={subCategory?._id}>
           <Link to={`/all?sub_category=${subCategory?.slug}`}>
             <img

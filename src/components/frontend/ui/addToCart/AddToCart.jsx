@@ -131,7 +131,13 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
                           addToCart({
                             size: item?.size,
                             size_variationId: item?._id,
-                            price: product?.price,
+                            price: item?.discount_price
+                              ? item?.discount_price
+                              : item?.price
+                              ? item?.price
+                              : product?.discount_price
+                              ? product?.discount_price
+                              : product?.price,
                             title: product?.title,
                             color: product?.colorId?.color,
                             thumbnail_image: product?.thumbnail_image,
