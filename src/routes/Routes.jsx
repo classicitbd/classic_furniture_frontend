@@ -32,6 +32,9 @@ import FailPage from "../components/frontend/ui/failPage/FailPage";
 import HomePage from "../pages/dashboard/homePage/HomePage";
 import UserDashboard from "../pages/frontend/userDashboard/UserDashboard";
 import ContactPage from "../pages/frontend/contact/ContactPage";
+import ShippingInfoPage from "../pages/frontend/shippingInfo/ShippingInfoPage";
+import ReturnExchangePage from "../pages/frontend/returnExchangePage/ReturnExchangePage";
+import MaterialAndCarePage from "../pages/frontend/materialAndCare/MaterialAndCarePage";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +77,18 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactPage />,
+      },
+      {
+        path: "/shipping-info",
+        element: <ShippingInfoPage />,
+      },
+      {
+        path: "/return-exchange",
+        element: <ReturnExchangePage />,
+      },
+      {
+        path: "/materials-care",
+        element: <MaterialAndCarePage />,
       },
     ],
   },

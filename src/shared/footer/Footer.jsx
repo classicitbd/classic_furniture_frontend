@@ -16,7 +16,7 @@ const helpfulLinks = [
     label: "Store Locator",
   },
   { path: "/contact", label: "Contact Us" },
-  { path: "/shipping", label: "Shipping Info" },
+  { path: "/shipping-info", label: "Shipping Info" },
   { path: "/return-exchange", label: "Return & Exchange" },
   { path: "/materials-care", label: "Materials & Care" },
 ];
