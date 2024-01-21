@@ -199,6 +199,7 @@ const AllProducts = () => {
     setSelectedColor(null);
     setSelectedFeature(null);
     setSelectedStyle(null);
+    setSelectedDiscount(false);
   };
 
   const toggleFilter = () => {
@@ -212,11 +213,11 @@ const AllProducts = () => {
       allQueryParams[key] = value;
     }
 
-
     const queryString = Object.keys(allQueryParams)
       .filter((key) => allQueryParams[key] !== undefined)
       .map((key) => `${key}=${allQueryParams[key]}`)
       .join("&");
+
     return queryString.length > 0
       ? setQuery(`all?${queryString}`)
       : setQuery("all");
@@ -265,22 +266,24 @@ const AllProducts = () => {
         </div>
 
         <ul className="flex items-center gap-3 sm:gap-5 text-sm">
-          <li>
-            <Link
-              className="hidden sm:block"
-              onClick={handleResetFilter}
-              to={`/all`}
-            >
-              Reset Filter
-            </Link>
-            <Link
-              onClick={handleResetFilter}
-              to={`/all`}
-              className="block sm:hidden"
-            >
-              <RxReload />
-            </Link>
-          </li>
+          {queryParameters.size > 0 && (
+            <li>
+              <Link
+                className="hidden sm:block"
+                onClick={handleResetFilter}
+                to={`/all`}
+              >
+                Reset Filter
+              </Link>
+              <Link
+                onClick={handleResetFilter}
+                to={`/all`}
+                className="block sm:hidden"
+              >
+                <RxReload />
+              </Link>
+            </li>
+          )}
           <li>
             <span className="w-[1px] h-4 bg-bgray-400 text-green inline-block"></span>
           </li>

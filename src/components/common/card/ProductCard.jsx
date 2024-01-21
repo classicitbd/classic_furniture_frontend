@@ -3,6 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, loading }) => {
+  console.log(product);
   return (
     <div>
       {product || loading ? (
@@ -24,7 +25,20 @@ const ProductCard = ({ product, loading }) => {
             <p className="text-center py-3 text-bgray-700">
               {product?.colorId?.color}
             </p>
-            <p className="px-4">BDT {product?.price}.00</p>
+            <p>
+              <span
+                className={`px-4 ${
+                  product?.discount_price ? "line-through" : ""
+                }`}
+              >
+                BDT {product?.price}.00
+              </span>
+              {product?.discount_price && (
+                <span className="text-error-300">
+                  BDT {product?.discount_price}.00
+                </span>
+              )}
+            </p>
           </article>
         </Link>
       ) : (
