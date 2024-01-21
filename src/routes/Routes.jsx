@@ -31,6 +31,11 @@ import SuccessPage from "../components/frontend/ui/successPage/SuccessPage";
 import FailPage from "../components/frontend/ui/failPage/FailPage";
 import HomePage from "../pages/dashboard/homePage/HomePage";
 import UserDashboard from "../pages/frontend/userDashboard/UserDashboard";
+import ContactPage from "../pages/frontend/contact/ContactPage";
+import ShippingInfoPage from "../pages/frontend/shippingInfo/ShippingInfoPage";
+import ReturnExchangePage from "../pages/frontend/returnExchangePage/ReturnExchangePage";
+import MaterialAndCarePage from "../pages/frontend/materialAndCare/MaterialAndCarePage";
+import AboutusPage from "../pages/frontend/aboutus/AboutusPage";
 
 const router = createBrowserRouter([
   {
@@ -59,16 +64,36 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/payment-success/:tnx-id",
+        path: "/payment-success/:tranId",
         element: <SuccessPage />,
       },
       {
         path: "/payment-fail/:tnx-id",
-        element: <FailPage />
+        element: <FailPage />,
       },
       {
         path: "/user-profile",
         element: <UserDashboard />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
+      },
+      {
+        path: "/shipping-info",
+        element: <ShippingInfoPage />,
+      },
+      {
+        path: "/return-exchange",
+        element: <ReturnExchangePage />,
+      },
+      {
+        path: "/materials-care",
+        element: <MaterialAndCarePage />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutusPage />,
       },
     ],
   },

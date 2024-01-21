@@ -11,7 +11,6 @@ const useUser = () => {
       fetch(`${BASE_URL}/getMe/${email}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setUser(data);
           setLoading(false);
         })

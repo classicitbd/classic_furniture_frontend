@@ -24,7 +24,6 @@ const ChangePassword = ({ user, setActive }) => {
       data.email = user?.email;
       const res = await changePassword(data);
 
-      console.log(res);
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         reset();
