@@ -3,7 +3,7 @@ import { BASE_URL } from "../../../../utils/baseURL";
 
 const ShippingInfo = () => {
   const { data: shippingInfo = [] } = useQuery({
-    queryKey: ["contact"],
+    queryKey: ["shippingInfo"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
       const data = res.json();
