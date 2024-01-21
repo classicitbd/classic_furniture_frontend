@@ -68,7 +68,7 @@ const router = createBrowserRouter([
         element: <SuccessPage />,
       },
       {
-        path: "/payment-fail/:tnx-id",
+        path: "/payment-fail/:tranId",
         element: <FailPage />,
       },
       {

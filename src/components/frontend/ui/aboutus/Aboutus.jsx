@@ -3,13 +3,15 @@ import { BASE_URL } from "../../../../utils/baseURL";
 
 const Aboutus = () => {
   const { data: aboutus = [] } = useQuery({
-    queryKey: ["aboutus"],
+    queryKey: ["/api/v1/siteSetting"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
       const data = res.json();
       return data;
     },
   });
+
+  
   return (
     <div className="py-10 w-full md:w-[1024px] px-4 md:px-0 mx-auto">
       <h2 className="text-xl lg:text-2xl xl:text-3xl text-center tracking-tight font-medium">

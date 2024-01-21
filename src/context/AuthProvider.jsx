@@ -10,7 +10,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 
-  
   useEffect(() => {
     const token = getCookie(authKey);
     if (token) {
@@ -41,7 +40,7 @@ const AuthProvider = ({ children }) => {
 
   const info = {
     user,
-    loading
+    loading,
   };
 
   return <AuthContext.Provider value={info}>{children}</AuthContext.Provider>;
