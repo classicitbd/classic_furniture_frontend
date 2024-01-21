@@ -292,6 +292,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         const slug = colorName + " " + (data?.title ? data?.title : updateModalValue?.title)
 
         const sendData = {
+            _id: updateModalValue?._id,
             email: user?.email,
             title: data?.title ? data?.title : updateModalValue?.title,
             related: slugify(data?.title ? data?.title : updateModalValue?.title, {
@@ -726,7 +727,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
 
                                 <div className="flex justify-end mt-6">
-                                    <button type="Submit" className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]">Create Now</button>
+                                    <button type="Submit" className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]">Update Now</button>
                                 </div>
 
 
