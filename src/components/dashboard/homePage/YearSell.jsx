@@ -27,7 +27,7 @@ const YearSell = ({ thisYearSellData }) => {
         datasets: [
             {
                 label: "Total Sell Count",
-                data: Array(7).fill(0),
+                data: Array(12).fill(0), // Ensure the length is 12
                 backgroundColor: "#EFADF3",
                 borderRadius: 8,
                 barThickness: 32,
@@ -35,6 +35,8 @@ const YearSell = ({ thisYearSellData }) => {
             },
         ],
     });
+    console.log(chartData)
+
 
     const [chartOptions] = useState({
         plugins: {
@@ -73,7 +75,11 @@ const YearSell = ({ thisYearSellData }) => {
         });
 
         // Update the chart data only if it has changed
-        if (!chartData.datasets[0].data.every((value, index) => value === monthlySellData[index])) {
+        if (
+            !chartData.datasets[0].data.every(
+                (value, index) => value === monthlySellData[index]
+            )
+        ) {
             setChartData({
                 ...chartData,
                 datasets: [
@@ -88,11 +94,12 @@ const YearSell = ({ thisYearSellData }) => {
 
 
 
+
+
     return (
         <div>
-            <div className="flex items-center justify-between mx-6 mt-6">
+            <div className="ml-6 mt-6">
                 <h6 className="text-[18px] md:text-[26px] font-semibold"> This year sales</h6>
-                <p className="font-semibold">View Report</p>
             </div>
 
             {/* Chart Start */}

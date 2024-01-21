@@ -21,6 +21,7 @@ ChartJS.register(
 );
 
 const WeekSell = ({ thisWeekSellData }) => {
+    
     const [chartData, setChartData] = useState({
         labels: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         datasets: [
@@ -87,9 +88,8 @@ const WeekSell = ({ thisWeekSellData }) => {
 
     return (
         <div>
-            <div className="flex items-center justify-between mx-6 mt-6">
+            <div className="ml-6 mt-6">
                 <h6 className="text-[18px] md:text-[26px] font-semibold"> This week sales</h6>
-                <p className="font-semibold">View Report</p>
             </div>
 
             {/* Chart Start */}
