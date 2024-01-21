@@ -6,17 +6,19 @@ const portfilioLinks = [
   { path: "#", label: "Facebook" },
   { path: "#", label: "Instagram" },
   { path: "#", label: "Youtube" },
-  { path: "#", label: "Linkedin" },
 ];
 
 const quickLinks = [{ path: "#", label: "Our Story" }];
 
 const helpfulLinks = [
-  { path: "#", label: "Store Locator" },
-  { path: "#", label: "Contact Us" },
-  { path: "#", label: "Shipping Info" },
-  { path: "#", label: "Return & Exchange" },
-  { path: "#", label: "Materials & Care" },
+  {
+    path: "https://maps.app.goo.gl/rWVd8iWAUsEqU2gj7",
+    label: "Store Locator",
+  },
+  { path: "/contact", label: "Contact Us" },
+  { path: "/shipping", label: "Shipping Info" },
+  { path: "/return-exchange", label: "Return & Exchange" },
+  { path: "/materials-care", label: "Materials & Care" },
 ];
 
 const Footer = () => {
@@ -135,53 +137,11 @@ const Footer = () => {
                 target="_blank"
                 className="text-[#0861F2] underline hover:decoration-primaryColor"
               >
-                <span>Classic It</span>
+                <span> Classic It</span>
               </a>
             </strong>{" "}
             || All right reserved
           </p>
-          {/* <nav className="flex gap-x-1 pb-16 md:pb-0">
-            <a
-              href="http://www.facebook.com/masudranawebdev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group"
-            >
-              <span className="w-10 h-10 rounded-full bg-[#1877f2] transition-all duration-500 flex items-center justify-center group-hover:-translate-y-1">
-                <FaFacebookF className="text-slate-50 text-[#ffffff] transition-all duration-500" />
-              </span>
-            </a>
-            <a
-              href="http://www.linkedin.com/in/masudranawebdev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group"
-            >
-              <span className="w-10 h-10 rounded-full bg-[#1877f2] transition-all duration-500 flex items-center justify-center group-hover:-translate-y-1">
-                <FaLinkedinIn className="text-slate-50 text-[#ffffff] transition-all duration-500" />
-              </span>
-            </a>
-            <a
-              href="http://www.github.com/masudranawebdev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group"
-            >
-              <span className="w-10 h-10 rounded-full bg-[#1877f2] transition-all duration-500 flex items-center justify-center group-hover:-translate-y-1">
-                <FaGithub className="text-slate-50 text-[#ffffff] transition-all duration-500" />
-              </span>
-            </a>
-            <a
-              href="http://mrmasud.netlify.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group"
-            >
-              <span className="w-10 h-10 rounded-full bg-[#1877f2] transition-all duration-500 flex items-center justify-center group-hover:-translate-y-1">
-                <FaBriefcase className="text-slate-50 text-[#ffffff] transition-all duration-500" />
-              </span>
-            </a>
-          </nav> */}
         </div>
       </div>
     </section>

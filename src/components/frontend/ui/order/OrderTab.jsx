@@ -156,8 +156,8 @@ const OrderTab = () => {
                   <td
                     className={`whitespace-nowrap px-4 py-2 font-light text-black ${
                       order?.status === "pending"
-                        ? "text-error-300"
-                        : "text-success-400"
+                        ? "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
+                        : "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                     }`}
                   >
                     {order?.status === "pending" ? "processing" : "delivered"}
@@ -169,8 +169,8 @@ const OrderTab = () => {
                     <span
                       className={`px-2  rounded-full ${
                         order?.type === "unpaid"
-                          ? "bg-yellow-100 text-black"
-                          : "bg-success-300 text-white"
+                          ? "inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10"
+                          : "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                       }`}
                     >
                       {order?.type}
@@ -181,7 +181,7 @@ const OrderTab = () => {
                     onClick={() => handleView(order)}
                     className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4"
                   >
-                    <button className="text-white bg-success-300 hover:bg-success-400 px-4 py-1 rounded-full">
+                    <button className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                       Details
                     </button>
                   </td>
