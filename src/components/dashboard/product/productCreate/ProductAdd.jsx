@@ -10,6 +10,7 @@ import ImageUploader from "./ImageUploader";
 import slugify from "slugify";
 import { useAddProductMutation } from "../../../../redux/feature/product/productApi";
 import { AuthContext } from "../../../../context/AuthProvider";
+import videoUploader from "../../setting/videoUploader";
 
 const ProductAdd = () => {
 
@@ -191,8 +192,8 @@ const ProductAdd = () => {
 
   const handleMuilOnChange = async (fieldName) => {
     if (fieldName[0]) {
-      if (multiImage.length >= 3) {
-        toast.error("only three images are allowed", {
+      if (multiImage.length >= 11) {
+        toast.error("only 10 images are allowed", {
           autoClose: 1000
         });
       } else {
@@ -253,8 +254,12 @@ const ProductAdd = () => {
   //image upload end
 
   // data post in backend
-  const handleDataPost = (data) => {
-
+  const handleDataPost = async(data) => {
+    let product_video
+    if (data?.product_video?.[0]) {
+      const videoUpload = await videoUploader(data?.product_video?.[0]);
+      product_video = videoUpload[0];
+    }
     const hasEmptySizeOrColor = data.size_variation.some(
       (variation) => (variation.size === '' || variation.size === null || variation.size === undefined) || (variation.quantity === '' || variation.quantity === null || variation.quantity === undefined)
     );
@@ -303,6 +308,7 @@ const ProductAdd = () => {
       })),
       thumbnail_image: imageName,
       hover_image: hoverImageName,
+      product_video: product_video,
       images: allImage?.map((item) => ({
         image: item?.image
       })),
@@ -613,53 +619,58 @@ const ProductAdd = () => {
 
                 </div>
 
-
                 <div>
-                  <p className="font-semibold">Add other photos</p>
-                  <div className="border border-gray-300 rounded-sm p-3">
-                    <div className="">
-                      {multiImage.length >= 0 ? (
-                        <div className="rounded-md flex items-center justify-start gap-3">
-                          {allImage.map((image, index) => (
-                            <div key={index} className="relative">
-                              <img
-                                src={image?.image}
-                                alt="image"
-                                height={0}
-                                width={0}
-                                sizes="100vw"
-                                style={{
-                                  width: "100px",
-                                  height: "70px",
-                                  borderRadius: "5px",
-                                }}
-                              />
-                              <button
-                                className="absolute top-0 left-0 bg-gray-100 w-7 h-7 rounded-full text-sm hover:text-red-500 mb-3"
-                                type="button"
-                                onClick={() => handleMuilDelete(image?.image)}
-                              >
-                                X
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                    {Array.from({ length: 1 }).map((_, index) => (
-                      <input
-                        key={index}
-                        type="file"
-                        onChange={(e) => handleMuilOnChange(e.target.files)}
-                        className="file-input w-full max-w-xs mt-3"
-                        ref={(ref) => (multiInputRefs.current[index] = ref)}
-                      />
-                    ))}
-                  </div>
+                  <label className="font-semibold" htmlFor="product_video"> Product Video</label>
+                  <input
+                    {...register("product_video")} id="product_video" type="file" className="block w-full p-3 mt-2 text-gray-700 bg-white border border-gray-200 rounded-sm" />
                 </div>
 
+              </div>
+            </div>
+
+            <div className="mt-2">
+              <p className="font-semibold">Add other photos</p>
+              <div className="border border-gray-300 rounded-sm p-3">
+                <div className="">
+                  {multiImage.length >= 0 ? (
+                    <div className="rounded-md flex items-center justify-start gap-3">
+                      {allImage.map((image, index) => (
+                        <div key={index} className="relative">
+                          <img
+                            src={image?.image}
+                            alt="image"
+                            height={0}
+                            width={0}
+                            sizes="100vw"
+                            style={{
+                              width: "100px",
+                              height: "70px",
+                              borderRadius: "5px",
+                            }}
+                          />
+                          <button
+                            className="absolute top-0 left-0 bg-gray-100 w-7 h-7 rounded-full text-sm hover:text-red-500 mb-3"
+                            type="button"
+                            onClick={() => handleMuilDelete(image?.image)}
+                          >
+                            X
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                {Array.from({ length: 1 }).map((_, index) => (
+                  <input
+                    key={index}
+                    type="file"
+                    onChange={(e) => handleMuilOnChange(e.target.files)}
+                    className="file-input w-full max-w-xs mt-3"
+                    ref={(ref) => (multiInputRefs.current[index] = ref)}
+                  />
+                ))}
               </div>
             </div>
 
