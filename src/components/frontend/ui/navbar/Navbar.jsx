@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -14,7 +15,7 @@ const Navbar = () => {
       const data = await res.json();
       return data;
     },
-    suspense: false
+    suspense: false,
   }); // get Menu type
 
   const { data: category = [] } = useQuery({
@@ -29,7 +30,7 @@ const Navbar = () => {
         return { data: [] };
       }
     },
-    suspense: false
+    suspense: false,
   }); // get category and sub category
 
   const handleHover = (menu) => {
@@ -39,7 +40,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-black text-white hidden sm:block">
+    <div className="bg-primaryColor text-textColor hidden sm:block">
       {/* ------ navbar with dropdown ------ start */}
       <div
         onMouseLeave={() => {
@@ -50,14 +51,19 @@ const Navbar = () => {
         <nav className="relative">
           <ul className="flex items-center justify-center gap-16 py-2">
             {menuTypes?.data?.map((menuItem) => (
-              <li key={menuItem?._id}>
+              <li className="group" key={menuItem?._id}>
                 <button
                   onMouseEnter={() => handleHover(menuItem)}
                   className={`text-lg font-light focus:outline-none uppercase ${
                     menu === menuItem?._id ? "opacity-80" : ""
                   } transition-opacity duration-300`}
                 >
-                  {menuItem?.menu}
+                  <p className="flex items-center gap-2">
+                    <span className="text-lg">{menuItem?.menu}</span>
+                    <MdOutlineKeyboardArrowDown
+                      className={`text-lg group-hover:rotate-180 transition-all duration-300 ease-linear`}
+                    />
+                  </p>
                   <span
                     className={`transition-all duration-500 h-[1px] block bg-white ${
                       menu === menuItem?._id ? "w-full" : "w-0"
@@ -69,7 +75,7 @@ const Navbar = () => {
           </ul>
           <div
             onMouseEnter={() => setIsDropdownOpen(true)}
-            className={`w-full absolute bg-black border-t border-t-gray-600 mt-1 ${
+            className={`w-full absolute bg-primaryColor border-t border-t-gray-600 mt-1 ${
               isDropdownOpen ? "top-10 z-10" : ""
             }`}
           >
@@ -80,7 +86,7 @@ const Navbar = () => {
                   <li className="w-[200px]" key={category?.category?._id}>
                     <Link
                       to={`/all?gender=${gender}&category=${category?.category?.slug}`}
-                      className="text-white py-1 px-2 w-full text-left rounded-sm text-base font-medium opacity-80 hover:opacity-100"
+                      className="text-textColor py-1 px-2 w-full text-left rounded-sm text-base font-medium opacity-100 hover:opacity-80"
                     >
                       {category?.category?.category}
                     </Link>
@@ -89,7 +95,7 @@ const Navbar = () => {
                         <li key={subItem?._id}>
                           <Link
                             to={`/all?gender=${gender}&category=${category?.category?.slug}&sub_category=${subItem?.slug}`}
-                            className=" text-white py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-80 hover:opacity-100"
+                            className=" text-textColor py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-100 hover:opacity-80"
                           >
                             {subItem?.sub_category}
                           </Link>
@@ -104,7 +110,6 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
-
       {/* ------ navbar with dropdown ------ end */}
     </div>
   );

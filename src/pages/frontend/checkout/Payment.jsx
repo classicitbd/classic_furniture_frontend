@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // import react icons
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useOrderMutation } from "../../../redux/feature/payment/paymentApi";
@@ -10,11 +10,18 @@ import { useNavigate } from "react-router-dom";
 
 const Payment = ({ total, user }) => {
   const [payBy, setPayBy] = useState("");
+  const [shippingType, setShippingType] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
   const [order, { isLoading, isError }] = useOrderMutation();
+  const shippingCharge = useSelector((state) => state.cart.shippingCharge);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const shippingTypeData = localStorage.getItem("deliveryPoint");
+    setShippingType(shippingTypeData);
+  }, [shippingType]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +44,8 @@ const Payment = ({ total, user }) => {
           city: user?.city,
           zip_code: user?.zip_code,
           country: user?.country,
-          shipping_price: 60,
+          shipping_price: shippingCharge,
+          shipping_type: shippingType,
         };
       }
       const res = await order(data);
@@ -64,6 +72,8 @@ const Payment = ({ total, user }) => {
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
+
+  console.log("shipping type", shippingType);
 
   return (
     <div className="px-10">
