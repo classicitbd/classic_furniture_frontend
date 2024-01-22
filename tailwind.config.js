@@ -5,13 +5,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primaryColor: "#168bbae6",
-        secondary: "#662bd2e6",
+        primaryColor: "#0A0D28",
+        secondary: "#F0F0F0",
+        logoColor: "#FDEE9B",
         yellowColor: "#FEB60D",
         purpleColor: "#9771FF",
         irisBlueColor: "#01B5C5",
         headingColor: "#181A1E",
-        textColor: "#4E545F",
+        textColor: "#FFFFFF",
         hoverColor: "#1E2A34",
         redColor: "#f03737",
 
