@@ -5,12 +5,13 @@ import { CiEdit } from "react-icons/ci";
 import { PiAddressBook } from "react-icons/pi";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useUpdateUserMutation } from "../../../redux/feature/auth/authApi";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
-import { AuthContext } from "../../../context/AuthProvider";
+import { useDispatch } from "react-redux";
+import { setShippingCharge } from "../../../redux/feature/cart/cartSlice";
 
 const options = [
   { value: "dhaka", label: "Dhaka" },
@@ -77,7 +78,6 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { setDeliveryCharge } = useContext(AuthContext);
 
   const { data: deliveryCharge = [] } = useQuery({
     queryKey: ["/api/v1/siteSetting"],
@@ -88,12 +88,15 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
     },
   });
 
+  const dispatch = useDispatch();
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleDeliveryPoint = (value) => {
     localStorage.setItem("deliveryPoint", value);
+    setDeliveryPoint(value);
     setIsOpen(!isOpen);
   };
 
@@ -103,13 +106,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
     if (data !== undefined) {
       setDeliveryPoint(data);
     }
-
-    if (data === "Inside Dhata") {
-      // setDeliveryCharge(deliveryCharge?.data[0]?.inside_dhaka);
-    } else if (data === "Outside Dhaka") {
-      // setDeliveryCharge(deliveryCharge?.data[0]?.outside_dhaka);
-    }
-  }, [isOpen, deliveryCharge?.data, setDeliveryCharge]);
+  }, [deliveryPoint]);
 
   const onSubmit = async (data) => {
     try {
@@ -333,7 +330,12 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
                   role="menuitem"
                   tabIndex="-1"
                   id="menu-item-0"
-                  onClick={() => handleDeliveryPoint("Inside Dhaka")}
+                  onClick={() => {
+                    dispatch(
+                      setShippingCharge(deliveryCharge?.data[0]?.inside_dhaka)
+                    );
+                    handleDeliveryPoint("Inside Dhaka");
+                  }}
                 >
                   Inside Dhaka
                 </button>
@@ -342,7 +344,12 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
                   role="menuitem"
                   tabIndex="-1"
                   id="menu-item-1"
-                  onClick={() => handleDeliveryPoint("Outside Dhaka")}
+                  onClick={() => {
+                    dispatch(
+                      setShippingCharge(deliveryCharge?.data[0]?.outside_dhaka)
+                    );
+                    handleDeliveryPoint("Outside Dhaka");
+                  }}
                 >
                   Outside Dhaka
                 </button>

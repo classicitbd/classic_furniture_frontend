@@ -34,6 +34,7 @@ const CheckoutPage = () => {
   const { user } = useContext(AuthContext);
 
   const { email } = getUserInfo();
+  const shippingCharge = useSelector((state) => state.cart.shippingCharge);
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -72,9 +73,9 @@ const CheckoutPage = () => {
   const closeConfirmModal = () => {
     setModalOpen(false);
   };
-
-  let total = (subTotal + 160).toFixed(2);
-  console.log(total);
+  const deliveryCharge = parseInt(shippingCharge);
+  let total = subTotal + deliveryCharge;
+  console.log(typeof shippingCharge);
 
   return (
     <div className="container py-5">
@@ -230,7 +231,7 @@ const CheckoutPage = () => {
                     BDT
                   </td>
                   <td className="whitespace-nowrap px-4 py- text-gray-700">
-                    ৳160.00
+                    ৳{deliveryCharge}.00
                   </td>
                 </tr>
                 <tr>
