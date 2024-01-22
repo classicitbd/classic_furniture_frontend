@@ -3,6 +3,7 @@ import {
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
+  setShippingCharge,
 } from "./feature/cart/cartSlice";
 
 const localstorageMiddleware = (store) => (next) => (action) => {
@@ -13,7 +14,8 @@ const localstorageMiddleware = (store) => (next) => (action) => {
     action.type === addToCart.type ||
     action.type === removeFromCart.type ||
     action.type === incrementQuantity.type ||
-    action.type === decrementQuantity.type
+    action.type === decrementQuantity.type ||
+    action.type === setShippingCharge.type
   ) {
     localStorage.setItem("cart", JSON.stringify(store.getState()));
   }

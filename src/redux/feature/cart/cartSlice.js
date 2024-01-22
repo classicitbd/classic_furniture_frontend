@@ -4,6 +4,7 @@ const initialState = {
   products: [],
   subtotal: 0,
   vat: 0,
+  shippingCharge: 0,
 };
 
 const cartSlice = createSlice({
@@ -100,6 +101,11 @@ const cartSlice = createSlice({
       state.subtotal = calculateSubtotal(state.products);
       state.vat = calculateVAT(state.subtotal);
     },
+
+    // set Shipping Charge
+    setShippingCharge: (state, action) => {
+      state.shippingCharge = action.payload;
+    },
   },
 });
 
@@ -119,6 +125,7 @@ export const {
   removeFromCart,
   incrementQuantity,
   decrementQuantity,
+  setShippingCharge,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
