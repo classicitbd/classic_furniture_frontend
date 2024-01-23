@@ -23,7 +23,6 @@ const Footer = () => {
     },
   });
 
-  console.log(footerData?.data[0]?.title);
   return (
     <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary">
       <div className="container pt-10">
