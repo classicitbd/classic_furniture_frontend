@@ -57,11 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: (
-          <PrivateRoute>
-            <CheckoutPage />
-          </PrivateRoute>
-        ),
+        element: <CheckoutPage />,
       },
       {
         path: "/payment-success/:tranId",

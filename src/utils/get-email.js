@@ -7,3 +7,13 @@ export const getEmail = (urlString) => {
   const emailAddress = match ? match[1] : null;
   return emailAddress;
 };
+
+export const getPhoneNumber = (urlString) => {
+  // Use a regular expression to extract the email address
+  const emailRegex = /\bphone=([^&]+)/;
+  const match = urlString.match(emailRegex);
+
+  // Check if there is a match and get the email address
+  const phoneNumber = match ? match[1] : null;
+  return phoneNumber;
+};

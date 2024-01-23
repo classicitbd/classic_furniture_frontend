@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateUserMutation } from "../../../redux/feature/auth/authApi";
-import PhoneInput from "react-phone-input-2";
 import Select from "react-select";
 import { toast } from "react-toastify";
 
@@ -62,7 +61,6 @@ const UserForm = ({ user, refetch }) => {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [country, setCountry] = useState(user?.country);
-  const [phone, setPhone] = useState(user?.phone);
   const [city, setCity] = useState(user?.city);
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const { register, handleSubmit, reset } = useForm();
@@ -71,16 +69,12 @@ const UserForm = ({ user, refetch }) => {
 
   const onSubmit = async (data) => {
     try {
-      if (!user?.phone) {
-        return toast.warn("Please provide your phone number!");
-      }
       setLoading(true);
       data.city = city;
       data.country = country;
       data.zip_code = data?.zip_code ? data?.zip_code : user?.zip_code;
-      data.phone = phone ? phone : user?.phone;
       data.address = data?.address ? data?.address : user?.address;
-      data.email = user?.email;
+      data.phone = user?.phone;
       data.name = data?.name ? data?.name : user?.name;
       const res = await updateUser(data);
       if (res.data.success) {
@@ -117,21 +111,21 @@ const UserForm = ({ user, refetch }) => {
             />
           </div>
           <div className="w-full">
-            <label htmlFor="email" className="label">
-              <span className="label-text">Email</span>
+            <label htmlFor="phone" className="label">
+              <span className="label-text">Phone Number</span>
             </label>
             <input
-              id="email"
-              type="email"
-              placeholder="example@gmail.com"
-              defaultValue={user?.email}
+              id="phone"
+              type="text"
+              placeholder="Enter your Phone number"
+              defaultValue={user?.phone}
               className="border rounded px-3 py-2 w-full"
               disabled
-              {...register("email")}
+              {...register("phone")}
             />
           </div>
         </div>
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <label htmlFor="phone" className="label">
             <span className="label-text">Phone Number </span>
             <span className="text-error-300">{user?.phone}</span>
@@ -147,7 +141,7 @@ const UserForm = ({ user, refetch }) => {
             defaultValue={phone}
             onChange={(value) => setPhone(value)}
           />
-        </div>
+        </div> */}
         <div className="w-full">
           <label htmlFor="address" className="label">
             <span className="label-text">Address</span>

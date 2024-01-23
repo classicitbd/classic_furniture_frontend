@@ -4,7 +4,7 @@ import {
   useOtpVerifyMutation,
   useResendOtpMutation,
 } from "../../redux/feature/auth/authApi";
-import { getEmail } from "../../utils/get-email";
+import { getPhoneNumber } from "../../utils/get-email";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
@@ -21,14 +21,14 @@ const Verified = () => {
   const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
   const [resendOtp] = useResendOtpMutation();
 
-  const email = getEmail(path?.search);
+  const phone = getPhoneNumber(path?.search);
   const handleVerify = async () => {
     try {
       setLoading(true);
       const otp = OTPinput.join("");
 
       const data = {
-        email,
+        phone,
         otp,
       };
       const res = await otpVeriy(data);
@@ -52,7 +52,7 @@ const Verified = () => {
     try {
       if (disable) return;
       const data = {
-        email,
+        phone,
       };
       const res = await resendOtp(data);
       if (res?.data?.data?.success) {
@@ -84,10 +84,10 @@ const Verified = () => {
         <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
           <div className="flex flex-col items-center justify-center text-center space-y-2">
             <div className="font-semibold text-3xl">
-              <p>Email Verification</p>
+              <p>Phone Number Verification</p>
             </div>
             <div className="flex flex-row text-sm font-medium text-gray-400">
-              <p>We have sent a code to your email {email}</p>
+              <p>We have sent a code to your Phone Number {phone}</p>
             </div>
           </div>
 
@@ -130,7 +130,7 @@ const Verified = () => {
                       className={`flex flex-row items-center ${
                         disable
                           ? "text-gray-500 cursor-not-allowed"
-                          : "text-secondary cursor-pointer underline"
+                          : "text-textColor cursor-pointer underline"
                       }`}
                       onClick={() => handleResend()}
                     >
