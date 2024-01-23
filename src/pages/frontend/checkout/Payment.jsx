@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // import react icons
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useOrderMutation } from "../../../redux/feature/payment/paymentApi";
@@ -10,27 +10,32 @@ import { useNavigate } from "react-router-dom";
 
 const Payment = ({ total, user }) => {
   const [payBy, setPayBy] = useState("");
-  const [shippingType, setShippingType] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
   const [order, { isLoading, isError }] = useOrderMutation();
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
-
+  const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const shippingTypeData = localStorage.getItem("deliveryPoint");
-    setShippingType(shippingTypeData);
-  }, [shippingType]);
-
+  console.log({ shippingType });
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       let data = {};
-      if (!payBy) {
-        return toast.error("select your payment method");
+
+      if (carts.length <= 0) {
+        return toast.info("Please add to cart before buy !");
       }
+      
+      if (!payBy) {
+        return toast.info("select your payment method !");
+      }
+
+      if (shippingType === "select") {
+        return toast.info("Select your delivery Point !");
+      }
+
       if (user && user?.address) {
         data = {
           userInfo: user?._id,
@@ -48,6 +53,7 @@ const Payment = ({ total, user }) => {
           shipping_type: shippingType,
         };
       }
+
       const res = await order(data);
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         setLoading(false);
@@ -72,8 +78,6 @@ const Payment = ({ total, user }) => {
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
-
-  console.log("shipping type", shippingType);
 
   return (
     <div className="px-10">
@@ -140,7 +144,7 @@ const Payment = ({ total, user }) => {
         </p>
         <button
           type="submit"
-          className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
+          className="block w-full text-center py-3 text-textColor bg-primaryColor hover:bg-opacity-70 rounded mt-4"
         >
           {loading || isLoading ? <MiniSpinner /> : "Place Order"}
         </button>
