@@ -75,12 +75,11 @@ const CheckoutPage = () => {
   };
   const deliveryCharge = parseInt(shippingCharge);
   let total = subTotal + deliveryCharge;
-  console.log(typeof shippingCharge);
 
   return (
     <div className="container py-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <section className="overflow-y-auto space-y-5">
+        <section className="overflow-y-auto space-y-5 order-2 md:order-1">
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
             <UserInfo email={email} user={informations?.data} />
           </div>
@@ -96,7 +95,7 @@ const CheckoutPage = () => {
             <Payment user={user} total={total} />
           </div>
         </section>
-        <section className="bg-white px-10 p-5 w-3/4 mx-auto rounded sticky">
+        <section className="bg-white md:px-10 p-5 w-full md:w-3/4 mx-auto rounded sticky order-1 md:order-2">
           <h2 className="text-center mb-10 tracking-normal leading-5 text-lg font-medium">
             Order Summary
           </h2>

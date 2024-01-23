@@ -10,8 +10,11 @@ import { useUpdateUserMutation } from "../../../redux/feature/auth/authApi";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
-import { useDispatch } from "react-redux";
-import { setShippingCharge } from "../../../redux/feature/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setShippingCharge,
+  setShippingType,
+} from "../../../redux/feature/cart/cartSlice";
 
 const options = [
   { value: "dhaka", label: "Dhaka" },
@@ -68,8 +71,6 @@ const options = [
 const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [deliveryPoint, setDeliveryPoint] = useState("Select...");
-
   const [country, setCountry] = useState("Bangladesh");
 
   const [city, setCity] = useState(user?.city);
@@ -89,25 +90,12 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
     },
   });
 
+  const deliveryPoint = useSelector((state) => state.cart.shippingType);
   const dispatch = useDispatch();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-
-  const handleDeliveryPoint = (value) => {
-    localStorage.setItem("deliveryPoint", value);
-    setDeliveryPoint(value);
-    setIsOpen(!isOpen);
-  };
-
-  useEffect(() => {
-    const data = localStorage.getItem("deliveryPoint");
-
-    if (data !== undefined) {
-      setDeliveryPoint(data);
-    }
-  }, [deliveryPoint]);
 
   const onSubmit = async (data) => {
     try {
@@ -335,7 +323,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
                     dispatch(
                       setShippingCharge(deliveryCharge?.data[0]?.inside_dhaka)
                     );
-                    handleDeliveryPoint("Inside Dhaka");
+                    dispatch(setShippingType("Inside Dhaka"));
                   }}
                 >
                   Inside Dhaka
@@ -349,7 +337,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
                     dispatch(
                       setShippingCharge(deliveryCharge?.data[0]?.outside_dhaka)
                     );
-                    handleDeliveryPoint("Outside Dhaka");
+                    dispatch(setShippingType("Outside Dhaka"));
                   }}
                 >
                   Outside Dhaka

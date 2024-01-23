@@ -5,6 +5,7 @@ const initialState = {
   subtotal: 0,
   vat: 0,
   shippingCharge: 0,
+  shippingType: "select",
 };
 
 const cartSlice = createSlice({
@@ -106,6 +107,10 @@ const cartSlice = createSlice({
     setShippingCharge: (state, action) => {
       state.shippingCharge = action.payload;
     },
+    // set Shipping Type
+    setShippingType: (state, action) => {
+      state.shippingType = action.payload;
+    },
   },
 });
 
@@ -126,6 +131,7 @@ export const {
   incrementQuantity,
   decrementQuantity,
   setShippingCharge,
+  setShippingType,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
