@@ -260,7 +260,7 @@ const AllProducts = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="flex justify-between py-4 sticky top-[58px] sm:top-[82px] z-30 bg-white px-4 sm:px-10 md:px-16 lg:px-20 xl:px-24 2xl:px-48 shadow-sm border-b border-bgray-500">
+      <div className="flex justify-between py-4 sticky top-[82px] sm:top-[82px] z-30 bg-white px-4 sm:px-10 md:px-16 lg:px-20 xl:px-24 2xl:px-48 shadow-sm border-b border-bgray-500">
         <div>
           <h1>Products {products?.length}</h1>
         </div>
@@ -539,7 +539,7 @@ const AllProducts = () => {
         {/* ------ filter drawer ------ start */}
 
         <div
-          className={`h-screen w-full fixed inset-y-0 left-0 top-[60px] z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
+          className={`h-screen w-full fixed inset-y-0 left-0 top-[82px] z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
             isFilterOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

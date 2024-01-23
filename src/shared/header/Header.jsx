@@ -120,9 +120,15 @@ const Header = () => {
           <div className="grid grid-cols-3 px-10 relative">
             {/* ------ header left side ------ start */}
             <div className="flex gap-10 items-center">
-              <button onClick={toggleMobileMenu} className="block md:hidden">
-                <RxHamburgerMenu className="text-2xl" />
-              </button>
+              <div className={`block md:hidden font-bold text-2xl h-[46px]`}>
+                <Link to={"/"}>
+                  <img
+                    src="/assets/images/logo/logo.png"
+                    alt=""
+                    className="h-[46px] object-contain"
+                  />
+                </Link>
+              </div>
               <div className={`hidden sm:block font-bold text-2xl h-[46px]`}>
                 <Link to={"/"}>
                   <img
@@ -178,6 +184,7 @@ const Header = () => {
                 />
               </Link>
             </div>
+            <div className="block md:hidden"></div>
 
             {/* ------ header middle side ------ end */}
 
@@ -187,8 +194,8 @@ const Header = () => {
               <div
                 className={`transition-all duration-500 ease-in-out absolute ${
                   isSearchFieldOpen
-                    ? "top-[5px] right-[260px]"
-                    : "-top-32 right-[260px]"
+                    ? "top-[5px] right-[210px] md:right-[260px]"
+                    : "-top-32 right-[210px] md:right-[260px]"
                 }`}
               >
                 <FormSearch />
@@ -260,6 +267,9 @@ const Header = () => {
                   </span>
                 </Link>
               )}
+              <button onClick={toggleMobileMenu} className="block md:hidden">
+                <RxHamburgerMenu className="text-2xl" />
+              </button>
             </div>
             {/* ------ header right side ------ end */}
           </div>
