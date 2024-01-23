@@ -73,6 +73,10 @@ const ChangePassword = ({ user, setActive }) => {
             className="border rounded px-3 py-2 w-full"
             {...register("new_password", {
               required: "New Password is required!",
+              minLength: {
+                value: 6,
+                message: "Password must be 6 character",
+              },
             })}
           />
           {errors.new_password && (

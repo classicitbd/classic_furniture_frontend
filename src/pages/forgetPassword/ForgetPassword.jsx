@@ -26,7 +26,7 @@ const ForgetPassword = () => {
         toast.success(res?.data?.message, {
           autoClose: 2000,
         });
-        setToLocalStorage('reset-email', data?.email);
+        setToLocalStorage("reset-email", data?.email);
         reset();
       } else if (res?.error?.status === 400) {
         toast.error(res?.error?.data?.message, {
@@ -52,29 +52,29 @@ const ForgetPassword = () => {
           className="space-y-4"
         >
           <div className="form-control w-full max-w-xs">
-            <label htmlFor="email" className="label">
-              <span className="label-text">Email</span>
+            <label htmlFor="phone" className="label">
+              <span className="label-text">Phone Number</span>
             </label>
             <input
-              id="email"
-              type="email"
-              placeholder="example@gmail.com"
+              id="phone"
+              type="text"
+              placeholder="Enter your phone number"
               className="border rounded px-3 p-1 w-full max-w-xs"
-              {...register("email", { required: "Email is required" })}
+              {...register("phone", { required: "Phone Number is required" })}
             />
-            {errors.email && (
-              <p className="text-red-600"> {errors.email.message}</p>
+            {errors.phone && (
+              <p className="text-red-600"> {errors.phone.message}</p>
             )}
           </div>
           <button
-            className="px-10 py-2 text-white bg-green-500 w-full rounded-full"
+            className="px-10 py-2 text-textColor bg-primaryColor w-full rounded-full"
             type="submit"
           >
             {loading || isLoading ? <MiniSpinner /> : "Reset Password"}
           </button>
         </form>
         <p className="text-[14px] mt-4 text-center">
-          <Link to="/sign-in" className="text-secondary">
+          <Link to="/sign-in" className="text-primaryColor">
             Back to Sign in
           </Link>
         </p>

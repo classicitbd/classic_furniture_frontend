@@ -5,7 +5,7 @@ import { CiEdit } from "react-icons/ci";
 import { PiAddressBook } from "react-icons/pi";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUpdateUserMutation } from "../../../redux/feature/auth/authApi";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
@@ -119,7 +119,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">
-        <p className="bg-black text-white h-8 w-8 rounded-full flex justify-center items-center font-bold">
+        <p className="bg-primaryColor text-textColor h-8 w-8 rounded-full flex justify-center items-center font-bold">
           2
         </p>
         <h2 className="text-xl font-semibold tracking-normal leading-5">
