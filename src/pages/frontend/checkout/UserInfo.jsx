@@ -22,6 +22,7 @@ const UserInfo = ({ user, loading }) => {
   if (loading) {
     return <BigSpinner />;
   }
+  console.log(user);
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">

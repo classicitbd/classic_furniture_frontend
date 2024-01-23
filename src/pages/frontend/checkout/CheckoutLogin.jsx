@@ -21,6 +21,15 @@ const CheckoutLogin = () => {
   const handleSignIn = async (data) => {
     try {
       setLoading(true);
+      const trimmedPhoneNumber = data.phone.trim();
+      const bdPhoneNumberRegex = /^01[3-9]\d{8}$/;
+
+      if (bdPhoneNumberRegex.test(trimmedPhoneNumber)) {
+        // toast.info(`Valid phone number: ${trimmedPhoneNumber}`);
+      } else {
+        return toast.error("Invalid phone number.");
+      }
+
       const res = await signIn(data);
       if (res?.data?.success) {
         setCookie(authKey, res?.data?.data?.token);
@@ -39,7 +48,7 @@ const CheckoutLogin = () => {
       console.error("sign-in error: ", error);
     } finally {
       setLoading(false);
-    //   window.location.reload();
+      //   window.location.reload();
     }
   };
 
