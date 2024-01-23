@@ -87,9 +87,6 @@ const CustomerTable = () => {
                     Name
                   </th>
                   <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                    Email
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                     Phone
                   </th>
                   <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
@@ -104,9 +101,6 @@ const CustomerTable = () => {
                     {isSearchData?.name}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {isSearchData?.email}
-                  </td>
-                  <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                     {isSearchData?.phone}
                   </td>
 
@@ -130,9 +124,6 @@ const CustomerTable = () => {
                   Name
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Email
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Phone
                 </th>
                 <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
@@ -148,9 +139,6 @@ const CustomerTable = () => {
                     {user?.name}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {user?.email}
-                  </td>
-                  <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                     {user?.phone}
                   </td>
 

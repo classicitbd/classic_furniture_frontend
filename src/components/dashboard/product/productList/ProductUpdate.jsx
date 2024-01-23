@@ -300,7 +300,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
         const sendData = {
             _id: updateModalValue?._id,
-            email: user?.email,
+            phone: user?.phone,
             title: data?.title ? data?.title : updateModalValue?.title,
             related: slugify(data?.title ? data?.title : updateModalValue?.title, {
                 lower: true,

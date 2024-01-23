@@ -14,7 +14,7 @@ const PrivateDashboardRoute = ({ children }) => {
     }
 
 
-    if (user.email && user.role == 'admin') {
+    if (user.phone && user.role == 'admin') {
         return children
     }
     return <Navigate to='/sign-in' state={{ from: location }} replace></Navigate>

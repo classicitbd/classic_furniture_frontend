@@ -57,7 +57,7 @@ const DashboardNavbar = () => {
                                 <h2 className="text-white text-sm font-semibold">
                                 {user?.name}
                                 </h2>
-                            <p className="text-white text-sm font-normal">{user?.email}</p>
+                            <p className="text-white text-sm font-normal">{user?.phone}</p>
                             </div>
                         </div>
 

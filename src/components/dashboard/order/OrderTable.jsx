@@ -290,7 +290,7 @@ const OrderTable = () => {
                     Name
                   </th>
                   <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                    Email
+                    Phone
                   </th>
                   <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                     Time
@@ -302,7 +302,7 @@ const OrderTable = () => {
                     Status
                   </th>
                   <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                    Type
+                    Payment
                   </th>
                   <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
                     Action
@@ -320,7 +320,7 @@ const OrderTable = () => {
                       {order?.userInfo?.name}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                      {order?.email}
+                      {order?.phone}
                     </td>
                     <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                       {formatDate(order?.createdAt)}

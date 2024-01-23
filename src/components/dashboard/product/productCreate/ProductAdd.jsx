@@ -287,7 +287,7 @@ const ProductAdd = () => {
     const slug = colorName + " " + data?.title
 
     const sendData = {
-      email: user,
+      phone: user?.phone,
       title: data?.title,
       related: slugify(data.title, {
         lower: true,
