@@ -8,6 +8,16 @@ export const getEmail = (urlString) => {
   return emailAddress;
 };
 
+export const getUserQuery = (urlString) => {
+  // Use a regular expression to extract the email address
+  const emailRegex = /\buser=([^&]+)/;
+  const match = urlString.match(emailRegex);
+
+  // Check if there is a match and get the email address
+  const userAddress = match ? match[1] : null;
+  return userAddress;
+};
+
 export const getPhoneNumber = (urlString) => {
   // Use a regular expression to extract the email address
   const emailRegex = /\bphone=([^&]+)/;

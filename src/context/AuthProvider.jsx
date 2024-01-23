@@ -9,9 +9,9 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const token = getCookie(authKey);
 
   useEffect(() => {
-    const token = getCookie(authKey);
     if (token) {
       fetch(`${BASE_URL}/getMe`, {
         method: "GET",
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
       setUser({});
       setLoading(false);
     }
-  }, []);
+  }, [token]);
 
   // console.log( "Fromn auth provider,", user)
 

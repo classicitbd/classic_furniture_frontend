@@ -9,6 +9,7 @@ const ChangePassword = ({ user, setActive }) => {
   const [loading, setLoading] = useState(false);
 
   const [changePassword, { isLoading }] = useChangePasswordMutation();
+  
   const {
     register,
     handleSubmit,
