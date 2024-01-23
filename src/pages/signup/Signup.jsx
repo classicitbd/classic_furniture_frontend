@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
 import { useSignUpMutation } from "../../redux/feature/auth/authApi";
@@ -10,15 +8,14 @@ import { useSignUpMutation } from "../../redux/feature/auth/authApi";
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-  const [phone, setPhone] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
+
   const navigate = useNavigate();
   const [signUp, { isLoading }] = useSignUpMutation();
 
@@ -30,13 +27,6 @@ const SignUp = () => {
     try {
       setLoading(true);
       const { password, confirm_password } = data;
-      data.phone = phone;
-      if (phone === "") {
-        setPhoneError("Please provide your phone number");
-        return;
-      } else {
-        setPhoneError("");
-      }
       if (password !== confirm_password) {
         setError("Does not match password!");
         return;
@@ -47,7 +37,7 @@ const SignUp = () => {
         toast.info(res?.data?.message, {
           autoClose: 2000,
         });
-        navigate(`/verify-user?email=${res?.data?.data?.email}`);
+        navigate(`/verify-user?phone=${res?.data?.data?.phone}`);
         reset();
       }
     } catch (error) {
@@ -80,12 +70,11 @@ const SignUp = () => {
               <p className="text-red-600"> {errors.name.message}</p>
             )}
           </div>
-          <div>
+          {/* <div>
             <label htmlFor="phone" className="label">
               <span className="label-text">Phone Number</span>
             </label>
             <PhoneInput
-            
               country={"bd"}
               inputProps={{
                 name: "phone",
@@ -96,8 +85,23 @@ const SignUp = () => {
               onChange={(value) => setPhone(value)}
             />
             <p className="text-red-600"> {phoneError}</p>
-          </div>
+          </div> */}
           <div className="w-full">
+            <label htmlFor="phone" className="label">
+              <span className="label-text">Phone Number</span>
+            </label>
+            <input
+              id="phone"
+              type="text"
+              placeholder="Enter your phone number"
+              className="border rounded px-3 py-2 w-full"
+              {...register("phone", { required: "Phone number is required" })}
+            />
+            {errors.phone && (
+              <p className="text-red-600"> {errors.phone.message}</p>
+            )}
+          </div>
+          {/* <div className="w-full">
             <label htmlFor="email" className="label">
               <span className="label-text">Email</span>
             </label>
@@ -111,7 +115,7 @@ const SignUp = () => {
             {errors.email && (
               <p className="text-red-600"> {errors.email.message}</p>
             )}
-          </div>
+          </div> */}
           <div className="w-full">
             <label htmlFor="password" className="label">
               <span className="label-text">Password</span>
@@ -162,7 +166,7 @@ const SignUp = () => {
             />
           </div>
           <button
-            className="px-10 py-2 text-white bg-green-500 w-full rounded-full"
+            className="px-10 py-2 text-textColor bg-primaryColor w-full rounded-full"
             type="submit"
           >
             {loading || isLoading ? <MiniSpinner /> : "SignUp"}
@@ -170,7 +174,7 @@ const SignUp = () => {
         </form>
         <p className="text-[14px] mt-4">
           Already have a account?
-          <Link to="/sign-in" className="text-secondary">
+          <Link to="/sign-in" className="text-primaryColor underline">
             Sign-in
           </Link>
         </p>

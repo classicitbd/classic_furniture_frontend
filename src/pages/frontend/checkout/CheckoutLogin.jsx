@@ -7,7 +7,7 @@ import { useSignInMutation } from "../../redux/feature/auth/authApi";
 import { setCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
 
-const SignIn = () => {
+const CheckoutLogin = () => {
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -111,4 +111,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default CheckoutLogin;

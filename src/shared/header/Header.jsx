@@ -26,34 +26,34 @@ import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import MobileMenu from "./MobileMenu";
 const Header = () => {
-  const [menu, setMenu] = useState("");
+  // const [menu, setMenu] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSearchFieldOpen, setSearchFieldOpen] = useState(false);
   const [data, setData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const carts = useSelector((state) => state.cart.products);
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
   const isUser = isLoggedin();
 
-  const { data: category = [] } = useQuery({
-    queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
-    queryFn: async () => {
-      if (menu !== "") {
-        const res = await fetch(`${BASE_URL}/menu/${menu}`);
-        const data = await res.json();
-        return data;
-      } else {
-        // Return a default value when menu is empty
-        return { data: [] };
-      }
-    },
-    suspense: false,
-  }); // get category and sub category
+  // const { data: category = [] } = useQuery({
+  //   queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
+  //   queryFn: async () => {
+  //     if (menu !== "") {
+  //       const res = await fetch(`${BASE_URL}/menu/${menu}`);
+  //       const data = await res.json();
+  //       return data;
+  //     } else {
+  //       // Return a default value when menu is empty
+  //       return { data: [] };
+  //     }
+  //   },
+  //   suspense: false,
+  // }); // get category and sub category
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -504,7 +504,7 @@ const Header = () => {
 
         {/* ------ confirm modal ------ end */}
 
-        <div
+        {/* <div
           onMouseEnter={() => setIsMenuOpen(true)}
           className={`w-full absolute bg-[#fdfcfc] border-b shadow-md border-t border-t-gray-600 mt-1 ${
             isMenuOpen ? "top-[59px]" : "-top-32"
@@ -513,7 +513,7 @@ const Header = () => {
             setIsMenuOpen(false);
             setMenu("");
           }}
-        >
+        > */}
           {/* ------ category section ------ start */}
           {/* <div className="border-r px-4 py-[5px]">
             <ul className="flex gap-5 py-10 container">
@@ -542,7 +542,7 @@ const Header = () => {
             </ul>
           </div> */}
           {/* ------ category section ------ end */}
-        </div>
+        {/* </div> */}
       </section>
     </>
   );
