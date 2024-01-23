@@ -34,17 +34,17 @@ const Category = () => {
         </h2>
         <p className="text-center">Step into the fusion of fine materials</p>
       </article>
-      <nav className="py-[40px] bg-[#000000]">
+      <nav className="py-[40px] bg-primaryColor">
         <ul className="flex flex-col md:flex-row items-center justify-between gap-[10px] md:gap-[20px] text-lg md:text-xl lga:text-2xl max-w-4xl px-[20px] mx-auto">
           {categoryTypes?.map((item, i) => (
             <li key={item._id}>
               <Link
                 to={`/all?category=${item?.slug}`}
-                className={`${
+                className={`text-lg ${
                   categoryTypes?.length === i && "text-error-300"
-                } uppercase text-white`}
+                } uppercase text-textColor`}
                 style={{
-                  opacity: hoveredCategory === i ? 1 : 0.75,
+                  opacity: hoveredCategory === i ? 0.75 : 1,
                   transition: "opacity 0.2s ease-in-out", // Optional: Add a transition for a smoother effect
                 }}
                 onMouseEnter={() => setHoveredCategory(i)}
@@ -57,7 +57,7 @@ const Category = () => {
           <li>
             <Link
               to={`/all?discount_price=true`}
-              className={`text-error-200 hover:text-error-300 uppercase`}
+              className={`text-error-200 text-lg hover:text-error-300 uppercase`}
             >
               Discount Section
             </Link>

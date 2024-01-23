@@ -3,7 +3,6 @@ import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, loading }) => {
-  console.log(product);
   return (
     <div>
       {product || loading ? (
