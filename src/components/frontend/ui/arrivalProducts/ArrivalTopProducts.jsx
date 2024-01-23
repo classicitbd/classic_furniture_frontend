@@ -79,7 +79,7 @@ const ArrivalTopProducts = () => {
         {products?.data?.map((product) => (
           <SwiperSlide
             key={product?._id}
-            className="border group rounded-md overflow-hidden"
+            className="border group rounded-md overflow-hidden bg-secondary"
           >
             <ProductCard product={product} loading={isLoading} />
           </SwiperSlide>

@@ -1,10 +1,8 @@
-import { SlPhone } from "react-icons/sl";
-import { MdAccessTime } from "react-icons/md";
+// import react icons
 import { GiBeachBag } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GoArrowRight, GoPlus } from "react-icons/go";
-import bdLogo from "/assets/images/bd-logo.png";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormSearch from "../../components/frontend/form/FormSearch";
@@ -22,23 +20,40 @@ import {
 } from "../../redux/feature/cart/cartSlice";
 
 import ConfirmationModal from "../../components/common/modal/ConfirmationModal";
-import { IoCloseOutline } from "react-icons/io5";
+import { IoCloseOutline, IoSearchOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import MobileMenu from "./MobileMenu";
 const Header = () => {
-  const [scroll, setScroll] = useState(false);
+  const [menu, setMenu] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isSearchFieldOpen, setSearchFieldOpen] = useState(false);
   const [data, setData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const carts = useSelector((state) => state.cart.products);
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
   const isUser = isLoggedin();
+
+  const { data: category = [] } = useQuery({
+    queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
+    queryFn: async () => {
+      if (menu !== "") {
+        const res = await fetch(`${BASE_URL}/menu/${menu}`);
+        const data = await res.json();
+        return data;
+      } else {
+        // Return a default value when menu is empty
+        return { data: [] };
+      }
+    },
+    suspense: false,
+  }); // get category and sub category
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -75,15 +90,10 @@ const Header = () => {
     setModalOpen(false);
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      setScroll(window.scrollY > 50);
-    });
-  }, []);
-
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -100,53 +110,21 @@ const Header = () => {
     };
   }, [isDrawerOpen]);
 
+  console.log();
   return (
     <>
-      <section className="bg-black text-white pt-2">
+      <section className="bg-primaryColor text-[#fff] py-5 border-b border-bgray-700">
         {/* ------ header top section ------ start */}
 
-        <div className="border-b pb-3 border-gray-600">
-          <div className="container grid grid-cols-3 items-center">
+        <div className="shadow-md">
+          <div className="grid grid-cols-3 px-10 relative">
             {/* ------ header left side ------ start */}
-            <div>
-              <div
-                className={`${
-                  scroll ? "hidden" : "hidden md:flex items-center gap-3"
-                } `}
-              >
-                <div className="w-[40px] h-[40px] rounded-full border border-white bg-white">
-                  <img
-                    src={bdLogo}
-                    alt="bd-logo"
-                    className="w-full h-full rounded-full"
-                  />
-                </div>
-                <div className="flex flex-col lg:flex-row items-center gap-x-[10px]">
-                  <p className="flex items-center gap-1">
-                    <span>
-                      <SlPhone />
-                    </span>
-                    <span className="font-sans text-sm">+88 01796 682951</span>
-                  </p>
-                  <p className="flex items-center gap-1">
-                    <span>
-                      <MdAccessTime />
-                    </span>
-                    <span className="font-sans text-sm">10:00AM - 10:00PM</span>
-                  </p>
-                </div>
-              </div>
+            <div className="flex gap-10 items-center">
               <button onClick={toggleMobileMenu} className="block md:hidden">
                 <RxHamburgerMenu className="text-2xl" />
               </button>
-              <div
-                className={`w-[394px] ${
-                  scroll
-                    ? "hidden sm:block font-bold text-2xl h-[46px]"
-                    : "hidden"
-                }`}
-              >
-                <Link to={"/"} className={``}>
+              <div className={`hidden sm:block font-bold text-2xl h-[46px]`}>
+                <Link to={"/"}>
                   <img
                     src="/assets/images/logo/logo.png"
                     alt=""
@@ -156,34 +134,76 @@ const Header = () => {
               </div>
             </div>
             {/* ------ header left side ------ start */}
-            {/* ------ header middle side ------ start */}
 
-            <div>
-              <Link
-                to={"/"}
-                className={`font-bold text-2xl h-[40px] sm:h-[46px] sm:w-[394px] mx-auto flex justify-start ${
-                  scroll ? "block sm:hidden" : "block"
-                }`}
-              >
+            {/* ------ header middle side ------ start */}
+            {/* ------ menu bar ------ start */}
+            {/* <div className=" text-[#000] hidden sm:block"> */}
+            {/* ------ navbar with dropdown ------ start */}
+            {/* <nav className="relative py-2">
+                <ul className="flex items-center justify-center gap-20">
+                  {menuTypes?.data?.map((menuItem) => (
+                    <li className="group" key={menuItem?._id}>
+                      <button
+                        onMouseEnter={() => handleHover(menuItem)}
+                        className={`font-normal focus:outline-none text-[#fff] py-3 uppercase ${
+                          menu === menuItem?._id ? "opacity-80" : ""
+                        } transition-opacity duration-300`}
+                      >
+                        <p className="flex items-center gap-2">
+                          <span className="text-lg">{menuItem?.menu}</span>
+                          <MdOutlineKeyboardArrowDown
+                            className={`text-lg group-hover:rotate-180 transition-all duration-300 ease-linear`}
+                          />
+                        </p>
+                        <span
+                          className={`transition-all duration-500 h-[1px] block bg-[#176B87] ${
+                            menu === menuItem?._id ? "w-full" : "w-0"
+                          }`}
+                        ></span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav> */}
+            {/* ------ navbar with dropdown ------ end */}
+            {/* </div> */}
+            {/* ------ menu bar ------ end */}
+
+            <div className={`h-[46px] justify-center hidden sm:flex`}>
+              <Link to={"/"}>
                 <img
-                  src="/assets/images/logo/logo.png"
+                  src="/assets/images/logo/logo-text.png"
                   alt=""
-                  className="w-full h-full object-contain"
+                  className="h-[46px] object-contain"
                 />
               </Link>
-              <div className={`${scroll ? "hidden sm:block" : "hidden"}`}>
-                <FormSearch />
-              </div>
             </div>
+
             {/* ------ header middle side ------ end */}
+
             {/* ------ header right side ------ start */}
 
             <div className="flex items-center justify-end gap-4">
+              <div
+                className={`transition-all duration-500 ease-in-out absolute ${
+                  isSearchFieldOpen
+                    ? "top-[5px] right-[260px]"
+                    : "-top-32 right-[260px]"
+                }`}
+              >
+                <FormSearch />
+              </div>
+              <button
+                onClick={() => setSearchFieldOpen(!isSearchFieldOpen)}
+                className="relative inline-flex items-center justify-center p-2 md:p-3 md:overflow-hidden font-medium transition duration-300 ease-out rounded-full shadow ring-1 ring-textColor"
+              >
+                <IoSearchOutline className="w-6 h-6 text-logoColor" />
+              </button>
               <button
                 onClick={toggleDrawer}
-                className="relative inline-flex items-center justify-center p-2 md:p-3 md:overflow-hidden font-medium transition duration-300 ease-out rounded-full shadow ring-1 ring-purple-500"
+                className="relative inline-flex items-center justify-center p-2 md:p-3 md:overflow-hidden font-medium transition duration-300 ease-out rounded-full shadow border border-textColor"
               >
-                <GiBeachBag className="w-6 h-6 text-white" />
+                <GiBeachBag className="w-6 h-6 text-logoColor" />
                 <span className="absolute z-20 top-1/2 right-1/2 bg-error-300 w-5 h-5 flex items-center justify-center text-white rounded-full">
                   {carts?.length}
                 </span>
@@ -193,11 +213,11 @@ const Header = () => {
                   <div className="inline-flex items-center overflow-hidden">
                     <button
                       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                      className="flex items-center gap-2 rounded-full border px-1 py-1 md:px-2 md:py-2"
+                      className="flex items-center gap-2 rounded-full border border-textColor px-1 py-1 md:px-2 md:py-2"
                     >
                       <span className="hidden md:block">Sign Out</span>
-                      <span className="w-7 h-7 flex items-center justify-center rounded-full bg-white">
-                        <FaRegUser className="w-5 h-5 text-black" />
+                      <span className="w-7 h-7 flex items-center justify-center rounded-full bg-primaryColor">
+                        <FaRegUser className="w-5 h-5 text-logoColor" />
                       </span>
                     </button>
                   </div>
@@ -232,11 +252,11 @@ const Header = () => {
               ) : (
                 <Link
                   to="/sign-in"
-                  className="flex items-center gap-2 rounded-full border px-1 py-1 md:px-2 md:py-2"
+                  className="flex items-center gap-2 rounded-full border border-textColor px-1 py-1 md:px-2 md:py-2"
                 >
                   <span className="hidden md:block">sign in</span>
-                  <span className="w-7 h-7 flex items-center justify-center rounded-full bg-white">
-                    <FaRegUser className="w-5 h-5 text-black" />
+                  <span className="w-7 h-7 flex items-center justify-center rounded-full bg-primaryColor">
+                    <FaRegUser className="w-5 h-5 text-logoColor" />
                   </span>
                 </Link>
               )}
@@ -246,80 +266,6 @@ const Header = () => {
         </div>
 
         {/* ------ header top section ------ end */}
-
-        {/* ------ navbar with dropdown ------ start */}
-
-        {/* <div
-          onMouseLeave={() => {
-            setIsDropdownOpen(false);
-            setMenu("");
-          }}
-          className={`${scrollBtm ? "hidden" : "hidden sm:block"}`}
-        >
-          <nav className="border-b border-gray-600 relative group">
-            <ul className="flex items-center justify-center gap-7 py-1">
-              <li className="group">
-                <button
-                  onMouseEnter={() => handleHover("men")}
-                  className={`text-xl font-light focus:outline-none ${
-                    menu === "men" ? "opacity-80" : ""
-                  } transition-opacity duration-300`}
-                >
-                  Men
-                  <span
-                    className={`transition-all duration-500 h-[1px] block bg-white ${
-                      menu === "men" ? "w-full" : "w-0"
-                    }`}
-                  ></span>
-                </button>
-              </li>
-              <li>
-                <Link className="border-r border-gray-600"></Link>
-              </li>
-              <li>
-                <button
-                  onMouseEnter={() => handleHover("women")}
-                  className={`text-xl font-light focus:outline-none ${
-                    menu === "women" ? "opacity-80" : ""
-                  } transition-opacity duration-300`}
-                >
-                  Women
-                  <span
-                    className={`transition-all duration-500 h-[1px] block bg-white ${
-                      menu === "women" ? "w-full" : "w-0"
-                    }`}
-                  ></span>
-                </button>
-              </li>
-              <li>
-                <Link className="border-r border-gray-600"></Link>
-              </li>
-              <li className="group">
-                <button
-                  onMouseEnter={() => handleHover("unisex")}
-                  className={`text-xl font-light focus:outline-none ${
-                    menu === "unisex" ? "opacity-80" : ""
-                  } transition-opacity duration-300 group`}
-                >
-                  Unisex
-                  <span
-                    className={`transition-all duration-500 h-[1px] block bg-white ${
-                      menu === "unisex" ? "w-full" : "w-0"
-                    }`}
-                  ></span>
-                </button>
-              </li>
-            </ul>
-            <div
-              onMouseEnter={() => setIsDropdownOpen(true)}
-              className={`w-full bg-black h-[300px] ${
-                isDropdownOpen ? "block" : "hidden"
-              }`}
-            ></div>
-          </nav>
-        </div> */}
-
-        {/* ------ navbar with dropdown ------ end */}
 
         {/* ------ cart drawer ------ start */}
 
@@ -547,85 +493,49 @@ const Header = () => {
         </ConfirmationModal>
 
         {/* ------ confirm modal ------ end */}
+
+        <div
+          onMouseEnter={() => setIsMenuOpen(true)}
+          className={`w-full absolute bg-[#fdfcfc] border-b shadow-md border-t border-t-gray-600 mt-1 ${
+            isMenuOpen ? "top-[59px]" : "-top-32"
+          }`}
+          onMouseLeave={() => {
+            setIsMenuOpen(false);
+            setMenu("");
+          }}
+        >
+          {/* ------ category section ------ start */}
+          {/* <div className="border-r px-4 py-[5px]">
+            <ul className="flex gap-5 py-10 container">
+              {category?.data?.map((category) => (
+                <li className="w-[200px]" key={category?.category?._id}>
+                  <Link
+                    to={`/all?gender=${gender}&category=${category?.category?.slug}`}
+                    className="text-[#000] py-1 px-2 w-full text-left rounded-sm text-base font-medium opacity-80 hover:opacity-100"
+                  >
+                    {category?.category?.category}
+                  </Link>
+                  <ul className="space-y-[2px] mt-2">
+                    {category?.subcategories?.map((subItem) => (
+                      <li key={subItem?._id}>
+                        <Link
+                          to={`/all?gender=${gender}&category=${category?.category?.slug}&sub_category=${subItem?.slug}`}
+                          className=" text-[#000] py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-80 hover:opacity-100"
+                        >
+                          {subItem?.sub_category}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </div> */}
+          {/* ------ category section ------ end */}
+        </div>
       </section>
     </>
   );
 };
 
 export default Header;
-
-// {
-//   products?.map((mobile) => (
-//     <div className="border shadow-sm rounded" key={mobile.id}>
-//       <div className="flex items-center pr-5 gap-3">
-//         {/* thumbnail */}
-//         <img
-//           className="w-18 h-20"
-//           src={mobile?.thumbnail}
-//           alt={mobile?.title}
-//         />
-//         {/* title & price */}
-//         <div className="md:px-5">
-//           <h2 className="w-full text-base md:text-md font-normal md:font-semibold">
-//             {mobile.title}
-//           </h2>
-//           <p className="text-orange font-bold">{mobile.price}৳</p>
-//         </div>
-//         {/* color & size */}
-//         <div className="w-full flex items-center justify-center flex-col gap-[2px] md:gap-2 md:flex-row">
-//           {/* color */}
-//           <div
-//             className={`w-8 h-8 flex justify-center items-center gap-2 p-[2px] border-2 border-primaryColor rounded `}
-//           >
-//             <span
-//               className={`w-6 h-6 rounded-full ${
-//                 mobile.selectColor === "Black"
-//                   ? "bg-black"
-//                   : mobile.selectColor === "Blue"
-//                   ? "bg-blue-600"
-//                   : "bg-red-600"
-//               }`}
-//             ></span>
-//           </div>
-//           {/* size */}
-//           <div className={`border-2 border-primaryColor rounded px-[2px]`}>
-//             <p className="text-center">{mobile?.selectSize}"</p>
-//           </div>
-//         </div>
-//         {/* quantity calculation */}
-//         <div className="flex flex-col md:flex-row items-center mx:pr-3">
-//           <span
-//             onClick={() => {
-//               if (mobile.quantity > 1) {
-//                 dispatch(removeOne(mobile));
-//               }
-//             }}
-//             className={`${
-//               mobile.quantity > 1 ? "cursor-pointer" : "cursor-not-allowed"
-//             } text-2xl md:text-3xl`}
-//           >
-//             <FiMinus className="p-1 group-hover:bg-blue-gray-50 shadow rounded" />{" "}
-//           </span>
-//           <span className="text-lg md:text-2xl border mx-1 px-3 rounded-sm">
-//             {mobile.quantity}
-//           </span>
-//           <span
-//             onClick={() => dispatch(addToCart(mobile))}
-//             className="text-2xl md:text-3xl cursor-pointer"
-//           >
-//             <GoPlus className="p-1 group-hover:bg-blue-gray-50 shadow rounded" />
-//           </span>
-//         </div>
-//         {/* item remover */}
-//         <span
-//           onClick={() => dispatch(removeFromCart(mobile))}
-//           className="text-2xl md:text-3xl group cursor-pointer"
-//         >
-//           <IoMdClose className="p-1 text-white bg-error-300  group-hover:bg-error-200 shadow rounded" />
-//         </span>
-//       </div>
-//     </div>
-//   ));
-// }
-
-// ${scroll ? "hidden" : "hidden md:block"}
