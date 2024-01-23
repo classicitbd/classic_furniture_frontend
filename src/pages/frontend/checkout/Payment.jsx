@@ -27,7 +27,7 @@ const Payment = ({ total, user }) => {
       if (carts.length <= 0) {
         return toast.info("Please add to cart before buy !");
       }
-      
+
       if (!payBy) {
         return toast.info("select your payment method !");
       }
@@ -56,7 +56,6 @@ const Payment = ({ total, user }) => {
 
       const res = await order(data);
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
-        setLoading(false);
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
         } else {

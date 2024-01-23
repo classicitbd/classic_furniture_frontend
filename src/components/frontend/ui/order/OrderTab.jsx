@@ -121,10 +121,10 @@ const OrderTab = () => {
                   Transaction Id
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Status
+                  Shipping Type
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Type
+                  Payment Type
                 </th>
                 <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
                   Action
@@ -152,20 +152,24 @@ const OrderTab = () => {
                   </td>
 
                   <td
-                    className={`whitespace-nowrap px-4 py-2 font-light text-black ${
-                      order?.status === "pending"
-                        ? "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
-                        : "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
-                    }`}
+                    className={`whitespace-nowrap px-4 py-2 font-light text-black `}
                   >
-                    {order?.status === "pending" ? "processing" : "delivered"}
+                    <span
+                      className={`px-2 ${
+                        order?.status === "pending"
+                          ? "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
+                          : "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+                      }`}
+                    >
+                      {order?.status === "pending" ? "processing" : "delivered"}
+                    </span>
                   </td>
 
                   <td
                     className={`whitespace-nowrap px-4 py-2 font-light text-black`}
                   >
                     <span
-                      className={`px-2  rounded-full ${
+                      className={`px-2 ${
                         order?.type === "unpaid"
                           ? "inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10"
                           : "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
