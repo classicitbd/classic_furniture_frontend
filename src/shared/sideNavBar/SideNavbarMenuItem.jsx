@@ -5,61 +5,71 @@ const SideNavbarMenuItem = () => {
     const menuItems = [
         {
             id: 1,
-            text: "Order",
+            text: "Dashboard",
             link: "/dashboard",
         },
         {
             id: 2,
+            text: "Order",
+            link: "/dashboard/order",
+        },
+        {
+            id: 3,
             text: "Customer",
             link: "/dashboard/customer",
         },
         {
-            id: 3,
+            id: 4,
             text: "Product",
             link: "/dashboard/product",
         },
         {
-            id: 4,
+            id: 5,
+            text: "Create Product",
+            link: "/dashboard/product/create",
+        },
+        {
+            id: 5,
             text: "Slider",
             link: "/dashboard/slider",
         },
         {
-            id: 3,
+            id: 6,
             text: "Menu",
             link: "/dashboard/menu",
         },
         {
-            id: 4,
+            id: 7,
             text: "Category",
             link: "/dashboard/category",
         },
         {
-            id: 5,
+            id: 8,
             text: "Sub Category",
             link: "/dashboard/sub_category",
         },
         {
-            id: 6,
+            id: 9,
             text: "Color",
             link: "/dashboard/color",
         },
         {
-            id: 7,
+            id: 10,
             text: "Collection",
             link: "/dashboard/collection",
         },
         {
-            id: 8,
+            id: 11,
             text: "Feature",
             link: "/dashboard/feature",
         },
         {
-            id: 9,
+            id: 12,
             text: "Style",
             link: "/dashboard/style",
         },
         {
-            id: 9,
+            id: 13,
             text: "Setting",
             link: "/dashboard/setting",
         },

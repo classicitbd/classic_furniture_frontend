@@ -3,7 +3,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Pagination = ({ rows, page, setPage, setRows, totalData }) => {
 
-    const lastArrow = Math.ceil( totalData / rows);
+    const lastArrow = Math.ceil(totalData / rows);
 
     const handleRowsChange = (event) => {
         setPage(1)
@@ -24,17 +24,9 @@ const Pagination = ({ rows, page, setPage, setRows, totalData }) => {
             <button onClick={page > 1 ? () => setPage(page - 1) : 1} className="border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white">
                 <FaChevronLeft />
             </button>
-
-            {
-                totalData > 10 ?
-                <button onClick={lastArrow != page ? () => setPage(page + 1) : null} className="border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white">
+            <button onClick={lastArrow != page ? () => setPage(page + 1) : null} className="border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white">
                 <FaChevronRight />
-                </button>
-                :
-                 <button disabled className="border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white">
-                    <FaChevronRight />
-                 </button>
-            }
+            </button>
         </div>
     );
 };

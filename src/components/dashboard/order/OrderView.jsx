@@ -114,8 +114,22 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                         </li>
                                         <li>
                                           <h4>
-                                            Customer Email :{" "}
-                                            <span>{isViewData?.email}</span>
+                                            Customer Phone :{" "}
+                                            <span>{isViewData?.phone}</span>
+                                          </h4>
+                                        </li>
+                                        <li>
+                                          <h4>
+                                            Shipping :{" "}
+                                            <span>
+                                              {isViewData?.shipping_type + " " + isViewData?.shipping_price}
+                                            </span>
+                                          </h4>
+                                        </li>
+                                        <li>
+                                          <h4>
+                                            Customer Address :{" "}
+                                            <span>{isViewData?.address}</span>
                                           </h4>
                                         </li>
                                       </ul>
@@ -126,7 +140,7 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                       style={{
                                         paddingBottom: "20px",
                                         borderTop: "1px solid #ddd",
-                                        marginTop: "50px",
+                                        marginTop: "80px",
                                         paddingTop: "20px",
                                         borderBottom: "1px solid #ddd",
                                         marginBottom: "20px",
