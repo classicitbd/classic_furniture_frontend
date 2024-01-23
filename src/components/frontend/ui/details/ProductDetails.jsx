@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable react/prop-types */
 import {
   Autoplay,
@@ -35,6 +36,11 @@ const ProductDetails = ({ product }) => {
     setModalOpen(false);
     setModal("");
   };
+
+  const allImages = [...product?.data?.images];
+  allImages.push({ image: product?.data?.thumbnail_image });
+  allImages.push({ image: product?.data?.hover_image });
+  console.log(allImages);
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
       {/* ------ products details left side content ------ start */}
@@ -55,7 +61,7 @@ const ProductDetails = ({ product }) => {
         onSlideChange={() => {}}
         className="h-[50vh] md:h-[90vh] w-full"
       >
-        {product?.data?.images?.map((image, i) => (
+        {allImages?.map((image, i) => (
           <SwiperSlide
             key={i}
             className="border w-full flex justify-center items-center"
@@ -100,7 +106,7 @@ const ProductDetails = ({ product }) => {
           </p>
           <button
             onClick={() => openModal("addToCart")}
-            className="bg-[#176B87] bg-opacity-80 hover:bg-opacity-100 text-lg font-medium leading-6 -tracking-normal text-white w-full py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm uppercase"
+            className="bg-primaryColor bg-opacity-100 hover:bg-opacity-80 text-lg font-medium leading-6 -tracking-normal text-white w-full py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm uppercase"
           >
             Add To Shopping Bag
           </button>

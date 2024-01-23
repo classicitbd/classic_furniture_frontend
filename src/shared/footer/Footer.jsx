@@ -22,8 +22,10 @@ const Footer = () => {
       return data;
     },
   });
+
+  console.log(footerData?.data[0]?.title);
   return (
-    <section className="bg-[#000000] text-[#A9A9A9] border-t-[2px] border-[#A9A9A9]">
+    <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary">
       <div className="container pt-10">
         {/* footer top */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
@@ -31,7 +33,7 @@ const Footer = () => {
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px] font-[500]">
               <h2
-                className="mb-6 text-[#A9A9A9] uppercase"
+                className="mb-6 text-secondary uppercase"
                 style={{ fontSize: "20px" }}
               >
                 Need Help?
@@ -67,7 +69,7 @@ const Footer = () => {
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px] font-[500]">
               <h2
-                className="mb-6 text-[#A9A9A9] uppercase"
+                className="mb-6 text-secondary uppercase"
                 style={{ fontSize: "20px" }}
               >
                 The Company
@@ -93,7 +95,7 @@ const Footer = () => {
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px]">
               <h2
-                className="mb-6 font-semibold text-[#A9A9A9] uppercase"
+                className="mb-6 font-semibold text-secondary uppercase"
                 style={{ fontSize: "20px" }}
               >
                 Find Us On
@@ -138,11 +140,11 @@ const Footer = () => {
           {/* payment gateway */}
           <div className="md:col-span-2 pr-10">
             <Link
-              className="mb-6 font-semibold text-[#A9A9A9] uppercase"
+              className="mb-6 font-semibold text-secondary uppercase"
               style={{ fontSize: "20px" }}
               to={"/"}
             >
-              Classic It
+              Traack
             </Link>
             <p className="text-[16px] leading-5 font-[400] mt-4 tracking-tighter">
               We are provide our website all sslcommerce payment system in buy
@@ -156,8 +158,16 @@ const Footer = () => {
 
         {/* footer bottom */}
         <div className="border-t mt-5 border-bgray-400 flex flex-col md:flex-row justify-center items-center pt-5 md:pb-16 lg:pb-5 gap-3">
-          <p className="text-[16px] text-center md:text-left leading-7 font-[400]">
-            {footerData?.data[0]?.copyRight}
+          <p className="text-[15px] text-center md:text-left leading-7 font-[200]">
+            copyright © 2024 {footerData?.data[0]?.title} developed by{" "}
+            <Link
+              target="_blank"
+              to={`https://classicit.com.bd/`}
+              className="text-[#f4f6f8] underline"
+            >
+              Classic IT
+            </Link>{" "}
+            || All right reserved
           </p>
         </div>
       </div>
