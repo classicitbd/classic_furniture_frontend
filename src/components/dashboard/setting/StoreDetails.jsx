@@ -12,7 +12,6 @@ const StoreDetails = ({ refetch, initialData }) => {
     const handleDataPost = async (data) => {
         toast.error("Please wait a moment")
         const sendData = {
-            copyRight: data?.copyRight || initialData?.copyRight,
             location: data?.location || initialData?.location,
             facebook: data?.facebook || initialData?.facebook,
             instagram: data?.instagram || initialData?.instagram,
@@ -39,15 +38,7 @@ const StoreDetails = ({ refetch, initialData }) => {
         <>
 
             <form onSubmit={handleSubmit(handleDataPost)}>
-                <div className="grid gap-6 grid-cols-2">
-                    <div>
-                        <label className="font-semibold" htmlFor="copyRight">Copyright<span className="text-red-500"> if need</span> </label>
-                        <input defaultValue={initialData?.copyRight} {...register("copyRight")} id="copyRight" type="text" className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl" />
-                    </div>
-                    <div>
-                        <label className="font-semibold" htmlFor="location">Store Loaction<span className="text-red-500"> if need</span> </label>
-                        <input defaultValue={initialData?.location} {...register("location")} id="location" type="text" className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl" />
-                    </div>
+                <div className="grid gap-6 grid-cols-2 md:grid-cols-3">
                     <div>
                         <label className="font-semibold" htmlFor="inside_dhaka">Delivery Inside Dhaka<span className="text-red-500"> if need</span> </label>
                         <input defaultValue={initialData?.inside_dhaka} {...register("inside_dhaka")} id="inside_dhaka" type="number" className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl" />
@@ -56,8 +47,10 @@ const StoreDetails = ({ refetch, initialData }) => {
                         <label className="font-semibold" htmlFor="outside_dhaka">Delivery Outside Dhaka<span className="text-red-500"> if need</span> </label>
                         <input defaultValue={initialData?.outside_dhaka} {...register("outside_dhaka")} id="inside_dhaka" type="number" className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl" />
                     </div>
-                </div>
-                <div className="grid gap-6 md:grid-cols-3 mt-4">
+                    <div>
+                        <label className="font-semibold" htmlFor="location">Store Loaction<span className="text-red-500"> if need</span> </label>
+                        <input defaultValue={initialData?.location} {...register("location")} id="location" type="text" className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl" />
+                    </div>
                     <div>
                         <label className="font-semibold" htmlFor="facebook">Facebook<span className="text-red-500"> if need</span> </label>
                         <input defaultValue={initialData?.facebook} {...register("facebook")} id="facebook" type="text" className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl" />
