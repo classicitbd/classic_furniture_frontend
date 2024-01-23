@@ -3,7 +3,6 @@ import { CiTrash } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 
-import { getUserInfo } from "../../../service/Auth.service";
 import { Link } from "react-router-dom";
 import UserInfo from "./UserInfo";
 import Recipient from "./Recipient";
@@ -31,9 +30,8 @@ const CheckoutPage = () => {
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
   const [addressUpdate, setAddressUpdate] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
-  const { email } = getUserInfo();
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
 
   const { data: products = [] } = useQuery({
@@ -46,9 +44,9 @@ const CheckoutPage = () => {
   }); // get All Product
 
   const { data: informations = [], refetch } = useQuery({
-    queryKey: [`/api/v1/getMe/${user?.email}`],
+    queryKey: [`/api/v1/getMe/${user?.phone}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/getMe/${user?.email}`);
+      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
       const data = await res.json();
       return data;
     },
@@ -81,7 +79,7 @@ const CheckoutPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <section className="overflow-y-auto space-y-5 order-2 md:order-1">
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
-            <UserInfo email={email} user={informations?.data} />
+            <UserInfo loading={loading} user={informations?.data} />
           </div>
           <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
             <Recipient

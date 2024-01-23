@@ -438,7 +438,7 @@ const Header = () => {
                 <div className="flex flex-col gap-y-1 bg-white">
                   <Link
                     onClick={toggleDrawer}
-                    to={`/checkout`}
+                    to={`/checkout?user=login`}
                     className="w-full text-center py-3 bg-black text-white rounded"
                   >
                     Proceed to Checkout
@@ -514,8 +514,8 @@ const Header = () => {
             setMenu("");
           }}
         > */}
-          {/* ------ category section ------ start */}
-          {/* <div className="border-r px-4 py-[5px]">
+        {/* ------ category section ------ start */}
+        {/* <div className="border-r px-4 py-[5px]">
             <ul className="flex gap-5 py-10 container">
               {category?.data?.map((category) => (
                 <li className="w-[200px]" key={category?.category?._id}>
@@ -541,7 +541,7 @@ const Header = () => {
               ))}
             </ul>
           </div> */}
-          {/* ------ category section ------ end */}
+        {/* ------ category section ------ end */}
         {/* </div> */}
       </section>
     </>

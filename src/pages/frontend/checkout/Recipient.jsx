@@ -68,7 +68,7 @@ const options = [
   // Add more cities as needed
 ];
 
-const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
+const Recipient = ({ user, refetch, addressUpdate, setAddressUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [country, setCountry] = useState("Bangladesh");
@@ -81,6 +81,15 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
     formState: { errors },
   } = useForm();
 
+  // const { data: informations = [], refetch } = useQuery({
+  //   queryKey: [`/api/v1/getMe/${user?.phone}`],
+  //   queryFn: async () => {
+  //     const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
+  //     const data = await res.json();
+  //     return data;
+  //   },
+  // }); // get USER INFO
+
   const { data: deliveryCharge = [] } = useQuery({
     queryKey: ["/api/v1/siteSetting"],
     queryFn: async () => {
@@ -90,6 +99,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
     },
   });
 
+  // console.log({ user });
   const deliveryPoint = useSelector((state) => state.cart.shippingType);
   const dispatch = useDispatch();
 
@@ -102,11 +112,13 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
       setLoading(true);
       data.city = city;
       data.country = country;
-      data.email = user?.email;
+      data.phone = user?.phone;
+      console.log(data);
       const res = await updateUser(data);
       if (res?.data?.success) {
         toast.success(res?.data?.message);
-        window.location.reload();
+        refetch();
+        // window.location.reload();
         setAddressUpdate(!addressUpdate);
       }
     } catch (error) {
@@ -208,7 +220,11 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
               id="country"
               type="text"
               placeholder="country"
-              defaultValue={user?.country ? user?.country : country}
+              defaultValue={
+                user?.country
+                  ? user?.country
+                  : country
+              }
               className="border rounded px-3 py-2 w-full"
               disabled
               {...register("country")}
@@ -269,7 +285,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
                 </td>
 
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  {user.country}
+                  {user?.country}
                 </td>
               </tr>
             </tbody>

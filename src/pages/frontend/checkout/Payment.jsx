@@ -39,7 +39,6 @@ const Payment = ({ total, user }) => {
       if (user && user?.address) {
         data = {
           userInfo: user?._id,
-          email: user?.email,
           name: user?.name,
           phone: user?.phone,
           payment_type: payBy,
@@ -55,6 +54,7 @@ const Payment = ({ total, user }) => {
       }
 
       const res = await order(data);
+      console.log({res});
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
