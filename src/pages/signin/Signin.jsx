@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -6,8 +6,10 @@ import MiniSpinner from "../../shared/loader/MiniSpinner";
 import { useSignInMutation } from "../../redux/feature/auth/authApi";
 import { setCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
+import { AuthContext } from "../../context/AuthProvider";
 
 const SignIn = () => {
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -15,6 +17,7 @@ const SignIn = () => {
     formState: { errors },
     reset,
   } = useForm();
+
   const location = useLocation();
   const form = location?.state?.from?.pathname || "/";
   const navigate = useNavigate();
@@ -28,9 +31,9 @@ const SignIn = () => {
         toast.success(res?.data?.message, {
           autoClose: 2000,
         });
-        reset();
         navigate(form, { replace: true });
         window.location.reload();
+        reset();
       } else if (res.error.status == 400) {
         toast.error(res?.error?.data?.message, {
           autoClose: 2000,
@@ -42,7 +45,7 @@ const SignIn = () => {
       setLoading(false);
     }
   };
-
+  console.log(user);
   return (
     <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
       <div className="w-full mx-3 md:w-[400px] px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">

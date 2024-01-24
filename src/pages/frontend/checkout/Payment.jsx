@@ -54,7 +54,7 @@ const Payment = ({ total, user }) => {
       }
 
       const res = await order(data);
-      console.log({res});
+      console.log({ res });
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
@@ -88,7 +88,7 @@ const Payment = ({ total, user }) => {
           Payment
         </h2>
       </div>
-      <p className="py-5 font-normal tracking-tight">BDT {total}</p>
+      <p className="py-5 font-normal tracking-tight">BDT {total}.00</p>
       <form className="space-y-5" onSubmit={handleSubmit}>
         <fieldset className="space-y-4">
           <legend className="sr-only">Delivery</legend>

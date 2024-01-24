@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }) => {
     return <BigSpinner />;
   }
 
-  if (user.phone) {
+  if (user) {
     return children;
   }
 
