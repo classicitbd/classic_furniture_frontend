@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-irregular-whitespace */
 import { useDeleteSub_CategoryMutation } from "../../../redux/feature/subCategory/subCategoryApi";
 import { toast } from "react-toastify";
 import BigSpinner from "../../../shared/loader/BigSpinner";
@@ -103,7 +101,6 @@ const SubCategoryTable = ({ refetch, isLoading, subCategoryTypes }) => {
               ))}
             </tbody>
           </table>
-                
         </div>
       ) : (
         <NoDataFound />

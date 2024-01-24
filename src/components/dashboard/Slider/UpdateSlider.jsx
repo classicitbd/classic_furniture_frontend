@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { RxCross1 } from "react-icons/rx";

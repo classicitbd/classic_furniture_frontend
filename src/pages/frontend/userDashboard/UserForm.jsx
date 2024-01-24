@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateUserMutation } from "../../../redux/feature/auth/authApi";

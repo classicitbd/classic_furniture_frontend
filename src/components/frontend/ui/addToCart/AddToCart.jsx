@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { CiTrash } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";

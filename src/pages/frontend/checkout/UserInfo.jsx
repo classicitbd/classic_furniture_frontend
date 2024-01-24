@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // import react icons
 import { CiUser } from "react-icons/ci";
 import { SlPhone } from "react-icons/sl";

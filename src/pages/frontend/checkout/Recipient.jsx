@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // import react icons
 import { CiLocationOn } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";

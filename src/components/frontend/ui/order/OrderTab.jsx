@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { BASE_URL } from "../../../../utils/baseURL";

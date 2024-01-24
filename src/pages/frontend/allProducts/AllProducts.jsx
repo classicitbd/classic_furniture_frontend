@@ -1,4 +1,3 @@
-/* eslint-disable no-prototype-builtins */
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 

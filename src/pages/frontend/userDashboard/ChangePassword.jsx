@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useChangePasswordMutation } from "../../../redux/feature/auth/authApi";
@@ -9,7 +8,7 @@ const ChangePassword = ({ user, setActive }) => {
   const [loading, setLoading] = useState(false);
 
   const [changePassword, { isLoading }] = useChangePasswordMutation();
-  
+
   const {
     register,
     handleSubmit,

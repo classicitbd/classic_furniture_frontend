@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // import react icons
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,7 +15,7 @@ const Payment = ({ user, subTotal }) => {
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
   const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
-  
+
   const deliveryCharge = parseInt(shippingCharge);
   const total = subTotal + deliveryCharge;
 
