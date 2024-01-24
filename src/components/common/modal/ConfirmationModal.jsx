@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-
 const ConfirmationModal = ({ isOpen, onClose, children }) => {
   const modalClasses = isOpen ? "block" : "hidden";
 
@@ -14,10 +11,7 @@ const ConfirmationModal = ({ isOpen, onClose, children }) => {
           ></div>
         </div>
 
-        <span
-          className="hidden sm:inline-block"
-          aria-hidden="true"
-        >
+        <span className="hidden sm:inline-block" aria-hidden="true">
           &#8203;
         </span>
 

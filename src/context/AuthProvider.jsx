@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { getCookie } from "../utils/cookie-storage";
 import { authKey } from "../constants/storageKey";
@@ -9,7 +8,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     const token = getCookie(authKey);
     if (token) {

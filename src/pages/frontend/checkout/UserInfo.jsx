@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // import react icons
 import { CiUser } from "react-icons/ci";
 import { SlPhone } from "react-icons/sl";
@@ -11,18 +10,27 @@ import CheckoutVerify from "./CheckoutVerify";
 import BigSpinner from "../../../shared/loader/BigSpinner";
 import CheckoutForgotPassword from "./CheckoutForgotPassword";
 import CheckoutChangePassword from "./ChecoutChangePassword";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
 
 const UserInfo = ({ user, loading }) => {
   const path = useLocation();
   const phone = getPhoneNumber(path?.search);
   const userData = getUserQuery(path?.search);
 
-  console.log(userData);
+  const { data: informations = [], refetch } = useQuery({
+    queryKey: [`/api/v1/getMe/${user?.phone}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get USER INFO
   useEffect(() => {}, [path]);
   if (loading) {
     return <BigSpinner />;
   }
-  console.log(user);
+
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">
@@ -33,6 +41,7 @@ const UserInfo = ({ user, loading }) => {
           Account
         </h2>
       </div>
+
       {user && (
         <div>
           <p className="py-5 font-semibold tracking-tight">My Details</p>
@@ -44,7 +53,7 @@ const UserInfo = ({ user, loading }) => {
                     <CiUser />
                   </td>
                   <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                    {user?.name}
+                    {informations?.data?.name}
                   </td>
                 </tr>
 
@@ -54,7 +63,9 @@ const UserInfo = ({ user, loading }) => {
                   </td>
 
                   <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                    {user?.phone ? user?.phone : "N/A"}
+                    {informations?.data?.phone
+                      ? informations?.data?.phone
+                      : "N/A"}
                   </td>
                 </tr>
               </tbody>
@@ -62,9 +73,10 @@ const UserInfo = ({ user, loading }) => {
           </div>
         </div>
       )}
+
       {!user && userData === "login" && (
         <div>
-          <CheckoutLogin />
+          <CheckoutLogin refetch={refetch} />
           <Link
             to={`/checkout?user=signup`}
             // onClick={() => setUserPosition("create-user")}
@@ -74,6 +86,7 @@ const UserInfo = ({ user, loading }) => {
           </Link>
         </div>
       )}
+
       {userData === "signup" && (
         <div>
           <CheckoutSignup />
@@ -92,11 +105,13 @@ const UserInfo = ({ user, loading }) => {
           <CheckoutVerify />
         </div>
       )}
+
       {userData === "forgot-password" && (
         <div>
           <CheckoutForgotPassword />
         </div>
       )}
+
       {userData === "change-password" && (
         <div>
           <CheckoutChangePassword />

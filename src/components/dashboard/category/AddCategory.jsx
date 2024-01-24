@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-irregular-whitespace */
 import { useForm } from 'react-hook-form';
 import BigSpinner from '../../../shared/loader/BigSpinner'
 import { toast } from 'react-toastify';

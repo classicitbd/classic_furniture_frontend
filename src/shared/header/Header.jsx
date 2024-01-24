@@ -40,21 +40,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const isUser = isLoggedin();
 
-  // const { data: category = [] } = useQuery({
-  //   queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
-  //   queryFn: async () => {
-  //     if (menu !== "") {
-  //       const res = await fetch(`${BASE_URL}/menu/${menu}`);
-  //       const data = await res.json();
-  //       return data;
-  //     } else {
-  //       // Return a default value when menu is empty
-  //       return { data: [] };
-  //     }
-  //   },
-  //   suspense: false,
-  // }); // get category and sub category
-
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
     queryFn: async () => {
@@ -66,8 +51,8 @@ const Header = () => {
 
   const handleLogOut = () => {
     eraseCookie(authKey);
-    navigate("/");
     window.location.reload();
+    navigate("/");
   };
 
   const openModal = (product) => {
@@ -110,14 +95,13 @@ const Header = () => {
     };
   }, [isDrawerOpen]);
 
-  console.log();
   return (
     <>
       <section className="bg-primaryColor text-[#fff] py-5 border-b border-bgray-700">
         {/* ------ header top section ------ start */}
 
         <div className="shadow-md">
-          <div className="grid grid-cols-3 px-10 relative">
+          <div className="grid grid-cols-3 px-2 md:px-10 relative">
             {/* ------ header left side ------ start */}
             <div className="flex gap-10 items-center">
               <div className={`block md:hidden font-bold text-2xl h-[46px]`}>
@@ -192,13 +176,16 @@ const Header = () => {
 
             <div className="flex items-center justify-end gap-4">
               <div
-                className={`transition-all duration-500 ease-in-out absolute ${
+                className={`transition-all duration-500 ease-in-out absolute z-40 ${
                   isSearchFieldOpen
-                    ? "top-[5px] right-[210px] md:right-[260px]"
-                    : "-top-32 right-[210px] md:right-[260px]"
+                    ? "top-[50px] md:top-[5px] right-10 md:right-[260px]"
+                    : "-top-32 right-10 md:right-[260px]"
                 }`}
               >
-                <FormSearch />
+                <FormSearch
+                  setSearchFieldOpen={setSearchFieldOpen}
+                  isSearchFieldOpen={isSearchFieldOpen}
+                />
               </div>
               <button
                 onClick={() => setSearchFieldOpen(!isSearchFieldOpen)}

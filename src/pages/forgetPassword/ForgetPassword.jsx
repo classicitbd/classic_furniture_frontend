@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "react-phone-input-2/lib/style.css";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../shared/loader/MiniSpinner";
@@ -18,15 +18,19 @@ const ForgetPassword = () => {
 
   const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
 
+  const navigate = useNavigate();
+
   const handleForgetPassword = async (data) => {
     try {
       setLoading(true);
       const res = await forgetPassword(data);
+      console.log(res);
       if (res?.data?.success) {
         toast.success(res?.data?.message, {
           autoClose: 2000,
         });
-        setToLocalStorage("reset-email", data?.email);
+        setToLocalStorage("reset-phone", res?.data?.data?.phone);
+        navigate("/reset-password");
         reset();
       } else if (res?.error?.status === 400) {
         toast.error(res?.error?.data?.message, {
@@ -41,7 +45,7 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
+    <div className="flex justify-center items-center md:min-h-screen py-10">
       <div className="w-full mx-3 md:w-96 px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
           Reset Password
@@ -58,8 +62,10 @@ const ForgetPassword = () => {
             <input
               id="phone"
               type="text"
+              maxLength={11}
+              minLength={11}
               placeholder="Enter your phone number"
-              className="border rounded px-3 p-1 w-full max-w-xs"
+              className="border rounded px-3 p-2 w-full max-w-xs"
               {...register("phone", { required: "Phone Number is required" })}
             />
             {errors.phone && (

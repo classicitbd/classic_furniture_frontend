@@ -48,7 +48,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen py-10">
       <div className="w-full mx-3 md:w-[400px] px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
           Create a New Account
@@ -70,22 +70,6 @@ const SignUp = () => {
               <p className="text-red-600"> {errors.name.message}</p>
             )}
           </div>
-          {/* <div>
-            <label htmlFor="phone" className="label">
-              <span className="label-text">Phone Number</span>
-            </label>
-            <PhoneInput
-              country={"bd"}
-              inputProps={{
-                name: "phone",
-                required: true,
-                autoFocus: true,
-              }}
-              disableDropdown={true}
-              onChange={(value) => setPhone(value)}
-            />
-            <p className="text-red-600"> {phoneError}</p>
-          </div> */}
           <div className="w-full">
             <label htmlFor="phone" className="label">
               <span className="label-text">Phone Number</span>
@@ -93,6 +77,8 @@ const SignUp = () => {
             <input
               id="phone"
               type="text"
+              minLength={11}
+              maxLength={11}
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
               {...register("phone", { required: "Phone number is required" })}

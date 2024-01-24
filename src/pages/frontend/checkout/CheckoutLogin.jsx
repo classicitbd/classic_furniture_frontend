@@ -7,7 +7,7 @@ import { setCookie } from "../../../utils/cookie-storage";
 import { authKey } from "../../../constants/storageKey";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
-const CheckoutLogin = () => {
+const CheckoutLogin = ({ refetch }) => {
   const [loading, setLoading] = useState(false);
 
   const {
@@ -33,12 +33,13 @@ const CheckoutLogin = () => {
       const res = await signIn(data);
       if (res?.data?.success) {
         setCookie(authKey, res?.data?.data?.token);
-        navigate("/checkout?user=info");
         toast.success(res?.data?.message, {
           autoClose: 2000,
         });
-        reset();
         window.location.reload();
+        reset();
+        refetch();
+        navigate("/checkout?user=info");
       } else if (res.error.status == 400) {
         toast.error(res?.error?.data?.message, {
           autoClose: 2000,

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { BASE_URL } from "../../utils/baseURL";

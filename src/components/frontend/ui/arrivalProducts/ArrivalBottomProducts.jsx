@@ -26,7 +26,7 @@ const ArrivalBottomProducts = () => {
     },
   }); // get All Product
   return (
-    <div className="px-[5px] lg:px-[50px] pb-[20px] pt-[5px]">
+    <div className="px-[5px] lg:px-[10px] pb-[20px] pt-[5px]">
       <Swiper
         modules={[Navigation, Scrollbar, A11y, Keyboard, Parallax]}
         slidesPerView={1}

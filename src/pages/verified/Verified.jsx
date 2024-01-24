@@ -12,26 +12,26 @@ import MiniSpinner from "../../shared/loader/MiniSpinner";
 const Verified = () => {
   const [loading, setLoading] = useState(false);
   const [timerCount, setTimer] = useState(60);
-  const [OTPinput, setOTPinput] = useState(["0", "0", "0", "0"]);
+  const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
   const path = useLocation();
   const { handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
-  const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
+  const [otpVerify, { isLoading }] = useOtpVerifyMutation();
   const [resendOtp] = useResendOtpMutation();
 
   const phone = getPhoneNumber(path?.search);
+
   const handleVerify = async () => {
     try {
       setLoading(true);
       const otp = OTPinput.join("");
-
       const data = {
         phone,
         otp,
       };
-      const res = await otpVeriy(data);
+      const res = await otpVerify(data);
       if (res?.data?.success) {
         toast.success(res?.data?.message, {
           autoClose: 1,
@@ -62,6 +62,24 @@ const Verified = () => {
       }
     } catch (error) {
       console.error("resend otp error", error);
+    }
+  };
+
+  const handleInputChange = (index, value) => {
+    const newOTPinput = [...OTPinput];
+    newOTPinput[index] = value;
+    setOTPinput(newOTPinput);
+
+    // Automatically move to the next input field if the current field is not the last one
+    if (index < newOTPinput.length - 1 && value !== "") {
+      document.getElementById(`otpInput-${index + 1}`).focus();
+    }
+  };
+
+  const handleInputKeyDown = (index, e) => {
+    // Move to the previous input field on backspace if the current field is empty
+    if (e.key === "Backspace" && index > 0 && OTPinput[index] === "") {
+      document.getElementById(`otpInput-${index - 1}`).focus();
     }
   };
 
@@ -96,18 +114,16 @@ const Verified = () => {
               <div className="flex flex-col space-y-16">
                 <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
                   {Array.from({ length: 4 }).map((_, index) => (
-                    <div key={index} className="w-16 h-16 ">
+                    <div key={index} className="w-16 h-16">
                       <input
                         maxLength="1"
+                        id={`otpInput-${index}`}
                         className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        name=""
-                        id=""
-                        onChange={(e) => {
-                          const newOTPinput = [...OTPinput];
-                          newOTPinput[index] = e.target.value;
-                          setOTPinput(newOTPinput);
-                        }}
+                        onChange={(e) =>
+                          handleInputChange(index, e.target.value)
+                        }
+                        onKeyDown={(e) => handleInputKeyDown(index, e)}
                       ></input>
                     </div>
                   ))}

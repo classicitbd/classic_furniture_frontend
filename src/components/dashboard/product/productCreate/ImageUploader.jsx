@@ -1,5 +1,3 @@
-/* eslint-disable no-irregular-whitespace */
-
 import axios from "axios";
 
 const CLOUDINARY_PRESET = "ml_default";

@@ -27,7 +27,7 @@ const ArrivalTopProducts = () => {
   }); // get All Product
 
   return (
-    <div className="px-[5px] lg:px-[50px] pt-[20px] pb-[5px]">
+    <div className="px-[5px] lg:px-[10px] pt-[20px] pb-[5px]">
       <div className="flex items-center justify-between py-[20px]">
         <div className="hidden lg:block"></div>
         <h2 className="text-xl md:text-2xl font-normal md:font-medium">

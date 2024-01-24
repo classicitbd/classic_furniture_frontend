@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // import react icons
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,7 +7,7 @@ import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
 import { useNavigate } from "react-router-dom";
 
-const Payment = ({ total, user }) => {
+const Payment = ({ user, subTotal }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
@@ -17,12 +16,14 @@ const Payment = ({ total, user }) => {
   const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
 
-  console.log({ shippingType });
+  const deliveryCharge = parseInt(shippingCharge);
+  const total = subTotal + deliveryCharge;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      let data = {};
+      let data;
 
       if (carts.length <= 0) {
         return toast.info("Please add to cart before buy !");
@@ -52,16 +53,14 @@ const Payment = ({ total, user }) => {
           shipping_type: shippingType,
         };
       }
-
       const res = await order(data);
-      console.log({res});
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
         } else {
           localStorage.removeItem(cartKey);
           toast.success(res?.data?.message);
-          navigate(`/payment-success/${res?.data?.transactionId}`);
+          navigate(`/payment-success/cash-on-delivery`);
           window.location.reload();
         }
       } else {
@@ -79,7 +78,7 @@ const Payment = ({ total, user }) => {
   }
 
   return (
-    <div className="px-10">
+    <div className="px-5 md:px-10">
       <div className="flex items-center gap-7">
         <p className="bg-black text-white h-8 w-8 rounded-full flex justify-center items-center font-bold">
           3
@@ -88,7 +87,7 @@ const Payment = ({ total, user }) => {
           Payment
         </h2>
       </div>
-      <p className="py-5 font-normal tracking-tight">BDT {total}</p>
+      <p className="py-5 font-normal tracking-tight">BDT {total}.00</p>
       <form className="space-y-5" onSubmit={handleSubmit}>
         <fieldset className="space-y-4">
           <legend className="sr-only">Delivery</legend>

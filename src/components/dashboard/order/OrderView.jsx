@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import { RxCross1 } from "react-icons/rx";
 import "./OrderView.css";
 
@@ -122,7 +120,9 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                           <h4>
                                             Shipping :{" "}
                                             <span>
-                                              {isViewData?.shipping_type + " " + isViewData?.shipping_price}
+                                              {isViewData?.shipping_type +
+                                                " " +
+                                                isViewData?.shipping_price}
                                             </span>
                                           </h4>
                                         </li>

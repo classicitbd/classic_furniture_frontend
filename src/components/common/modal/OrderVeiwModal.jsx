@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { RxCross1 } from "react-icons/rx";
 
 const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
@@ -18,7 +17,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
       location.reload();
     }, 10);
   };
-
+  console.log(isViewData);
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
@@ -114,12 +113,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                 </tbody>
               </table>
               <h2 className="text-xl font-semibold text-sky-500 text-end mb-3">
-                Total Price:{" "}
-                {isViewData?.order?.reduce(
-                  (prev, next) =>
-                    prev + parseInt(next.price) * parseInt(next.quantity),
-                  0
-                )}
+                Total Price : {isViewData?.totalPrice}
               </h2>
 
               <div className="text-center px-3 my-1">
