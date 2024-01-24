@@ -20,7 +20,7 @@ const UserDashboard = () => {
   }); // get USER INFO
 
   return (
-    <div className="">
+    <>
       <section className="bg-white shadow">
         <nav
           className="w-full md:w-[768px] mx-auto flex justify-center gap-6 border-b"
@@ -53,7 +53,7 @@ const UserDashboard = () => {
           </button>
         </nav>
       </section>
-      <section className="my-5">
+      <section className="my-5 px-2">
         {active === "profile" && (
           <div className="w-full md:w-[768px] mx-auto">
             <UserForm user={informations?.data} refetch={refetch} />
@@ -71,7 +71,7 @@ const UserDashboard = () => {
           </div>
         )}
       </section>
-    </div>
+    </>
   );
 };
 

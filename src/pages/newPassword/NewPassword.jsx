@@ -13,6 +13,7 @@ import {
 const NewPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [isChecked, setIsChecked] = useState(false);
   const {
     register,
@@ -27,21 +28,50 @@ const NewPassword = () => {
     setIsChecked(event.target.checked);
   };
 
+  const handleInputChange = (index, value) => {
+    const newOTPinput = [...OTPinput];
+    newOTPinput[index] = value;
+    setOTPinput(newOTPinput);
+
+    // Automatically move to the next input field if the current field is not the last one
+    if (index < newOTPinput.length - 1 && value !== "") {
+      document.getElementById(`otpInput-${index + 1}`).focus();
+    }
+  };
+
+  const handleInputKeyDown = (index, e) => {
+    // Move to the previous input field on backspace if the current field is empty
+    if (e.key === "Backspace" && index > 0 && OTPinput[index] === "") {
+      document.getElementById(`otpInput-${index - 1}`).focus();
+    }
+  };
+
   const handleSetPassword = async (data) => {
     try {
       setLoading(true);
-      const email = getFromLocalStorage("reset-email");
-      const { password, confirm_password } = data;
-      if (password !== confirm_password) {
-        setError("Does not match password!");
+      const phone = getFromLocalStorage("reset-phone");
+      const otp = OTPinput.join(""); // Make sure OTPinput is an array
+      console.log(phone);
+      if (!otp) {
+        toast.warn("Must provide OTP!");
         return;
       }
+
+      const { password, confirm_password } = data;
+      if (password !== confirm_password) {
+        setError("Passwords do not match!");
+        return;
+      }
+
       delete data.confirm_password;
-      data.email = email;
+      data.phone = phone;
+      data.otp = otp;
+
       const res = await setPassword(data);
+      console.log(res);
       if (res?.data?.success) {
-        toast.info(res?.data?.message);
-        setToLocalStorage("reset-email", "");
+        toast.success(res?.data?.message);
+        setToLocalStorage("reset-phone", "");
         navigate(`/sign-in`);
         reset();
       } else if (res?.error?.status === 400) {
@@ -53,23 +83,41 @@ const NewPassword = () => {
       setLoading(false);
     }
   };
+
   return (
-    <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen py-10">
       <div className="w-full mx-3 md:w-96 px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
           Reset Password
         </h2>
 
         <form onSubmit={handleSubmit(handleSetPassword)} className="space-y-4">
-          <div className="form-control w-full max-w-xs">
+          <p className="label text-center border-b pb-2">
+            <span className="label-text">Fill your reset OTP</span>
+          </p>
+          <div className="flex flex-row items-center justify-between mx-auto max-w-xs">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="w-12 md:w-16 h-12 md:h-16">
+                <input
+                  maxLength="1"
+                  id={`otpInput-${index}`}
+                  className="w-full h-full flex flex-col items-center justify-center text-center px-2 md:px-5 outline-none rounded-md border border-primaryColor text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-primaryColor"
+                  type="text"
+                  onChange={(e) => handleInputChange(index, e.target.value)}
+                  onKeyDown={(e) => handleInputKeyDown(index, e)}
+                ></input>
+              </div>
+            ))}
+          </div>
+          <div className="form-control w-full">
             <label htmlFor="password" className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text">New Password</span>
             </label>
             <input
               id="password"
               type={`${isChecked ? "text" : "password"}`}
               placeholder="* * * * *"
-              className="border rounded px-3 p-1 w-full max-w-xs"
+              className="border rounded px-3 p-2 w-full"
               {...register("password", {
                 required: "Password is required",
                 minLength: {
@@ -82,7 +130,7 @@ const NewPassword = () => {
               <p className="text-red-600"> {errors.password.message}</p>
             )}
           </div>
-          <div className="form-control w-full max-w-xs">
+          <div className="form-control w-full">
             <label htmlFor="confirm-password" className="label">
               <span className="label-text">Confirm Password</span>
             </label>
@@ -90,7 +138,7 @@ const NewPassword = () => {
               id="confirm-password"
               type={`${isChecked ? "text" : "password"}`}
               placeholder="* * * * *"
-              className="border rounded px-3 p-1 w-full max-w-xs"
+              className="border rounded px-3 p-2 w-full"
               {...register("confirm_password", {
                 required: "Confirm Password is required",
               })}
@@ -111,7 +159,7 @@ const NewPassword = () => {
             />
           </div>
           <button
-            className="px-10 py-2 text-white bg-green-500 w-full rounded-full"
+            className="px-10 py-2 text-textColor bg-primaryColor w-full rounded-full"
             type="submit"
           >
             {loading || isLoading ? <MiniSpinner /> : "Change Password"}
@@ -119,7 +167,7 @@ const NewPassword = () => {
         </form>
         <p className="text-[14px] mt-4">
           Already have a account?
-          <Link to="/sign-in" className="text-secondary">
+          <Link to="/sign-in" className="text-primaryColor underline">
             Sign-in
           </Link>
         </p>

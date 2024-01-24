@@ -78,7 +78,7 @@ const Payment = ({ total, user }) => {
   }
 
   return (
-    <div className="px-10">
+    <div className="px-5 md:px-10">
       <div className="flex items-center gap-7">
         <p className="bg-black text-white h-8 w-8 rounded-full flex justify-center items-center font-bold">
           3

@@ -110,7 +110,7 @@ const CheckoutChangePassword = () => {
           </div>
           <div className="form-control w-full flex flex-col">
             <label htmlFor="password" className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text">New Password</span>
             </label>
             <input
               id="password"

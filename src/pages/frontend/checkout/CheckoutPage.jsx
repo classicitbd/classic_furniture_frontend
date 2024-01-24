@@ -6,7 +6,7 @@ import { FiMinus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import UserInfo from "./UserInfo";
 import Recipient from "./Recipient";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Payment from "./Payment";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,6 +24,10 @@ import { AuthContext } from "../../../context/AuthProvider";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 
 const CheckoutPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);
   const carts = useSelector((state) => state.cart.products);
@@ -78,10 +82,10 @@ const CheckoutPage = () => {
     <div className="container py-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <section className="overflow-y-auto space-y-5 order-2 md:order-1">
-          <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
+          <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
             <UserInfo loading={loading} user={informations?.data} />
           </div>
-          <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
+          <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
             <Recipient
               user={user}
               refetch={refetch}
@@ -89,12 +93,12 @@ const CheckoutPage = () => {
               setAddressUpdate={setAddressUpdate}
             />
           </div>
-          <div className="bg-white py-[40px] px-[12px] rounded-lg shadow-md">
+          <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
             <Payment user={user} total={total} />
           </div>
         </section>
         <section className="order-1 md:order-2">
-          <div className="bg-white md:px-10 p-5 w-full md:w-3/4 mx-auto sticky top-[82px] rounded">
+          <div className="bg-white md:px-10 p-5 w-full md:w-3/4 mx-auto sticky top-[102px] rounded">
             <h2 className="text-center mb-10 tracking-normal leading-5 text-lg font-medium">
               Order Summary
             </h2>
