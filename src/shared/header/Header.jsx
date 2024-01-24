@@ -40,21 +40,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const isUser = isLoggedin();
 
-  // const { data: category = [] } = useQuery({
-  //   queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
-  //   queryFn: async () => {
-  //     if (menu !== "") {
-  //       const res = await fetch(`${BASE_URL}/menu/${menu}`);
-  //       const data = await res.json();
-  //       return data;
-  //     } else {
-  //       // Return a default value when menu is empty
-  //       return { data: [] };
-  //     }
-  //   },
-  //   suspense: false,
-  // }); // get category and sub category
-
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
     queryFn: async () => {
@@ -66,8 +51,8 @@ const Header = () => {
 
   const handleLogOut = () => {
     eraseCookie(authKey);
-    navigate("/");
     window.location.reload();
+    navigate("/");
   };
 
   const openModal = (product) => {
@@ -110,7 +95,6 @@ const Header = () => {
     };
   }, [isDrawerOpen]);
 
-  console.log();
   return (
     <>
       <section className="bg-primaryColor text-[#fff] py-5 border-b border-bgray-700">

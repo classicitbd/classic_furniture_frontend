@@ -64,6 +64,7 @@ const RecipientForm = ({
   addressUpdate,
 }) => {
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [country, setCountry] = useState("Bangladesh");
 
   const [city, setCity] = useState(userData?.city);
@@ -79,7 +80,6 @@ const RecipientForm = ({
       data.city = city;
       data.country = country;
       data.phone = userData?.phone;
-      console.log(data);
       const res = await updateUser(data);
       if (res?.data?.success) {
         toast.success(res?.data?.message, {

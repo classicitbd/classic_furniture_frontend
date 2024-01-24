@@ -11,9 +11,9 @@ const UserDashboard = () => {
   const [active, setActive] = useState("order");
 
   const { data: informations = [], refetch } = useQuery({
-    queryKey: [`/api/v1/getMe/${user?.email}`],
+    queryKey: [`/api/v1/getMe/${user?.phone}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/getMe/${user?.email}`);
+      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
       const data = await res.json();
       return data;
     },

@@ -34,7 +34,6 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
     },
   });
 
-  // console.log({ user });
   const deliveryPoint = useSelector((state) => state.cart.shippingType);
   const dispatch = useDispatch();
 
@@ -76,87 +75,6 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
         )}
       </div>
       {!user?.address || addressUpdate ? (
-        // <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-        //   <div className="form-control w-full">
-        //     <label htmlFor="address" className="label">
-        //       <span className="label-text">Address</span>
-        //       <span className="text-error-300">*</span>
-        //     </label>
-        //     <input
-        //       id="address"
-        //       type="text"
-        //       defaultValue={user?.address}
-        //       placeholder="your delivery address"
-        //       className="border rounded px-3 py-2 w-full"
-        //       {...register("address", { required: "Address is required" })}
-        //     />
-        //     {errors.address && (
-        //       <p className="text-red-600"> {errors.address.message}</p>
-        //     )}
-        //   </div>
-        //   <div className="flex items-center gap-3">
-        //     <div className="w-full">
-        //       <label htmlFor="city" className="label">
-        //         <span className="label-text">City</span>
-        //         <span className="text-error-300">* {user?.city}</span>
-        //       </label>
-        //       <Select
-        //         className="basic-single"
-        //         name="city"
-        //         options={options}
-        //         defaultValue={city}
-        //         onChange={(e) => setCity(e.value)}
-        //         required={!user?.address}
-        //       />
-        //       {errors.city && (
-        //         <p className="text-red-600"> {errors.city.message}</p>
-        //       )}
-        //     </div>
-        //     <div className="w-full">
-        //       <label htmlFor="zipcode" className="label">
-        //         <span className="label-text">Zipcode</span>
-        //       </label>
-        //       <input
-        //         id="zipcode"
-        //         type="text"
-        //         defaultValue={user?.zip_code}
-        //         placeholder="zipcode"
-        //         className="border rounded px-3 py-2 w-full"
-        //         {...register("zip_code")}
-        //       />
-        //     </div>
-        //   </div>
-        //   <div className="form-control w-full">
-        //     <label htmlFor="country" className="label">
-        //       <span className="label-text">Country</span>
-        //     </label>
-        //     <input
-        //       id="country"
-        //       type="text"
-        //       placeholder="country"
-        //       defaultValue={
-        //         user?.country
-        //           ? user?.country
-        //           : country
-        //       }
-        //       className="border rounded px-3 py-2 w-full"
-        //       disabled
-        //       {...register("country")}
-        //     />
-        //   </div>
-        //   <div className="flex justify-end">
-        //     <button
-        //       type="submit"
-        //       className="flex justify-end gap-1 text-[#549AFC] mb-5"
-        //     >
-        //       {!loading || !isLoading ? (
-        //         <span>Save</span>
-        //       ) : (
-        //         <span>loading...</span>
-        //       )}
-        //     </button>
-        //   </div>
-        // </form>
         <RecipientForm
           userData={informations?.data}
           refetch={refetch}
@@ -283,6 +201,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
           )}
         </div>
       </div>
+
       <p className="text-sm">
         For urgent delivery, please contact{" "}
         <span className="text-blue-500">+88*********16</span> (11AM-10PM) or

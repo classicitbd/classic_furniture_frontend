@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -6,11 +6,10 @@ import MiniSpinner from "../../shared/loader/MiniSpinner";
 import { useSignInMutation } from "../../redux/feature/auth/authApi";
 import { setCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
-import { AuthContext } from "../../context/AuthProvider";
 
 const SignIn = () => {
-  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -23,9 +22,11 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [signIn, { isLoading }] = useSignInMutation();
   const handleSignIn = async (data) => {
+
     try {
       setLoading(true);
       const res = await signIn(data);
+      
       if (res?.data?.success) {
         setCookie(authKey, res?.data?.data?.token);
         toast.success(res?.data?.message, {
@@ -45,7 +46,7 @@ const SignIn = () => {
       setLoading(false);
     }
   };
-  console.log(user);
+
   return (
     <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
       <div className="w-full mx-3 md:w-[400px] px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
@@ -61,6 +62,8 @@ const SignIn = () => {
             <input
               id="phone"
               type="text"
+              maxLength="11"
+              minLength="11"
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
               {...register("phone", { required: "Phone number is required" })}
