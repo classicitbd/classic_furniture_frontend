@@ -122,7 +122,7 @@ const OrderTable = () => {
     }
   }, [searchTerm]);
 
- const formatDate = (timestamp) => {
+  const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();

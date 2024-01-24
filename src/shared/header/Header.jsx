@@ -101,7 +101,7 @@ const Header = () => {
         {/* ------ header top section ------ start */}
 
         <div className="shadow-md">
-          <div className="grid grid-cols-3 px-10 relative">
+          <div className="grid grid-cols-3 px-2 md:px-10 relative">
             {/* ------ header left side ------ start */}
             <div className="flex gap-10 items-center">
               <div className={`block md:hidden font-bold text-2xl h-[46px]`}>
@@ -176,13 +176,16 @@ const Header = () => {
 
             <div className="flex items-center justify-end gap-4">
               <div
-                className={`transition-all duration-500 ease-in-out absolute ${
+                className={`transition-all duration-500 ease-in-out absolute z-40 ${
                   isSearchFieldOpen
-                    ? "top-[5px] right-[210px] md:right-[260px]"
-                    : "-top-32 right-[210px] md:right-[260px]"
+                    ? "top-[50px] md:top-[5px] right-10 md:right-[260px]"
+                    : "-top-32 right-10 md:right-[260px]"
                 }`}
               >
-                <FormSearch />
+                <FormSearch
+                  setSearchFieldOpen={setSearchFieldOpen}
+                  isSearchFieldOpen={isSearchFieldOpen}
+                />
               </div>
               <button
                 onClick={() => setSearchFieldOpen(!isSearchFieldOpen)}

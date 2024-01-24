@@ -178,6 +178,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
                       setShippingCharge(deliveryCharge?.data[0]?.inside_dhaka)
                     );
                     dispatch(setShippingType("Inside Dhaka"));
+                    toggleDropdown();
                   }}
                 >
                   Inside Dhaka
@@ -192,6 +193,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
                       setShippingCharge(deliveryCharge?.data[0]?.outside_dhaka)
                     );
                     dispatch(setShippingType("Outside Dhaka"));
+                    toggleDropdown();
                   }}
                 >
                   Outside Dhaka

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
 import { useNavigate } from "react-router-dom";
 
-const Payment = ({ total, user }) => {
+const Payment = ({ user, subTotal }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
@@ -16,12 +16,15 @@ const Payment = ({ total, user }) => {
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
   const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
+  
+  const deliveryCharge = parseInt(shippingCharge);
+  const total = subTotal + deliveryCharge;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      let data = {};
+      let data;
 
       if (carts.length <= 0) {
         return toast.info("Please add to cart before buy !");
@@ -51,16 +54,14 @@ const Payment = ({ total, user }) => {
           shipping_type: shippingType,
         };
       }
-
       const res = await order(data);
-      
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
         } else {
           localStorage.removeItem(cartKey);
           toast.success(res?.data?.message);
-          navigate(`/payment-success/${res?.data?.transactionId}`);
+          navigate(`/payment-success/cash-on-delivery`);
           window.location.reload();
         }
       } else {

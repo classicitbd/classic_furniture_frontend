@@ -19,11 +19,11 @@ const OrderTab = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${BASE_URL}/order/${user?.email}`).then((response) => {
+    axios.get(`${BASE_URL}/order/${user?.phone}`).then((response) => {
       setProducts(response?.data?.data);
       setLoading(false);
     });
-  }, [user?.email]);
+  }, [user?.phone]);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -49,6 +49,8 @@ const OrderTab = () => {
   if (loading || isLoading) {
     return <BigSpinner />;
   }
+
+  console.log("Order Data: ", products);
   return (
     <div>
       {/* ------ Order info tabs ------ start */}

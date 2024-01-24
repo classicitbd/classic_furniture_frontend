@@ -6,7 +6,6 @@ const SuccessPage = () => {
   const { tranId } = useParams();
  if (tranId) {
    localStorage.removeItem(cartKey);
-   
  }
   useEffect(() => {
    

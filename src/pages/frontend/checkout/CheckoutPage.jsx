@@ -27,7 +27,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);
   const carts = useSelector((state) => state.cart.products);
@@ -76,7 +76,7 @@ const CheckoutPage = () => {
     setModalOpen(false);
   };
   const deliveryCharge = parseInt(shippingCharge);
-  let total = subTotal + deliveryCharge;
+  const total = subTotal + deliveryCharge;
 
   return (
     <div className="container py-5">
@@ -94,7 +94,7 @@ const CheckoutPage = () => {
             />
           </div>
           <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
-            <Payment user={user} total={total} />
+            <Payment user={user} subTotal={subTotal} />
           </div>
         </section>
         <section className="order-1 md:order-2">
