@@ -5,6 +5,7 @@ import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useOrderMutation } from "../../../redux/feature/payment/paymentApi";
 import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
+import { useNavigate } from "react-router-dom";
 
 const Payment = ({ user, subTotal }) => {
   const [payBy, setPayBy] = useState("");
@@ -13,6 +14,7 @@ const Payment = ({ user, subTotal }) => {
   const [order, { isLoading, isError }] = useOrderMutation();
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
   const shippingType = useSelector((state) => state.cart.shippingType);
+  const navigate = useNavigate();
 
   const deliveryCharge = parseInt(shippingCharge);
   const total = subTotal + deliveryCharge;
@@ -23,16 +25,20 @@ const Payment = ({ user, subTotal }) => {
       setLoading(true);
       let data;
 
+      if (!user) {
+        return toast.error("Must be provide your Information !");
+      }
+
       if (carts.length <= 0) {
-        return toast.info("Please add to cart before buy !");
+        return toast.error("Please add to cart before buy !");
       }
 
       if (!payBy) {
-        return toast.info("select your payment method !");
+        return toast.error("select your payment method !");
       }
 
       if (shippingType === "select") {
-        return toast.info("Select your delivery Point !");
+        return toast.error("Select your delivery Point !");
       }
 
       if (user && user?.address) {
@@ -47,17 +53,16 @@ const Payment = ({ user, subTotal }) => {
           shipping_type: shippingType,
         };
       }
-      console.log("order data", data);
       const res = await order(data);
-      console.log("order response data", res);
+
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
         } else {
           localStorage.removeItem(cartKey);
           toast.success(res?.data?.message);
-          // navigate(`/payment-success/cash-on-delivery`);
-          // window.location.reload();
+          navigate(`/payment-success/cash-on-delivery`);
+          window.location.reload();
         }
       } else {
         setLoading(false);

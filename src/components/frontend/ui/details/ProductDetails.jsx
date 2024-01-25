@@ -41,7 +41,7 @@ const ProductDetails = ({ product }) => {
   allImages.push({ image: product?.data?.thumbnail_image });
   allImages.push({ image: product?.data?.hover_image });
 
-  console.log(product.data.product_video);
+  console.log(product);
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
       {/* ------ products details left side content ------ start */}
@@ -117,9 +117,9 @@ const ProductDetails = ({ product }) => {
             <p className="py-7 text-xl font-medium tracking-tight leading-5">
               Products Details
             </p>
-            {/* <div
-              dangerouslySetInnerHTML={{ __html: singleProduct.description }}
-            ></div> */}
+            <div
+              dangerouslySetInnerHTML={{ __html: product?.data?.description }}
+            ></div>
           </div>
           <div className="py-5 md:py-10 gap-2 items-center flex">
             <button

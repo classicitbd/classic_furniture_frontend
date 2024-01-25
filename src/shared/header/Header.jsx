@@ -40,7 +40,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const isUser = isLoggedin();
   const isUserLogin = isUserLoggedin();
-  console.log("user login", isUserLogin);
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],

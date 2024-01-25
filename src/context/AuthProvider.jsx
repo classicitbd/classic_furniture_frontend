@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
         throw new Error("Invalid response format");
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      // console.error("Error fetching user data:", error);
       handleLogout(); // Log out the user on error
     } finally {
       setLoading(false);

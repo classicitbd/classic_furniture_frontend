@@ -33,11 +33,17 @@ const Recipient = ({ addressUpdate, setAddressUpdate, user, setUser }) => {
   const { data: informations = [], refetch } = useQuery({
     queryKey: [`/api/v1/getMe/${user?.phone}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
+      // Check if user?.phone is defined before making the query
+      if (!user?.phone) {
+        // Handle the case where user?.phone is undefined or null
+        return [];
+      }
+
+      const res = await fetch(`${BASE_URL}/getMe/${user.phone}`);
       const data = await res.json();
       return data;
     },
-  }); // get USER INFO
+  });
 
   const handleVerify = async () => {
     try {
@@ -121,8 +127,6 @@ const Recipient = ({ addressUpdate, setAddressUpdate, user, setUser }) => {
     // cleanup the interval on complete
     return () => clearInterval(interval);
   }, [disable]);
-
-  console.log(user);
 
   return (
     <div className="px-5 md:px-10">

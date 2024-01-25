@@ -26,6 +26,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
   const [user, setUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);

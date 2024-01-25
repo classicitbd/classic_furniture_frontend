@@ -45,7 +45,7 @@ const RecipientForm = ({
     try {
       setLoading(true);
       const res = await orderRegUser(data);
-
+      console.log("res", res);
       if (res?.data?.success) {
         setAddressUpdate(!addressUpdate);
         setCookie(
@@ -258,14 +258,25 @@ const RecipientForm = ({
           </div>
         </div>
 
-        <div className="flex justify-end">
-          <button
-            className="px-10 py-2 w-[120px] text-textColor bg-primaryColor opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
-            type="submit"
-          >
-            {loading || isLoading ? <MiniSpinner /> : "Next"}
-          </button>
-        </div>
+        {userData ? (
+          <div className="flex justify-end">
+            <button
+              className="px-10 py-2 w-[120px] text-textColor bg-primaryColor opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
+              type="submit"
+            >
+              {loading || isLoading ? <MiniSpinner /> : "Next"}
+            </button>
+          </div>
+        ) : (
+          <div className="flex justify-end">
+            <button
+              className="px-10 py-2 w-[120px] text-textColor bg-primaryColor opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
+              type="submit"
+            >
+              {loading || isLoading ? <MiniSpinner /> : "Save"}
+            </button>
+          </div>
+        )}
       </form>
     </>
   );
