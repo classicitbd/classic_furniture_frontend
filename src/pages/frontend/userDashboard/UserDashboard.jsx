@@ -11,16 +11,16 @@ const UserDashboard = () => {
   const [active, setActive] = useState("order");
 
   const { data: informations = [], refetch } = useQuery({
-    queryKey: [`/api/v1/getMe/${user?.email}`],
+    queryKey: [`/api/v1/getMe/${user?.phone}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/getMe/${user?.email}`);
+      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
       const data = await res.json();
       return data;
     },
   }); // get USER INFO
 
   return (
-    <div className="">
+    <>
       <section className="bg-white shadow">
         <nav
           className="w-full md:w-[768px] mx-auto flex justify-center gap-6 border-b"
@@ -53,7 +53,7 @@ const UserDashboard = () => {
           </button>
         </nav>
       </section>
-      <section className="my-5">
+      <section className="my-5 px-2">
         {active === "profile" && (
           <div className="w-full md:w-[768px] mx-auto">
             <UserForm user={informations?.data} refetch={refetch} />
@@ -71,7 +71,7 @@ const UserDashboard = () => {
           </div>
         )}
       </section>
-    </div>
+    </>
   );
 };
 

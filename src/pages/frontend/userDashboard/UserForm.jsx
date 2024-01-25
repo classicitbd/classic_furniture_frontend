@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateUserMutation } from "../../../redux/feature/auth/authApi";
@@ -60,12 +59,11 @@ const options = [
 const UserForm = ({ user, refetch }) => {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [country, setCountry] = useState(user?.country);
   const [city, setCity] = useState(user?.city);
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const { register, handleSubmit, reset } = useForm();
-
-  useEffect(() => {}, [user, edit]);
 
   const onSubmit = async (data) => {
     try {
@@ -89,6 +87,8 @@ const UserForm = ({ user, refetch }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {}, [user, edit]);
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>

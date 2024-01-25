@@ -1,42 +1,43 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 import {
   useOtpVerifyMutation,
   useResendOtpMutation,
-} from "../../redux/feature/auth/authApi";
-import { getPhoneNumber } from "../../utils/get-email";
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import MiniSpinner from "../../shared/loader/MiniSpinner";
+} from "../../../redux/feature/auth/authApi";
+import { getPhoneNumber } from "../../../utils/get-email";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
-const Verified = () => {
+const CheckoutVerify = () => {
   const [loading, setLoading] = useState(false);
   const [timerCount, setTimer] = useState(60);
-  const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
+  const [OTPinput, setOTPinput] = useState(["0", "0", "0", "0"]);
   const [disable, setDisable] = useState(true);
   const path = useLocation();
   const { handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
-  const [otpVerify, { isLoading }] = useOtpVerifyMutation();
+  const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
   const [resendOtp] = useResendOtpMutation();
 
   const phone = getPhoneNumber(path?.search);
-
   const handleVerify = async () => {
     try {
       setLoading(true);
       const otp = OTPinput.join("");
+
       const data = {
         phone,
         otp,
       };
-      const res = await otpVerify(data);
+      const res = await otpVeriy(data);
       if (res?.data?.success) {
         toast.success(res?.data?.message, {
           autoClose: 1,
         });
-        navigate(`/sign-in`);
+        navigate(`/checkout?user=login`);
         reset();
       } else if (res?.error?.status === 400) {
         toast.error(res?.error?.data?.message);
@@ -65,24 +66,6 @@ const Verified = () => {
     }
   };
 
-  const handleInputChange = (index, value) => {
-    const newOTPinput = [...OTPinput];
-    newOTPinput[index] = value;
-    setOTPinput(newOTPinput);
-
-    // Automatically move to the next input field if the current field is not the last one
-    if (index < newOTPinput.length - 1 && value !== "") {
-      document.getElementById(`otpInput-${index + 1}`).focus();
-    }
-  };
-
-  const handleInputKeyDown = (index, e) => {
-    // Move to the previous input field on backspace if the current field is empty
-    if (e.key === "Backspace" && index > 0 && OTPinput[index] === "") {
-      document.getElementById(`otpInput-${index - 1}`).focus();
-    }
-  };
-
   useEffect(() => {
     let interval = setInterval(() => {
       setTimer((lastTimerCount) => {
@@ -97,8 +80,8 @@ const Verified = () => {
   }, [disable]);
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-gray-50">
-      <div className="bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-md rounded-2xl">
+    <div className="flex justify-center items-center bg-gray-50">
+      <div className="bg-white px-6 pt-10 pb-9 mx-auto w-full">
         <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
           <div className="flex flex-col items-center justify-center text-center space-y-2">
             <div className="font-semibold text-3xl">
@@ -114,16 +97,18 @@ const Verified = () => {
               <div className="flex flex-col space-y-16">
                 <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
                   {Array.from({ length: 4 }).map((_, index) => (
-                    <div key={index} className="w-16 h-16">
+                    <div key={index} className="w-16 h-16 ">
                       <input
                         maxLength="1"
-                        id={`otpInput-${index}`}
                         className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        onChange={(e) =>
-                          handleInputChange(index, e.target.value)
-                        }
-                        onKeyDown={(e) => handleInputKeyDown(index, e)}
+                        name=""
+                        id=""
+                        onChange={(e) => {
+                          const newOTPinput = [...OTPinput];
+                          newOTPinput[index] = e.target.value;
+                          setOTPinput(newOTPinput);
+                        }}
                       ></input>
                     </div>
                   ))}
@@ -163,4 +148,4 @@ const Verified = () => {
   );
 };
 
-export default Verified;
+export default CheckoutVerify;

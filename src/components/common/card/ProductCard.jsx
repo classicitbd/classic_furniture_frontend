@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 

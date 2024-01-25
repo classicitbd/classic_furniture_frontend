@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { getCookie } from "../utils/cookie-storage";
 import { authKey } from "../constants/storageKey";

@@ -1,5 +1,3 @@
-import React from "react";
-
 const RootLoader = () => {
   return (
     <div className="relative min-h-screen flex justify-center items-center">

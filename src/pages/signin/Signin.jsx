@@ -9,28 +9,32 @@ import { authKey } from "../../constants/storageKey";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
+
   const location = useLocation();
   const form = location?.state?.from?.pathname || "/";
   const navigate = useNavigate();
   const [signIn, { isLoading }] = useSignInMutation();
   const handleSignIn = async (data) => {
+
     try {
       setLoading(true);
       const res = await signIn(data);
+      
       if (res?.data?.success) {
         setCookie(authKey, res?.data?.data?.token);
         toast.success(res?.data?.message, {
           autoClose: 2000,
         });
-        reset();
         navigate(form, { replace: true });
         window.location.reload();
+        reset();
       } else if (res.error.status == 400) {
         toast.error(res?.error?.data?.message, {
           autoClose: 2000,
@@ -44,7 +48,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen py-10 bg-gray-100">
+    <div className="flex justify-center items-center md:min-h-screen py-10">
       <div className="w-full mx-3 md:w-[400px] px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
           Login
@@ -58,6 +62,8 @@ const SignIn = () => {
             <input
               id="phone"
               type="text"
+              maxLength={11}
+              minLength={11}
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
               {...register("phone", { required: "Phone number is required" })}

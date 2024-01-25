@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { CiTrash } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";
@@ -285,7 +284,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
               Continue Shipping
             </button>
             <Link
-              to={"/checkout"}
+              to={"/checkout?user=login"}
               disabled={carts?.length === 0}
               className={`py-3 px-5 text-center text-white ${
                 carts?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"

@@ -3,14 +3,14 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import "react-phone-input-2/lib/style.css";
 import { toast } from "react-toastify";
-import MiniSpinner from "../../shared/loader/MiniSpinner";
-import { useSetPasswordMutation } from "../../redux/feature/auth/authApi";
+import { useSetPasswordMutation } from "../../../redux/feature/auth/authApi";
 import {
   getFromLocalStorage,
   setToLocalStorage,
-} from "../../utils/local-storage";
+} from "../../../utils/local-storage";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
-const NewPassword = () => {
+const CheckoutChangePassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
@@ -51,7 +51,6 @@ const NewPassword = () => {
       setLoading(true);
       const phone = getFromLocalStorage("reset-phone");
       const otp = OTPinput.join(""); // Make sure OTPinput is an array
-      console.log(phone);
       if (!otp) {
         toast.warn("Must provide OTP!");
         return;
@@ -68,11 +67,11 @@ const NewPassword = () => {
       data.otp = otp;
 
       const res = await setPassword(data);
-      console.log(res);
+
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         setToLocalStorage("reset-phone", "");
-        navigate(`/sign-in`);
+        navigate(`/checkout?user=login`);
         reset();
       } else if (res?.error?.status === 400) {
         toast.error(res?.error?.data?.message);
@@ -85,23 +84,23 @@ const NewPassword = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen py-10">
-      <div className="w-full mx-3 md:w-96 px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
-        <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
-          Reset Password
+    <div className="flex justify-center items-center">
+      <div className="w-full mx-3 px-3 md:px-10 pt-5">
+        <h2 className="text-2xl text-gray-900 my-4 font-bold border-b pb-2">
+          Change Password
         </h2>
 
         <form onSubmit={handleSubmit(handleSetPassword)} className="space-y-4">
           <p className="label text-center border-b pb-2">
             <span className="label-text">Fill your reset OTP</span>
           </p>
-          <div className="flex flex-row items-center justify-between mx-auto max-w-xs">
+          <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
             {Array.from({ length: 4 }).map((_, index) => (
-              <div key={index} className="w-12 md:w-16 h-12 md:h-16">
+              <div key={index} className="w-12 h-12">
                 <input
                   maxLength="1"
                   id={`otpInput-${index}`}
-                  className="w-full h-full flex flex-col items-center justify-center text-center px-2 md:px-5 outline-none rounded-md border border-primaryColor text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-primaryColor"
+                  className="w-full h-full flex flex-col items-center justify-center text-center px-2 outline-none rounded-md border border-primaryColor text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-primaryColor"
                   type="text"
                   onChange={(e) => handleInputChange(index, e.target.value)}
                   onKeyDown={(e) => handleInputKeyDown(index, e)}
@@ -109,7 +108,7 @@ const NewPassword = () => {
               </div>
             ))}
           </div>
-          <div className="form-control w-full">
+          <div className="form-control w-full flex flex-col">
             <label htmlFor="password" className="label">
               <span className="label-text">New Password</span>
             </label>
@@ -117,7 +116,7 @@ const NewPassword = () => {
               id="password"
               type={`${isChecked ? "text" : "password"}`}
               placeholder="* * * * *"
-              className="border rounded px-3 p-2 w-full"
+              className="border rounded px-3 p-1 w-full"
               {...register("password", {
                 required: "Password is required",
                 minLength: {
@@ -130,7 +129,7 @@ const NewPassword = () => {
               <p className="text-red-600"> {errors.password.message}</p>
             )}
           </div>
-          <div className="form-control w-full">
+          <div className="w-full">
             <label htmlFor="confirm-password" className="label">
               <span className="label-text">Confirm Password</span>
             </label>
@@ -138,7 +137,7 @@ const NewPassword = () => {
               id="confirm-password"
               type={`${isChecked ? "text" : "password"}`}
               placeholder="* * * * *"
-              className="border rounded px-3 p-2 w-full"
+              className="border rounded px-3 p-1 w-full"
               {...register("confirm_password", {
                 required: "Confirm Password is required",
               })}
@@ -158,17 +157,18 @@ const NewPassword = () => {
               id="show"
             />
           </div>
-          <button
-            className="px-10 py-2 text-textColor bg-primaryColor w-full rounded-full"
-            type="submit"
-          >
-            {loading || isLoading ? <MiniSpinner /> : "Change Password"}
-          </button>
+          <div className="flex justify-end">
+            <button
+              className="px-5 py-2 w-[180px] text-textColor bg-primaryColor opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
+              type="submit"
+            >
+              {loading || isLoading ? <MiniSpinner /> : "Change Password"}
+            </button>
+          </div>
         </form>
         <p className="text-[14px] mt-4">
-          Already have a account?
-          <Link to="/sign-in" className="text-primaryColor underline">
-            Sign-in
+          <Link to="/checkout?user=login" className="text-primaryColor">
+            Back to login
           </Link>
         </p>
       </div>
@@ -176,4 +176,4 @@ const NewPassword = () => {
   );
 };
 
-export default NewPassword;
+export default CheckoutChangePassword;

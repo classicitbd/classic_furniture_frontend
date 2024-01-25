@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import MiniSpinner from "../../shared/loader/MiniSpinner";
-import { useSignUpMutation } from "../../redux/feature/auth/authApi";
+import { useSignUpMutation } from "../../../redux/feature/auth/authApi";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
-const SignUp = () => {
+const CheckoutSignup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
@@ -37,7 +37,7 @@ const SignUp = () => {
         toast.info(res?.data?.message, {
           autoClose: 2000,
         });
-        navigate(`/verify-user?phone=${res?.data?.data?.phone}`);
+        navigate(`/checkout?phone=${res?.data?.data?.phone}`);
         reset();
       }
     } catch (error) {
@@ -48,13 +48,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen py-10">
-      <div className="w-full mx-3 md:w-[400px] px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
-        <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
-          Create a New Account
-        </h2>
-
-        <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
+    <div className="w-full pt-5 pb-7">
+      <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
+        <div className="flex gap-5">
           <div className="w-full">
             <label htmlFor="name" className="label">
               <span className="label-text">Full Name</span>
@@ -77,8 +73,6 @@ const SignUp = () => {
             <input
               id="phone"
               type="text"
-              minLength={11}
-              maxLength={11}
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
               {...register("phone", { required: "Phone number is required" })}
@@ -87,21 +81,8 @@ const SignUp = () => {
               <p className="text-red-600"> {errors.phone.message}</p>
             )}
           </div>
-          {/* <div className="w-full">
-            <label htmlFor="email" className="label">
-              <span className="label-text">Email</span>
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="example@gmail.com"
-              className="border rounded px-3 py-2 w-full"
-              {...register("email", { required: "Email is required" })}
-            />
-            {errors.email && (
-              <p className="text-red-600"> {errors.email.message}</p>
-            )}
-          </div> */}
+        </div>
+        <div className="flex gap-5">
           <div className="w-full">
             <label htmlFor="password" className="label">
               <span className="label-text">Password</span>
@@ -141,32 +122,28 @@ const SignUp = () => {
             )}
             {error && <p className="text-red-600 mb-3">{error}</p>}
           </div>
-          <div className="flex flex-row-reverse justify-end gap-2">
-            <label htmlFor="show">Show Password</label>
-            <input
-              checked={isChecked}
-              onChange={handleCheckboxChange}
-              type="checkbox"
-              name="show"
-              id="show"
-            />
-          </div>
+        </div>
+        <div className="flex flex-row-reverse justify-end gap-2">
+          <label htmlFor="show">Show Password</label>
+          <input
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+            type="checkbox"
+            name="show"
+            id="show"
+          />
+        </div>
+        <div className="flex justify-end">
           <button
-            className="px-10 py-2 text-textColor bg-primaryColor w-full rounded-full"
+            className="px-10 py-2 w-[120px] text-textColor bg-primaryColor opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
             type="submit"
           >
-            {loading || isLoading ? <MiniSpinner /> : "SignUp"}
+            {loading || isLoading ? <MiniSpinner /> : "Next"}
           </button>
-        </form>
-        <p className="text-[14px] mt-4">
-          Already have a account?
-          <Link to="/sign-in" className="text-primaryColor underline">
-            Sign-in
-          </Link>
-        </p>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };
 
-export default SignUp;
+export default CheckoutSignup;

@@ -1,10 +1,36 @@
-/* eslint-disable react/prop-types */
 // import react icons
 import { CiUser } from "react-icons/ci";
 import { SlPhone } from "react-icons/sl";
-import { AiOutlineMail } from "react-icons/ai";
+import CheckoutLogin from "./CheckoutLogin";
+import { useEffect } from "react";
+import CheckoutSignup from "./CheckoutSignup";
+import { Link, useLocation } from "react-router-dom";
+import { getPhoneNumber, getUserQuery } from "../../../utils/get-email";
+import CheckoutVerify from "./CheckoutVerify";
+import BigSpinner from "../../../shared/loader/BigSpinner";
+import CheckoutForgotPassword from "./CheckoutForgotPassword";
+import CheckoutChangePassword from "./ChecoutChangePassword";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
 
-const UserInfo = ({ user }) => {
+const UserInfo = ({ user, loading }) => {
+  const path = useLocation();
+  const phone = getPhoneNumber(path?.search);
+  const userData = getUserQuery(path?.search);
+
+  const { data: informations = [], refetch } = useQuery({
+    queryKey: [`/api/v1/getMe/${user?.phone}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get USER INFO
+  useEffect(() => {}, [path]);
+  if (loading) {
+    return <BigSpinner />;
+  }
+
   return (
     <div className="px-10">
       <div className="flex items-center gap-7">
@@ -15,6 +41,7 @@ const UserInfo = ({ user }) => {
           Account
         </h2>
       </div>
+
       {user && (
         <div>
           <p className="py-5 font-semibold tracking-tight">My Details</p>
@@ -26,7 +53,7 @@ const UserInfo = ({ user }) => {
                     <CiUser />
                   </td>
                   <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                    {user?.name}
+                    {informations?.data?.name}
                   </td>
                 </tr>
 
@@ -36,17 +63,9 @@ const UserInfo = ({ user }) => {
                   </td>
 
                   <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                    {user?.phone ? user?.phone : "N/A"}
-                  </td>
-                </tr>
-
-                <tr>
-                  <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900">
-                    <AiOutlineMail />
-                  </td>
-
-                  <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                    {user?.email}
+                    {informations?.data?.phone
+                      ? informations?.data?.phone
+                      : "N/A"}
                   </td>
                 </tr>
               </tbody>
@@ -55,68 +74,47 @@ const UserInfo = ({ user }) => {
         </div>
       )}
 
-      {!user && (
-        <div className="w-full mx-3 md:w-[400px] px-3 md:px-10 pt-5 pb-14 border rounded bg-slate-100 shadow-md">
-          <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
-            Login
-          </h2>
+      {!user && userData === "login" && (
+        <div>
+          <CheckoutLogin refetch={refetch} />
+          <Link
+            to={`/checkout?user=signup`}
+            // onClick={() => setUserPosition("create-user")}
+            className="text-primaryColor"
+          >
+            Create account?
+          </Link>
+        </div>
+      )}
 
-          <form onSubmit={handleSubmit(handleSignIn)} className="space-y-4">
-            <div className="form-control w-full">
-              <label htmlFor="phone" className="label">
-                <span className="label-text">Phone Number</span>
-              </label>
-              <input
-                id="phone"
-                type="text"
-                placeholder="Enter your phone number"
-                className="border rounded px-3 py-2 w-full"
-                {...register("phone", { required: "Phone number is required" })}
-              />
-              {errors.phone && (
-                <p className="text-red-600"> {errors?.phone?.message}</p>
-              )}
-            </div>
-            <div className="form-control w-full">
-              <label htmlFor="password" className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                id="password"
-                type="password"
-                placeholder="* * * * *"
-                className="border rounded px-3 py-2 w-full"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be 6 character",
-                  },
-                })}
-              />
-              {errors.password && (
-                <p className="text-red-600"> {errors.password.message}</p>
-              )}
-            </div>
-            <div className="text-[14px] flex justify-between">
-              {/* <p className="text-[14px] mt-4"></p> */}
-              <Link to="/sign-up" className="text-primaryColor">
-                Create account?
-              </Link>
-              <Link
-                to={"/forget-password"}
-                className="text-primaryColor underline cursor-pointer"
-              >
-                Forget Password
-              </Link>
-            </div>
-            <button
-              className="px-10 py-2 text-textColor bg-primaryColor w-full opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
-              type="submit"
-            >
-              {loading || isLoading ? <MiniSpinner /> : "Login"}
-            </button>
-          </form>
+      {userData === "signup" && (
+        <div>
+          <CheckoutSignup />
+          <Link
+            to={`/checkout?user=login`}
+            // onClick={() => setUserPosition("user-login")}
+            className="text-primaryColor"
+          >
+            Login
+          </Link>
+        </div>
+      )}
+
+      {phone && (
+        <div>
+          <CheckoutVerify />
+        </div>
+      )}
+
+      {userData === "forgot-password" && (
+        <div>
+          <CheckoutForgotPassword />
+        </div>
+      )}
+
+      {userData === "change-password" && (
+        <div>
+          <CheckoutChangePassword />
         </div>
       )}
     </div>

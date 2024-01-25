@@ -1,5 +1,4 @@
 /* eslint-disable no-unsafe-optional-chaining */
-/* eslint-disable react/prop-types */
 import {
   Autoplay,
   Keyboard,
@@ -22,6 +21,7 @@ import MaterialCareModal from "../../../common/modal/MaterialCareModal";
 import ShippingInfo from "../shippingInfo/ShippingInfo";
 import AddToCartModal from "../../../common/modal/AddToCartModal";
 import AddToCart from "../addToCart/AddToCart";
+import VideoModal from "../../../common/modal/VideoModal";
 
 const ProductDetails = ({ product }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -40,7 +40,8 @@ const ProductDetails = ({ product }) => {
   const allImages = [...product?.data?.images];
   allImages.push({ image: product?.data?.thumbnail_image });
   allImages.push({ image: product?.data?.hover_image });
-  console.log(allImages);
+
+  console.log(product.data.product_video);
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
       {/* ------ products details left side content ------ start */}
@@ -77,10 +78,10 @@ const ProductDetails = ({ product }) => {
       {/* ------ products details left side content ------ end */}
 
       {/* ------ products details right side content ------ start */}
-      <div className="md:px-10 py-5">
+      <div className="px-5 md:px-10 py-5">
         <Breadcrumb product={product?.data} />
-        <div className="md:px-4">
-          <article className="space-y-5 mt-8 border-bgray-500">
+        <div className="px-4">
+          <article className="space-y-2 md:space-y-5 mt-8 border-bgray-500">
             <h1 className="text-xl font-semibold">{product?.data?.title}</h1>
             <p className="space-x-4">
               <span
@@ -120,20 +121,31 @@ const ProductDetails = ({ product }) => {
               dangerouslySetInnerHTML={{ __html: singleProduct.description }}
             ></div> */}
           </div>
-          <div className="py-10 space-x-5">
+          <div className="py-5 md:py-10 gap-2 items-center flex">
             <button
               onClick={() => openModal("materialCare")}
-              className="underline text-xl font-medium hover:opacity-100 opacity-85 tracking-tight leading-5"
+              className="underline text-sm md:text-lg font-normal hover:opacity-100 opacity-80 tracking-tight leading-5"
             >
               Materials & Care
             </button>
             <span className="h-[12px] w-[2px] bg-bgray-500 inline-block"></span>
             <button
               onClick={() => openModal("shippingInfo")}
-              className="underline text-xl font-medium hover:opacity-100 opacity-85 tracking-tight leading-5"
+              className="underline text-sm md:text-lg font-normal hover:opacity-100 opacity-80 tracking-tight leading-5"
             >
               Shipping Info
             </button>
+            {!product.data.product_video && (
+              <span className="h-[12px] w-[2px] bg-bgray-500 inline-block"></span>
+            )}
+            {!product.data.product_video && (
+              <button
+                onClick={() => openModal("video")}
+                className="underline text-sm md:text-lg font-normal hover:opacity-100 opacity-80 tracking-tight leading-5"
+              >
+                Show Video
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -205,6 +217,45 @@ const ProductDetails = ({ product }) => {
       )}
 
       {/* ------ add to cart modal ------ end */}
+
+      {/* ------ video modal ------ start */}
+
+      {modal === "video" && (
+        <VideoModal isOpen={isModalOpen} onClose={closeModal} length={length}>
+          <div className="p-6">
+            <div className="flex justify-end">
+              <button
+                className="text-textColor font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                onClick={closeModal}
+              >
+                <IoCloseOutline className="text-2xl" />
+              </button>
+            </div>
+            {/* <AddToCart
+              sizeType={product?.data?.size_variation}
+              id={product?.data?._id}
+              product={product?.data}
+              setModal={setModal}
+            /> */}
+            <div className="relative group overflow-hidden md:col-span-3 md:row-span-2">
+              <div className="block w-full h-full">
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                >
+                  {/* <source src={product.data.product_video} type="video/mp4" /> */}
+                  <source src={"/assets/video/shoe.mp4"} type="video/mp4" />
+                  {/* Your browser does not support the video tag. */}
+                </video>
+              </div>
+            </div>
+          </div>
+        </VideoModal>
+      )}
+
+      {/* ------ video modal ------ end */}
     </section>
   );
 };

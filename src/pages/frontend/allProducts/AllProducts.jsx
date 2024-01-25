@@ -1,4 +1,3 @@
-/* eslint-disable no-prototype-builtins */
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -12,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import { GoArrowRight } from "react-icons/go";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const AllProducts = () => {
   // get to top page all products page
@@ -19,12 +19,13 @@ const AllProducts = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const [loading, setLoading] = useState(false);
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [categoryTypes, setCategoryTypes] = useState([]);
   const [subCategoryTypes, setSubCategoryTypes] = useState([]);
-  const [query, setQuery] = useState("");
+  // const [query, setQuery] = useState(null);
 
   // selected options
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -218,21 +219,34 @@ const AllProducts = () => {
       .map((key) => `${key}=${allQueryParams[key]}`)
       .join("&");
 
-    return queryString.length > 0
-      ? setQuery(`all?${queryString}`)
-      : setQuery("all");
+    // return queryString.length > 0
+    //   ? setQuery(`all?${queryString}`)
+    //   : setQuery("all");
+    setLoading(true);
+    fetch(
+      `${BASE_URL}/${queryString.length > 0 ? `all?${queryString}` : "all"}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data?.data);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+
+    setFilterDropdownOpen(false);
+    setSortDropdownOpen(false);
 
     // You can perform any other logic based on all query parameters here
   }, [queryParameters]);
 
-  useEffect(() => {
-    fetch(`${BASE_URL}/${query}`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data?.data))
-      .catch((error) => console.error(error));
-    setFilterDropdownOpen(false);
-    setSortDropdownOpen(false);
-  }, [query]);
+  // useEffect(() => {
+  //   fetch(`${BASE_URL}/${query}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setProducts(data?.data))
+  //     .catch((error) => console.error(error));
+  //   setFilterDropdownOpen(false);
+  //   setSortDropdownOpen(false);
+  // }, [query]);
 
   // unique sub category
   useEffect(() => {
@@ -832,54 +846,60 @@ const AllProducts = () => {
       </div>
 
       {/* ------ all products ------ start */}
-      {products?.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-          {products?.map((product) => (
-            <div
-              key={product?._id}
-              className="border group rounded overflow-hidden bg-[#F0F0F0]"
-            >
-              <Link to={`/products/details/${product?.slug}`}>
-                <div className="flex">
-                  <img
-                    src={product?.thumbnail_image}
-                    className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
-                    alt={product?.id}
-                  />
-                  <img
-                    src={product?.hover_image}
-                    className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
-                    alt={product?.id}
-                  />
-                </div>
-                <article className="pb-[10px]">
-                  <h2 className="text-center">
-                    {product?.title} {product?.colorId?.color}
-                  </h2>
-                  <p className="text-center py-3 text-bgray-700">
-                    {product?.colorId?.color}
-                  </p>
-                  <p>
-                    <span
-                      className={`px-4 ${
-                        product?.discount_price ? "line-through" : ""
-                      }`}
-                    >
-                      BDT {product?.price}.00
-                    </span>
-                    {product?.discount_price && (
-                      <span className="text-error-300">
-                        BDT {product?.discount_price}.00
-                      </span>
-                    )}
-                  </p>
-                </article>
-              </Link>
-            </div>
-          ))}
-        </div>
+      {loading ? (
+        <BigSpinner />
       ) : (
-        <ProductNotFound />
+        <div>
+          {products?.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+              {products?.map((product) => (
+                <div
+                  key={product?._id}
+                  className="border group rounded overflow-hidden bg-[#F0F0F0]"
+                >
+                  <Link to={`/products/details/${product?.slug}`}>
+                    <div className="flex">
+                      <img
+                        src={product?.thumbnail_image}
+                        className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
+                        alt={product?.id}
+                      />
+                      <img
+                        src={product?.hover_image}
+                        className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
+                        alt={product?.id}
+                      />
+                    </div>
+                    <article className="pb-[10px]">
+                      <h2 className="text-center">
+                        {product?.title} {product?.colorId?.color}
+                      </h2>
+                      <p className="text-center py-3 text-bgray-700">
+                        {product?.colorId?.color}
+                      </p>
+                      <p>
+                        <span
+                          className={`px-4 ${
+                            product?.discount_price ? "line-through" : ""
+                          }`}
+                        >
+                          BDT {product?.price}.00
+                        </span>
+                        {product?.discount_price && (
+                          <span className="text-error-300">
+                            BDT {product?.discount_price}.00
+                          </span>
+                        )}
+                      </p>
+                    </article>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <ProductNotFound />
+          )}
+        </div>
       )}
       {/* ------ all products ------ end */}
     </div>

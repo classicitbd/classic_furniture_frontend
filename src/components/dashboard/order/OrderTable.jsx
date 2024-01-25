@@ -1,5 +1,3 @@
-/* eslint-disable no-irregular-whitespace */
-/* eslint-disable react/prop-types */
 // import { BiSearch } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
@@ -122,7 +120,7 @@ const OrderTable = () => {
     }
   }, [searchTerm]);
 
- const formatDate = (timestamp) => {
+  const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();

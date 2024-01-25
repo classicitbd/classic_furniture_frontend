@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const FormSearch = () => {
+const FormSearch = ({ isSearchFieldOpen, setSearchFieldOpen }) => {
   const [value, setValue] = useState("");
   // const [selectedValue, setSelectedValue] = useState(null);
   const [queryParameters] = useSearchParams();
@@ -17,12 +17,13 @@ const FormSearch = () => {
     // Update the URL using navigate
     navigate(`/all?${queryParams.toString()}`);
   };
-  
+
   // const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
     handleDiscountClick(value);
     setValue("");
+    setSearchFieldOpen(!isSearchFieldOpen);
   };
 
   return (
