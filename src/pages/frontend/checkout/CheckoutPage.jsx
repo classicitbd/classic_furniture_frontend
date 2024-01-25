@@ -4,9 +4,8 @@ import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 
 import { Link } from "react-router-dom";
-import UserInfo from "./UserInfo";
 import Recipient from "./Recipient";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Payment from "./Payment";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,22 +19,20 @@ import { IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
-import { AuthContext } from "../../../context/AuthProvider";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
+import { getCookie } from "../../../utils/cookie-storage";
 
 const CheckoutPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  const [user, setUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);
   const carts = useSelector((state) => state.cart.products);
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
   const [addressUpdate, setAddressUpdate] = useState(false);
-  const { user, loading } = useContext(AuthContext);
-
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
 
   const { data: products = [] } = useQuery({
@@ -45,16 +42,8 @@ const CheckoutPage = () => {
       const data = await res.json();
       return data;
     },
+    suspense: false,
   }); // get All Product
-
-  const { data: informations = [], refetch } = useQuery({
-    queryKey: [`/api/v1/getMe/${user?.phone}`],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
-      const data = await res.json();
-      return data;
-    },
-  }); // get USER INFO
 
   const openModal = (product) => {
     setData(product);
@@ -75,26 +64,32 @@ const CheckoutPage = () => {
   const closeConfirmModal = () => {
     setModalOpen(false);
   };
+
   const deliveryCharge = parseInt(shippingCharge);
   const total = subTotal + deliveryCharge;
+
+  useEffect(() => {
+    const getData = getCookie("user");
+    if (getData) {
+      const userData = JSON.parse(getData);
+      setUser(userData);
+    }
+  }, []);
 
   return (
     <div className="container py-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <section className="overflow-y-auto space-y-5 order-2 md:order-1">
           <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
-            <UserInfo loading={loading} user={informations?.data} />
-          </div>
-          <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
             <Recipient
               user={user}
-              refetch={refetch}
+              setUser={setUser}
               addressUpdate={addressUpdate}
               setAddressUpdate={setAddressUpdate}
             />
           </div>
           <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
-            <Payment user={user} subTotal={subTotal} />
+            <Payment user={user} setUser={setUser} subTotal={subTotal} />
           </div>
         </section>
         <section className="order-1 md:order-2">

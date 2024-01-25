@@ -1,19 +1,34 @@
 // import react icons
-import { CiLocationOn } from "react-icons/ci";
+import { CiLocationOn, CiUser } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
 import { PiAddressBook } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setShippingCharge,
-  setShippingType,
-} from "../../../redux/feature/cart/cartSlice";
 import RecipientForm from "./RecipientForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { setCookie } from "../../../utils/cookie-storage";
+import { SlPhone } from "react-icons/sl";
+import VerifyModal from "../../../components/common/modal/VerifyModal";
+import { toast } from "react-toastify";
+import {
+  useOtpVerifyMutation,
+  useResendOtpMutation,
+} from "../../../redux/feature/auth/authApi";
 
-const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
-  const [isOpen, setIsOpen] = useState(false);
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
+
+const Recipient = ({ addressUpdate, setAddressUpdate, user, setUser }) => {
+  const [loading, setLoading] = useState(false);
+  const [timerCount, setTimer] = useState(60);
+  const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
+  const [disable, setDisable] = useState(true);
+  const { handleSubmit, reset } = useForm();
+
+  const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
+  const [resendOtp] = useResendOtpMutation();
+  const navigate = useNavigate();
 
   const { data: informations = [], refetch } = useQuery({
     queryKey: [`/api/v1/getMe/${user?.phone}`],
@@ -24,27 +39,96 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
     },
   }); // get USER INFO
 
-  const { data: deliveryCharge = [] } = useQuery({
-    queryKey: ["/api/v1/siteSetting"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/siteSetting`);
-      const data = res.json();
-      return data;
-    },
-  });
+  const handleVerify = async () => {
+    try {
+      setLoading(true);
+      const otp = OTPinput.join("");
+      console.log(otp);
+      if (!otp || otp.length < 4) {
+        toast.error("Must be provide OTP !");
+        return;
+      }
+      const data = {
+        phone: user?.phone,
+        otp,
+      };
+      const res = await otpVeriy(data);
+      console.log(res);
 
-  const deliveryPoint = useSelector((state) => state.cart.shippingType);
-  const dispatch = useDispatch();
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+      if (res?.data?.success) {
+        setCookie("user", JSON.stringify({ ...user, verify: true }));
+        setAddressUpdate(!addressUpdate);
+        setUser({ ...user, verify: true });
+        toast.success(res?.data?.message, {
+          autoClose: 1,
+        });
+        navigate(`/checkout`);
+        reset();
+      } else if (res?.error?.status === 400) {
+        toast.error(res?.error?.data?.message);
+      }
+    } catch (error) {
+      console.error("otp verified error", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleResend = async () => {
+    try {
+      if (disable) return;
+      const data = {
+        phone: user?.phone,
+      };
+      const res = await resendOtp(data);
+      if (res?.data?.data?.success) {
+        setDisable(true);
+        toast.info(res?.data?.data?.message);
+        setTimer(60);
+      }
+    } catch (error) {
+      console.error("resend otp error", error);
+    }
+  };
+
+  const handleInputChange = (index, value) => {
+    const newOTPinput = [...OTPinput];
+    newOTPinput[index] = value;
+    setOTPinput(newOTPinput);
+
+    // Automatically move to the next input field if the current field is not the last one
+    if (index < newOTPinput.length - 1 && value !== "") {
+      document.getElementById(`otpInput-${index + 1}`).focus();
+    }
+  };
+
+  const handleInputKeyDown = (index, e) => {
+    // Move to the previous input field on backspace if the current field is empty
+    if (e.key === "Backspace" && index > 0 && OTPinput[index] === "") {
+      document.getElementById(`otpInput-${index - 1}`).focus();
+    }
+  };
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setTimer((lastTimerCount) => {
+        lastTimerCount <= 1 && clearInterval(interval);
+        if (lastTimerCount <= 1) setDisable(false);
+        if (lastTimerCount <= 0) return lastTimerCount;
+        return lastTimerCount - 1;
+      });
+    }, 1000); // each count lasts for a second
+    // cleanup the interval on complete
+    return () => clearInterval(interval);
+  }, [disable]);
+
+  console.log(user);
 
   return (
     <div className="px-5 md:px-10">
       <div className="flex items-center gap-7">
         <p className="bg-primaryColor text-textColor h-8 w-8 rounded-full flex justify-center items-center font-bold">
-          2
+          1
         </p>
         <h2 className="text-xl font-semibold tracking-normal leading-5">
           Recipient
@@ -52,7 +136,7 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
       </div>
       <div className="flex justify-between">
         <p className="py-5 font-semibold tracking-tight">Delivery Address</p>
-        {user?.address && (
+        {user && (
           <div>
             {addressUpdate ? (
               <button
@@ -73,9 +157,10 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
           </div>
         )}
       </div>
-      {!user?.address || addressUpdate ? (
+      {!user || addressUpdate ? (
         <RecipientForm
-          userData={informations?.data}
+          setUser={setUser}
+          userData={user}
           refetch={refetch}
           setAddressUpdate={setAddressUpdate}
           addressUpdate={addressUpdate}
@@ -86,6 +171,26 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
             <tbody className="divide-y divide-gray-200">
               <tr>
                 <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
+                  <CiUser />
+                  <span>Name</span>
+                </td>
+                <td className="whitespace-nowrap px-4 py-1 text-gray-700">
+                  {user?.name}
+                </td>
+              </tr>
+
+              <tr>
+                <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
+                  <SlPhone />
+                  <span>Phone</span>
+                </td>
+
+                <td className="whitespace-nowrap px-4 py-1 text-gray-700">
+                  {user?.phone}
+                </td>
+              </tr>
+              <tr>
+                <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
                   <PiAddressBook />
                   <span> Address</span>
                 </td>
@@ -93,36 +198,14 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
                   {informations?.data?.address}
                 </td>
               </tr>
-
-              <tr>
-                <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 uppercase flex items-center gap-1">
-                  <CiLocationOn />
-                  <span> Zipcode</span>
-                </td>
-
-                <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  {informations?.data?.zip_code}
-                </td>
-              </tr>
-
               <tr>
                 <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
                   <CiLocationOn />
-                  <span>City</span>
+                  <span>Delivery Point</span>
                 </td>
 
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  {informations?.data?.city}
-                </td>
-              </tr>
-              <tr>
-                <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
-                  <CiLocationOn />
-                  <span>Country</span>
-                </td>
-
-                <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  {user?.country}
+                  {user?.deliveryPoint ? user?.deliveryPoint : "N/A"}
                 </td>
               </tr>
             </tbody>
@@ -130,85 +213,84 @@ const Recipient = ({ user, addressUpdate, setAddressUpdate }) => {
         </div>
       )}
 
-      <div className="flex justify-between mb-10">
-        <h2>Delivery Point</h2>
-        <div className="relative inline-block text-left">
-          <div>
-            <button
-              onClick={toggleDropdown}
-              className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              id="menu-button"
-              aria-expanded={isOpen}
-              aria-haspopup="true"
-            >
-              {deliveryPoint}
-              <svg
-                className={`-mr-1 h-5 w-5 text-gray-400 transform ${
-                  isOpen ? "rotate-180" : ""
-                }`}
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </div>
-          {isOpen && (
-            <div
-              className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="menu-button"
-              tabIndex="-1"
-            >
-              <div className="py-1" role="none">
-                <button
-                  className="text-gray-700 block px-4 py-2 text-sm"
-                  role="menuitem"
-                  tabIndex="-1"
-                  id="menu-item-0"
-                  onClick={() => {
-                    dispatch(
-                      setShippingCharge(deliveryCharge?.data[0]?.inside_dhaka)
-                    );
-                    dispatch(setShippingType("Inside Dhaka"));
-                    toggleDropdown();
-                  }}
-                >
-                  Inside Dhaka
-                </button>
-                <button
-                  className="text-gray-700 block px-4 py-2 text-sm"
-                  role="menuitem"
-                  tabIndex="-1"
-                  id="menu-item-1"
-                  onClick={() => {
-                    dispatch(
-                      setShippingCharge(deliveryCharge?.data[0]?.outside_dhaka)
-                    );
-                    dispatch(setShippingType("Outside Dhaka"));
-                    toggleDropdown();
-                  }}
-                >
-                  Outside Dhaka
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
       <p className="text-sm">
         For urgent delivery, please contact{" "}
         <span className="text-blue-500">+88*********16</span> (11AM-10PM) or
         reach to our social media platform{" "}
         <span className="text-blue-500">Facebook/ Instagram</span>
       </p>
+
+      {user && !user?.verify && (
+        <VerifyModal isOpen={!user?.verify}>
+          <div className="p-6">
+            <div className="w-full">
+              <div className="mx-auto flex w-full max-w-md flex-col ">
+                <div className="flex flex-col items-center justify-center text-center space-y-2 mb-5">
+                  <div className="font-semibold text-3xl">
+                    <p className="text-textColor">Phone Number Verification</p>
+                  </div>
+                  <div className="flex flex-row text-sm font-medium text-textColor">
+                    <p>
+                      We have sent a code to your Phone Number {user?.phone}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <form onSubmit={handleSubmit(handleVerify)}>
+                    <div className="flex flex-col space-y-7">
+                      <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                          <div key={index} className="w-16 h-16">
+                            <input
+                              maxLength="1"
+                              id={`otpInput-${index}`}
+                              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                              type="text"
+                              onChange={(e) =>
+                                handleInputChange(index, e.target.value)
+                              }
+                              onKeyDown={(e) => handleInputKeyDown(index, e)}
+                            ></input>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex flex-col space-y-5">
+                        <div>
+                          <button className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-3 bg-opacity-100 hover:bg-opacity-80 bg-success-300 border-none text-white text-sm shadow-sm">
+                            {loading || isLoading ? (
+                              <MiniSpinner />
+                            ) : (
+                              "Verify Account"
+                            )}
+                          </button>
+                        </div>
+
+                        <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
+                          <p>Did not receive code?</p>{" "}
+                          <a
+                            className={`flex flex-row items-center ${
+                              disable
+                                ? "text-gray-500 cursor-not-allowed"
+                                : "text-textColor cursor-pointer underline"
+                            }`}
+                            onClick={() => handleResend()}
+                          >
+                            {disable
+                              ? `Resend OTP in ${timerCount}s`
+                              : "Resend OTP"}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </VerifyModal>
+      )}
     </div>
   );
 };

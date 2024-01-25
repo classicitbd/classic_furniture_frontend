@@ -80,6 +80,16 @@ export const authApi = api.injectEndpoints({
     }),
 
     //get refeshToken
+    orderRegUser: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/orderRegUser`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+
+    //get refeshToken
     refeshToken: build.mutation({
       query: () => ({
         url: `${AUTH_URL}/refesh_token`,
@@ -120,4 +130,5 @@ export const {
   useDeleteUserMutation,
   useUpdateUserMutation,
   useChangePasswordMutation,
+  useOrderRegUserMutation,
 } = authApi;

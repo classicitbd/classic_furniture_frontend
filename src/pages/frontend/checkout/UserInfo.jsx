@@ -2,34 +2,29 @@
 import { CiUser } from "react-icons/ci";
 import { SlPhone } from "react-icons/sl";
 import CheckoutLogin from "./CheckoutLogin";
-import { useEffect } from "react";
 import CheckoutSignup from "./CheckoutSignup";
 import { Link, useLocation } from "react-router-dom";
 import { getPhoneNumber, getUserQuery } from "../../../utils/get-email";
 import CheckoutVerify from "./CheckoutVerify";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import CheckoutForgotPassword from "./CheckoutForgotPassword";
 import CheckoutChangePassword from "./ChecoutChangePassword";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 
-const UserInfo = ({ user, loading }) => {
+const UserInfo = ({ user }) => {
   const path = useLocation();
   const phone = getPhoneNumber(path?.search);
   const userData = getUserQuery(path?.search);
 
-  const { data: informations = [], refetch } = useQuery({
+  const { data: informations = [] } = useQuery({
     queryKey: [`/api/v1/getMe/${user?.phone}`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
       const data = await res.json();
       return data;
     },
+    suspense: false,
   }); // get USER INFO
-  useEffect(() => {}, [path]);
-  if (loading) {
-    return <BigSpinner />;
-  }
 
   return (
     <div className="px-10">
@@ -76,7 +71,7 @@ const UserInfo = ({ user, loading }) => {
 
       {!user && userData === "login" && (
         <div>
-          <CheckoutLogin refetch={refetch} />
+          <CheckoutLogin />
           <Link
             to={`/checkout?user=signup`}
             // onClick={() => setUserPosition("create-user")}

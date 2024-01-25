@@ -284,7 +284,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
               Continue Shipping
             </button>
             <Link
-              to={"/checkout?user=login"}
+              to={"/checkout"}
               disabled={carts?.length === 0}
               className={`py-3 px-5 text-center text-white ${
                 carts?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"

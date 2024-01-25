@@ -131,7 +131,7 @@ const CheckoutVerify = () => {
                       className={`flex flex-row items-center ${
                         disable
                           ? "text-gray-500 cursor-not-allowed"
-                          : "text-textColor cursor-pointer underline"
+                          : "text-primaryColor cursor-pointer underline"
                       }`}
                       onClick={() => handleResend()}
                     >

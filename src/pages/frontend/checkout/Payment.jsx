@@ -5,7 +5,6 @@ import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useOrderMutation } from "../../../redux/feature/payment/paymentApi";
 import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
-import { useNavigate } from "react-router-dom";
 
 const Payment = ({ user, subTotal }) => {
   const [payBy, setPayBy] = useState("");
@@ -14,7 +13,6 @@ const Payment = ({ user, subTotal }) => {
   const [order, { isLoading, isError }] = useOrderMutation();
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
   const shippingType = useSelector((state) => state.cart.shippingType);
-  const navigate = useNavigate();
 
   const deliveryCharge = parseInt(shippingCharge);
   const total = subTotal + deliveryCharge;
@@ -39,29 +37,27 @@ const Payment = ({ user, subTotal }) => {
 
       if (user && user?.address) {
         data = {
-          userInfo: user?._id,
           name: user?.name,
           phone: user?.phone,
+          address: user?.address,
           payment_type: payBy,
           order: carts,
           price: total,
-          address: user?.address,
-          city: user?.city,
-          zip_code: user?.zip_code,
-          country: user?.country,
           shipping_price: shippingCharge,
           shipping_type: shippingType,
         };
       }
+      console.log("order data", data);
       const res = await order(data);
+      console.log("order response data", res);
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
         } else {
           localStorage.removeItem(cartKey);
           toast.success(res?.data?.message);
-          navigate(`/payment-success/cash-on-delivery`);
-          window.location.reload();
+          // navigate(`/payment-success/cash-on-delivery`);
+          // window.location.reload();
         }
       } else {
         setLoading(false);
