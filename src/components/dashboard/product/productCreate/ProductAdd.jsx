@@ -23,6 +23,7 @@ const ProductAdd = () => {
   const [collection, setCollection] = useState('');
   const [style, setStyle] = useState('');
   const [feature, setFeature] = useState('');
+  const [description, setDescription] = useState('');
 
   const [menuIdForCategory, setMenuIdForCategory] = useState('');
 
