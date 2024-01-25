@@ -12,9 +12,12 @@ import { RxCross1 } from "react-icons/rx";
 import { MdDeleteForever } from "react-icons/md";
 import { AuthContext } from "../../../../context/AuthProvider";
 import videoUploader from "../../setting/videoUploader";
+import ReactQuill from "react-quill";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   const { user } = useContext(AuthContext);
+
+  const [description, setDescription] = useState(updateModalValue?.description);
 
   const [oldVariation, setOldVariation] = useState(
     updateModalValue?.size_variation
@@ -339,8 +342,8 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         lower: true,
         replacement: "-",
       }),
-      description: data?.description
-        ? data?.description
+      description: description
+        ? description
         : updateModalValue?.description,
       price: data?.price ? data?.price : updateModalValue?.price,
       discount_price: data?.discount_price
@@ -457,21 +460,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                   <label className="font-semibold" htmlFor="description">
                     Description<span className="text-red-500">*</span>
                   </label>
-                  <textarea
-                    rows={3}
-                    defaultValue={updateModalValue?.description}
-                    {...register("description", {
-                      required: "Description is required",
-                    })}
-                    id="description"
-                    type="text"
-                    className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-                  />
-                  {errors.description && (
-                    <p className="text-red-600">
-                      {errors.description?.message}
-                    </p>
-                  )}
+                  <ReactQuill className='mt-4' theme="snow" value={description} onChange={setDescription} />
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-2">

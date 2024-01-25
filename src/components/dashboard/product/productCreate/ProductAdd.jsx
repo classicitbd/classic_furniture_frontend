@@ -10,6 +10,7 @@ import slugify from "slugify";
 import { useAddProductMutation } from "../../../../redux/feature/product/productApi";
 import { AuthContext } from "../../../../context/AuthProvider";
 import videoUploader from "../../setting/videoUploader";
+import ReactQuill from "react-quill";
 
 const ProductAdd = () => {
   const { user } = useContext(AuthContext);
@@ -21,6 +22,7 @@ const ProductAdd = () => {
   const [collection, setCollection] = useState("");
   const [style, setStyle] = useState("");
   const [feature, setFeature] = useState("");
+  const [description, setDescription] = useState('');
 
   const [menuIdForCategory, setMenuIdForCategory] = useState("");
 
@@ -269,6 +271,11 @@ const ProductAdd = () => {
 
   // data post in backend
   const handleDataPost = async (data) => {
+    if(!description){
+      toast.error(
+        "Error: Please fill in the product description box."
+      );
+    }
     let product_video;
     if (data?.product_video?.[0]) {
       const videoUpload = await videoUploader(data?.product_video?.[0]);
@@ -321,7 +328,7 @@ const ProductAdd = () => {
         lower: true,
         replacement: "-",
       }),
-      description: data?.description,
+      description: description,
       price: data?.price,
       discount_price: data?.discount_price,
       size_variation: data?.size_variation?.map((item) => ({
@@ -427,19 +434,7 @@ const ProductAdd = () => {
               <label className="font-semibold" htmlFor="description">
                 Description<span className="text-red-500">*</span>
               </label>
-              <textarea
-                rows={3}
-                placeholder="Description...."
-                {...register("description", {
-                  required: "Description is required",
-                })}
-                id="description"
-                type="text"
-                className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-              />
-              {errors.description && (
-                <p className="text-red-600">{errors.description?.message}</p>
-              )}
+              <ReactQuill className='mt-4' theme="snow" value={description} onChange={setDescription} />
             </div>
 
             <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-2">
