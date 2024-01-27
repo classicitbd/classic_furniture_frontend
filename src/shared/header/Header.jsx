@@ -120,7 +120,7 @@ const Header = () => {
                 <Link to={"/"}>
                   <img
                     loading="lazy"
-                    src="/assets/images/logo/100X90.png"
+                    src="/assets/images/logo/logo.png"
                     alt="logo"
                     className="h-[46px] object-contain"
                   />
@@ -169,9 +169,9 @@ const Header = () => {
               <Link to={"/"}>
                 <img
                   loading="lazy"
-                  src="/assets/images/logo/184X39.png"
+                  src="/assets/images/logo/logo-text.png"
                   alt="logo"
-                  className="h-[35px] object-contain"
+                  className="h-[40px] object-contain"
                 />
               </Link>
             </div>
