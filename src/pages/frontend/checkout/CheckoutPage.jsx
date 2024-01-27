@@ -107,6 +107,7 @@ const CheckoutPage = () => {
                   >
                     <div className="w-[70px] h-[70px] border rounded mr-3">
                       <img
+                        loading="lazy"
                         src={product?.thumbnail_image}
                         alt={product?.title}
                         className="object-fill rounded"

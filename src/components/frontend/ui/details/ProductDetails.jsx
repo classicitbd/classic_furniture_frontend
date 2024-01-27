@@ -68,6 +68,7 @@ const ProductDetails = ({ product }) => {
             className="border w-full flex justify-center items-center"
           >
             <img
+              loading="lazy"
               className="object-fill h-full w-full"
               src={image?.image}
               alt={image}

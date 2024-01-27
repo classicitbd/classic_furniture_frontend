@@ -65,6 +65,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
             Size Guide
           </h2>
           <img
+            loading="lazy"
             src="/assets/images/shoe-size-chart.png"
             alt="size-guide-chart"
             className="w-3/4 mx-auto"

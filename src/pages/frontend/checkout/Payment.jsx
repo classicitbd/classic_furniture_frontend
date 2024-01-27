@@ -110,8 +110,9 @@ const Payment = ({ user, subTotal }) => {
               >
                 <span className="text-sm"> Pay With SSL Commerz </span>
                 <img
+                  loading="lazy"
                   src={`/assets/images/payment-gateways.png`}
-                  alt=""
+                  alt="ssl commerze"
                   className="h-[30px]"
                 />
               </label>

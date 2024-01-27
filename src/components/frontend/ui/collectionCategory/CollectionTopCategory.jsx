@@ -58,6 +58,7 @@ const CollectionTopCategory = () => {
         >
           <Link to={`/all?sub_category=${collection?.slug}`}>
             <img
+              loading="lazy"
               className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110 object-cover md:h-[200px] lg:h-[300px] 2xl:h-[400px] w-full"
               src={collection?.collection_image}
               alt={collection?.collection_name}

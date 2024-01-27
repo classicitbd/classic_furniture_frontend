@@ -109,8 +109,9 @@ const Header = () => {
               <div className={`block md:hidden font-bold text-2xl h-[46px]`}>
                 <Link to={"/"}>
                   <img
+                    loading="lazy"
                     src="/assets/images/logo/logo.png"
-                    alt=""
+                    alt="logo"
                     className="h-[46px] object-contain"
                   />
                 </Link>
@@ -118,8 +119,9 @@ const Header = () => {
               <div className={`hidden sm:block font-bold text-2xl h-[46px]`}>
                 <Link to={"/"}>
                   <img
+                    loading="lazy"
                     src="/assets/images/logo/100X90.png"
-                    alt=""
+                    alt="logo"
                     className="h-[46px] object-contain"
                   />
                 </Link>
@@ -166,8 +168,9 @@ const Header = () => {
             >
               <Link to={"/"}>
                 <img
+                  loading="lazy"
                   src="/assets/images/logo/184X39.png"
-                  alt=""
+                  alt="logo"
                   className="h-[35px] object-contain"
                 />
               </Link>
@@ -294,6 +297,7 @@ const Header = () => {
                     >
                       <div className="w-[70px] h-[70px] border rounded mr-3">
                         <img
+                          loading="lazy"
                           src={product?.thumbnail_image}
                           alt={product?.title}
                           className="object-fill rounded"

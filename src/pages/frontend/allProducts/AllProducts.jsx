@@ -860,11 +860,13 @@ const AllProducts = () => {
                   <Link to={`/products/details/${product?.slug}`}>
                     <div className="flex">
                       <img
+                        loading="lazy"
                         src={product?.thumbnail_image}
                         className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
                         alt={product?.id}
                       />
                       <img
+                        loading="lazy"
                         src={product?.hover_image}
                         className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
                         alt={product?.id}
