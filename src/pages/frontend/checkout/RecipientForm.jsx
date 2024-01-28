@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOrderRegUserMutation } from "../../../redux/feature/auth/authApi";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -11,6 +11,9 @@ import {
   setShippingType,
 } from "../../../redux/feature/cart/cartSlice";
 import { setCookie } from "../../../utils/cookie-storage";
+import Select from "react-select";
+import { districts } from "../../../data/districts";
+import { divisions } from "../../../data/divisions";
 
 const RecipientForm = ({
   userData,
@@ -18,8 +21,14 @@ const RecipientForm = ({
   setAddressUpdate,
   addressUpdate,
   setUser,
+  setDivision,
+  setDistrict,
+  district,
+  division,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [districtsData, setDistrictsData] = useState([]);
+  const [districtId, setDistrictId] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [orderRegUser, { isLoading }] = useOrderRegUserMutation();
   const deliveryPoint = useSelector((state) => state.cart.shippingType);
@@ -44,6 +53,8 @@ const RecipientForm = ({
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+      data.district = district;
+      data.division = division;
       const res = await orderRegUser(data);
       console.log("res", res);
       if (res?.data?.success) {
@@ -69,6 +80,15 @@ const RecipientForm = ({
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    if (districtId) {
+      const districtData = districts.filter(
+        (district) => district?.division_id === districtId
+      );
+      setDistrictsData(districtData);
+    }
+  }, [districtId]);
 
   return (
     <>
@@ -129,6 +149,51 @@ const RecipientForm = ({
           {errors.address && (
             <p className="text-red-600"> {errors.address.message}</p>
           )}
+        </div>
+        <div className="flex flex-col md:flex-row gap-5">
+          <div className="form-control w-full">
+            <label htmlFor="division" className="label">
+              <span className="label-text">Division</span>
+              <span className="text-error-300">*</span>
+            </label>
+            <Select
+              id="division"
+              name="division"
+              required
+              aria-label="Select a Menu"
+              options={divisions}
+              getOptionLabel={(x) => x?.name}
+              getOptionValue={(x) => x?.id}
+              onChange={(selectedOption) => {
+                setDistrictId(selectedOption?.id);
+                setDivision(selectedOption?.name);
+              }}
+            ></Select>
+            {errors.address && (
+              <p className="text-red-600"> {errors.address.message}</p>
+            )}
+          </div>
+          <div className="form-control w-full">
+            <label htmlFor="district" className="label">
+              <span className="label-text">District</span>
+              <span className="text-error-300">*</span>
+            </label>
+            <Select
+              id="district"
+              name="district"
+              required
+              aria-label="Select a district"
+              options={districtsData}
+              getOptionLabel={(x) => x?.name}
+              getOptionValue={(x) => x?.id}
+              onChange={(selectedOption) => {
+                setDistrict(selectedOption?.name);
+              }}
+            ></Select>
+            {errors.address && (
+              <p className="text-red-600"> {errors.address.message}</p>
+            )}
+          </div>
         </div>
         {/* <div className="flex items-center gap-3">
           <div className="w-full">
@@ -270,10 +335,10 @@ const RecipientForm = ({
         ) : (
           <div className="flex justify-end">
             <button
-              className="px-10 py-2 w-[120px] text-textColor bg-primaryColor opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
+              className="px-10 py-2 w-[200px] text-textColor bg-primaryColor opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
               type="submit"
             >
-              {loading || isLoading ? <MiniSpinner /> : "Save"}
+              {loading || isLoading ? <MiniSpinner /> : "Continue for Verify"}
             </button>
           </div>
         )}

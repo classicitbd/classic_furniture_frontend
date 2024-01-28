@@ -5,7 +5,7 @@ const ProductCard = ({ product, loading }) => {
   return (
     <div>
       {product || loading ? (
-        <Link to={`/products/details/${product?.slug}`}>
+        <Link to={`/${product?.slug}`}>
           <div className="flex">
             <img
               loading="lazy"

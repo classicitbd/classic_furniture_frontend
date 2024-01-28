@@ -50,6 +50,16 @@ const Header = () => {
     },
   }); // get All Product
 
+  const { data: logo = [] } = useQuery({
+    queryKey: ["socialMedia"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`);
+      const data = res.json();
+      return data;
+    },
+    suspense: false,
+  });
+
   const handleLogOut = () => {
     eraseCookie(authKey);
     eraseCookie("user");
@@ -110,7 +120,7 @@ const Header = () => {
                 <Link to={"/"}>
                   <img
                     loading="lazy"
-                    src="/assets/images/logo/logo.png"
+                    src={logo?.data[0]?.logo}
                     alt="logo"
                     className="h-[46px] object-contain"
                   />
@@ -120,7 +130,7 @@ const Header = () => {
                 <Link to={"/"}>
                   <img
                     loading="lazy"
-                    src="/assets/images/logo/logo.png"
+                    src={logo?.data[0]?.logo}
                     alt="logo"
                     className="h-[46px] object-contain"
                   />
@@ -169,9 +179,9 @@ const Header = () => {
               <Link to={"/"}>
                 <img
                   loading="lazy"
-                  src="/assets/images/logo/logo-text.png"
+                  src={logo?.data[0]?.logo_name}
                   alt="logo"
-                  className="h-[40px] object-contain"
+                  className="h-[35px] object-contain"
                 />
               </Link>
             </div>
