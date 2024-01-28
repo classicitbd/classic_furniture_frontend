@@ -132,6 +132,34 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                             <span>{isViewData?.address}</span>
                                           </h4>
                                         </li>
+                                        <li>
+                                          <h4>
+                                            Method :{" "}
+                                            <span>
+                                              {isViewData?.payment_type}
+                                            </span>
+                                          </h4>
+                                        </li>
+                                        <li>
+                                          <h4>
+                                            Division :{" "}
+                                            <span>{isViewData?.division}</span>
+                                          </h4>
+                                        </li>
+                                        <li>
+                                          <h4>
+                                            Total Include Shipping :{" "}
+                                            <span>
+                                              {isViewData?.totalPrice}
+                                            </span>
+                                          </h4>
+                                        </li>
+                                        <li>
+                                          <h4>
+                                            District :{" "}
+                                            <span>{isViewData?.district}</span>
+                                          </h4>
+                                        </li>
                                       </ul>
                                     </div>
 
@@ -140,7 +168,7 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                       style={{
                                         paddingBottom: "20px",
                                         borderTop: "1px solid #ddd",
-                                        marginTop: "80px",
+                                        marginTop: "120px",
                                         paddingTop: "20px",
                                         borderBottom: "1px solid #ddd",
                                         marginBottom: "20px",

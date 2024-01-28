@@ -13,10 +13,15 @@ const LogoVidio = ({ refetch, initialData }) => {
     toast.error("Please wait a moment");
     let video;
     let logo;
+    let logo_name;
     let favicon;
     if (data?.logo?.[0]) {
       const logoUpload = await ImageUploader(data?.logo?.[0]);
       logo = logoUpload[0];
+    }
+    if (data?.logo_name?.[0]) {
+      const logoUpload = await ImageUploader(data?.logo_name?.[0]);
+      logo_name = logoUpload[0];
     }
     if (data?.favicon?.[0]) {
       const faviconUpload = await ImageUploader(data?.favicon?.[0]);
@@ -29,6 +34,7 @@ const LogoVidio = ({ refetch, initialData }) => {
     const sendData = {
       video: video || initialData?.video,
       logo: logo || initialData?.logo,
+      logo_name: logo_name || initialData?.logo_name,
       favicon: favicon || initialData?.favicon,
       title: data?.title || initialData?.title,
       _id: initialData?._id,
@@ -62,6 +68,17 @@ const LogoVidio = ({ refetch, initialData }) => {
             <input
               {...register("logo")}
               id="logo"
+              type="file"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label className="font-semibold" htmlFor="logo_name">
+              Logo Name<span className="text-red-500"> if need</span>{" "}
+            </label>
+            <input
+              {...register("logo_name")}
+              id="logo_name"
               type="file"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />

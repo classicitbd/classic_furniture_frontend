@@ -15,7 +15,7 @@ const ProductView = ({ setIsViewOpen, isViewData }) => {
     const baseString = `Size: ${option.size}, Quantity: ${option.quantity}`;
 
     // Check if price and discount_price is not null before including it in the string
-    const priceString = option.discount_price ? `, Price: ${option.price}` : "";
+    const priceString = option.price ? `, Price: ${option.price}` : "";
 
     const discountString = option.discount_price
       ? `, Discount Price: ${option.discount_price}`
@@ -104,7 +104,7 @@ const ProductView = ({ setIsViewOpen, isViewData }) => {
               ></Select>
             </div>
           </div>
-          <p className="text-gray-400">{isViewData?.description}</p>
+          <div className="text-gray-400" dangerouslySetInnerHTML={{ __html: isViewData?.description }}></div>
         </div>
       </div>
     </>
