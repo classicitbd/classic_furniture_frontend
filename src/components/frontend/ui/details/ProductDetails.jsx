@@ -1,4 +1,3 @@
-/* eslint-disable no-unsafe-optional-chaining */
 import {
   Autoplay,
   Keyboard,
@@ -37,7 +36,7 @@ const ProductDetails = ({ product }) => {
     setModal("");
   };
 
-  const allImages = [...product?.data?.images];
+  const allImages = [...product.data.images];
   allImages.push({ image: product?.data?.thumbnail_image });
   allImages.push({ image: product?.data?.hover_image });
 
@@ -124,12 +123,6 @@ const ProductDetails = ({ product }) => {
           </div>
           <div className="py-5 md:py-10 gap-2 items-center flex">
             {!product.data.product_video && (
-              // <button
-
-              //   className="bg-primaryColor text-textColor px-4 py-2 text-sm md:text-lg font-normal opacity-100 hover:opacity-80 tracking-tight leading-5"
-              // >
-              //   Show Video
-              // </button>
               <button
                 onClick={() => openModal("video")}
                 className="relative inline-flex items-center justify-start px-4 py-1.5 overflow-hidden font-medium transition-all bg-primaryColor rounded group"

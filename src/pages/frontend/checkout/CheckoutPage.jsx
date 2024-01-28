@@ -26,7 +26,8 @@ const CheckoutPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  const [division, setDivision] = useState("");
+  const [district, setDistrict] = useState("");
   const [user, setUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);
@@ -85,12 +86,22 @@ const CheckoutPage = () => {
             <Recipient
               user={user}
               setUser={setUser}
+              setDivision={setDivision}
+              setDistrict={setDistrict}
+              district={district}
+              division={division}
               addressUpdate={addressUpdate}
               setAddressUpdate={setAddressUpdate}
             />
           </div>
           <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
-            <Payment user={user} setUser={setUser} subTotal={subTotal} />
+            <Payment
+              district={district}
+              division={division}
+              user={user}
+              setUser={setUser}
+              subTotal={subTotal}
+            />
           </div>
         </section>
         <section className="order-1 md:order-2">

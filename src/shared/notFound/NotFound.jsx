@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
 
 const NotFound = () => {
@@ -21,8 +20,8 @@ const NotFound = () => {
               Page not found
             </h1>
             <p className="mt-4 text-gray-500 dark:text-gray-400">
-              The page you are looking for doesn't exist. Here are some helpful
-              links:
+              The page you are looking for doesn&apos;t exist. Here are some
+              helpful links:
             </p>
 
             <div className="flex items-center justify-center w-full mt-6 gap-x-3 shrink-0 sm:w-auto">

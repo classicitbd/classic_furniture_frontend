@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
 import { useNavigate } from "react-router-dom";
 
-const Payment = ({ user, subTotal }) => {
+const Payment = ({ user, subTotal, district, division }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
@@ -24,7 +24,6 @@ const Payment = ({ user, subTotal }) => {
     try {
       setLoading(true);
       let data;
-
       if (!user) {
         return toast.error("Must be provide your Information !");
       }
@@ -51,6 +50,8 @@ const Payment = ({ user, subTotal }) => {
           price: total,
           shipping_price: shippingCharge,
           shipping_type: shippingType,
+          district,
+          division,
         };
       }
       const res = await order(data);

@@ -19,7 +19,16 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
-const Recipient = ({ addressUpdate, setAddressUpdate, user, setUser }) => {
+const Recipient = ({
+  addressUpdate,
+  setAddressUpdate,
+  user,
+  setUser,
+  setDivision,
+  setDistrict,
+  district,
+  division,
+}) => {
   const [loading, setLoading] = useState(false);
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
@@ -163,6 +172,10 @@ const Recipient = ({ addressUpdate, setAddressUpdate, user, setUser }) => {
       </div>
       {!user || addressUpdate ? (
         <RecipientForm
+          setDivision={setDivision}
+          setDistrict={setDistrict}
+          district={district}
+          division={division}
           setUser={setUser}
           userData={user}
           refetch={refetch}
@@ -200,6 +213,24 @@ const Recipient = ({ addressUpdate, setAddressUpdate, user, setUser }) => {
                 </td>
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
                   {informations?.data?.address}
+                </td>
+              </tr>
+              <tr>
+                <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
+                  <PiAddressBook />
+                  <span> Division</span>
+                </td>
+                <td className="whitespace-nowrap px-4 py-1 text-gray-700">
+                  {informations?.data?.division}
+                </td>
+              </tr>
+              <tr>
+                <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
+                  <PiAddressBook />
+                  <span> District</span>
+                </td>
+                <td className="whitespace-nowrap px-4 py-1 text-gray-700">
+                  {informations?.data?.district}
                 </td>
               </tr>
               <tr>
