@@ -41,7 +41,7 @@ const ProductDetails = ({ product }) => {
   allImages.push({ image: product?.data?.thumbnail_image });
   allImages.push({ image: product?.data?.hover_image });
 
-  console.log(product.data.product_video);
+  console.log(product);
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
       {/* ------ products details left side content ------ start */}
@@ -68,6 +68,7 @@ const ProductDetails = ({ product }) => {
             className="border w-full flex justify-center items-center"
           >
             <img
+              loading="lazy"
               className="object-fill h-full w-full"
               src={image?.image}
               alt={image}
@@ -117,11 +118,34 @@ const ProductDetails = ({ product }) => {
             <p className="py-7 text-xl font-medium tracking-tight leading-5">
               Products Details
             </p>
-            {/* <div
-              dangerouslySetInnerHTML={{ __html: singleProduct.description }}
-            ></div> */}
+            <div
+              dangerouslySetInnerHTML={{ __html: product?.data?.description }}
+            ></div>
           </div>
           <div className="py-5 md:py-10 gap-2 items-center flex">
+            {!product.data.product_video && (
+              // <button
+
+              //   className="bg-primaryColor text-textColor px-4 py-2 text-sm md:text-lg font-normal opacity-100 hover:opacity-80 tracking-tight leading-5"
+              // >
+              //   Show Video
+              // </button>
+              <button
+                onClick={() => openModal("video")}
+                className="relative inline-flex items-center justify-start px-4 py-1.5 overflow-hidden font-medium transition-all bg-primaryColor rounded group"
+              >
+                <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-[#F9DF7B] rounded group-hover:-mr-4 group-hover:-mt-4">
+                  <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2 bg-white"></span>
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-full transition-all duration-500 ease-in-out delay-200 -translate-x-full translate-y-full bg-primaryColor rounded-2xl group-hover:mb-12 group-hover:translate-x-0"></span>
+                <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-white">
+                  Show Video
+                </span>
+              </button>
+            )}
+            {!product.data.product_video && (
+              <span className="h-[12px] w-[2px] bg-bgray-500 inline-block"></span>
+            )}
             <button
               onClick={() => openModal("materialCare")}
               className="underline text-sm md:text-lg font-normal hover:opacity-100 opacity-80 tracking-tight leading-5"
@@ -135,17 +159,6 @@ const ProductDetails = ({ product }) => {
             >
               Shipping Info
             </button>
-            {!product.data.product_video && (
-              <span className="h-[12px] w-[2px] bg-bgray-500 inline-block"></span>
-            )}
-            {!product.data.product_video && (
-              <button
-                onClick={() => openModal("video")}
-                className="underline text-sm md:text-lg font-normal hover:opacity-100 opacity-80 tracking-tight leading-5"
-              >
-                Show Video
-              </button>
-            )}
           </div>
         </div>
       </div>

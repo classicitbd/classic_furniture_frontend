@@ -80,6 +80,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
                         <img
+                          loading="lazy"
                           src={order?.thumbnail_image}
                           alt="image"
                           className="w-20 h-20"

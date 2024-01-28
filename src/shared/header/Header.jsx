@@ -9,7 +9,7 @@ import FormSearch from "../../components/frontend/form/FormSearch";
 import ProductNotFound from "../../components/common/productNotFound/ProductNotFound";
 import { CiTrash } from "react-icons/ci";
 import { FiMinus } from "react-icons/fi";
-import { isLoggedin } from "../../service/Auth.service";
+import { isLoggedin, isUserLoggedin } from "../../service/Auth.service";
 import { eraseCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +39,7 @@ const Header = () => {
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
   const isUser = isLoggedin();
+  const isUserLogin = isUserLoggedin();
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -51,8 +52,9 @@ const Header = () => {
 
   const handleLogOut = () => {
     eraseCookie(authKey);
-    window.location.reload();
+    eraseCookie("user");
     navigate("/");
+    window.location.reload();
   };
 
   const openModal = (product) => {
@@ -107,8 +109,9 @@ const Header = () => {
               <div className={`block md:hidden font-bold text-2xl h-[46px]`}>
                 <Link to={"/"}>
                   <img
+                    loading="lazy"
                     src="/assets/images/logo/logo.png"
-                    alt=""
+                    alt="logo"
                     className="h-[46px] object-contain"
                   />
                 </Link>
@@ -116,8 +119,9 @@ const Header = () => {
               <div className={`hidden sm:block font-bold text-2xl h-[46px]`}>
                 <Link to={"/"}>
                   <img
+                    loading="lazy"
                     src="/assets/images/logo/logo.png"
-                    alt=""
+                    alt="logo"
                     className="h-[46px] object-contain"
                   />
                 </Link>
@@ -159,12 +163,15 @@ const Header = () => {
             {/* </div> */}
             {/* ------ menu bar ------ end */}
 
-            <div className={`h-[46px] justify-center hidden sm:flex`}>
+            <div
+              className={`h-[46px] items-center justify-center hidden sm:flex`}
+            >
               <Link to={"/"}>
                 <img
+                  loading="lazy"
                   src="/assets/images/logo/logo-text.png"
-                  alt=""
-                  className="h-[46px] object-contain"
+                  alt="logo"
+                  className="h-[40px] object-contain"
                 />
               </Link>
             </div>
@@ -202,7 +209,7 @@ const Header = () => {
                   {carts?.length}
                 </span>
               </button>
-              {isUser ? (
+              {isUser || isUserLogin ? (
                 <div className="relative">
                   <div className="inline-flex items-center overflow-hidden">
                     <button
@@ -290,6 +297,7 @@ const Header = () => {
                     >
                       <div className="w-[70px] h-[70px] border rounded mr-3">
                         <img
+                          loading="lazy"
                           src={product?.thumbnail_image}
                           alt={product?.title}
                           className="object-fill rounded"
@@ -425,7 +433,7 @@ const Header = () => {
                 <div className="flex flex-col gap-y-1 bg-white">
                   <Link
                     onClick={toggleDrawer}
-                    to={`/checkout?user=login`}
+                    to={`/checkout`}
                     className="w-full text-center py-3 bg-black text-white rounded"
                   >
                     Proceed to Checkout

@@ -18,6 +18,7 @@ const CollectionCategory = () => {
         <div className="relative group overflow-hidden" key={collection?._id}>
           <Link to={`/all?sub_category=${collection?.slug}`}>
             <img
+              loading="lazy"
               className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110"
               src={collection?.collection_image}
               alt={collection?.collection_name}

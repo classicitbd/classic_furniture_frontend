@@ -67,6 +67,7 @@ export default {
         sec: ["Nunito", "sans-serif"],
         extra: ["Pacifico", "cursive"],
       },
+      
       transitionDuration: {
         1200: "1200ms",
         1500: "1500ms",
@@ -79,6 +80,7 @@ export default {
         xl: "1280px",
         "2xl": "1440px", // Extra-large screens (e.g., desktops)
       },
+
       fontSize: {
         xs: "12px",
         sm: "14px",
@@ -89,6 +91,7 @@ export default {
         "3xl": "28px",
         "5xl": "48px",
       },
+
     },
   },
   plugins: [require("tailwind-scrollbar-hide"), require("tailwind-scrollbar")],

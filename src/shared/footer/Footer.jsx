@@ -48,17 +48,17 @@ const Footer = () => {
                 Store Locator
               </Link>
             </li>
-            {helpfulLinks.map((item, index) => (
+            {helpfulLinks?.map((item, index) => (
               <li
                 key={index}
                 className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1"
               >
                 <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
                 <Link
-                  to={item.path}
+                  to={item?.path}
                   className="flex flex-col text-[15px] hover:decoration-primaryColor"
                 >
-                  {item.label}
+                  {item?.label}
                 </Link>
               </li>
             ))}
@@ -74,17 +74,17 @@ const Footer = () => {
                 The Company
               </h2>
             </li>
-            {quickLinks.map((item, index) => (
+            {quickLinks?.map((item, index) => (
               <li
                 key={index}
                 className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1"
               >
                 <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
                 <Link
-                  to={item.path}
+                  to={item?.path}
                   className="flex flex-col text-[15px] hover:decoration-primaryColor"
                 >
-                  {item.label}
+                  {item?.label}
                 </Link>
               </li>
             ))}
@@ -150,7 +150,7 @@ const Footer = () => {
               any product easily. Welcome to Classic It.
             </p>
             <div>
-              <img src={sslcommerceLogo} alt="sslcommerceLogo" />
+              <img loading="lazy" src={sslcommerceLogo} alt="sslcommerceLogo" />
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@ const Footer = () => {
             copyright © 2024 {footerData?.data[0]?.title} developed by{" "}
             <Link
               target="_blank"
-              to={`https://classicit.com.bd/`}
+              to={`https://classicit.com.bd`}
               className="text-[#f4f6f8] underline"
             >
               Classic IT

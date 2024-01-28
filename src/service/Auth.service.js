@@ -27,6 +27,11 @@ export const isLoggedin = () => {
   return !!jwtoken;
 };
 
+export const isUserLoggedin = () => {
+  const user = getCookie("user");
+  return !!user;
+};
+
 export const removeUserInfo = (key) => {
   return eraseCookie(key);
 };

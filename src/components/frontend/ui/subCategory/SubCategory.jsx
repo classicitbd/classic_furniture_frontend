@@ -18,6 +18,7 @@ const SubCategory = () => {
         <div className="relative group overflow-hidden" key={subCategory?._id}>
           <Link to={`/all?sub_category=${subCategory?.slug}`}>
             <img
+              loading="lazy"
               className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110"
               src={subCategory?.sub_category_image}
               alt={subCategory?.sub_category}

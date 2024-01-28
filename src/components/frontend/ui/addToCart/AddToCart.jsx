@@ -65,6 +65,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
             Size Guide
           </h2>
           <img
+            loading="lazy"
             src="/assets/images/shoe-size-chart.png"
             alt="size-guide-chart"
             className="w-3/4 mx-auto"
@@ -284,7 +285,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
               Continue Shipping
             </button>
             <Link
-              to={"/checkout?user=login"}
+              to={"/checkout"}
               disabled={carts?.length === 0}
               className={`py-3 px-5 text-center text-white ${
                 carts?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"

@@ -25,35 +25,36 @@ const Payment = ({ user, subTotal }) => {
       setLoading(true);
       let data;
 
+      if (!user) {
+        return toast.error("Must be provide your Information !");
+      }
+
       if (carts.length <= 0) {
-        return toast.info("Please add to cart before buy !");
+        return toast.error("Please add to cart before buy !");
       }
 
       if (!payBy) {
-        return toast.info("select your payment method !");
+        return toast.error("select your payment method !");
       }
 
       if (shippingType === "select") {
-        return toast.info("Select your delivery Point !");
+        return toast.error("Select your delivery Point !");
       }
 
       if (user && user?.address) {
         data = {
-          userInfo: user?._id,
           name: user?.name,
           phone: user?.phone,
+          address: user?.address,
           payment_type: payBy,
           order: carts,
           price: total,
-          address: user?.address,
-          city: user?.city,
-          zip_code: user?.zip_code,
-          country: user?.country,
           shipping_price: shippingCharge,
           shipping_type: shippingType,
         };
       }
       const res = await order(data);
+
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
@@ -109,8 +110,9 @@ const Payment = ({ user, subTotal }) => {
               >
                 <span className="text-sm"> Pay With SSL Commerz </span>
                 <img
+                  loading="lazy"
                   src={`/assets/images/payment-gateways.png`}
-                  alt=""
+                  alt="ssl commerze"
                   className="h-[30px]"
                 />
               </label>
