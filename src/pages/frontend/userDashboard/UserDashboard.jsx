@@ -1,23 +1,31 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../context/AuthProvider";
+import { useEffect, useState } from "react";
 import UserForm from "./UserForm";
-import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../../../utils/baseURL";
 import OrderTab from "../../../components/frontend/ui/order/OrderTab";
 import ChangePassword from "./ChangePassword";
+import { getCookie } from "../../../utils/cookie-storage";
 
 const UserDashboard = () => {
-  const { user } = useContext(AuthContext);
+  const [user, setUser] = useState(null);
   const [active, setActive] = useState("order");
 
-  const { data: informations = [], refetch } = useQuery({
-    queryKey: [`/api/v1/getMe/${user?.phone}`],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
-      const data = await res.json();
-      return data;
-    },
-  }); // get USER INFO
+  // const { data: informations = [], refetch } = useQuery({
+  //   queryKey: [`/api/v1/getMe/${user?.phone}`],
+  //   queryFn: async () => {
+  //     const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
+  //     const data = await res.json();
+  //     return data;
+  //   },
+  // }); // get USER INFO
+
+  useEffect(() => {
+    const getData = getCookie("user");
+    if (getData) {
+      const userData = JSON.parse(getData);
+      setUser(userData);
+    }
+  }, []);
+
+  console.log(user);
 
   return (
     <>
@@ -55,8 +63,8 @@ const UserDashboard = () => {
       </section>
       <section className="my-5 px-2">
         {active === "profile" && (
-          <div className="w-full md:w-[768px] mx-auto">
-            <UserForm user={informations?.data} refetch={refetch} />
+          <div className="w-full md:w-[768px] mx-auto bg-textColor px-5 py-10 rounded-md">
+            <UserForm user={user} setUser={setUser} />
           </div>
         )}
         {active === "change-password" && (

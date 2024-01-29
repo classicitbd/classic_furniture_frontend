@@ -35,7 +35,6 @@ import ShippingInfoPage from "../pages/frontend/shippingInfo/ShippingInfoPage";
 import ReturnExchangePage from "../pages/frontend/returnExchangePage/ReturnExchangePage";
 import MaterialAndCarePage from "../pages/frontend/materialAndCare/MaterialAndCarePage";
 import AboutusPage from "../pages/frontend/aboutus/AboutusPage";
-import PrivateRoute from "./privateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -69,11 +68,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/user-profile",
-        element: (
-          <PrivateRoute>
-            <UserDashboard />
-          </PrivateRoute>
-        ),
+        element: <UserDashboard />,
       },
       {
         path: "/contact",

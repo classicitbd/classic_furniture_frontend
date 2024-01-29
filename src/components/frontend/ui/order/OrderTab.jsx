@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BASE_URL } from "../../../../utils/baseURL";
 import OrderViewModal from "../../../common/modal/OrderVeiwModal";
 import ProductNotFound from "../../../common/productNotFound/ProductNotFound";
@@ -7,14 +7,12 @@ import BigSpinner from "../../../../shared/loader/BigSpinner";
 import { FaCartPlus, FaMoneyBillAlt } from "react-icons/fa";
 import { GrCompliance } from "react-icons/gr";
 import { CgSandClock } from "react-icons/cg";
-import { AuthContext } from "../../../../context/AuthProvider";
 
-const OrderTab = () => {
+const OrderTab = ({ user }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isViewData, setIsViewData] = useState({});
-  const { user, loading: isLoading } = useContext(AuthContext);
 
   useEffect(() => {
     setLoading(true);
@@ -45,7 +43,7 @@ const OrderTab = () => {
     (product) => product.status === "complete"
   );
 
-  if (loading || isLoading) {
+  if (loading) {
     return <BigSpinner />;
   }
 

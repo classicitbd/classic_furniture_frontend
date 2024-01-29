@@ -57,7 +57,6 @@ const Header = () => {
       const data = res.json();
       return data;
     },
-    suspense: false,
   });
 
   const handleLogOut = () => {
