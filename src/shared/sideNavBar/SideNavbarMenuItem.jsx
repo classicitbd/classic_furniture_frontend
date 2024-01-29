@@ -6,72 +6,72 @@ const SideNavbarMenuItem = () => {
         {
             id: 1,
             text: "Dashboard",
-            link: "/dashboard",
+            link: "/istiak",
         },
         {
             id: 2,
             text: "Order",
-            link: "/dashboard/order",
+            link: "/istiak/order",
         },
         {
             id: 3,
             text: "Customer",
-            link: "/dashboard/customer",
+            link: "/istiak/customer",
         },
         {
             id: 4,
             text: "Product",
-            link: "/dashboard/product",
+            link: "/istiak/product",
         },
         {
             id: 5,
             text: "Create Product",
-            link: "/dashboard/product/create",
+            link: "/istiak/product/create",
         },
         {
             id: 5,
             text: "Slider",
-            link: "/dashboard/slider",
+            link: "/istiak/slider",
         },
         {
             id: 6,
             text: "Menu",
-            link: "/dashboard/menu",
+            link: "/istiak/menu",
         },
         {
             id: 7,
             text: "Category",
-            link: "/dashboard/category",
+            link: "/istiak/category",
         },
         {
             id: 8,
             text: "Sub Category",
-            link: "/dashboard/sub_category",
+            link: "/istiak/sub_category",
         },
         {
             id: 9,
             text: "Color",
-            link: "/dashboard/color",
+            link: "/istiak/color",
         },
         {
             id: 10,
             text: "Collection",
-            link: "/dashboard/collection",
+            link: "/istiak/collection",
         },
         {
             id: 11,
             text: "Feature",
-            link: "/dashboard/feature",
+            link: "/istiak/feature",
         },
         {
             id: 12,
             text: "Style",
-            link: "/dashboard/style",
+            link: "/istiak/style",
         },
         {
             id: 13,
             text: "Setting",
-            link: "/dashboard/setting",
+            link: "/istiak/setting",
         },
         
     ];

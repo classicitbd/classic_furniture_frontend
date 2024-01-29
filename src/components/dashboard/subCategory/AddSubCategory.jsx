@@ -201,7 +201,7 @@ const AddSubCategory = ({ refetch, isLoading }) => {
               )}
 
               {menuTypes?.data?.length === 0 ? (
-                <Link to="/dashboard/menu">
+                <Link to="/istiak/menu">
                   <button
                     type="Submit"
                     className="px-6 py-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-400"
@@ -210,7 +210,7 @@ const AddSubCategory = ({ refetch, isLoading }) => {
                   </button>
                 </Link>
               ) : categoryTypes?.data?.length === 0 ? (
-                <Link to="/dashboard/category">
+                <Link to="/istiak/category">
                   <button
                     type="Submit"
                     className="px-6 py-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-400"

@@ -9,9 +9,9 @@ const Order = () => {
             <div className="flex items-center justify-between bg-white p-4 rounded-xl">
                 <h3 className="text-[20px] font-semibold">Order List</h3>
                 <div className="flex items-center gap-2">
-                    <Link to='/dashboard'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
+                    <Link to='/istiak'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
                     <p className="font-semibold text-xl">/</p>
-                    <Link to='/dashboard/order'><p className="font-semibold">Order List</p></Link>
+                    <Link to='/istiak/order'><p className="font-semibold">Order List</p></Link>
                 </div>
             </div>
 

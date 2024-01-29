@@ -94,7 +94,7 @@ const AddCategory = ({refetch, isLoading}) => {
                     <div>
                         <h2 className="font-semibold text-[20px]">Add A Category Type: </h2>
 
-                        <form onSubmit={handleSubmit(handleDataPost)} className='flex items-center gap-2 md:gap-6 mt-3'>
+                        <form onSubmit={handleSubmit(handleDataPost)} className='grid md:grid-cols-4 grid-cols-2 items-center gap-2 md:gap-6 mt-3'>
 
                             <div>
                                 <input placeholder="Type Name" {...register("category", { required: 'Type Name is required' })} id="category" type="text" className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl" />
@@ -135,7 +135,7 @@ const AddCategory = ({refetch, isLoading}) => {
 
                                 {
                                     menuLength == 0 ?
-                                    <Link to='/dashboard/menu'>
+                                    <Link to='/istiak/menu'>
                                     <button type="Submit" className="px-6 py-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-400">Please create a menu</button>
                                     </Link>
                                     :
