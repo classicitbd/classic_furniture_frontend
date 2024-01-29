@@ -299,7 +299,9 @@ const Header = () => {
                   to="/sign-in"
                   className="flex items-center gap-2 rounded-full border border-textColor px-1 py-1 md:px-2 md:py-2"
                 >
-                  <span className="hidden md:block">sign in</span>
+                  <span className="hidden md:block text-logoColor">
+                    sign in
+                  </span>
                   <span className="w-7 h-7 flex items-center justify-center rounded-full bg-primaryColor">
                     <FaRegUser className="w-5 h-5 text-logoColor" />
                   </span>

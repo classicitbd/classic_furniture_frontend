@@ -30,6 +30,7 @@ const CheckoutPage = () => {
   }, []);
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
+  const [deliveryCharge, setSetDeliveryCharge] = useState(0);
   const [curior, setCurior] = useState("Select...");
   const [user, setUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -39,7 +40,7 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [addressUpdate, setAddressUpdate] = useState(false);
-  const shippingCharge = useSelector((state) => state.cart.shippingCharge);
+  // const shippingCharge = useSelector((state) => state.cart.shippingCharge);
   const quantity = useSelector((state) => state.cart.quantity);
 
   const { data: products = [] } = useQuery({
@@ -72,7 +73,6 @@ const CheckoutPage = () => {
     setModalOpen(false);
   };
 
-  const deliveryCharge = parseInt(shippingCharge);
   const total = subTotal + deliveryCharge;
 
   useEffect(() => {
@@ -94,6 +94,21 @@ const CheckoutPage = () => {
       dispatch(setShippingType(district));
     }
   }, [district, dispatch]);
+
+  useEffect(() => {
+    const insideDhakaCharge = 100;
+    const additionalChargePerQuantity = 50; // Adjust the value as needed
+    const outsideDhakaCharge = 160;
+
+    if (district === "Dhaka") {
+      setSetDeliveryCharge(
+        insideDhakaCharge +
+          (quantity > 1 ? (quantity - 1) * additionalChargePerQuantity : 0)
+      );
+    } else {
+      setSetDeliveryCharge(outsideDhakaCharge);
+    }
+  }, [district, quantity]);
 
   return (
     <div>
