@@ -25,10 +25,10 @@ const SideNavBar = () => {
             <div className="flex flex-col mt-6">
 
                 <Link className={
-                    pathname === "/dashboard"
+                    pathname === "/istiak"
                         ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
                         : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/dashboard">
+                } to="/istiak">
                     <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
                         <FcPieChart size={30} />
                         Dashboard
@@ -36,10 +36,10 @@ const SideNavBar = () => {
                 </Link>
 
                 <Link className={
-                    pathname === "/dashboard/order"
+                    pathname === "/istiak/order"
                         ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
                         : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/dashboard/order">
+                } to="/istiak/order">
                     <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
                         <FcBarChart size={30} />
                         Order
@@ -56,14 +56,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/menu"
+                                    pathname === "/istiak/menu"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold">
                                     <Link
-                                        to="/dashboard/menu"
+                                        to="/istiak/menu"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <BiMaleFemale />
@@ -74,14 +74,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/category"
+                                    pathname === "/istiak/category"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
-                                        to="/dashboard/category"
+                                        to="/istiak/category"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <TbCategoryPlus />
@@ -92,14 +92,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/sub_category"
+                                    pathname === "/istiak/sub_category"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
-                                        to="/dashboard/sub_category"
+                                        to="/istiak/sub_category"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <MdControlPointDuplicate />
@@ -110,14 +110,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/color"
+                                    pathname === "/istiak/color"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
-                                        to="/dashboard/color"
+                                        to="/istiak/color"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <IoColorPaletteOutline />
@@ -128,14 +128,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/collection"
+                                    pathname === "/istiak/collection"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
-                                        to="/dashboard/collection"
+                                        to="/istiak/collection"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <MdOutlineCollectionsBookmark />
@@ -146,14 +146,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/feature"
+                                    pathname === "/istiak/feature"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
-                                        to="/dashboard/feature"
+                                        to="/istiak/feature"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <MdOutlineFeaturedPlayList />
@@ -164,14 +164,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/style"
+                                    pathname === "/istiak/style"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
-                                        to="/dashboard/style"
+                                        to="/istiak/style"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <RxFontStyle />
@@ -194,14 +194,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/product"
+                                    pathname === "/istiak/product"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold">
                                     <Link
-                                        to="/dashboard/product"
+                                        to="/istiak/product"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <FaListUl />
@@ -212,14 +212,14 @@ const SideNavBar = () => {
 
                             <div
                                 className={
-                                    pathname === "/dashboard/product/create"
+                                    pathname === "/istiak/product/create"
                                         ? "nab_item text-[#3EA2FA]"
                                         : "text-[#717171] nab_item"
                                 }
                             >
                                 <div className="flex items-center justify-between font-semibold mt-2">
                                     <Link
-                                        to="/dashboard/product/create"
+                                        to="/istiak/product/create"
                                         className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
                                     >
                                         <IoAddCircleSharp />
@@ -233,10 +233,10 @@ const SideNavBar = () => {
                 </div>
 
                 <Link className={
-                    pathname === "/dashboard/slider"
+                    pathname === "/istiak/slider"
                         ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
                         : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/dashboard/slider">
+                } to="/istiak/slider">
                     <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
                         <PiSlideshowBold size={30} className="text-sky-500" />
                         Slider
@@ -244,10 +244,10 @@ const SideNavBar = () => {
                 </Link>
 
                 <Link className={
-                    pathname === "/dashboard/customer"
+                    pathname === "/istiak/customer"
                         ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
                         : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/dashboard/customer">
+                } to="/istiak/customer">
                     <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
                         <FaUsers size={25} className="text-yellow-500" />
                         Customer
@@ -255,10 +255,10 @@ const SideNavBar = () => {
                 </Link>
 
                 <Link className={
-                    pathname === "/dashboard/setting"
+                    pathname === "/istiak/setting"
                         ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
                         : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/dashboard/setting">
+                } to="/istiak/setting">
                     <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
                         <IoSettingsOutline className="text-red-500" size={25} />
                         Setting

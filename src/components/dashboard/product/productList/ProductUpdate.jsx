@@ -286,6 +286,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   // data post in backend
   const handleDataPost = async (data) => {
+    toast.error("Please wait a moment");
     let product_video;
     if (data?.product_video?.[0]) {
       const videoUpload = await videoUploader(data?.product_video?.[0]);

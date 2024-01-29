@@ -118,7 +118,7 @@ const router = createBrowserRouter([
     element: <NewPassword />,
   },
   {
-    path: "/dashboard",
+    path: "/istiak",
     element: (
       <PrivateDashboardRoute>
         <DashboardLayout />
@@ -127,63 +127,63 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: "/dashboard",
+        path: "/istiak",
         element: <HomePage />,
       },
       {
-        path: "/dashboard/order",
+        path: "/istiak/order",
         element: <Order />,
       },
       {
-        path: "/dashboard/slider",
+        path: "/istiak/slider",
         element: <Slider />,
       },
       {
-        path: "/dashboard/menu",
+        path: "/istiak/menu",
         element: <Menu />,
       },
       {
-        path: "/dashboard/category",
+        path: "/istiak/category",
         element: <Category />,
       },
       {
-        path: "/dashboard/sub_category",
+        path: "/istiak/sub_category",
         element: <SubCategory />,
       },
       {
-        path: "/dashboard/color",
+        path: "/istiak/color",
         element: <Color />,
       },
       {
-        path: "/dashboard/collection",
+        path: "/istiak/collection",
         element: <Collection />,
       },
       {
-        path: "/dashboard/feature",
+        path: "/istiak/feature",
         element: <Feature />,
       },
       {
-        path: "/dashboard/style",
+        path: "/istiak/style",
         element: <Style />,
       },
       {
-        path: "/dashboard/slider",
+        path: "/istiak/slider",
         element: <Slider />,
       },
       {
-        path: "/dashboard/product",
+        path: "/istiak/product",
         element: <ProductList />,
       },
       {
-        path: "/dashboard/product/create",
+        path: "/istiak/product/create",
         element: <ProductCreate />,
       },
       {
-        path: "/dashboard/customer",
+        path: "/istiak/customer",
         element: <Customer />,
       },
       {
-        path: "/dashboard/setting",
+        path: "/istiak/setting",
         element: <SiteSetting />,
       },
     ],
