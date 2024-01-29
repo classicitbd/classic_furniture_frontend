@@ -1,3 +1,3 @@
-## Classic It
+## Traack Website
 
-[classic-it](https://classic-it-shop.netlify.app/)
+[traack](https://traack.netlify.app/)

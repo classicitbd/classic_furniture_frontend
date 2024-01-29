@@ -40,7 +40,7 @@ const ProductDetails = ({ product }) => {
   allImages.push({ image: product?.data?.thumbnail_image });
   allImages.push({ image: product?.data?.hover_image });
 
-  console.log(product);
+  console.log("product", product);
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 sm:mx-5">
       {/* ------ products details left side content ------ start */}
@@ -122,7 +122,7 @@ const ProductDetails = ({ product }) => {
             ></div>
           </div>
           <div className="py-5 md:py-10 gap-2 items-center flex">
-            {!product.data.product_video && (
+            {product?.data?.product_video && (
               <button
                 onClick={() => openModal("video")}
                 className="relative inline-flex items-center justify-start px-4 py-1.5 overflow-hidden font-medium transition-all bg-primaryColor rounded group"
@@ -136,7 +136,7 @@ const ProductDetails = ({ product }) => {
                 </span>
               </button>
             )}
-            {!product.data.product_video && (
+            {product?.data?.product_video && (
               <span className="h-[12px] w-[2px] bg-bgray-500 inline-block"></span>
             )}
             <button
@@ -252,7 +252,7 @@ const ProductDetails = ({ product }) => {
                   loop
                 >
                   {/* <source src={product.data.product_video} type="video/mp4" /> */}
-                  <source src={"/assets/video/shoe.mp4"} type="video/mp4" />
+                  <source src={product?.data?.product_video} type="video/mp4" />
                   {/* Your browser does not support the video tag. */}
                 </video>
               </div>

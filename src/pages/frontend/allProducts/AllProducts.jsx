@@ -857,7 +857,7 @@ const AllProducts = () => {
                   key={product?._id}
                   className="border group rounded overflow-hidden bg-[#F0F0F0]"
                 >
-                  <Link to={`/products/details/${product?.slug}`}>
+                  <Link to={`/${product?.slug}`}>
                     <div className="flex">
                       <img
                         loading="lazy"
