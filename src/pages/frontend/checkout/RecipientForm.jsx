@@ -56,7 +56,7 @@ const RecipientForm = ({
       data.district = district;
       data.division = division;
       const res = await orderRegUser(data);
-      console.log("res", res);
+
       if (res?.data?.success) {
         setAddressUpdate(!addressUpdate);
         setCookie(
@@ -155,6 +155,7 @@ const RecipientForm = ({
             <label htmlFor="division" className="label">
               <span className="label-text">Division</span>
               <span className="text-error-300">*</span>
+              <span className="text-error-300">{userData?.division}</span>
             </label>
             <Select
               id="division"
@@ -169,14 +170,12 @@ const RecipientForm = ({
                 setDivision(selectedOption?.name);
               }}
             ></Select>
-            {errors.address && (
-              <p className="text-red-600"> {errors.address.message}</p>
-            )}
           </div>
           <div className="form-control w-full">
             <label htmlFor="district" className="label">
               <span className="label-text">District</span>
               <span className="text-error-300">*</span>
+              <span className="text-error-300">{userData?.district}</span>
             </label>
             <Select
               id="district"
@@ -190,9 +189,6 @@ const RecipientForm = ({
                 setDistrict(selectedOption?.name);
               }}
             ></Select>
-            {errors.address && (
-              <p className="text-red-600"> {errors.address.message}</p>
-            )}
           </div>
         </div>
         {/* <div className="flex items-center gap-3">

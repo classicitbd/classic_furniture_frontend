@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
 import { useNavigate } from "react-router-dom";
 
-const Payment = ({ user, subTotal, district, division }) => {
+const Payment = ({ user, subTotal, district, division, addressUpdate }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
@@ -78,7 +78,7 @@ const Payment = ({ user, subTotal, district, division }) => {
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
-
+  
   return (
     <div className="px-5 md:px-10">
       <div className="flex items-center gap-7">
@@ -145,6 +145,7 @@ const Payment = ({ user, subTotal, district, division }) => {
         </p>
         <button
           type="submit"
+          disabled={!user || addressUpdate}
           className="block w-full text-center py-3 text-textColor bg-primaryColor hover:bg-opacity-70 rounded mt-4"
         >
           {loading || isLoading ? <MiniSpinner /> : "Place Order"}
