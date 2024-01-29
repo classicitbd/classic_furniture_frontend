@@ -100,6 +100,7 @@ const CheckoutPage = () => {
               division={division}
               user={user}
               setUser={setUser}
+              addressUpdate={addressUpdate}
               subTotal={subTotal}
             />
           </div>
