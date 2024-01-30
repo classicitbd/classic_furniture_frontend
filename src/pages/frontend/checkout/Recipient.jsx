@@ -10,6 +10,7 @@ import { setCookie } from "../../../utils/cookie-storage";
 import { SlPhone } from "react-icons/sl";
 import VerifyModal from "../../../components/common/modal/VerifyModal";
 import { toast } from "react-toastify";
+import Select from "react-select";
 import {
   useOtpVerifyMutation,
   useResendOtpMutation,
@@ -19,6 +20,20 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
+const options = [
+  {
+    label: "Pathao",
+    value: "pathao",
+  },
+  {
+    label: "Sundarban Courier",
+    value: "sundarban-courier",
+  },
+  {
+    label: "SA Paribahan",
+    value: "sa-paribahan",
+  },
+];
 const Recipient = ({
   addressUpdate,
   setAddressUpdate,
@@ -28,6 +43,8 @@ const Recipient = ({
   setDistrict,
   district,
   division,
+  setCurior,
+  curior,
 }) => {
   const [loading, setLoading] = useState(false);
   const [timerCount, setTimer] = useState(60);
@@ -247,6 +264,31 @@ const Recipient = ({
           </table>
         </div>
       )}
+
+      <div className="flex items-center gap-3">
+        <div className="w-full">
+          <label htmlFor="city" className="label block mb-2">
+            <strong className="label-text">Curior Service</strong>
+            <span className="text-error-300">*</span>
+          </label>
+          <Select
+            name="curior-service"
+            options={options}
+            defaultValue={{ value: curior, label: curior }}
+            onChange={(e) => setCurior(e.value)}
+          />
+        </div>
+      </div>
+
+      <div className="mb-10 flex flex-col gap-3 mt-5">
+        <h2>
+          <strong>Delivery Charge </strong>
+          <span className="text-error-300">*</span>
+        </h2>
+
+        <p>Inside Dhaka ৳100</p>
+        <p>Outside Dhaka ৳150</p>
+      </div>
 
       <p className="text-sm">
         For urgent delivery, please contact{" "}

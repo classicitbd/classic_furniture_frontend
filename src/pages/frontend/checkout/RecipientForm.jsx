@@ -238,7 +238,7 @@ const RecipientForm = ({
           />
         </div> */}
 
-        <div className="mb-10 flex items-center gap-3">
+        {/* <div className="mb-10 flex items-center gap-3">
           <h2>
             <span>Delivery Point</span>
             <span className="text-error-300">*</span>
@@ -317,7 +317,7 @@ const RecipientForm = ({
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
         {userData ? (
           <div className="flex justify-end">

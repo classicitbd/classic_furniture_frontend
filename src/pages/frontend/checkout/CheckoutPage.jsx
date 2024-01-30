@@ -29,6 +29,7 @@ const CheckoutPage = () => {
   }, []);
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
+  const [curior, setCurior] = useState("Select...");
   const [user, setUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);
@@ -89,7 +90,9 @@ const CheckoutPage = () => {
           <section className="overflow-y-auto space-y-5 order-2 md:order-1">
             <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
               <Recipient
+                setCurior={setCurior}
                 user={user}
+                curior={curior}
                 setUser={setUser}
                 setDivision={setDivision}
                 setDistrict={setDistrict}
@@ -104,6 +107,7 @@ const CheckoutPage = () => {
                 district={district}
                 division={division}
                 user={user}
+                curior={curior}
                 setUser={setUser}
                 addressUpdate={addressUpdate}
                 subTotal={subTotal}
