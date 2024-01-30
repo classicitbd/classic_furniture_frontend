@@ -1,6 +1,8 @@
 // import react icons
+import { IoHomeOutline } from "react-icons/io5";
+import { IoBriefcaseOutline } from "react-icons/io5";
 import { CiLocationOn, CiUser } from "react-icons/ci";
-import { CiEdit } from "react-icons/ci";
+import { CiEdit, CiHeart } from "react-icons/ci";
 import { PiAddressBook } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
@@ -50,6 +52,7 @@ const Recipient = ({
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
+  const [addNote, setAddNote] = useState("home");
   const { handleSubmit, reset } = useForm();
 
   const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
@@ -265,12 +268,95 @@ const Recipient = ({
         </div>
       )}
 
+      <fieldset className="mb-5">
+        <legend className="mb-2">Add Note</legend>
+
+        <div className="text-center flex items-center gap-5">
+          <div onClick={() => setAddNote("home")}>
+            <input
+              className="peer sr-only"
+              id="home"
+              type="radio"
+              tabIndex="-1"
+              name="payment"
+            />
+
+            <label
+              htmlFor="home"
+              className={`w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:bg-success-400 flex justify-between items-center ${
+                addNote === "home" && "bg-success-400"
+              }`}
+              tabIndex="0"
+            >
+              <span className="text-sm">
+                <IoHomeOutline
+                  className={`${addNote === "home" && "text-textColor"}`}
+                />
+              </span>
+            </label>
+            <p>Home</p>
+          </div>
+
+          <div onClick={() => setAddNote("work")}>
+            <input
+              className="peer sr-only"
+              id="work"
+              type="radio"
+              tabIndex="-1"
+              name="payment"
+            />
+
+            <label
+              htmlFor="work"
+              className={`w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:bg-success-400 flex justify-between items-center ${
+                addNote === "work" && "bg-success-400"
+              }`}
+              tabIndex="0"
+            >
+              <span className="text-sm">
+                <IoBriefcaseOutline
+                  className={`${addNote === "work" && "text-textColor"}`}
+                />
+              </span>
+            </label>
+            <p>Work</p>
+          </div>
+          <div onClick={() => setAddNote("partner")}>
+            <input
+              className="peer sr-only"
+              id="partner"
+              type="radio"
+              tabIndex="-1"
+              name="payment"
+            />
+
+            <label
+              htmlFor="partner"
+              className={`w-full rounded-lg border border-gray-200 p-2 text-gray-600 hover:border-black peer-checked:bg-success-400 flex justify-center items-center ${
+                addNote === "partner" && "bg-success-400"
+              }`}
+              tabIndex="0"
+            >
+              <span className="flex justify-center items-center">
+                <CiHeart
+                  className={`text-xl ${
+                    addNote === "partner" && "text-textColor"
+                  }`}
+                />
+              </span>
+            </label>
+            <p>Partner</p>
+          </div>
+        </div>
+      </fieldset>
+
       <div className="flex items-center gap-3">
         <div className="w-full">
           <label htmlFor="city" className="label block mb-2">
             <strong className="label-text">Curior Service</strong>
             <span className="text-error-300">*</span>
           </label>
+
           <Select
             name="curior-service"
             options={options}

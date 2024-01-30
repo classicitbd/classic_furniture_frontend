@@ -245,9 +245,11 @@ const Header = () => {
                 className="relative inline-flex items-center justify-center p-2 md:p-3 md:overflow-hidden font-medium transition duration-300 ease-out rounded-full shadow border border-textColor"
               >
                 <GiBeachBag className="w-6 h-6 text-logoColor" />
-                <span className="absolute z-20 top-1/2 right-1/2 bg-error-300 w-5 h-5 flex items-center justify-center text-white rounded-full">
-                  {carts?.length}
-                </span>
+                {carts?.length > 0 && (
+                  <span className="absolute z-20 top-1/2 right-1/2 bg-error-300 w-5 h-5 flex items-center justify-center text-white rounded-full">
+                    {carts?.length}
+                  </span>
+                )}
               </button>
               {isUser || isUserLogin ? (
                 <div className="relative">
@@ -324,9 +326,7 @@ const Header = () => {
             <button className="text-4xl" onClick={toggleDrawer}>
               <GoArrowRight className="p-1 bg-bgray-50 text-black shadow rounded-full text-3xl" />
             </button>
-            <p>
-              <strong>Total:</strong> <span className="text-orange"></span>
-            </p>
+            <p></p>
           </div>
           <div className="py-1 px-4">
             {carts?.length > 0 ? (

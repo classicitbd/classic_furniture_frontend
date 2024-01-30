@@ -20,7 +20,7 @@ const Breadcrumb = ({ product }) => {
     <nav className="text-gray-600 text-sm">
       <ol className="list-none p-0 inline-flex">
         {breadcrumbData.map((item, i) => (
-          <li key={item.label} className="flex items-center">
+          <li key={i} className="flex items-center">
             <Link
               to={`/all?${item?.link}`}
               className={`text-bgray-900 hover:text-bgray-500 text-xl px-4 ${

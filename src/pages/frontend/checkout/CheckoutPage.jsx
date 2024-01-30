@@ -3,7 +3,7 @@ import { CiTrash } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Recipient from "./Recipient";
 import { useEffect, useState } from "react";
 import Payment from "./Payment";
@@ -36,6 +36,7 @@ const CheckoutPage = () => {
   const carts = useSelector((state) => state.cart.products);
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [addressUpdate, setAddressUpdate] = useState(false);
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
 
@@ -79,6 +80,12 @@ const CheckoutPage = () => {
       setUser(userData);
     }
   }, []);
+
+  useEffect(() => {
+    if (carts.length <= 0) {
+      navigate("/all");
+    }
+  }, [carts?.length, navigate]);
 
   return (
     <div>

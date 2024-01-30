@@ -56,6 +56,7 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
     .map((item) => `${item.size} (${item.quantity})`)
     .join(", ")
     .replace(/,([^,]*)$/, " & $1");
+  console.log("setectedSizes");
 
   return (
     <>
@@ -284,15 +285,24 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
             <button onClick={closeModal} className="underline">
               Continue Shipping
             </button>
-            <Link
-              to={"/checkout"}
-              disabled={carts?.length === 0}
-              className={`py-3 px-5 text-center text-white ${
-                carts?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"
-              }`}
-            >
-              Proceed To Checkout
-            </Link>
+            {selectedSizes?.length <= 0 ? (
+              <div
+                className={`py-3 px-5 text-center cursor-default text-white ${
+                  selectedSizes?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"
+                }`}
+              >
+                Proceed To Checkout
+              </div>
+            ) : (
+              <Link
+                to={"/checkout"}
+                className={`py-3 px-5 text-center text-white ${
+                  selectedSizes?.length > 0 ? "bg-bgray-900" : "bg-bgray-400"
+                }`}
+              >
+                Proceed To Checkout
+              </Link>
+            )}
           </div>
         </div>
       )}
