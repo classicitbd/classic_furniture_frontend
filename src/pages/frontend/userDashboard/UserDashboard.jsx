@@ -3,6 +3,7 @@ import UserForm from "./UserForm";
 import OrderTab from "../../../components/frontend/ui/order/OrderTab";
 import ChangePassword from "./ChangePassword";
 import { getCookie } from "../../../utils/cookie-storage";
+import Header from "../../../shared/header/Header";
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
@@ -25,10 +26,11 @@ const UserDashboard = () => {
     }
   }, []);
 
-  console.log(user);
-
   return (
     <>
+      <div className="sticky top-0 bg-primaryColor z-30">
+        <Header />
+      </div>
       <section className="bg-white shadow">
         <nav
           className="w-full md:w-[768px] mx-auto flex justify-center gap-6 border-b"
