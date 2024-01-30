@@ -3,8 +3,11 @@ import { toast } from "react-toastify";
 import { useAddSliderMutation } from "../../../redux/feature/slider/sliderApi";
 import { RxCross1 } from "react-icons/rx";
 import { ImageValidate } from "../../../utils/ImageValidation";
+import { useState } from "react";
+import ReactQuill from "react-quill";
 
 const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
+  const [description, setDescription] = useState('');
   const {
     register,
     reset,
@@ -39,6 +42,10 @@ const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
         formData.append(key, value);
       }
     });
+    if(!description){
+      toast.error("Please fill up description !")
+    }
+    formData.append("description", description);
     postSlider(formData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
         toast.success(
@@ -92,6 +99,37 @@ const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
               {errors.slider && (
                 <p className="text-red-600">{errors.slider?.message}</p>
               )}
+            </div>
+
+            <div>
+              <input
+                placeholder="Slider Title"
+                {...register("title", { required: "Slider Title is required" })}
+                id="title"
+                type="text"
+                className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-3"
+              />
+              {errors.title && (
+                <p className="text-red-600">{errors.title?.message}</p>
+              )}
+            </div>
+
+            <div>
+              <input
+                placeholder="Slider Path"
+                {...register("url", { required: "Slider Path is required" })}
+                id="url"
+                type="text"
+                className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-3"
+              />
+              {errors.url && (
+                <p className="text-red-600">{errors.url?.message}</p>
+              )}
+            </div>
+
+            <div className="mt-3">
+              <p className="mb-2 font-medium">Slider Description: </p>
+              <ReactQuill theme="snow" value={description} onChange={setDescription} />
             </div>
 
             <div className="flex justify-end mt-6 gap-4">

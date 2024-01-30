@@ -11,6 +11,7 @@ import { useAddProductMutation } from "../../../../redux/feature/product/product
 import { AuthContext } from "../../../../context/AuthProvider";
 import videoUploader from "../../setting/videoUploader";
 import ReactQuill from "react-quill";
+import { VideoValidate } from "../../../../utils/VideoValidation";
 
 const ProductAdd = () => {
   const { user } = useContext(AuthContext);
@@ -277,6 +278,20 @@ const ProductAdd = () => {
       );
     }
     let product_video;
+    let errorEncountered;
+
+    if (data?.product_video?.[0]) {
+      const productVideoValidate = data?.product_video?.[0];
+      const result = VideoValidate(productVideoValidate); //check image type
+      if (result == false) {
+        errorEncountered = true;
+      }
+    }
+    if (errorEncountered == true){
+      toast.error("Must be a mp4 type video in product video field")
+    }
+    toast.error("Please wait a minute");
+
     if (data?.product_video?.[0]) {
       const videoUpload = await videoUploader(data?.product_video?.[0]);
       product_video = videoUpload[0];
