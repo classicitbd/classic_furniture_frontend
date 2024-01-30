@@ -21,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 import { getCookie } from "../../../utils/cookie-storage";
+import Header from "../../../shared/header/Header";
 
 const CheckoutPage = () => {
   useEffect(() => {
@@ -79,212 +80,220 @@ const CheckoutPage = () => {
   }, []);
 
   return (
-    <div className="container py-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <section className="overflow-y-auto space-y-5 order-2 md:order-1">
-          <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
-            <Recipient
-              user={user}
-              setUser={setUser}
-              setDivision={setDivision}
-              setDistrict={setDistrict}
-              district={district}
-              division={division}
-              addressUpdate={addressUpdate}
-              setAddressUpdate={setAddressUpdate}
-            />
-          </div>
-          <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
-            <Payment
-              district={district}
-              division={division}
-              user={user}
-              setUser={setUser}
-              addressUpdate={addressUpdate}
-              subTotal={subTotal}
-            />
-          </div>
-        </section>
-        <section className="order-1 md:order-2">
-          <div className="bg-white md:px-10 p-5 w-full md:w-3/4 mx-auto sticky top-[102px] rounded">
-            <h2 className="text-center mb-10 tracking-normal leading-5 text-lg font-medium">
-              Order Summary
-            </h2>
-            {carts.length > 0 ? (
-              <div className="space-y-2 border-t pt-3">
-                {carts.map((product, i) => (
-                  <div
-                    className="flex items-center gap-2 border-b pb-3"
-                    key={i}
-                  >
-                    <div className="w-[70px] h-[70px] border rounded mr-3">
-                      <img
-                        loading="lazy"
-                        src={product?.thumbnail_image}
-                        alt={product?.title}
-                        className="object-fill rounded"
-                      />
-                    </div>
-                    <div className="flex flex-col flex-1 space-y-2">
-                      <h2 className="text-sm tracking-tight leading-5">
-                        {product?.title}
-                      </h2>
-                      <p className="flex gap-2 items-center">
-                        <span className="text-sm tracking-tight leading-5">
-                          {product?.color}
-                        </span>
-                        <span className="text-sm tracking-tight leading-5">
-                          {product?.size}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-sm">BDT {product?.price}.00</p>
-                      <div
-                        className={`flex items-center justify-center border rounded-md px-2`}
-                      >
-                        {carts.find(
-                          (selectedItem) =>
-                            selectedItem.size === product?.size &&
-                            selectedItem.productId === product?.productId
-                        )?.quantity === 1 && (
+    <div>
+      <div className="sticky top-0 bg-primaryColor z-30">
+        <Header />
+      </div>
+      <div className="container py-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <section className="overflow-y-auto space-y-5 order-2 md:order-1">
+            <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
+              <Recipient
+                user={user}
+                setUser={setUser}
+                setDivision={setDivision}
+                setDistrict={setDistrict}
+                district={district}
+                division={division}
+                addressUpdate={addressUpdate}
+                setAddressUpdate={setAddressUpdate}
+              />
+            </div>
+            <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
+              <Payment
+                district={district}
+                division={division}
+                user={user}
+                setUser={setUser}
+                addressUpdate={addressUpdate}
+                subTotal={subTotal}
+              />
+            </div>
+          </section>
+          <section className="order-1 md:order-2">
+            <div className="bg-white md:px-10 p-5 w-full md:w-3/4 mx-auto sticky top-[102px] rounded">
+              <h2 className="text-center mb-10 tracking-normal leading-5 text-lg font-medium">
+                Order Summary
+              </h2>
+              {carts.length > 0 ? (
+                <div className="space-y-2 border-t pt-3">
+                  {carts.map((product, i) => (
+                    <div
+                      className="flex items-center gap-2 border-b pb-3"
+                      key={i}
+                    >
+                      <div className="w-[70px] h-[70px] border rounded mr-3">
+                        <img
+                          loading="lazy"
+                          src={product?.thumbnail_image}
+                          alt={product?.title}
+                          className="object-fill rounded"
+                        />
+                      </div>
+                      <div className="flex flex-col flex-1 space-y-2">
+                        <h2 className="text-sm tracking-tight leading-5">
+                          {product?.title}
+                        </h2>
+                        <p className="flex gap-2 items-center">
+                          <span className="text-sm tracking-tight leading-5">
+                            {product?.color}
+                          </span>
+                          <span className="text-sm tracking-tight leading-5">
+                            {product?.size}
+                          </span>
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm">BDT {product?.price}.00</p>
+                        <div
+                          className={`flex items-center justify-center border rounded-md px-2`}
+                        >
+                          {carts.find(
+                            (selectedItem) =>
+                              selectedItem.size === product?.size &&
+                              selectedItem.productId === product?.productId
+                          )?.quantity === 1 && (
+                            <button
+                              onClick={() => {
+                                openModal(product);
+                              }}
+                              className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
+                            >
+                              <CiTrash />
+                            </button>
+                          )}
+                          {carts.find(
+                            (selectedItem) =>
+                              selectedItem.size === product?.size &&
+                              selectedItem.productId === product?.productId
+                          )?.quantity > 1 && (
+                            <button
+                              onClick={() =>
+                                dispatch(decrementQuantity(product))
+                              }
+                              className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
+                            >
+                              <FiMinus />
+                            </button>
+                          )}
+                          <span className="px-2 py-1">{product?.quantity}</span>
                           <button
                             onClick={() => {
-                              openModal(product);
+                              if (
+                                products?.data
+                                  ?.find(
+                                    (singleProduct) =>
+                                      singleProduct?._id === product?.productId
+                                  )
+                                  .size_variation.find(
+                                    (sizeItem) =>
+                                      sizeItem.size === product?.size
+                                  ).quantity === product?.quantity
+                              ) {
+                                toast.error(
+                                  "Max Stock Selected/Shortage of Stock",
+                                  {
+                                    autoClose: 3000,
+                                  }
+                                );
+                              } else dispatch(incrementQuantity(product));
                             }}
-                            className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
+                            className="text-bgray-700 px-2 py-2 border rounded hover:bg-bgray-300"
                           >
-                            <CiTrash />
+                            <GoPlus />
                           </button>
-                        )}
-                        {carts.find(
-                          (selectedItem) =>
-                            selectedItem.size === product?.size &&
-                            selectedItem.productId === product?.productId
-                        )?.quantity > 1 && (
-                          <button
-                            onClick={() => dispatch(decrementQuantity(product))}
-                            className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
-                          >
-                            <FiMinus />
-                          </button>
-                        )}
-                        <span className="px-2 py-1">{product?.quantity}</span>
-                        <button
-                          onClick={() => {
-                            if (
-                              products?.data
-                                ?.find(
-                                  (singleProduct) =>
-                                    singleProduct?._id === product?.productId
-                                )
-                                .size_variation.find(
-                                  (sizeItem) => sizeItem.size === product?.size
-                                ).quantity === product?.quantity
-                            ) {
-                              toast.error(
-                                "Max Stock Selected/Shortage of Stock",
-                                {
-                                  autoClose: 3000,
-                                }
-                              );
-                            } else dispatch(incrementQuantity(product));
-                          }}
-                          className="text-bgray-700 px-2 py-2 border rounded hover:bg-bgray-300"
-                        >
-                          <GoPlus />
-                        </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <ProductNotFound />
-            )}
-            <Link
-              to={`/all`}
-              className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
-            >
-              Shop More
-            </Link>
-            <div className="overflow-x-auto mt-5">
-              <table className="min-w-1/2 ml-auto divide-y-2 divide-gray-200 bg-white text-sm">
-                <tbody className="divide-y divide-gray-200">
-                  <tr>
-                    <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
-                      Sub-Total
-                    </td>
-                    <td className="whitespace-nowrap px-4 py- text-gray-700">
-                      BDT
-                    </td>
-                    <td className="whitespace-nowrap px-4 py- text-gray-700">
-                      ৳{subTotal}.00
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
-                      Delivery Charge
-                    </td>
-
-                    <td className="whitespace-nowrap px-4 py- text-gray-700">
-                      BDT
-                    </td>
-                    <td className="whitespace-nowrap px-4 py- text-gray-700">
-                      ৳{deliveryCharge}.00
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
-                      Total
-                    </td>
-
-                    <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
-                      BDT
-                    </td>
-                    <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
-                      ৳{total}.00
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p className="mt-5 text-sm">
-              <span className="text-error-300">*</span> Add more items to reduce
-              delivery charge
-            </p>
-          </div>
-        </section>
-      </div>
-      {/* ------ confirm modal ------ start */}
-
-      <ConfirmationModal isOpen={isModalOpen} onClose={closeModal}>
-        <div className="p-6">
-          <div className="flex justify-end">
-            <button
-              className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
-              onClick={closeConfirmModal}
-            >
-              <IoCloseOutline className="text-2xl" />
-            </button>
-          </div>
-          <div>
-            <p className="border-b pb-4 text-black">
-              Are you sure you want to remove this item from cart?
-            </p>
-            <div className="flex justify-end mt-5">
-              <button
-                onClick={() => handleConfirm()}
-                className="bg-bgray-900 px-7 py-3 text-white font-medium tracking-tight leading-5 rounded"
+                  ))}
+                </div>
+              ) : (
+                <ProductNotFound />
+              )}
+              <Link
+                to={`/all`}
+                className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
               >
-                Confirm
+                Shop More
+              </Link>
+              <div className="overflow-x-auto mt-5">
+                <table className="min-w-1/2 ml-auto divide-y-2 divide-gray-200 bg-white text-sm">
+                  <tbody className="divide-y divide-gray-200">
+                    <tr>
+                      <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
+                        Sub-Total
+                      </td>
+                      <td className="whitespace-nowrap px-4 py- text-gray-700">
+                        BDT
+                      </td>
+                      <td className="whitespace-nowrap px-4 py- text-gray-700">
+                        ৳{subTotal}.00
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
+                        Delivery Charge
+                      </td>
+
+                      <td className="whitespace-nowrap px-4 py- text-gray-700">
+                        BDT
+                      </td>
+                      <td className="whitespace-nowrap px-4 py- text-gray-700">
+                        ৳{deliveryCharge}.00
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="whitespace-nowrap px-4 py- font-medium text-gray-900">
+                        Total
+                      </td>
+
+                      <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
+                        BDT
+                      </td>
+                      <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
+                        ৳{total}.00
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-5 text-sm">
+                <span className="text-error-300">*</span> Add more items to
+                reduce delivery charge
+              </p>
+            </div>
+          </section>
+        </div>
+        {/* ------ confirm modal ------ start */}
+
+        <ConfirmationModal isOpen={isModalOpen} onClose={closeModal}>
+          <div className="p-6">
+            <div className="flex justify-end">
+              <button
+                className="bg-bgray-900 hover:bg-bgray-700 text-white font-bold py-1 px-2 -mt-4 mb-2 -mr-4 rounded"
+                onClick={closeConfirmModal}
+              >
+                <IoCloseOutline className="text-2xl" />
               </button>
             </div>
+            <div>
+              <p className="border-b pb-4 text-black">
+                Are you sure you want to remove this item from cart?
+              </p>
+              <div className="flex justify-end mt-5">
+                <button
+                  onClick={() => handleConfirm()}
+                  className="bg-bgray-900 px-7 py-3 text-white font-medium tracking-tight leading-5 rounded"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </ConfirmationModal>
+        </ConfirmationModal>
 
-      {/* ------ confirm modal ------ end */}
+        {/* ------ confirm modal ------ end */}
+      </div>
     </div>
   );
 };
