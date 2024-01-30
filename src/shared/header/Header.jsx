@@ -25,15 +25,17 @@ import { toast } from "react-toastify";
 import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import MobileMenu from "./MobileMenu";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 const Header = () => {
-  // const [menu, setMenu] = useState("");
+  const [menu, setMenu] = useState("");
+  const [gender, setGender] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSearchFieldOpen, setSearchFieldOpen] = useState(false);
   const [data, setData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const carts = useSelector((state) => state.cart.products);
   const subTotal = useSelector((state) => state.cart.subtotal);
@@ -59,11 +61,42 @@ const Header = () => {
     },
   });
 
+  const { data: menuTypes = [] } = useQuery({
+    queryKey: ["/api/v1/menu"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/menu`);
+      const data = await res.json();
+      return data;
+    },
+    suspense: false,
+  }); // get Menu type
+
+  const { data: category = [] } = useQuery({
+    queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
+    queryFn: async () => {
+      if (menu !== "") {
+        const res = await fetch(`${BASE_URL}/menu/${menu}`);
+        const data = await res.json();
+        return data;
+      } else {
+        // Return a default value when menu is empty
+        return { data: [] };
+      }
+    },
+    suspense: false,
+  }); // get category and sub category
+
   const handleLogOut = () => {
     eraseCookie(authKey);
     eraseCookie("user");
     navigate("/");
     window.location.reload();
+  };
+
+  const handleHover = (menu) => {
+    setIsMenuOpen(true);
+    setGender(menu?.slug);
+    setMenu(menu?._id);
   };
 
   const openModal = (product) => {
@@ -108,52 +141,50 @@ const Header = () => {
 
   return (
     <>
-      <section className="bg-primaryColor text-[#fff] py-5 border-b border-bgray-700">
+      <section className="py-5 relative">
         {/* ------ header top section ------ start */}
 
-        <div className="shadow-md">
-          <div className="grid grid-cols-3 px-2 md:px-10 relative">
+        <div className="">
+          <div className="grid grid-cols-3 items-center px-2 lg:px-10 relative">
             {/* ------ header left side ------ start */}
-            <div className="flex gap-10 items-center">
-              <div className={`block md:hidden font-bold text-2xl h-[46px]`}>
-                <Link to={"/"}>
-                  <img
-                    loading="lazy"
-                    src={logo?.data[0]?.logo}
-                    alt="logo"
-                    className="h-[46px] object-contain"
-                  />
-                </Link>
-              </div>
-              <div className={`hidden sm:block font-bold text-2xl h-[46px]`}>
-                <Link to={"/"}>
-                  <img
-                    loading="lazy"
-                    src={logo?.data[0]?.logo}
-                    alt="logo"
-                    className="h-[46px] object-contain"
-                  />
-                </Link>
-              </div>
+            <div className={`block lg:hidden h-[35px]`}>
+              <Link to={"/"}>
+                <img
+                  loading="lazy"
+                  src={logo?.data[0]?.logo}
+                  alt="logo"
+                  className="h-[35px] object-contain"
+                />
+              </Link>
             </div>
+            {/* <div className={`hidden sm:block font-bold text-2xl h-[46px]`}>
+                <Link to={"/"}>
+                  <img
+                    loading="lazy"
+                    src={logo?.data[0]?.logo}
+                    alt="logo"
+                    className="h-[46px] object-contain"
+                  />
+                </Link>
+              </div> */}
             {/* ------ header left side ------ start */}
 
             {/* ------ header middle side ------ start */}
             {/* ------ menu bar ------ start */}
-            {/* <div className=" text-[#000] hidden sm:block"> */}
-            {/* ------ navbar with dropdown ------ start */}
-            {/* <nav className="relative py-2">
-                <ul className="flex items-center justify-center gap-20">
+            <div className="hidden lg:block">
+              {/* ------ navbar with dropdown ------ start */}
+              <nav className="relative">
+                <ul className="flex items-center gap-10">
                   {menuTypes?.data?.map((menuItem) => (
                     <li className="group" key={menuItem?._id}>
                       <button
                         onMouseEnter={() => handleHover(menuItem)}
-                        className={`font-normal focus:outline-none text-[#fff] py-3 uppercase ${
+                        className={`font-light focus:outline-none text-textColor uppercase ${
                           menu === menuItem?._id ? "opacity-80" : ""
                         } transition-opacity duration-300`}
                       >
                         <p className="flex items-center gap-2">
-                          <span className="text-lg">{menuItem?.menu}</span>
+                          <span className="text-base">{menuItem?.menu}</span>
                           <MdOutlineKeyboardArrowDown
                             className={`text-lg group-hover:rotate-180 transition-all duration-300 ease-linear`}
                           />
@@ -167,13 +198,13 @@ const Header = () => {
                     </li>
                   ))}
                 </ul>
-              </nav> */}
-            {/* ------ navbar with dropdown ------ end */}
-            {/* </div> */}
+              </nav>
+              {/* ------ navbar with dropdown ------ end */}
+            </div>
             {/* ------ menu bar ------ end */}
 
             <div
-              className={`h-[46px] items-center justify-center hidden sm:flex`}
+              className={`h-[46px] items-center justify-center hidden lg:flex`}
             >
               <Link to={"/"}>
                 <img
@@ -184,7 +215,7 @@ const Header = () => {
                 />
               </Link>
             </div>
-            <div className="block md:hidden"></div>
+            <div className="block lg:hidden"></div>
 
             {/* ------ header middle side ------ end */}
 
@@ -225,7 +256,9 @@ const Header = () => {
                       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                       className="flex items-center gap-2 rounded-full border border-textColor px-1 py-1 md:px-2 md:py-2"
                     >
-                      <span className="hidden md:block">Sign Out</span>
+                      <span className="hidden md:block text-logoColor">
+                        Sign Out
+                      </span>
                       <span className="w-7 h-7 flex items-center justify-center rounded-full bg-primaryColor">
                         <FaRegUser className="w-5 h-5 text-logoColor" />
                       </span>
@@ -233,7 +266,7 @@ const Header = () => {
                   </div>
                   {isDropdownOpen && (
                     <div
-                      className="absolute w-40 end-0 z-10 mt-2 rounded-md border border-gray-100 bg-white shadow-lg"
+                      className="absolute w-40 end-0 z-50 mt-2 rounded-md border border-gray-100 bg-white shadow-lg"
                       role="menu"
                     >
                       <div className="p-2">
@@ -270,8 +303,8 @@ const Header = () => {
                   </span>
                 </Link>
               )}
-              <button onClick={toggleMobileMenu} className="block md:hidden">
-                <RxHamburgerMenu className="text-2xl" />
+              <button onClick={toggleMobileMenu} className="block lg:hidden">
+                <RxHamburgerMenu className="text-2xl text-textColor" />
               </button>
             </div>
             {/* ------ header right side ------ end */}
@@ -508,24 +541,24 @@ const Header = () => {
 
         {/* ------ confirm modal ------ end */}
 
-        {/* <div
-          onMouseEnter={() => setIsMenuOpen(true)}
-          className={`w-full absolute bg-[#fdfcfc] border-b shadow-md border-t border-t-gray-600 mt-1 ${
-            isMenuOpen ? "top-[59px]" : "-top-32"
-          }`}
+        <div
+          // onMouseEnter={() => setIsMenuOpen(true)}
           onMouseLeave={() => {
             setIsMenuOpen(false);
             setMenu("");
           }}
-        > */}
-        {/* ------ category section ------ start */}
-        {/* <div className="border-r px-4 py-[5px]">
-            <ul className="flex gap-5 py-10 container">
+          className={`w-full z-40 absolute bg-primaryColor shadow-md border-t border-bgray-800 ${
+            isMenuOpen ? "top-[81px]" : "-top-40"
+          }`}
+        >
+          {/* ------ category section ------ start */}
+          <div className="border-r px-10 py-[5px]">
+            <ul className="flex gap-5 py-10">
               {category?.data?.map((category) => (
                 <li className="w-[200px]" key={category?.category?._id}>
                   <Link
                     to={`/all?gender=${gender}&category=${category?.category?.slug}`}
-                    className="text-[#000] py-1 px-2 w-full text-left rounded-sm text-base font-medium opacity-80 hover:opacity-100"
+                    className="text-textColor py-1 px-2 w-full text-left rounded-sm text-base font-medium opacity-80 hover:opacity-100"
                   >
                     {category?.category?.category}
                   </Link>
@@ -534,7 +567,7 @@ const Header = () => {
                       <li key={subItem?._id}>
                         <Link
                           to={`/all?gender=${gender}&category=${category?.category?.slug}&sub_category=${subItem?.slug}`}
-                          className=" text-[#000] py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-80 hover:opacity-100"
+                          className="text-textColor py-1 px-2 w-full text-left rounded-sm text-sm font-sans tracking-tight leading-5 opacity-80 hover:opacity-100"
                         >
                           {subItem?.sub_category}
                         </Link>
@@ -544,9 +577,9 @@ const Header = () => {
                 </li>
               ))}
             </ul>
-          </div> */}
-        {/* ------ category section ------ end */}
-        {/* </div> */}
+          </div>
+          {/* ------ category section ------ end */}
+        </div>
       </section>
     </>
   );

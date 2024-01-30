@@ -17,6 +17,7 @@ import "swiper/css/bundle";
 // import "swiper/css/keyboard";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
+// import Header from "../../../../shared/header/Header";
 
 const Slider = () => {
   const { data: sliders = [] } = useQuery({
@@ -27,8 +28,14 @@ const Slider = () => {
       return data;
     },
   }); // get all slider
+
   return (
-    <div className="main-container">
+    <div className="relative">
+      {/* <div
+        className={`absolute top-0 right-0 z-30 w-full hover:bg-primaryColor bg-opacity-5 hover:bg-opacity-100`}
+      >
+        <Header />
+      </div> */}
       <Swiper
         // install Swiper modules
         modules={[
