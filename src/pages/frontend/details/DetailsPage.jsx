@@ -5,6 +5,7 @@ import RelatedProducts from "../../../components/frontend/ui/relatedProducts/Rel
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
+import Header from "../../../shared/header/Header";
 
 const DetailsPage = () => {
   const { slug } = useParams();
@@ -23,6 +24,9 @@ const DetailsPage = () => {
 
   return (
     <main className="bg-white pb-10">
+      <div className="sticky top-0 bg-primaryColor z-30">
+        <Header />
+      </div>
       <ProductDetails product={product} />
       <section>
         <RelatedProducts
