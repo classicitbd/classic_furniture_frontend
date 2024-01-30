@@ -56,7 +56,6 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
     .map((item) => `${item.size} (${item.quantity})`)
     .join(", ")
     .replace(/,([^,]*)$/, " & $1");
-  console.log("setectedSizes");
 
   return (
     <>

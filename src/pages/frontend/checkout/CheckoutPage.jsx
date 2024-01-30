@@ -12,6 +12,7 @@ import {
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
+  setShippingType,
 } from "../../../redux/feature/cart/cartSlice";
 
 import ConfirmationModal from "../../../components/common/modal/ConfirmationModal";
@@ -39,6 +40,7 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const [addressUpdate, setAddressUpdate] = useState(false);
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
+  const quantity = useSelector((state) => state.cart.quantity);
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -86,6 +88,12 @@ const CheckoutPage = () => {
       navigate("/all");
     }
   }, [carts?.length, navigate]);
+
+  useEffect(() => {
+    if (district === "Dhaka") {
+      dispatch(setShippingType(district));
+    }
+  }, [district, dispatch]);
 
   return (
     <div>

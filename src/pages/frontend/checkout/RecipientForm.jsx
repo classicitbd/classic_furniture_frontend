@@ -3,7 +3,7 @@ import { useOrderRegUserMutation } from "../../../redux/feature/auth/authApi";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import {
 //   setShippingCharge,
 //   setShippingType,
@@ -12,6 +12,7 @@ import { setCookie } from "../../../utils/cookie-storage";
 import Select from "react-select";
 import { districts } from "../../../data/districts";
 import { divisions } from "../../../data/divisions";
+import { setShippingType } from "../../../redux/feature/cart/cartSlice";
 
 const RecipientForm = ({
   userData,
@@ -30,7 +31,7 @@ const RecipientForm = ({
   // const [isOpen, setIsOpen] = useState(false);
   const [orderRegUser, { isLoading }] = useOrderRegUserMutation();
   const deliveryPoint = useSelector((state) => state.cart.shippingType);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -87,6 +88,8 @@ const RecipientForm = ({
       setDistrictsData(districtData);
     }
   }, [districtId]);
+
+  console.log(district);
 
   return (
     <>
@@ -185,6 +188,7 @@ const RecipientForm = ({
               getOptionValue={(x) => x?.id}
               onChange={(selectedOption) => {
                 setDistrict(selectedOption?.name);
+                dispatch(setShippingType(selectedOption?.name));
               }}
             ></Select>
           </div>
