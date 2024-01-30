@@ -1,6 +1,8 @@
 // import react icons
+import { IoHomeOutline } from "react-icons/io5";
+import { IoBriefcaseOutline } from "react-icons/io5";
 import { CiLocationOn, CiUser } from "react-icons/ci";
-import { CiEdit } from "react-icons/ci";
+import { CiEdit, CiHeart } from "react-icons/ci";
 import { PiAddressBook } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
@@ -10,6 +12,7 @@ import { setCookie } from "../../../utils/cookie-storage";
 import { SlPhone } from "react-icons/sl";
 import VerifyModal from "../../../components/common/modal/VerifyModal";
 import { toast } from "react-toastify";
+import Select from "react-select";
 import {
   useOtpVerifyMutation,
   useResendOtpMutation,
@@ -19,6 +22,20 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
+const options = [
+  {
+    label: "Pathao",
+    value: "pathao",
+  },
+  {
+    label: "Sundarban Courier",
+    value: "sundarban-courier",
+  },
+  {
+    label: "SA Paribahan",
+    value: "sa-paribahan",
+  },
+];
 const Recipient = ({
   addressUpdate,
   setAddressUpdate,
@@ -28,11 +45,14 @@ const Recipient = ({
   setDistrict,
   district,
   division,
+  setCurior,
+  curior,
 }) => {
   const [loading, setLoading] = useState(false);
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
+  const [addNote, setAddNote] = useState("home");
   const { handleSubmit, reset } = useForm();
 
   const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
@@ -247,6 +267,114 @@ const Recipient = ({
           </table>
         </div>
       )}
+
+      <fieldset className="mb-5">
+        <legend className="mb-2">Add Note</legend>
+
+        <div className="text-center flex items-center gap-5">
+          <div onClick={() => setAddNote("home")}>
+            <input
+              className="peer sr-only"
+              id="home"
+              type="radio"
+              tabIndex="-1"
+              name="payment"
+            />
+
+            <label
+              htmlFor="home"
+              className={`w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:bg-success-400 flex justify-between items-center ${
+                addNote === "home" && "bg-success-400"
+              }`}
+              tabIndex="0"
+            >
+              <span className="text-sm">
+                <IoHomeOutline
+                  className={`${addNote === "home" && "text-textColor"}`}
+                />
+              </span>
+            </label>
+            <p>Home</p>
+          </div>
+
+          <div onClick={() => setAddNote("work")}>
+            <input
+              className="peer sr-only"
+              id="work"
+              type="radio"
+              tabIndex="-1"
+              name="payment"
+            />
+
+            <label
+              htmlFor="work"
+              className={`w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:bg-success-400 flex justify-between items-center ${
+                addNote === "work" && "bg-success-400"
+              }`}
+              tabIndex="0"
+            >
+              <span className="text-sm">
+                <IoBriefcaseOutline
+                  className={`${addNote === "work" && "text-textColor"}`}
+                />
+              </span>
+            </label>
+            <p>Work</p>
+          </div>
+          <div onClick={() => setAddNote("partner")}>
+            <input
+              className="peer sr-only"
+              id="partner"
+              type="radio"
+              tabIndex="-1"
+              name="payment"
+            />
+
+            <label
+              htmlFor="partner"
+              className={`w-full rounded-lg border border-gray-200 p-2 text-gray-600 hover:border-black peer-checked:bg-success-400 flex justify-center items-center ${
+                addNote === "partner" && "bg-success-400"
+              }`}
+              tabIndex="0"
+            >
+              <span className="flex justify-center items-center">
+                <CiHeart
+                  className={`text-xl ${
+                    addNote === "partner" && "text-textColor"
+                  }`}
+                />
+              </span>
+            </label>
+            <p>Partner</p>
+          </div>
+        </div>
+      </fieldset>
+
+      <div className="flex items-center gap-3">
+        <div className="w-full">
+          <label htmlFor="city" className="label block mb-2">
+            <strong className="label-text">Curior Service</strong>
+            <span className="text-error-300">*</span>
+          </label>
+
+          <Select
+            name="curior-service"
+            options={options}
+            defaultValue={{ value: curior, label: curior }}
+            onChange={(e) => setCurior(e.value)}
+          />
+        </div>
+      </div>
+
+      <div className="mb-10 flex flex-col gap-3 mt-5">
+        <h2>
+          <strong>Delivery Charge </strong>
+          <span className="text-error-300">*</span>
+        </h2>
+
+        <p>Inside Dhaka ৳100</p>
+        <p>Outside Dhaka ৳150</p>
+      </div>
 
       <p className="text-sm">
         For urgent delivery, please contact{" "}

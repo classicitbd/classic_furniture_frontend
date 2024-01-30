@@ -3,7 +3,7 @@ import { CiTrash } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Recipient from "./Recipient";
 import { useEffect, useState } from "react";
 import Payment from "./Payment";
@@ -12,6 +12,7 @@ import {
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
+  setShippingType,
 } from "../../../redux/feature/cart/cartSlice";
 
 import ConfirmationModal from "../../../components/common/modal/ConfirmationModal";
@@ -29,14 +30,17 @@ const CheckoutPage = () => {
   }, []);
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
+  const [curior, setCurior] = useState("Select...");
   const [user, setUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);
   const carts = useSelector((state) => state.cart.products);
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [addressUpdate, setAddressUpdate] = useState(false);
   const shippingCharge = useSelector((state) => state.cart.shippingCharge);
+  const quantity = useSelector((state) => state.cart.quantity);
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -79,6 +83,18 @@ const CheckoutPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (carts.length <= 0) {
+      navigate("/all");
+    }
+  }, [carts?.length, navigate]);
+
+  useEffect(() => {
+    if (district === "Dhaka") {
+      dispatch(setShippingType(district));
+    }
+  }, [district, dispatch]);
+
   return (
     <div>
       <div className="sticky top-0 bg-primaryColor z-30">
@@ -89,7 +105,9 @@ const CheckoutPage = () => {
           <section className="overflow-y-auto space-y-5 order-2 md:order-1">
             <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
               <Recipient
+                setCurior={setCurior}
                 user={user}
+                curior={curior}
                 setUser={setUser}
                 setDivision={setDivision}
                 setDistrict={setDistrict}
@@ -104,6 +122,7 @@ const CheckoutPage = () => {
                 district={district}
                 division={division}
                 user={user}
+                curior={curior}
                 setUser={setUser}
                 addressUpdate={addressUpdate}
                 subTotal={subTotal}

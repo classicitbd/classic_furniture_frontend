@@ -4,16 +4,15 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../../../utils/baseURL";
-import {
-  setShippingCharge,
-  setShippingType,
-} from "../../../redux/feature/cart/cartSlice";
+// import {
+//   setShippingCharge,
+//   setShippingType,
+// } from "../../../redux/feature/cart/cartSlice";
 import { setCookie } from "../../../utils/cookie-storage";
 import Select from "react-select";
 import { districts } from "../../../data/districts";
 import { divisions } from "../../../data/divisions";
+import { setShippingType } from "../../../redux/feature/cart/cartSlice";
 
 const RecipientForm = ({
   userData,
@@ -29,7 +28,7 @@ const RecipientForm = ({
   const [loading, setLoading] = useState(false);
   const [districtsData, setDistrictsData] = useState([]);
   const [districtId, setDistrictId] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [orderRegUser, { isLoading }] = useOrderRegUserMutation();
   const deliveryPoint = useSelector((state) => state.cart.shippingType);
   const dispatch = useDispatch();
@@ -40,15 +39,15 @@ const RecipientForm = ({
     formState: { errors },
   } = useForm();
 
-  const { data: deliveryCharge = [] } = useQuery({
-    queryKey: ["/api/v1/siteSetting"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/siteSetting`);
-      const data = res.json();
-      return data;
-    },
-    suspense: false,
-  });
+  // const { data: deliveryCharge = [] } = useQuery({
+  //   queryKey: ["/api/v1/siteSetting"],
+  //   queryFn: async () => {
+  //     const res = await fetch(`${BASE_URL}/siteSetting`);
+  //     const data = res.json();
+  //     return data;
+  //   },
+  //   suspense: false,
+  // });
 
   const onSubmit = async (data) => {
     try {
@@ -77,9 +76,9 @@ const RecipientForm = ({
     }
   };
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   useEffect(() => {
     if (districtId) {
@@ -89,6 +88,8 @@ const RecipientForm = ({
       setDistrictsData(districtData);
     }
   }, [districtId]);
+
+  console.log(district);
 
   return (
     <>
@@ -187,6 +188,7 @@ const RecipientForm = ({
               getOptionValue={(x) => x?.id}
               onChange={(selectedOption) => {
                 setDistrict(selectedOption?.name);
+                dispatch(setShippingType(selectedOption?.name));
               }}
             ></Select>
           </div>
@@ -238,7 +240,7 @@ const RecipientForm = ({
           />
         </div> */}
 
-        <div className="mb-10 flex items-center gap-3">
+        {/* <div className="mb-10 flex items-center gap-3">
           <h2>
             <span>Delivery Point</span>
             <span className="text-error-300">*</span>
@@ -317,7 +319,7 @@ const RecipientForm = ({
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
         {userData ? (
           <div className="flex justify-end">
