@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import UserForm from "./UserForm";
 import OrderTab from "../../../components/frontend/ui/order/OrderTab";
-import ChangePassword from "./ChangePassword";
 import { getCookie } from "../../../utils/cookie-storage";
 import Header from "../../../shared/header/Header";
 import { useNavigate } from "react-router-dom";
@@ -10,15 +9,6 @@ const UserDashboard = () => {
   const [user, setUser] = useState(null);
   const [active, setActive] = useState("order");
   const navigate = useNavigate();
-
-  // const { data: informations = [], refetch } = useQuery({
-  //   queryKey: [`/api/v1/getMe/${user?.phone}`],
-  //   queryFn: async () => {
-  //     const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
-  //     const data = await res.json();
-  //     return data;
-  //   },
-  // }); // get USER INFO
 
   useEffect(() => {
     const getData = getCookie("user");

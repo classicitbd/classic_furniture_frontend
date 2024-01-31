@@ -1,7 +1,7 @@
 // import react icons
 import { IoHomeOutline } from "react-icons/io5";
 import { IoBriefcaseOutline } from "react-icons/io5";
-import { CiLocationOn, CiUser } from "react-icons/ci";
+import { CiUser } from "react-icons/ci";
 import { CiEdit, CiHeart } from "react-icons/ci";
 import { PiAddressBook } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
@@ -258,7 +258,7 @@ const Recipient = ({
                   {informations?.data?.district}
                 </td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
                   <CiLocationOn />
                   <span>Delivery Point</span>
@@ -267,7 +267,7 @@ const Recipient = ({
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
                   {user?.deliveryPoint ? user?.deliveryPoint : "N/A"}
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </div>

@@ -25,9 +25,6 @@ const Payment = ({
   const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
 
-  // const deliveryCharge = parseInt(shippingCharge);
-  // const total = subTotal + deliveryCharge;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -50,10 +47,6 @@ const Payment = ({
 
       if (!payBy) {
         return toast.error("select your payment method !");
-      }
-
-      if (shippingType === "select") {
-        return toast.error("Select your delivery Point !");
       }
 
       if (user && user?.address) {
