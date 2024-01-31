@@ -19,7 +19,7 @@ const OrderTab = ({ user }) => {
       setProducts(response?.data?.data);
       // setLoading(false);
     });
-  }, [user?.phone]);
+  }, []);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -49,6 +49,8 @@ const OrderTab = ({ user }) => {
   // if (loading) {
   //   return <BigSpinner />;
   // }
+
+  console.log(products);
 
   return (
     <div>
