@@ -1,26 +1,25 @@
 import {
   Navigation,
-  Pagination,
   Scrollbar,
   A11y,
   Autoplay,
   Keyboard,
   Parallax,
+  EffectFade,
 } from "swiper/modules";
-import { FcNext, FcPrevious } from "react-icons/fc";
+// import { FcNext, FcPrevious } from "react-icons/fc";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/bundle";
-// import "swiper/css/keyboard";
+import "swiper/css/effect-fade";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-// import Header from "../../../../shared/header/Header";
 
-const Slider = () => {
+const CategorySlider = () => {
   const { data: sliders = [] } = useQuery({
     queryKey: ["/api/v1/slider"],
     queryFn: async () => {
@@ -30,20 +29,13 @@ const Slider = () => {
     },
   }); // get all slider
 
-  console.log(sliders);
-
   return (
     <div className="relative">
-      {/* <div
-        className={`absolute top-0 right-0 z-30 w-full hover:bg-primaryColor bg-opacity-5 hover:bg-opacity-100`}
-      >
-        <Header />
-      </div> */}
       <Swiper
         // install Swiper modules
         modules={[
           Navigation,
-          Pagination,
+          EffectFade,
           Scrollbar,
           A11y,
           Autoplay,
@@ -51,6 +43,7 @@ const Slider = () => {
           Parallax,
         ]}
         slidesPerView={1}
+        effect={"fade"}
         speed={1000}
         parallax={true}
         navigation={{
@@ -72,12 +65,12 @@ const Slider = () => {
               <img
                 loading="lazy"
                 src={slider?.slider}
-                className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] xl:h-[90vh] object-fill"
+                className="w-full h-[40vh] md:h-[50vh] lg:h-[60vh] xl:h-[60vh] object-top"
                 alt={slider.id}
               />
 
-              <div className="absolute top-0 left-0 z-30 h-full w-full flex items-center px-12 md:px-20 bg-primaryColor bg-opacity-40">
-                <div className="space-y-1 lg:space-y-2">
+              <div className="absolute top-0 left-0 z-30 h-full w-full flex items-center justify-center px-12 md:px-20 bg-primaryColor bg-opacity-40">
+                <div className="space-y-1 lg:space-y-2 flex flex-col items-center">
                   <h3 className="text-textColor text-xl md:text-2xl lg:text-4xl">
                     {slider?.title}
                   </h3>
@@ -87,7 +80,7 @@ const Slider = () => {
                   ></div>
                   <Link
                     to={`${slider?.url ? slider?.url : "/all"}`}
-                    className="relative inline-flex items-center justify-start px-5 py-3 overflow-hidden font-normal rounded group"
+                    className="w-[80px] text-center relative inline-flex items-center justify-center px-5 py-3 overflow-hidden font-normal rounded group"
                   >
                     <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
                     <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-white opacity-100 group-hover:-translate-x-8"></span>
@@ -101,7 +94,7 @@ const Slider = () => {
             </SwiperSlide>
           ))}
         </div>
-        <div className="">
+        {/* <div className="">
           <button className="prev w-10 h-10 absolute top-[43%] left-0 md:left-[10px] z-10 bg-gray-600 bg-opacity-0 hover:bg-opacity-40 rounded flex items-center justify-center transition-all duration-300">
             <span>
               <FcPrevious className="text-4xl md:text-5xl p-1 font-light" />
@@ -112,10 +105,10 @@ const Slider = () => {
               <FcNext className="text-4xl md:text-5xl p-1 font-light" />
             </span>
           </button>
-        </div>
+        </div> */}
       </Swiper>
     </div>
   );
 };
 
-export default Slider;
+export default CategorySlider;

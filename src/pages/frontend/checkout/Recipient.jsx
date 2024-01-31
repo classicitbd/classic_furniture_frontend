@@ -19,7 +19,7 @@ import {
 } from "../../../redux/feature/auth/authApi";
 
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 const options = [
@@ -71,8 +71,17 @@ const Recipient = ({
         return [];
       }
 
-      const res = await fetch(`${BASE_URL}/getMe/${user.phone}`);
+      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
       const data = await res.json();
+      return data;
+    },
+  });
+
+  const { data: data = [] } = useQuery({
+    queryKey: ["data"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`);
+      const data = res.json();
       return data;
     },
   });
@@ -161,6 +170,8 @@ const Recipient = ({
   useEffect(() => {
     setCookie("curior", JSON.stringify(curior));
   }, [curior]);
+
+  console.log(data?.data[0]?.inside_dhaka);
 
   return (
     <div className="px-5 md:px-10">
@@ -371,20 +382,27 @@ const Recipient = ({
         </div>
       </div>
 
-      <div className="mb-10 flex flex-col gap-3 mt-5">
+      <div className="mb-10 flex flex-col gap-2 mt-5">
         <h2>
-          <strong>Delivery Charge </strong>
-          <span className="text-error-300">*</span>
+          <strong>Delivery Time </strong>
         </h2>
-        <p>Inside Dhaka ৳100</p>
-        <p>Outside Dhaka ৳160</p>
+        <p>Inside Dhaka {data?.data[0]?.inside_dhaka} days</p>
+        <p>Outside Dhaka {data?.data[0]?.outside_dhaka} days</p>
       </div>
 
       <p className="text-sm">
-        For urgent delivery, please contact{" "}
-        <span className="text-blue-500">+88*********16</span> (11AM-10PM) or
-        reach to our social media platform{" "}
-        <span className="text-blue-500">Facebook/ Instagram</span>
+        For urgent delivery, please contact
+        <span className="text-blue-500 underline ml-1">
+          {data?.data[0]?.emergency_contact}
+        </span>{" "}
+        (10AM-10PM) or reach to our social media platform
+        <Link
+          to={`${data?.data[0]?.facebook}`}
+          target="_blank"
+          className="text-blue-500 ml-1 underline"
+        >
+          Facebook
+        </Link>
       </p>
 
       {user && !user?.verify && (

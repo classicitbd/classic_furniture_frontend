@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../../utils/cookie-storage";
+import { Link } from "react-router-dom";
 
 const Payment = ({
   user,
@@ -16,13 +17,13 @@ const Payment = ({
   total,
   addNote,
   curior,
+  deliveryCharge,
 }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
   const [order, { isLoading, isError }] = useOrderMutation();
-  const shippingCharge = useSelector((state) => state.cart.shippingCharge);
-  const shippingType = useSelector((state) => state.cart.shippingType);
+  // const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -57,23 +58,23 @@ const Payment = ({
           payment_type: payBy,
           order: carts,
           price: total,
-          shipping_price: shippingCharge,
-          shipping_type: shippingType,
-          district,
-          division,
+          shipping_price: deliveryCharge,
+          district: user?.district,
+          division: user?.division,
           addNote,
           curior,
         };
       }
+      console.log(data);
       const res = await order(data);
+
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
         } else {
-          localStorage.removeItem(cartKey);
-          toast.success(res?.data?.message);
-          window.location.reload();
           navigate(`/payment-success/cash-on-delivery`);
+          localStorage.removeItem(cartKey);
+          window.location.reload();
         }
       } else {
         setLoading(false);
@@ -85,6 +86,7 @@ const Payment = ({
       setLoading(false);
     }
   };
+
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
@@ -151,7 +153,10 @@ const Payment = ({
 
         <p className="text-xs mt-2">
           By making this purchase you agree to our
-          <span className="text-blue-500"> terms and conditions.</span>
+          <Link to="/return-exchange" className="text-blue-500 underline">
+            {" "}
+            terms and conditions.
+          </Link>
         </p>
         <button
           type="submit"

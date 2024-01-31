@@ -8,6 +8,7 @@ import CollectionCategory from "../../../components/frontend/ui/collectionCatego
 import CollectionTopCategory from "../../../components/frontend/ui/collectionCategory/CollectionTopCategory";
 import { useEffect, useState } from "react";
 import Header from "../../../shared/header/Header";
+import CategorySlider from "../../../components/frontend/ui/slider/CategorySlider";
 // import Navbar from "../../../components/frontend/ui/navbar/Navbar";
 
 const Home = () => {
@@ -49,6 +50,7 @@ const Home = () => {
         <ArrivalTopProducts />
         <ArrivalBottomProducts />
       </section>
+      <CategorySlider />
       <section>
         <SubCategory />
         <CollectionTopCategory />

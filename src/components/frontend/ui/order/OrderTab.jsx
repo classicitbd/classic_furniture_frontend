@@ -3,24 +3,23 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../../../../utils/baseURL";
 import OrderViewModal from "../../../common/modal/OrderVeiwModal";
 import ProductNotFound from "../../../common/productNotFound/ProductNotFound";
-import BigSpinner from "../../../../shared/loader/BigSpinner";
 import { FaCartPlus, FaMoneyBillAlt } from "react-icons/fa";
 import { GrCompliance } from "react-icons/gr";
 import { CgSandClock } from "react-icons/cg";
 
 const OrderTab = ({ user }) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isViewData, setIsViewData] = useState({});
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     axios.get(`${BASE_URL}/order/${user?.phone}`).then((response) => {
       setProducts(response?.data?.data);
-      setLoading(false);
+      // setLoading(false);
     });
-  }, [user?.phone]);
+  }, []);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -50,6 +49,8 @@ const OrderTab = ({ user }) => {
   // if (loading) {
   //   return <BigSpinner />;
   // }
+
+  console.log(products);
 
   return (
     <div>
