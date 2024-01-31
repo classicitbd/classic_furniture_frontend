@@ -17,6 +17,7 @@ import "swiper/css/bundle";
 // import "swiper/css/keyboard";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 // import Header from "../../../../shared/header/Header";
 
 const Slider = () => {
@@ -28,6 +29,8 @@ const Slider = () => {
       return data;
     },
   }); // get all slider
+
+  console.log(sliders);
 
   return (
     <div className="relative">
@@ -72,6 +75,29 @@ const Slider = () => {
                 className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] xl:h-[90vh] object-fill"
                 alt={slider.id}
               />
+
+              <div className="absolute top-0 left-0 z-30 h-full w-full flex items-center px-12 lg:px-20 bg-primaryColor bg-opacity-40">
+                <div className="space-y-1 lg:space-y-2">
+                  <h3 className="text-textColor text-xl md:text-2xl lg:text-4xl">
+                    {slider?.title}
+                  </h3>
+                  <div
+                    className="text-textColor"
+                    dangerouslySetInnerHTML={{ __html: slider?.description }}
+                  ></div>
+                  <Link
+                    to={`${slider?.url ? slider?.url : "/all"}`}
+                    className="relative inline-flex items-center justify-start px-5 py-3 overflow-hidden font-normal rounded group"
+                  >
+                    <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
+                    <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-white opacity-100 group-hover:-translate-x-8"></span>
+                    <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-gray-900">
+                      Explore
+                    </span>
+                    <span className="absolute inset-0 border-2 border-white rounded"></span>
+                  </Link>
+                </div>
+              </div>
             </SwiperSlide>
           ))}
         </div>
