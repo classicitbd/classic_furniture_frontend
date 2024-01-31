@@ -11,8 +11,6 @@ import { Link } from "react-router-dom";
 
 const Payment = ({
   user,
-  district,
-  division,
   addressUpdate,
   total,
   addNote,
@@ -52,6 +50,7 @@ const Payment = ({
 
       if (user && user?.address) {
         data = {
+          userInfo: user?._id,
           name: user?.name,
           phone: user?.phone,
           address: user?.address,
@@ -90,6 +89,8 @@ const Payment = ({
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
+
+  console.log(user);
 
   return (
     <div className="px-5 md:px-10">
@@ -161,7 +162,9 @@ const Payment = ({
         <button
           type="submit"
           disabled={!user || addressUpdate}
-          className="block w-full text-center py-3 text-textColor bg-primaryColor hover:bg-opacity-70 rounded mt-4"
+          className={`block w-full text-center py-3 text-textColor bg-primaryColor hover:bg-opacity-70 rounded mt-4 ${
+            !user || addressUpdate ? "bg-opacity-70" : "bg-opacity-100"
+          }`}
         >
           {loading || isLoading ? <MiniSpinner /> : "Place Order"}
         </button>
