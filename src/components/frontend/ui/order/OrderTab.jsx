@@ -47,9 +47,9 @@ const OrderTab = ({ user }) => {
     return total + product.totalPrice;
   }, 0);
 
-  if (loading) {
-    return <BigSpinner />;
-  }
+  // if (loading) {
+  //   return <BigSpinner />;
+  // }
 
   return (
     <div>
