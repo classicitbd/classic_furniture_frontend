@@ -89,7 +89,6 @@ const RecipientForm = ({
     }
   }, [districtId]);
 
-  console.log(district);
 
   return (
     <>

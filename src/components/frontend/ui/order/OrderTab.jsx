@@ -43,11 +43,14 @@ const OrderTab = ({ user }) => {
     (product) => product.status === "complete"
   );
 
-  if (loading) {
-    return <BigSpinner />;
-  }
+  const totalPrice = products.reduce((total, product) => {
+    return total + product.totalPrice;
+  }, 0);
 
-  console.log("Order Data: ", products);
+  // if (loading) {
+  //   return <BigSpinner />;
+  // }
+
   return (
     <div>
       {/* ------ Order info tabs ------ start */}
@@ -95,8 +98,8 @@ const OrderTab = ({ user }) => {
             </p>
           </div>
           <div>
-            <p className="text-end">Revenue</p>
-            <h2 className="font-medium text-[24px]">$ {120}</h2>
+            <p className="text-end">Total Order Price</p>
+            <h2 className="font-medium text-[24px]">৳ {totalPrice}.00</h2>
           </div>
         </div>
       </div>

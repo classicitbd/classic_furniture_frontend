@@ -28,10 +28,12 @@ const CheckoutPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [division, setDivision] = useState("");
-  const [district, setDistrict] = useState("");
+
+  const [division, setDivision] = useState("Select...");
+  const [district, setDistrict] = useState("Select...");
   const [deliveryCharge, setSetDeliveryCharge] = useState(0);
   const [curior, setCurior] = useState("Select...");
+  const [addNote, setAddNote] = useState("home");
   const [user, setUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);
@@ -110,6 +112,12 @@ const CheckoutPage = () => {
     }
   }, [district, quantity]);
 
+  useEffect(() => {
+    const getData = getCookie("curior");
+    const curiorData = JSON.parse(getData);
+    setCurior(curiorData);
+  }, []);
+
   return (
     <div>
       <div className="sticky top-0 bg-primaryColor z-30">
@@ -122,6 +130,8 @@ const CheckoutPage = () => {
               <Recipient
                 setCurior={setCurior}
                 user={user}
+                addNote={addNote}
+                setAddNote={setAddNote}
                 curior={curior}
                 setUser={setUser}
                 setDivision={setDivision}
@@ -141,6 +151,9 @@ const CheckoutPage = () => {
                 setUser={setUser}
                 addressUpdate={addressUpdate}
                 subTotal={subTotal}
+                total={total}
+                addNote={addNote}
+                setAddNote={setAddNote}
               />
             </div>
           </section>

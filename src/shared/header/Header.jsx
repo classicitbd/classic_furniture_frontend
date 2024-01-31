@@ -4,14 +4,11 @@ import { FaRegUser } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GoArrowRight, GoPlus } from "react-icons/go";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormSearch from "../../components/frontend/form/FormSearch";
 import ProductNotFound from "../../components/common/productNotFound/ProductNotFound";
 import { CiTrash } from "react-icons/ci";
 import { FiMinus } from "react-icons/fi";
-import { isLoggedin, isUserLoggedin } from "../../service/Auth.service";
-import { eraseCookie } from "../../utils/cookie-storage";
-import { authKey } from "../../constants/storageKey";
 import { useDispatch, useSelector } from "react-redux";
 import {
   decrementQuantity,
@@ -26,6 +23,7 @@ import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import MobileMenu from "./MobileMenu";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import useUser from "../../hooks/useUser";
 const Header = () => {
   const [menu, setMenu] = useState("");
   const [gender, setGender] = useState("");
@@ -34,14 +32,15 @@ const Header = () => {
   const [data, setData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const carts = useSelector((state) => state.cart.products);
   const subTotal = useSelector((state) => state.cart.subtotal);
   const dispatch = useDispatch();
-  const isUser = isLoggedin();
-  const isUserLogin = isUserLoggedin();
+  // const isUser = isLoggedin();
+  // const isUserLogin = isUserLoggedin();
+  const [user] = useUser();
 
   const { data: products = [] } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -86,12 +85,12 @@ const Header = () => {
     suspense: false,
   }); // get category and sub category
 
-  const handleLogOut = () => {
-    eraseCookie(authKey);
-    eraseCookie("user");
-    navigate("/");
-    window.location.reload();
-  };
+  // const handleLogOut = () => {
+  //   eraseCookie(authKey);
+  //   eraseCookie("user");
+  //   navigate("/");
+  //   window.location.reload();
+  // };
 
   const handleHover = (menu) => {
     setIsMenuOpen(true);
@@ -138,6 +137,10 @@ const Header = () => {
       document.body.style.overflow = "unset";
     };
   }, [isDrawerOpen]);
+
+  // if (loading) {
+  //   return <BigSpinner />;
+  // }
 
   return (
     <>
@@ -251,7 +254,53 @@ const Header = () => {
                   </span>
                 )}
               </button>
-              {isUser || isUserLogin ? (
+
+              {user && (
+                <div className="relative">
+                  <div className="inline-flex items-center overflow-hidden">
+                    <Link
+                      to={`/user-profile`}
+                      // onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      className="flex items-center gap-2 rounded-full border border-textColor px-1 py-1 md:px-2 md:py-2"
+                    >
+                      <span className="hidden md:block text-logoColor">
+                        Profile
+                      </span>
+                      <span className="w-7 h-7 flex items-center justify-center rounded-full bg-primaryColor">
+                        <FaRegUser className="w-5 h-5 text-logoColor" />
+                      </span>
+                    </Link>
+                  </div>
+                  {/* {isDropdownOpen && (
+                    <div
+                      className="absolute w-40 end-0 z-50 mt-2 rounded-md border border-gray-100 bg-white shadow-lg"
+                      role="menu"
+                    >
+                      <div className="p-2">
+                        <Link
+                          to="/user-profile"
+                          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                          className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          role="menuitem"
+                        >
+                          My Profile
+                        </Link>
+                        <form>
+                          <button
+                            type="submit"
+                            className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                            role="menuitem"
+                            onClick={handleLogOut}
+                          >
+                            Log Out
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  )} */}
+                </div>
+              )}
+              {/* {user ? (
                 <div className="relative">
                   <div className="inline-flex items-center overflow-hidden">
                     <button
@@ -259,7 +308,7 @@ const Header = () => {
                       className="flex items-center gap-2 rounded-full border border-textColor px-1 py-1 md:px-2 md:py-2"
                     >
                       <span className="hidden md:block text-logoColor">
-                        Sign Out
+                        Profile
                       </span>
                       <span className="w-7 h-7 flex items-center justify-center rounded-full bg-primaryColor">
                         <FaRegUser className="w-5 h-5 text-logoColor" />
@@ -296,17 +345,17 @@ const Header = () => {
                 </div>
               ) : (
                 <Link
-                  to="/sign-in"
+                  to="#"
                   className="flex items-center gap-2 rounded-full border border-textColor px-1 py-1 md:px-2 md:py-2"
                 >
                   <span className="hidden md:block text-logoColor">
-                    sign in
+                    Profile
                   </span>
                   <span className="w-7 h-7 flex items-center justify-center rounded-full bg-primaryColor">
                     <FaRegUser className="w-5 h-5 text-logoColor" />
                   </span>
                 </Link>
-              )}
+              )} */}
               <button onClick={toggleMobileMenu} className="block lg:hidden">
                 <RxHamburgerMenu className="text-2xl text-textColor" />
               </button>

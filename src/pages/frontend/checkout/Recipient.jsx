@@ -1,7 +1,7 @@
 // import react icons
 import { IoHomeOutline } from "react-icons/io5";
 import { IoBriefcaseOutline } from "react-icons/io5";
-import { CiLocationOn, CiUser } from "react-icons/ci";
+import { CiUser } from "react-icons/ci";
 import { CiEdit, CiHeart } from "react-icons/ci";
 import { PiAddressBook } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
@@ -36,6 +36,7 @@ const options = [
     value: "sa-paribahan",
   },
 ];
+
 const Recipient = ({
   addressUpdate,
   setAddressUpdate,
@@ -47,12 +48,14 @@ const Recipient = ({
   division,
   setCurior,
   curior,
+  addNote,
+  setAddNote,
 }) => {
   const [loading, setLoading] = useState(false);
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
-  const [addNote, setAddNote] = useState("home");
+
   const { handleSubmit, reset } = useForm();
 
   const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
@@ -78,7 +81,6 @@ const Recipient = ({
     try {
       setLoading(true);
       const otp = OTPinput.join("");
-      console.log(otp);
       if (!otp || otp.length < 4) {
         toast.error("Must be provide OTP !");
         return;
@@ -88,7 +90,6 @@ const Recipient = ({
         otp,
       };
       const res = await otpVeriy(data);
-      console.log(res);
 
       if (res?.data?.success) {
         setCookie("user", JSON.stringify({ ...user, verify: true }));
@@ -156,6 +157,10 @@ const Recipient = ({
     // cleanup the interval on complete
     return () => clearInterval(interval);
   }, [disable]);
+
+  useEffect(() => {
+    setCookie("curior", JSON.stringify(curior));
+  }, [curior]);
 
   return (
     <div className="px-5 md:px-10">
@@ -229,7 +234,7 @@ const Recipient = ({
               <tr>
                 <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
                   <PiAddressBook />
-                  <span> Address</span>
+                  <span>Address</span>
                 </td>
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
                   {informations?.data?.address}
@@ -238,7 +243,7 @@ const Recipient = ({
               <tr>
                 <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
                   <PiAddressBook />
-                  <span> Division</span>
+                  <span>Division</span>
                 </td>
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
                   {informations?.data?.division}
@@ -247,13 +252,13 @@ const Recipient = ({
               <tr>
                 <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
                   <PiAddressBook />
-                  <span> District</span>
+                  <span>District</span>
                 </td>
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
                   {informations?.data?.district}
                 </td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
                   <CiLocationOn />
                   <span>Delivery Point</span>
@@ -262,7 +267,7 @@ const Recipient = ({
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
                   {user?.deliveryPoint ? user?.deliveryPoint : "N/A"}
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </div>
@@ -371,9 +376,8 @@ const Recipient = ({
           <strong>Delivery Charge </strong>
           <span className="text-error-300">*</span>
         </h2>
-
         <p>Inside Dhaka ৳100</p>
-        <p>Outside Dhaka ৳150</p>
+        <p>Outside Dhaka ৳160</p>
       </div>
 
       <p className="text-sm">

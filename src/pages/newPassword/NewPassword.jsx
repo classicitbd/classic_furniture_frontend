@@ -51,7 +51,6 @@ const NewPassword = () => {
       setLoading(true);
       const phone = getFromLocalStorage("reset-phone");
       const otp = OTPinput.join(""); // Make sure OTPinput is an array
-      console.log(phone);
       if (!otp) {
         toast.warn("Must provide OTP!");
         return;
@@ -68,7 +67,6 @@ const NewPassword = () => {
       data.otp = otp;
 
       const res = await setPassword(data);
-      console.log(res);
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         setToLocalStorage("reset-phone", "");

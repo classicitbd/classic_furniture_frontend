@@ -6,8 +6,17 @@ import { useOrderMutation } from "../../../redux/feature/payment/paymentApi";
 import { toast } from "react-toastify";
 import { cartKey } from "../../../constants/cartKey";
 import { useNavigate } from "react-router-dom";
+import { setCookie } from "../../../utils/cookie-storage";
 
-const Payment = ({ user, subTotal, district, division, addressUpdate }) => {
+const Payment = ({
+  user,
+  district,
+  division,
+  addressUpdate,
+  total,
+  addNote,
+  curior,
+}) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.products);
@@ -16,14 +25,18 @@ const Payment = ({ user, subTotal, district, division, addressUpdate }) => {
   const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
 
-  const deliveryCharge = parseInt(shippingCharge);
-  const total = subTotal + deliveryCharge;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       let data;
+      if (!curior) {
+        return toast.error("Select your curior !");
+      } else {
+        setCookie("curior", JSON.stringify(curior));
+      }
+      setCookie("addNote", JSON.stringify(addNote));
+
       if (!user) {
         return toast.error("Must be provide your Information !");
       }
@@ -34,10 +47,6 @@ const Payment = ({ user, subTotal, district, division, addressUpdate }) => {
 
       if (!payBy) {
         return toast.error("select your payment method !");
-      }
-
-      if (shippingType === "select") {
-        return toast.error("Select your delivery Point !");
       }
 
       if (user && user?.address) {
@@ -52,18 +61,19 @@ const Payment = ({ user, subTotal, district, division, addressUpdate }) => {
           shipping_type: shippingType,
           district,
           division,
+          addNote,
+          curior,
         };
       }
       const res = await order(data);
-
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
         if (res?.data?.data?.GatewayPageURL) {
           window.location.replace(res?.data?.data?.GatewayPageURL);
         } else {
           localStorage.removeItem(cartKey);
           toast.success(res?.data?.message);
-          navigate(`/payment-success/cash-on-delivery`);
           window.location.reload();
+          navigate(`/payment-success/cash-on-delivery`);
         }
       } else {
         setLoading(false);
@@ -78,7 +88,7 @@ const Payment = ({ user, subTotal, district, division, addressUpdate }) => {
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
-  
+
   return (
     <div className="px-5 md:px-10">
       <div className="flex items-center gap-7">

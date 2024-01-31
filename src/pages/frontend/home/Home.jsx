@@ -31,8 +31,6 @@ const Home = () => {
     };
   }, []); // useEffect will run once when the component mounts
 
-  console.log(isHeaderFixed);
-
   return (
     <main className="">
       {/* <Navbar /> */}

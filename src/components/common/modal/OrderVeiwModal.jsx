@@ -17,7 +17,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
       location.reload();
     }, 10);
   };
-  console.log(isViewData);
+  
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
