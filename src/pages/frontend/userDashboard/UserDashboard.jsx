@@ -4,10 +4,12 @@ import OrderTab from "../../../components/frontend/ui/order/OrderTab";
 import ChangePassword from "./ChangePassword";
 import { getCookie } from "../../../utils/cookie-storage";
 import Header from "../../../shared/header/Header";
+import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
   const [active, setActive] = useState("order");
+  const navigate = useNavigate();
 
   // const { data: informations = [], refetch } = useQuery({
   //   queryKey: [`/api/v1/getMe/${user?.phone}`],
@@ -25,6 +27,10 @@ const UserDashboard = () => {
       setUser(userData);
     }
   }, []);
+
+  if (!user) {
+    return navigate("/all");
+  }
 
   return (
     <>
@@ -53,14 +59,14 @@ const UserDashboard = () => {
           >
             My Order
           </button>
-          <button
+          {/* <button
             onClick={() => setActive("change-password")}
             className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 border-b hover:border-b-success-400 ${
               active === "change-password" && "border-b-success-400"
             }`}
           >
             Change Password
-          </button>
+          </button> */}
         </nav>
       </section>
       <section className="my-5 px-2">
@@ -69,11 +75,11 @@ const UserDashboard = () => {
             <UserForm user={user} setUser={setUser} />
           </div>
         )}
-        {active === "change-password" && (
+        {/* {active === "change-password" && (
           <div className="w-full md:w-[768px] mx-auto">
             <ChangePassword user={user} />
           </div>
-        )}
+        )} */}
 
         {active === "order" && (
           <div className="w-full md:w-[1024px] mx-auto">

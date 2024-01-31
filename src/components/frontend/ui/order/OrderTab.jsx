@@ -47,7 +47,6 @@ const OrderTab = ({ user }) => {
     return <BigSpinner />;
   }
 
-  console.log("Order Data: ", products);
   return (
     <div>
       {/* ------ Order info tabs ------ start */}

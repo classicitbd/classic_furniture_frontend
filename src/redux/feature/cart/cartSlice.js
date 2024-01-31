@@ -129,8 +129,6 @@ const cartSlice = createSlice({
       // Update total quantity
       state.quantity = calculateTotalQuantity(state.products);
 
-      console.log(state.quantity);
-
       // update delivery charge
       state.deliveryCharge = calculateDeliveryCharge(
         state.shippingType,

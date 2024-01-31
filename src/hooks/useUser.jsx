@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react";
-import { getUserInfo } from "../service/Auth.service";
-import { BASE_URL } from "../utils/baseURL";
+import { getCookie } from "../utils/cookie-storage";
 
 const useUser = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { email } = getUserInfo();
   useEffect(() => {
-    if (email) {
-      fetch(`${BASE_URL}/getMe/${email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setUser(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    setLoading(true);
+    const getData = getCookie("user");
+    if (getData) {
+      const userData = JSON.parse(getData);
+      setUser(userData);
+      setLoading(false);
     }
-  }, [email]);
+  }, []);
   return [user, loading];
 };
 

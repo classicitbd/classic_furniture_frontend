@@ -30,9 +30,11 @@ const UserForm = ({ user, setUser }) => {
       if (!division || !district) {
         return toast.error("Please provide your District & Division");
       }
+      data.name = data.name ? data?.name : user?.name;
+      data.phone = data.phone ? data?.phone : user?.phone;
+      data.address = data.address ? data?.address : user?.address;
       data.district = district;
       data.division = division;
-      console.log(data);
       const res = await orderRegUser(data);
 
       if (res?.data?.success) {
@@ -45,6 +47,7 @@ const UserForm = ({ user, setUser }) => {
         toast.success("Your Information is done!", {
           autoClose: 2,
         });
+        setEdit(!edit);
         reset();
       }
     } catch (error) {
@@ -62,8 +65,6 @@ const UserForm = ({ user, setUser }) => {
       setDistrictsData(districtData);
     }
   }, [districtId]);
-
-  console.log(user);
 
   return (
     <form className="space-y-5 mb-10" onSubmit={handleSubmit(onSubmit)}>
