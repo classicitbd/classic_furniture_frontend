@@ -29,8 +29,6 @@ const CategorySlider = () => {
     },
   }); // get all slider
 
-  console.log(sliders);
-
   return (
     <div className="relative">
       <Swiper
