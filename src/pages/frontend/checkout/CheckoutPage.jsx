@@ -20,9 +20,9 @@ import { IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
-import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 import { getCookie } from "../../../utils/cookie-storage";
 import Header from "../../../shared/header/Header";
+import EmptyCart from "../../../components/common/emptyCart/EmptyCart";
 
 const CheckoutPage = () => {
   useEffect(() => {
@@ -255,7 +255,7 @@ const CheckoutPage = () => {
                   ))}
                 </div>
               ) : (
-                <ProductNotFound />
+                <EmptyCart />
               )}
               <Link
                 to={`/all`}

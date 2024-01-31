@@ -6,7 +6,6 @@ import { GoArrowRight, GoPlus } from "react-icons/go";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FormSearch from "../../components/frontend/form/FormSearch";
-import ProductNotFound from "../../components/common/productNotFound/ProductNotFound";
 import { CiTrash } from "react-icons/ci";
 import { FiMinus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +23,7 @@ import { useQuery } from "@tanstack/react-query";
 import MobileMenu from "./MobileMenu";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import useUser from "../../hooks/useUser";
+import EmptyCart from "../../components/common/emptyCart/EmptyCart";
 const Header = () => {
   const [menu, setMenu] = useState("");
   const [gender, setGender] = useState("");
@@ -534,7 +534,7 @@ const Header = () => {
                 </div>
               </section>
             ) : (
-              <ProductNotFound />
+              <EmptyCart />
             )}
           </div>
         </div>
@@ -591,7 +591,7 @@ const Header = () => {
         </ConfirmationModal>
 
         {/* ------ confirm modal ------ end */}
-
+        {/* ----- dropdown section ----- start */}
         <div
           // onMouseEnter={() => setIsMenuOpen(true)}
           onMouseLeave={() => {
@@ -631,6 +631,7 @@ const Header = () => {
           </div>
           {/* ------ category section ------ end */}
         </div>
+        {/* ----- dropdown section ----- end */}
       </section>
     </>
   );

@@ -71,8 +71,8 @@ const Payment = ({
           window.location.replace(res?.data?.data?.GatewayPageURL);
         } else {
           localStorage.removeItem(cartKey);
-          toast.success(res?.data?.message);
           window.location.reload();
+          toast.success(res?.data?.message);
           navigate(`/payment-success/cash-on-delivery`);
         }
       } else {
