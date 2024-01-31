@@ -12,7 +12,6 @@ import {
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
-  setShippingType,
 } from "../../../redux/feature/cart/cartSlice";
 
 import ConfirmationModal from "../../../components/common/modal/ConfirmationModal";
@@ -31,7 +30,7 @@ const CheckoutPage = () => {
 
   const [division, setDivision] = useState("Select...");
   const [district, setDistrict] = useState("Select...");
-  const [deliveryCharge, setSetDeliveryCharge] = useState(0);
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [curior, setCurior] = useState("Select...");
   const [addNote, setAddNote] = useState("home");
   const [user, setUser] = useState(null);
@@ -91,32 +90,41 @@ const CheckoutPage = () => {
     }
   }, [carts?.length, navigate]);
 
-  useEffect(() => {
-    if (district === "Dhaka") {
-      dispatch(setShippingType(district));
-    }
-  }, [district, dispatch]);
+  // useEffect(() => {
+  //   if (district === "Dhaka") {
+  //     dispatch(setShippingType(district));
+  //   }
+  // }, [district, dispatch]);
 
   useEffect(() => {
     const insideDhakaCharge = 100;
     const additionalChargePerQuantity = 50; // Adjust the value as needed
     const outsideDhakaCharge = 160;
 
-    if (district === "Dhaka") {
-      setSetDeliveryCharge(
+    if (user?.district === "Dhaka" || district === "Dhaka") {
+      localStorage.setItem("charge", deliveryCharge);
+      return setDeliveryCharge(
         insideDhakaCharge +
           (quantity > 1 ? (quantity - 1) * additionalChargePerQuantity : 0)
       );
     } else {
-      setSetDeliveryCharge(outsideDhakaCharge);
+      localStorage.setItem("charge", deliveryCharge);
+      setDeliveryCharge(outsideDhakaCharge);
     }
-  }, [district, quantity]);
+  }, [district, quantity, deliveryCharge, user?.district]);
+
+  useEffect(() => {
+    const chargeData = localStorage.getItem("charge");
+    setDeliveryCharge(chargeData);
+  }, []);
 
   useEffect(() => {
     const getData = getCookie("curior");
     const curiorData = JSON.parse(getData);
     setCurior(curiorData);
   }, []);
+
+  console.log(user);
 
   return (
     <div>
@@ -154,6 +162,7 @@ const CheckoutPage = () => {
                 total={total}
                 addNote={addNote}
                 setAddNote={setAddNote}
+                deliveryCharge={deliveryCharge}
               />
             </div>
           </section>

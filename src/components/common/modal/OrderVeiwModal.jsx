@@ -17,7 +17,9 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
       location.reload();
     }, 10);
   };
-  
+
+  console.log(isViewData);
+
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
@@ -65,6 +67,9 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                       Quantity
                     </th>
                     <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                      Shipping Price
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                       Color
                     </th>
                     <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
@@ -96,6 +101,9 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
                         {order?.quantity}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {isViewData?.shipping_price}
                       </td>
 
                       <td
