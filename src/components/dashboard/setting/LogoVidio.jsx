@@ -37,6 +37,7 @@ const LogoVidio = ({ refetch, initialData }) => {
       logo_name: logo_name || initialData?.logo_name,
       favicon: favicon || initialData?.favicon,
       title: data?.title || initialData?.title,
+      emergency_contact: data?.emergency_contact || initialData?.emergency_contact,
       _id: initialData?._id,
     };
     postSiteSettng(sendData).then((result) => {
@@ -114,6 +115,18 @@ const LogoVidio = ({ refetch, initialData }) => {
               {...register("title")}
               id="title"
               type="text"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label className="font-semibold" htmlFor="emergency_contact">
+              Contact No<span className="text-red-500"> if need</span>{" "}
+            </label>
+            <input
+              defaultValue={initialData?.emergency_contact}
+              {...register("emergency_contact")}
+              id="emergency_contact"
+              type="number"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>

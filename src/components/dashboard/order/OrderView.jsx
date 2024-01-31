@@ -118,11 +118,9 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                         </li>
                                         <li>
                                           <h4>
-                                            Shipping :{" "}
+                                            Shipping Price :{" "}
                                             <span>
-                                              {isViewData?.shipping_type +
-                                                " " +
-                                                isViewData?.shipping_price}
+                                              {isViewData?.shipping_price}
                                             </span>
                                           </h4>
                                         </li>
