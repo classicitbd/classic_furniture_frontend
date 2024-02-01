@@ -30,7 +30,6 @@ const Slider = () => {
     },
   }); // get all slider
 
-  console.log(sliders);
 
   return (
     <div className="relative">
@@ -66,13 +65,13 @@ const Slider = () => {
         onSwiper={() => {}}
         onSlideChange={() => {}}
       >
-        <div className="relative" data-swiper-parallax-duration="2000">
+        <div className="relative" data-swiper-parallax-duration="2000"> 
           {sliders?.data?.map((slider) => (
             <SwiperSlide key={slider._id}>
               <img
                 loading="lazy"
                 src={slider?.slider}
-                className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] xl:h-[90vh] object-fill"
+                className="w-full h-[100vh] object-fill"
                 alt={slider.id}
               />
 
