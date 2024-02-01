@@ -47,7 +47,7 @@ const SliderTable = ({ sliders, refetch }) => {
     <div className="my-12">
       <div className="flex items-center justify-between mb-8 ">
         <h1 className="font-semiboldunderline md:text-2xl text-xl underline">
-          Manage your image
+          Manage your Slider
         </h1>
         <button
           onClick={() => setAddSliderModalOpen(!addSliderModalOpen)}

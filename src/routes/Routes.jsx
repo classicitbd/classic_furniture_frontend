@@ -35,6 +35,7 @@ import ShippingInfoPage from "../pages/frontend/shippingInfo/ShippingInfoPage";
 import ReturnExchangePage from "../pages/frontend/returnExchangePage/ReturnExchangePage";
 import MaterialAndCarePage from "../pages/frontend/materialAndCare/MaterialAndCarePage";
 import AboutusPage from "../pages/frontend/aboutus/AboutusPage";
+import Banner from "../pages/dashboard/banner/Banner";
 
 const router = createBrowserRouter([
   {
@@ -132,6 +133,10 @@ const router = createBrowserRouter([
       {
         path: "/istiak/slider",
         element: <Slider />,
+      },
+      {
+        path: "/istiak/banner",
+        element: <Banner />,
       },
       {
         path: "/istiak/menu",

@@ -35,11 +35,16 @@ const SideNavbarMenuItem = () => {
         },
         {
             id: 6,
+            text: "Banner",
+            link: "/istiak/banner",
+        },
+        {
+            id: 7,
             text: "Menu",
             link: "/istiak/menu",
         },
         {
-            id: 7,
+            id: 15,
             text: "Category",
             link: "/istiak/category",
         },
