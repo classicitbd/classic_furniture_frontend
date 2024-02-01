@@ -75,7 +75,7 @@ const UpdateSlider = ({
       const sendData = {
         title: data?.title || sliderUpdateModalValue?.title,
         url: data?.url || sliderUpdateModalValue?.url,
-        description: data?.description || sliderUpdateModalValue?.description,
+        description: description || sliderUpdateModalValue?.description,
         slider: sliderUpdateModalValue?.slider,
         _id: sliderUpdateModalValue?._id
       }
