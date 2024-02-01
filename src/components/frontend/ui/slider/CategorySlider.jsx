@@ -27,7 +27,7 @@ const CategorySlider = () => {
       const data = await res.json();
       return data;
     },
-  }); // get all banners 
+  }); // get all banners
 
   return (
     <div className="relative">
