@@ -20,14 +20,14 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 const CategorySlider = () => {
-  const { data: sliders = [] } = useQuery({
-    queryKey: ["/api/v1/slider"],
+  const { data: banners = [] } = useQuery({
+    queryKey: ["/api/v1/banner"],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/slider`);
+      const res = await fetch(`${BASE_URL}/banner`);
       const data = await res.json();
       return data;
     },
-  }); // get all slider
+  }); // get all banners
 
   return (
     <div className="relative">
@@ -60,26 +60,26 @@ const CategorySlider = () => {
         onSlideChange={() => {}}
       >
         <div className="relative" data-swiper-parallax-duration="2000">
-          {sliders?.data?.map((slider) => (
-            <SwiperSlide key={slider._id}>
+          {banners?.data?.map((banner) => (
+            <SwiperSlide key={banner._id}>
               <img
                 loading="lazy"
-                src={slider?.slider}
-                className="w-full h-[40vh] md:h-[50vh] lg:h-[60vh] xl:h-[60vh] object-top"
-                alt={slider.id}
+                src={banner?.banner}
+                className="w-full h-[100vh] object-top"
+                alt={banner.id}
               />
 
               <div className="absolute top-0 left-0 z-30 h-full w-full flex items-center justify-center px-12 md:px-20 bg-primaryColor bg-opacity-40">
                 <div className="space-y-1 lg:space-y-2 flex flex-col items-center">
                   <h3 className="text-textColor text-xl md:text-2xl lg:text-4xl">
-                    {slider?.title}
+                    {banner?.title}
                   </h3>
                   <div
                     className="text-textColor"
-                    dangerouslySetInnerHTML={{ __html: slider?.description }}
+                    dangerouslySetInnerHTML={{ __html: banner?.description }}
                   ></div>
                   <Link
-                    to={`${slider?.url ? slider?.url : "/all"}`}
+                    to={`${banner?.url ? banner?.url : "/all"}`}
                     className="w-[80px] text-center relative inline-flex items-center justify-center px-5 py-3 overflow-hidden font-normal rounded group"
                   >
                     <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
