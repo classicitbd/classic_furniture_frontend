@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import UserForm from "./UserForm";
 import OrderTab from "../../../components/frontend/ui/order/OrderTab";
 import { getCookie } from "../../../utils/cookie-storage";
-import Header from "../../../shared/header/Header";
 import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
@@ -24,9 +23,6 @@ const UserDashboard = () => {
 
   return (
     <>
-      {/* <div className="sticky top-0 bg-primaryColor z-30">
-        <Header />
-      </div> */}
       <section className="bg-white shadow">
         <nav
           className="w-full md:w-[768px] mx-auto flex justify-center gap-6 border-b"
