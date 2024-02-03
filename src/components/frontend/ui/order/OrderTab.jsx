@@ -55,7 +55,7 @@ const OrderTab = ({ user }) => {
     <div>
       {/* ------ Order info tabs ------ start */}
       <div className="grid lg:grid-cols-4 grid-cols-2 mt-6 gap-3">
-        <div className="bg-[#D4F3FB] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+        <div className="bg-[#D4F3FB] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] flex items-center justify-center bg-[#00B7E9] rounded-full">
               <FaCartPlus size={20} color="#FFFFFF" />
@@ -63,11 +63,13 @@ const OrderTab = ({ user }) => {
           </div>
           <div>
             <p className="text-end">Total</p>
-            <h2 className="font-medium text-[24px]">{products?.length}</h2>
+            <h2 className="font-medium text-[16px] md:text-[24px]">
+              {products?.length}
+            </h2>
           </div>
         </div>
 
-        <div className="bg-[#DEF6EE] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+        <div className="bg-[#DEF6EE] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] flex items-center justify-center bg-[#3EC99E] rounded-full">
               <CgSandClock size={20} color="#FFFFFF" />
@@ -75,11 +77,13 @@ const OrderTab = ({ user }) => {
           </div>
           <div>
             <p className="text-end">Pending</p>
-            <h2 className="font-medium text-[24px]">{orderPending?.length}</h2>
+            <h2 className="font-medium text-[16px] md:text-[24px]">
+              {orderPending?.length}
+            </h2>
           </div>
         </div>
 
-        <div className="bg-[#EAE9FE] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+        <div className="bg-[#EAE9FE] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] flex justify-center items-center bg-[#837DFB] rounded-full">
               <GrCompliance size={20} color="#FFFFFF" />
@@ -87,19 +91,23 @@ const OrderTab = ({ user }) => {
           </div>
           <div>
             <p className="text-end">Success</p>
-            <h2 className="font-medium text-[24px]">{orderSuccess?.length}</h2>
+            <h2 className="font-medium text-[16px] md:text-[24px]">
+              {orderSuccess?.length}
+            </h2>
           </div>
         </div>
 
-        <div className="bg-teal-100 rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+        <div className="bg-teal-100 rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] flex items-center justify-center bg-teal-500 rounded-full">
               <FaMoneyBillAlt size={20} color="#FFFFFF" />
             </p>
           </div>
           <div>
-            <p className="text-end">Total Order Price</p>
-            <h2 className="font-medium text-[24px]">৳ {totalPrice}.00</h2>
+            <p className="text-end">Order Price</p>
+            <h2 className="font-medium text-[16px] md:text-[24px]">
+              ৳ {totalPrice}.00
+            </h2>
           </div>
         </div>
       </div>

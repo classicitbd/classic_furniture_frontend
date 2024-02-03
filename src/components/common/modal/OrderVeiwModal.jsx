@@ -14,16 +14,16 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
 
     // Reload the page after printing
     setTimeout(() => {
-      location.reload();
+      window.location.reload();
     }, 10);
-  };
 
-  console.log(isViewData);
+    return () => clearTimeout();
+  };
 
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[1000px] p-6 max-h-[100vh] overflow-y-auto">
+        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-full md:w-[1000px] p-6 max-h-[100vh] overflow-y-auto">
           <div className="flex items-center justify-between">
             <h3
               className="text-[26px] font-bold text-[#0A0A0A] capitalize"
