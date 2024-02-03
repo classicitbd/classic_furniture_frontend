@@ -133,9 +133,9 @@ const CheckoutPage = () => {
 
   return (
     <div>
-      <div className="sticky top-0 bg-primaryColor z-30">
+      {/* <div className="sticky top-0 bg-primaryColor z-30">
         <Header />
-      </div>
+      </div> */}
       <div className="container py-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <section className="overflow-y-auto space-y-5 order-2 md:order-1">

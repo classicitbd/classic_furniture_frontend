@@ -3,7 +3,6 @@ import { BsArrowRightShort } from "react-icons/bs";
 import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../utils/baseURL";
-import BigSpinner from "../loader/BigSpinner";
 
 const quickLinks = [{ path: "/about-us", label: "Our Story" }];
 

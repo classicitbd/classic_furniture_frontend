@@ -24,9 +24,9 @@ const UserDashboard = () => {
 
   return (
     <>
-      <div className="sticky top-0 bg-primaryColor z-30">
+      {/* <div className="sticky top-0 bg-primaryColor z-30">
         <Header />
-      </div>
+      </div> */}
       <section className="bg-white shadow">
         <nav
           className="w-full md:w-[768px] mx-auto flex justify-center gap-6 border-b"

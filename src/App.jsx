@@ -1,6 +1,5 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/Routes";
-import BigSpinner from "./shared/loader/BigSpinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
@@ -15,6 +14,7 @@ function App() {
         setFavicon(data?.data[0]?.favicon);
       });
   }, []);
+  
   // effect to update favicon
   useEffect(() => {
     let link = document.querySelector("link[rel~='icon']");

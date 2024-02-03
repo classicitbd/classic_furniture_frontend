@@ -4,9 +4,9 @@ import Header from "../../../shared/header/Header";
 const ContactPage = () => {
   return (
     <>
-      <div className="sticky top-0 bg-primaryColor z-30">
+      {/* <div className="sticky top-0 bg-primaryColor z-30">
         <Header />
-      </div>
+      </div> */}
       <Contact />
     </>
   );
