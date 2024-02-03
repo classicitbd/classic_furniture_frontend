@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 
 const MaterialAndCare = () => {
-  const { data: materail = [] } = useQuery({
+  const { data: materail = [], isLoading } = useQuery({
     queryKey: ["materail"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
@@ -10,6 +10,11 @@ const MaterialAndCare = () => {
       return data;
     },
   });
+
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <div className="py-10 mx-auto">
       <h2 className="text-xl lg:text-2xl xl:text-3xl text-center tracking-tight font-medium">

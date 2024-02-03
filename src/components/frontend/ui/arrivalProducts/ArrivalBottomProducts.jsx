@@ -26,53 +26,58 @@ const ArrivalBottomProducts = () => {
       return data;
     },
   }); // get All Product
-
-   if (isLoading) {
-     return <ProductCardSkeleton />;
-   }
   return (
     <div className="px-[5px] lg:px-[10px] pb-[20px] pt-[5px]">
-      <Swiper
-        modules={[Navigation, Scrollbar, A11y, Keyboard, Parallax]}
-        slidesPerView={1}
-        spaceBetween={10}
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-          },
-          768: {
-            slidesPerView: 3,
-          },
-          1024: {
-            slidesPerView: 4,
-          },
-        }}
-        speed={600}
-        parallax={true}
-        navigation={{
-          nextEl: ".next-btm",
-          prevEl: ".prev-btm",
-        }}
-        loop={true}
-        autoplay={{
-          delay: 3000,
-        }}
-        keyboard={{ enabled: true }}
-        pagination={{ clickable: true }}
-        onSwiper={() => {}}
-        onSlideChange={() => {}}
-      >
-        <div>
-          {products?.data?.map((product) => (
-            <SwiperSlide
-              key={product?._id}
-              className="border group rounded-md overflow-hidden bg-secondary"
-            >
-              <ProductCard product={product} loading={isLoading} />
-            </SwiperSlide>
-          ))}
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
+          <ProductCardSkeleton />
+          <ProductCardSkeleton />
+          <ProductCardSkeleton />
+          <ProductCardSkeleton />
         </div>
-      </Swiper>
+      ) : (
+        <Swiper
+          modules={[Navigation, Scrollbar, A11y, Keyboard, Parallax]}
+          slidesPerView={1}
+          spaceBetween={10}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+            },
+            768: {
+              slidesPerView: 3,
+            },
+            1024: {
+              slidesPerView: 4,
+            },
+          }}
+          speed={600}
+          parallax={true}
+          navigation={{
+            nextEl: ".next-btm",
+            prevEl: ".prev-btm",
+          }}
+          loop={true}
+          autoplay={{
+            delay: 3000,
+          }}
+          keyboard={{ enabled: true }}
+          pagination={{ clickable: true }}
+          onSwiper={() => {}}
+          onSlideChange={() => {}}
+        >
+          <div>
+            {products?.data?.map((product) => (
+              <SwiperSlide
+                key={product?._id}
+                className="border group rounded-md overflow-hidden bg-secondary"
+              >
+                <ProductCard product={product} loading={isLoading} />
+              </SwiperSlide>
+            ))}
+          </div>
+        </Swiper>
+      )}
       <div className="flex items-center justify-between py-[20px]">
         <div className="hidden lg:block"></div>
         <h2 className="text-xl md:text-2xl font-normal md:font-medium"></h2>

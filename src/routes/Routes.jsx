@@ -36,6 +36,7 @@ import ReturnExchangePage from "../pages/frontend/returnExchangePage/ReturnExcha
 import MaterialAndCarePage from "../pages/frontend/materialAndCare/MaterialAndCarePage";
 import AboutusPage from "../pages/frontend/aboutus/AboutusPage";
 import Banner from "../pages/dashboard/banner/Banner";
+import SecondMain from "../layout/SecondMain";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,13 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+    ],
+  },
+  {
+    path: "/",
+    element: <SecondMain />,
+    errorElement: <NotFound />,
+    children: [
       {
         path: "/:slug",
         element: <DetailsPage />,

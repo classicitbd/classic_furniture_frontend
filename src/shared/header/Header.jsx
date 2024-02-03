@@ -24,6 +24,7 @@ import MobileMenu from "./MobileMenu";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import useUser from "../../hooks/useUser";
 import EmptyCart from "../../components/common/emptyCart/EmptyCart";
+import PreLoader from "../loader/PreLoader";
 const Header = () => {
   const [menu, setMenu] = useState("");
   const [gender, setGender] = useState("");
@@ -139,7 +140,7 @@ const Header = () => {
   }, [isDrawerOpen]);
 
   if (isLoading || logoLoading) {
-    return <p></p>;
+    return <PreLoader />;
   }
 
   return (
