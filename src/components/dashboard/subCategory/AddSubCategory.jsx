@@ -43,8 +43,11 @@ const AddSubCategory = ({ refetch }) => {
   }); // get Category type
 
   const handleSelectChange = (selectedOption) => {
-    setMenuId(selectedOption?._id);
-    setIsCategoryOpen(true);
+    setIsCategoryOpen(false);
+    setTimeout(() => {
+      setMenuId(selectedOption?._id);
+      setIsCategoryOpen(true);
+    }, 100)
   };
 
   const [postSubCategoryType] = useAddSub_CategoryMutation(); //post Sub Category type
