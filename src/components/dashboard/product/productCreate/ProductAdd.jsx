@@ -25,8 +25,10 @@ const ProductAdd = () => {
   const [feature, setFeature] = useState("");
   const [description, setDescription] = useState('');
 
-  const [menuIdForCategory, setMenuIdForCategory] = useState("");
+  const [isMenuIdForCategory, setIsMenuIdForCategory] = useState(false);
+  const [menuIdForCategory, setMenuIdForCategory] = useState('');
 
+  const [isCategoryIdForSubCategory, setIsCategoryIdForSubCategory] = useState(false);
   const [categoryIdForSubCategory, setCategoryIdForSubCategory] = useState("");
   const [isOpenCategory, setIsOpenCategory] = useState(false);
 
@@ -55,7 +57,7 @@ const ProductAdd = () => {
 
   const {
     data: colors = [],
-    isLoading,
+    isLoading: colorLoading,
     refetch,
   } = useQuery({
     queryKey: ["/api/v1/color"],
@@ -66,7 +68,7 @@ const ProductAdd = () => {
     },
   }); // get Color type
 
-  const { data: menus = [] } = useQuery({
+  const { data: menus = [], isLoading: menuLoading } = useQuery({
     queryKey: ["/api/v1/menu"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/menu`);
@@ -103,8 +105,15 @@ const ProductAdd = () => {
   }); // get Feature type
 
   const handleMenuToCategory = (menu) => {
+    setIsCategoryIdForSubCategory(false);
+    setIsOpenSubCategory(false);
+    setIsMenuIdForCategory(false);
+    setIsOpenCategory(false);
+    setTimeout(() => {
     setMenuIdForCategory(menu?._id);
+    setIsMenuIdForCategory(true);
     setIsOpenCategory(true);
+    }, 100)
   };
 
   const setColorIdValue = (color) => {
@@ -113,8 +122,13 @@ const ProductAdd = () => {
   };
 
   const handleCategoryToSubCategory = (category) => {
+    setIsCategoryIdForSubCategory(false);
+    setIsOpenSubCategory(false);
+    setTimeout(() => {
     setCategoryIdForSubCategory(category?._id);
+    setIsCategoryIdForSubCategory(true);
     setIsOpenSubCategory(true);
+    }, 100)
   };
 
   const { data: categories = [] } = useQuery({
@@ -393,7 +407,7 @@ const ProductAdd = () => {
     });
   };
 
-  if (isLoading) {
+  if (colorLoading || menuLoading ) {
     return <BigSpinner />;
   }
 
@@ -578,7 +592,7 @@ const ProductAdd = () => {
                 ></Select>
               </div>
 
-              {isOpenCategory && (
+              {isOpenCategory && isMenuIdForCategory && (
                 <div>
                   <label className="font-semibold" htmlFor="categoryId">
                     Category Type
@@ -598,7 +612,7 @@ const ProductAdd = () => {
                 </div>
               )}
 
-              {isOpenSubCategory && (
+              {isOpenSubCategory && isCategoryIdForSubCategory && (
                 <div>
                   <label className="font-semibold" htmlFor="subCategoryId">
                     Sub Category Type
