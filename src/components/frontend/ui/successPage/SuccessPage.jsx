@@ -1,32 +1,19 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { cartKey } from "../../../../constants/cartKey";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const SuccessPage = () => {
-  const { tranId } = useParams();
-  const [localStorageRemoved, setLocalStorageRemoved] = useState(false);
-  const [initialReloadDone, setInitialReloadDone] = useState(false);
+  // const { tranId } = useParams();
 
   useEffect(() => {
-    const removeLocalStorage = () => {
-      // Process the successful order
-      localStorage.removeItem(cartKey);
-      setLocalStorageRemoved(true);
-    };
+    localStorage.removeItem(cartKey);
+    const timerId = setTimeout(() => {
+      window.location.reload();
+    }, 10);
 
-    // Check if it's the initial render
-    const isInitialRender = tranId === undefined;
-
-    if (isInitialRender) {
-      // Perform any actions you want on the initial render
-      setInitialReloadDone(true);
-    } else if (tranId && !localStorageRemoved) {
-      // Remove localStorage only once on successful order
-      removeLocalStorage();
-    } else if (localStorageRemoved && !initialReloadDone) {
-      // Force a one-time reload after localStorage is removed
-    }
-  }, [tranId, localStorageRemoved, initialReloadDone]);
+    // Cleanup the timer to avoid memory leaks
+    return () => clearTimeout(timerId);
+  }, []);
 
   return (
     <div>
