@@ -30,9 +30,9 @@ const CategorySlider = () => {
     },
   }); // get all banners
 
-   if (isLoading) {
-     return <ProductCardSkeleton />;
-   }
+  if (isLoading) {
+    return <ProductCardSkeleton />;
+  }
 
   return (
     <div className="relative">
@@ -70,8 +70,8 @@ const CategorySlider = () => {
               <img
                 loading="lazy"
                 src={banner?.banner}
-                className="w-full h-[100vh] object-top"
-                alt={banner.id}
+                className="w-full h-[60vh] lg:h-[100vh] object-top"
+                alt={banner._id}
               />
 
               <div className="absolute top-0 left-0 z-30 h-full w-full flex items-center justify-center px-12 md:px-20 bg-primaryColor bg-opacity-40">

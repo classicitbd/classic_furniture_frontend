@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/baseURL";
 import { Link } from "react-router-dom";
 
 const MobileMenu = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const [menu, setMenu] = useState("");
   const [gender, setGender] = useState("");
-  const { data: menuTypes = [] } = useQuery({
+  const [categoryData, setCategoryData] = useState([]);
+  const [subCategoryData, setSubCategoryData] = useState([]);
+  const [categoryAndSubCategory, setCategoryAndSubCategory] = useState([]);
+
+  const { data: menuTypes = [], isLoading } = useQuery({
     queryKey: ["/api/v1/menu"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/menu`);
@@ -14,19 +18,44 @@ const MobileMenu = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
       return data;
     },
   }); // get Menu type
-  const { data: category = [] } = useQuery({
-    queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
-    queryFn: async () => {
-      if (menu !== "") {
-        const res = await fetch(`${BASE_URL}/menu/${menu}`);
-        const data = await res.json();
-        return data;
-      } else {
-        // Return a default value when menu is empty
-        return { data: [] };
-      }
-    },
-  }); // get category and sub category
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/category`)
+      .then((res) => res.json())
+      .then((data) => setCategoryData(data?.data));
+  }, []);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/sub_category`)
+      .then((res) => res.json())
+      .then((data) => setSubCategoryData(data?.data));
+  }, []);
+
+  useEffect(() => {
+    const getCategoryData = categoryData.filter(
+      (category) => category?.menuId?._id === menu
+    );
+
+    let categoryAndSubCategoryData = [];
+
+    getCategoryData.forEach((category) => {
+      const getSubCategoryData = subCategoryData.filter(
+        (subCategory) =>
+          category?._id === subCategory?.categoryId?._id &&
+          subCategory?.menuId?._id === menu
+      );
+      categoryAndSubCategoryData.push({
+        category,
+        subCategories: getSubCategoryData,
+      });
+    });
+
+    setCategoryAndSubCategory([...categoryAndSubCategoryData]);
+  }, [menu, categoryData, subCategoryData]);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <div className="px-4">
@@ -60,7 +89,7 @@ const MobileMenu = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
               </summary>
 
               <ul className="mt-2 space-y-1 px-2">
-                {category?.data?.map((category) => (
+                {categoryAndSubCategory?.map((category) => (
                   <li className="w-[200px]" key={category?.category?._id}>
                     <Link
                       onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -70,7 +99,7 @@ const MobileMenu = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
                       {category?.category?.category}
                     </Link>
                     <ul className="space-y-[2px] mt-2">
-                      {category?.subcategories?.map((subItem) => (
+                      {category?.subCategories?.map((subItem) => (
                         <li key={subItem?._id}>
                           <Link
                             onClick={() =>
