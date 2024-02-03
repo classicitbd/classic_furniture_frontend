@@ -25,6 +25,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import useUser from "../../hooks/useUser";
 import EmptyCart from "../../components/common/emptyCart/EmptyCart";
 import PreLoader from "../loader/PreLoader";
+
 const Header = () => {
   const [menu, setMenu] = useState("");
   const [gender, setGender] = useState("");
@@ -33,6 +34,8 @@ const Header = () => {
   const [data, setData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [categoryData, setCategoryData] = useState([]);
+  const [subCategoryData, setSubCategoryData] = useState([]);
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const navigate = useNavigate();
@@ -139,6 +142,38 @@ const Header = () => {
     };
   }, [isDrawerOpen]);
 
+  useEffect(() => {
+    fetch(`${BASE_URL}/category`)
+      .then((res) => res.json())
+      .then((data) => setCategoryData(data?.data));
+  }, []);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/sub_category`)
+      .then((res) => res.json())
+      .then((data) => setSubCategoryData(data?.data));
+  }, []);
+
+  useEffect(() => {
+    const getCategoryData = categoryData.filter(
+      (category) => category?.menuId?._id === menu
+    );
+    console.log(getCategoryData);
+
+  // for(const category of getCategoryData){
+  //   const getSubCategoryData 
+  // }
+
+    // const getSubCategoryData = getCategoryData.filter((category) =>
+    //   // console.log(category)
+    // );
+
+    // console.log(getSubCategoryData);
+  }, [menu, categoryData]);
+
+  // console.log("category", categoryData);
+  // console.log("sub category", subCategoryData);
+
   if (isLoading || logoLoading) {
     return <PreLoader />;
   }
@@ -229,8 +264,8 @@ const Header = () => {
               <div
                 className={`transition-all duration-500 ease-in-out absolute z-40 ${
                   isSearchFieldOpen
-                    ? "top-[50px] md:top-[5px] right-10 md:right-[260px]"
-                    : "-top-32 right-10 md:right-[260px]"
+                    ? "top-[50px] md:top-[5px] right-16 md:right-[260px]"
+                    : "-top-32 right-16 md:right-[260px]"
                 }`}
               >
                 <FormSearch
