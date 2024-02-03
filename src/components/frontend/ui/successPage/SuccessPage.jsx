@@ -1,32 +1,14 @@
-import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { cartKey } from "../../../../constants/cartKey";
-import { useEffect, useState } from "react";
 
 const SuccessPage = () => {
-  const { tranId } = useParams();
-  const [localStorageRemoved, setLocalStorageRemoved] = useState(false);
-  const [initialReloadDone, setInitialReloadDone] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const removeLocalStorage = () => {
-      // Process the successful order
-      localStorage.removeItem(cartKey);
-      setLocalStorageRemoved(true);
-    };
-
-    // Check if it's the initial render
-    const isInitialRender = tranId === undefined;
-
-    if (isInitialRender) {
-      // Perform any actions you want on the initial render
-      setInitialReloadDone(true);
-    } else if (tranId && !localStorageRemoved) {
-      // Remove localStorage only once on successful order
-      removeLocalStorage();
-    } else if (localStorageRemoved && !initialReloadDone) {
-      // Force a one-time reload after localStorage is removed
-    }
-  }, [tranId, localStorageRemoved, initialReloadDone]);
+  const handleNavigate = () => {
+    localStorage.removeItem(cartKey);
+    navigate("/user-profile");
+    window.location.reload();
+  };
 
   return (
     <div>
@@ -37,12 +19,12 @@ const SuccessPage = () => {
         <p className="text-lg text-gray-600 mb-8">
           Thank you for your purchase.
         </p>
-        <Link
-          to="/user-profile"
+        <button
           className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          onClick={() => handleNavigate()}
         >
           See your Order
-        </Link>
+        </button>
       </div>
     </div>
   );
