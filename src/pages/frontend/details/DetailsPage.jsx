@@ -6,10 +6,11 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import Header from "../../../shared/header/Header";
+import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
 
 const DetailsPage = () => {
   const { slug } = useParams();
-  const { data: product = [] } = useQuery({
+  const { data: product = [], isLoading } = useQuery({
     queryKey: [`/api/v1/product/${slug}`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/product/${slug}`);
@@ -21,6 +22,10 @@ const DetailsPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (isLoading) {
+    return <ProductCardSkeleton />;
+  }
 
   return (
     <main className="bg-white pb-10">

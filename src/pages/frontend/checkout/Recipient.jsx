@@ -21,6 +21,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const options = [
   {
@@ -77,7 +78,7 @@ const Recipient = ({
     },
   });
 
-  const { data: data = [] } = useQuery({
+  const { data = [], isLoading: dataLoading } = useQuery({
     queryKey: ["data"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
@@ -171,7 +172,9 @@ const Recipient = ({
     setCookie("curior", JSON.stringify(curior));
   }, [curior]);
 
-  console.log(data?.data[0]?.inside_dhaka);
+  if (isLoading || dataLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <div className="px-5 md:px-10">

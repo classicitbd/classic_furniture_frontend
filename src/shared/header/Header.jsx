@@ -24,6 +24,7 @@ import MobileMenu from "./MobileMenu";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import useUser from "../../hooks/useUser";
 import EmptyCart from "../../components/common/emptyCart/EmptyCart";
+import ProductCardSkeleton from "../loader/ProductCardSkeleton";
 const Header = () => {
   const [menu, setMenu] = useState("");
   const [gender, setGender] = useState("");
@@ -42,7 +43,7 @@ const Header = () => {
   // const isUserLogin = isUserLoggedin();
   const [user] = useUser();
 
-  const { data: products = [] } = useQuery({
+  const { data: products = [], isLoading } = useQuery({
     queryKey: [`/api/v1/product`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/product`);
@@ -51,7 +52,7 @@ const Header = () => {
     },
   }); // get All Product
 
-  const { data: logo = [] } = useQuery({
+  const { data: logo = [], isLoading: logoLoading } = useQuery({
     queryKey: ["socialMedia"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
@@ -138,9 +139,9 @@ const Header = () => {
     };
   }, [isDrawerOpen]);
 
-  // if (loading) {
-  //   return <BigSpinner />;
-  // }
+  if (isLoading || logoLoading) {
+    return <ProductCardSkeleton />;
+  }
 
   return (
     <>

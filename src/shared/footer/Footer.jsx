@@ -3,6 +3,7 @@ import { BsArrowRightShort } from "react-icons/bs";
 import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../utils/baseURL";
+import BigSpinner from "../loader/BigSpinner";
 
 const quickLinks = [{ path: "/about-us", label: "Our Story" }];
 
@@ -14,7 +15,7 @@ const helpfulLinks = [
 ];
 
 const Footer = () => {
-  const { data: footerData = [] } = useQuery({
+  const { data: footerData = [], isLoading } = useQuery({
     queryKey: ["socialMedia"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
@@ -22,6 +23,10 @@ const Footer = () => {
       return data;
     },
   });
+
+  if (isLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary">

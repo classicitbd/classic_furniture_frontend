@@ -22,6 +22,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { getCookie } from "../../../utils/cookie-storage";
 import Header from "../../../shared/header/Header";
 import EmptyCart from "../../../components/common/emptyCart/EmptyCart";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const CheckoutPage = () => {
   useEffect(() => {
@@ -44,7 +45,7 @@ const CheckoutPage = () => {
   // const shippingCharge = useSelector((state) => state.cart.shippingCharge);
   const quantity = useSelector((state) => state.cart.quantity);
 
-  const { data: products = [] } = useQuery({
+  const { data: products = [], isLoading } = useQuery({
     queryKey: [`/api/v1/product`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/product`);
@@ -120,11 +121,15 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     const getData = getCookie("curior");
-    const curiorData = JSON.parse(getData);
-    setCurior(curiorData);
+    if (getData) {
+      const curiorData = JSON.parse(getData);
+      setCurior(curiorData);
+    }
   }, []);
 
-  console.log(user);
+  if (isLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <div>
