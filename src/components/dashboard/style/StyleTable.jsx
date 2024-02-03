@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteStyleMutation } from "../../../redux/feature/style/styleApi";
@@ -7,15 +6,11 @@ import { FiEdit } from "react-icons/fi";
 import { useState } from "react";
 import UpdateStyle from "./UpdateStyle";
 
-const FeatureTable = ({ refetch, isLoading, styles }) => {
+const FeatureTable = ({ refetch, styles }) => {
   const [styleUpdateModal, setStyleUpdateModal] = useState(false);
   const [styleUpdateModalValue, setStyleUpdateModalValue] = useState(false);
 
   const [deleteStyle] = useDeleteStyleMutation(); //delete Style type
-
-  if (isLoading) {
-    <BigSpinner />;
-  }
 
   // delete a Style
   const handleDeleteStyle = (style) => {

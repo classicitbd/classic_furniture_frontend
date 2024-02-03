@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteFeatureMutation } from "../../../redux/feature/feature/feature";
@@ -7,16 +6,12 @@ import { FiEdit } from "react-icons/fi";
 import { useState } from "react";
 import UpdateFeature from "./UpdateFeature";
 
-const FeatureTable = ({ refetch, isLoading, features }) => {
+const FeatureTable = ({ refetch, features }) => {
   const [featureUpdateModal, setFeatureUpdateModal] = useState(false);
   const [featureUpdateModalValue, setSubCategoryUpdateModalValue] =
     useState(false);
 
   const [deleteFeature] = useDeleteFeatureMutation(); //delete Feature type
-
-  if (isLoading) {
-    <BigSpinner />;
-  }
 
   // delete a Feature
   const handleDeleteFeature = (feature) => {

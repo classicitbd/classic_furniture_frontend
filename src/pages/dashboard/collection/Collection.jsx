@@ -4,6 +4,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import AddCollection from "../../../components/dashboard/collection/AddCollection";
 import CollectionTable from "../../../components/dashboard/collection/collectionTable";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const Collection = () => {
 
@@ -15,6 +16,10 @@ const Collection = () => {
             return data;
         }
     }) // get Collection type
+
+    if (isLoading) {
+       return <BigSpinner />;
+    }
 
     return (
         <>
@@ -32,7 +37,7 @@ const Collection = () => {
             <AddCollection refetch={refetch} />
 
             {/* update delete and show deails in table */}
-            <CollectionTable collections={collections} isLoading={isLoading} refetch={refetch} />
+            <CollectionTable collections={collections} refetch={refetch} />
 
         </>
     );

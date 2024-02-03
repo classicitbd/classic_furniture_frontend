@@ -1,13 +1,12 @@
 import { toast } from "react-toastify";
 import { useDeleteCategoryMutation } from "../../../redux/feature/category/categoryApi";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useState } from "react";
 import UpdateCategory from "./UpdateCategory";
 import { FiEdit } from "react-icons/fi";
 
-const CategoryTable = ({ refetch, isLoading, categoryTypes }) => {
+const CategoryTable = ({ refetch, categoryTypes }) => {
   const [categoryUpdateModal, setCategoryUpdateModal] = useState(false);
   const [categoryUpdateModalValue, setCategoryUpdateModalValue] =
     useState(false);
@@ -33,10 +32,7 @@ const CategoryTable = ({ refetch, isLoading, categoryTypes }) => {
 
   const [deleteCategoryType] = useDeleteCategoryMutation(); //delete Category type
 
-  if (isLoading) {
-    <BigSpinner />;
-  }
-
+  
   const updateCategoryModal = (category) => {
     setCategoryUpdateModal(true);
     setCategoryUpdateModalValue(category);

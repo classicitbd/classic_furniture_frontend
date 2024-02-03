@@ -1,22 +1,17 @@
 import { useDeleteSub_CategoryMutation } from "../../../redux/feature/subCategory/subCategoryApi";
 import { toast } from "react-toastify";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useState } from "react";
 import UpdateSubCategory from "./UpdateSubCategory";
 import { FiEdit } from "react-icons/fi";
 
-const SubCategoryTable = ({ refetch, isLoading, subCategoryTypes }) => {
+const SubCategoryTable = ({ refetch, subCategoryTypes }) => {
   const [subCategoryUpdateModal, setSubCategoryUpdateModal] = useState(false);
   const [subCategoryUpdateModalValue, setSubCategoryUpdateModalValue] =
     useState(false);
 
   const [deleteSubCategoryType] = useDeleteSub_CategoryMutation(); //delete Sub Category type
-
-  if (isLoading) {
-    <BigSpinner />;
-  }
 
   const updateSubCategoryModal = (subCategory) => {
     setSubCategoryUpdateModal(true);

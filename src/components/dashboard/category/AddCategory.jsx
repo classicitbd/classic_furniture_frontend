@@ -12,13 +12,13 @@ import { ImageValidate } from '../../../utils/ImageValidation';
 import Select from 'react-select';
 
 
-const AddCategory = ({refetch, isLoading}) => {
+const AddCategory = ({refetch}) => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const [menuLength, setMenuLength] = useState(1);
     const [menuId, setMenuId] = useState('');
 
-    const { data: menuTypes = [] } = useQuery({
+    const { data: menuTypes = [], isLoading } = useQuery({
         queryKey: ['/api/v1/menu'],
         queryFn: async () => {
             const res = await fetch(`${BASE_URL}/menu`)
@@ -31,10 +31,6 @@ const AddCategory = ({refetch, isLoading}) => {
     }) // get All Menu type
 
     const [postCategoryType] = useAddCategoryMutation();  //post Category type
-
-    if (isLoading) {
-        <BigSpinner />
-    }
 
 
     // post a Category 
@@ -83,6 +79,10 @@ const AddCategory = ({refetch, isLoading}) => {
                 toast.error(result?.error?.data?.message);
             }
         });
+    }
+
+    if (isLoading) {
+        return <BigSpinner />
     }
 
     return (

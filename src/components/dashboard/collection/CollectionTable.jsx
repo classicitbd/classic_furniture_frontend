@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteCollectionMutation } from "../../../redux/feature/collection/collectionApi";
@@ -7,16 +6,12 @@ import { useState } from "react";
 import UpdateCollection from "./UpdateCollection";
 import { FiEdit } from "react-icons/fi";
 
-const CollectionTable = ({ refetch, isLoading, collections }) => {
+const CollectionTable = ({ refetch, collections }) => {
   const [subCategoryUpdateModal, setCollectionUpdateModal] = useState(false);
   const [collectionUpdateModalValue, setSubCategoryUpdateModalValue] =
     useState(false);
 
   const [deleteCollection] = useDeleteCollectionMutation(); //delete Collection type
-
-  if (isLoading) {
-    <BigSpinner />;
-  }
 
   const updateCollectionModal = (collection) => {
     setCollectionUpdateModal(true);

@@ -4,6 +4,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import AddColor from "../../../components/dashboard/color/AddColor";
 import ColorTable from "../../../components/dashboard/color/ColorTable";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const Color = () => {
 
@@ -15,6 +16,10 @@ const Color = () => {
             return data;
         }
     }) // get Color type
+
+    if(isLoading){
+        return <BigSpinner />
+    }
 
     return (
         <>
@@ -32,7 +37,7 @@ const Color = () => {
             <AddColor refetch={refetch} />
 
             {/* update delete and show deails in table */}
-            <ColorTable colors={colors} isLoading={isLoading} refetch={refetch} />
+            <ColorTable colors={colors} refetch={refetch} />
 
         </>
     );

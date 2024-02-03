@@ -4,6 +4,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import AddFeature from "../../../components/dashboard/featurte/AddFeature";
 import FeatureTable from "../../../components/dashboard/featurte/FeatureTable";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const Feature = () => {
 
@@ -15,6 +16,10 @@ const Feature = () => {
             return data;
         }
     }) // get Feature type
+
+    if (isLoading) {
+        return <BigSpinner />;
+    }
 
     return (
         <>
@@ -32,7 +37,7 @@ const Feature = () => {
             <AddFeature refetch={refetch} />
 
             {/* update delete and show deails in table */}
-            <FeatureTable features={features} isLoading={isLoading} refetch={refetch} />
+            <FeatureTable features={features} refetch={refetch} />
 
         </>
     );

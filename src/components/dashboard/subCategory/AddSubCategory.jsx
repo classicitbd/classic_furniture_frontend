@@ -11,7 +11,7 @@ import { useAddSub_CategoryMutation } from "../../../redux/feature/subCategory/s
 import { ImageValidate } from "../../../utils/ImageValidation";
 import Select from "react-select";
 
-const AddSubCategory = ({ refetch, isLoading }) => {
+const AddSubCategory = ({ refetch }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [menuId, setMenuId] = useState(false);
   const [categoryId, setcategoryId] = useState("");
@@ -24,7 +24,7 @@ const AddSubCategory = ({ refetch, isLoading }) => {
   } = useForm();
   const [loading, setLoading] = useState(false);
 
-  const { data: menuTypes = [] } = useQuery({
+  const { data: menuTypes = [], isLoading } = useQuery({
     queryKey: ["/api/v1/menu"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/menu`);
@@ -48,10 +48,6 @@ const AddSubCategory = ({ refetch, isLoading }) => {
   };
 
   const [postSubCategoryType] = useAddSub_CategoryMutation(); //post Sub Category type
-
-  if (isLoading) {
-    <BigSpinner />;
-  }
 
   // post a Sub Category
   const handleDataPost = (data) => {
@@ -106,6 +102,10 @@ const AddSubCategory = ({ refetch, isLoading }) => {
       }
     });
   };
+
+  if (isLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <>

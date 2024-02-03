@@ -18,7 +18,7 @@ const Slider = () => {
     }) // get all slider
 
     if(isLoading){
-        <BigSpinner />
+       return <BigSpinner />
     }
 
 
