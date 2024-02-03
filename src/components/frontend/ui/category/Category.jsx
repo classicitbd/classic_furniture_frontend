@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
+import BigSpinner from "../../../../shared/loader/BigSpinner";
 
 const Category = () => {
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [categoryTypes, setCategoryTypes] = useState([]);
   // get Category type
-  const { data = [] } = useQuery({
+  const { data = [], isLoading } = useQuery({
     queryKey: ["/api/v1/category"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/category`);
@@ -26,6 +27,11 @@ const Category = () => {
     const uniqueData = Array.from(uniqueMap.values());
     setCategoryTypes(uniqueData);
   }, [data?.data]);
+
+  if (isLoading) {
+    return <BigSpinner />;
+  }
+
   return (
     <section>
       <article className="text-wrap py-[30px]">

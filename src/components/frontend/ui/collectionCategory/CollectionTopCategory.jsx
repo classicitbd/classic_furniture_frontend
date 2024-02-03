@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
+import BigSpinner from "../../../../shared/loader/BigSpinner";
 
 const CollectionTopCategory = () => {
-  const { data: collections = [] } = useQuery({
+  const { data: collections = [], isLoading } = useQuery({
     queryKey: [`/api/v1/collection?collection`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/collection`);
@@ -13,7 +14,7 @@ const CollectionTopCategory = () => {
   }); // get All collection
 
   //get video this api
-  const { data: video = [] } = useQuery({
+  const { data: video = [], isLoading: videoLoading } = useQuery({
     queryKey: ["/api/v1/siteSetting"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
@@ -21,6 +22,10 @@ const CollectionTopCategory = () => {
       return data;
     },
   });
+
+  if (isLoading || videoLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-7 grid-rows-1 md:grid-rows-2">
