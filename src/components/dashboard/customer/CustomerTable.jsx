@@ -43,10 +43,6 @@ const CustomerTable = () => {
     },
   }); // get All User
 
-  if (isLoading) {
-    <BigSpinner />;
-  }
-
   // open delete modal
   const handleDelete = (data) => {
     setIsDeleteData(data);
@@ -58,6 +54,10 @@ const CustomerTable = () => {
     setIsSearchData(data);
     setIsSearchOpen(true);
   };
+
+  if (isLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <div>

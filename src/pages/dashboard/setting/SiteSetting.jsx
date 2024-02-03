@@ -17,12 +17,12 @@ const SiteSetting = () => {
             return data;
         }
     }) // get Site Settings
+    
+    if (isLoading){
+       return <BigSpinner />
+    }
 
     const initialData = settings?.data[0]
-
-    if (isLoading){
-        <BigSpinner />
-    }
 
     return (
         <>

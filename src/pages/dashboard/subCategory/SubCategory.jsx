@@ -4,6 +4,7 @@ import AddSubCategory from "../../../components/dashboard/subCategory/AddSubCate
 import SubCategoryTable from "../../../components/dashboard/subCategory/SubCategoryTable";
 import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const SubCategory = () => {
 
@@ -15,6 +16,10 @@ const SubCategory = () => {
             return data;
         }
     }) // get Sub Category type
+
+    if (isLoading) {
+        return <BigSpinner />;
+    }
 
     return (
         <>
@@ -29,10 +34,10 @@ const SubCategory = () => {
             </div>
 
             {/* Add Sub Category Type And Show In Table */}
-            <AddSubCategory refetch={refetch} isLoading={isLoading} />
+            <AddSubCategory refetch={refetch} />
 
             {/* update delete and show deails in table */}
-            <SubCategoryTable subCategoryTypes={subCategoryTypes} isLoading={isLoading} refetch={refetch} />
+            <SubCategoryTable subCategoryTypes={subCategoryTypes} refetch={refetch} />
 
         </>
     );

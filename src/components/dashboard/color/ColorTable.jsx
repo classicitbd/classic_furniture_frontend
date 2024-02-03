@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteColorMutation } from "../../../redux/feature/color/colorApi";
@@ -7,15 +6,11 @@ import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import UpdateColor from "./UpdateColor";
 
-const ColorTable = ({ refetch, isLoading, colors }) => {
+const ColorTable = ({ refetch, colors }) => {
   const [colorUpdateModal, setColorUpdateModal] = useState(false);
   const [colorUpdateModalValue, setColorUpdateModalValue] = useState(false);
 
   const [deleteColor] = useDeleteColorMutation(); //delete Color type
-
-  if (isLoading) {
-    <BigSpinner />;
-  }
 
   // delete a Color
   const handleDeleteColor = (color) => {

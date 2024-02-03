@@ -28,7 +28,7 @@ const HomePage = () => {
     }
 
     if (isLoading){
-        <BigSpinner />
+       return <BigSpinner />
     }
 
 

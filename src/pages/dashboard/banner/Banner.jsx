@@ -18,7 +18,7 @@ const Banner = () => {
     }) // get all Banner
 
     if (isLoading) {
-        <BigSpinner />
+        return <BigSpinner />
     }
 
     return (

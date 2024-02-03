@@ -4,6 +4,7 @@ import AddMenuType from "../../../components/dashboard/menuType/AddMenuType";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import MenuTable from "../../../components/dashboard/menuType/MenuTable";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const Menu = () => {
 
@@ -15,6 +16,10 @@ const Menu = () => {
             return data;
         }
     }) // get Menu type
+
+    if (isLoading) {
+        return <BigSpinner />;
+    }
 
     return (
         <>
