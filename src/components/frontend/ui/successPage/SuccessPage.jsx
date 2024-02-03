@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { cartKey } from "../../../../constants/cartKey";
 import { useEffect, useState } from "react";
-import Header from "../../../../shared/header/Header";
 
 const SuccessPage = () => {
   const { tranId } = useParams();
@@ -31,9 +30,6 @@ const SuccessPage = () => {
 
   return (
     <div>
-      {/* <div className="sticky top-0 bg-primaryColor z-30">
-        <Header />
-      </div> */}
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-4xl font-bold text-green-600 mb-4">
           Your Order Successful!

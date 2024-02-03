@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
-import BigSpinner from "../../../../shared/loader/BigSpinner";
 import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const CollectionTopCategory = () => {
