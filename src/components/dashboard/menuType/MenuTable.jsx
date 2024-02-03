@@ -14,15 +14,12 @@ const MenuTable = ({ menuTypes, isLoading, refetch }) => {
 
   const [deleteMenuType] = useDeleteMenuMutation(); //delete Menu type
 
-  if (isLoading) {
-    <BigSpinner />;
-  }
-
+  
   const updateMenuModal = (menu) => {
     setMenuUpdateModal(true);
     setMenuUpdateModalValue(menu);
   };
-
+  
   // delete a Menu
   const handleDeleteMenu = (menu) => {
     deleteMenuType(menu).then((result) => {
@@ -31,17 +28,21 @@ const MenuTable = ({ menuTypes, isLoading, refetch }) => {
           result?.data?.message
             ? result?.data?.message
             : "Menu Delete successfully !",
-          {
-            autoClose: 1000,
-          }
-        );
-        refetch();
-      } else {
-        toast.error(result?.error?.data?.message);
+            {
+              autoClose: 1000,
+            }
+            );
+            refetch();
+          } else {
+            toast.error(result?.error?.data?.message);
       }
     });
   };
-
+  
+  if (isLoading) {
+   return <BigSpinner />;
+  }
+  
   return (
     <div>
       {/* Table for showing data */}

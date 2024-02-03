@@ -4,6 +4,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import AddStyle from "../../../components/dashboard/style/AddStyle";
 import StyleTable from "../../../components/dashboard/style/StyleTable";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const Style = () => {
 
@@ -15,6 +16,10 @@ const Style = () => {
             return data;
         }
     }) // get Style type
+
+    if (isLoading) {
+        return <BigSpinner />;
+    }
 
     return (
         <>
@@ -32,7 +37,7 @@ const Style = () => {
             <AddStyle refetch={refetch} />
 
             {/* update delete and show deails in table */}
-            <StyleTable styles={styles} isLoading={isLoading} refetch={refetch} />
+            <StyleTable styles={styles} refetch={refetch} />
 
         </>
     );

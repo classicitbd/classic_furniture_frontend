@@ -141,10 +141,6 @@ const ProductAdd = () => {
     },
   }); // get Sub Category type
 
-  if (isLoading) {
-    <BigSpinner />;
-  }
-
   // image upload start
   const fileInputRefs = useRef([]);
   const fileInputRefsHover = useRef([]);
@@ -396,6 +392,10 @@ const ProductAdd = () => {
       }
     });
   };
+
+  if (isLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <>

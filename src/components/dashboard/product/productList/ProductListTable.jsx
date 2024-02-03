@@ -17,9 +17,16 @@ const ProductListTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
+      if (searchTerm != "") {
+        setSearchTerm("");
+        setSearchData([]);
+        setIsSearchOpen(false);
+      }else{
+      setLoading(true)
       setSearchTerm(e.target.value);
       fetch(`${BASE_URL}/product/searchProduct/${searchTerm}`)
         .then((response) => response.json())
@@ -27,28 +34,38 @@ const ProductListTable = () => {
           if (result?.statusCode == 200 && result?.success == true) {
             setSearchData(result?.data);
             setIsSearchOpen(true);
+            setLoading(false)
           } else {
+            setLoading(false);
+            setSearchData('');
+            setIsSearchOpen(false);
             toast.error(result?.error?.data?.message);
           }
         });
+      }
     }
   };
 
   useEffect(() => {
     if (searchTerm != "") {
+      setLoading(true)
       fetch(`${BASE_URL}/product/searchProduct/${searchTerm}`)
         .then((response) => response.json())
         .then((result) => {
           if (result?.statusCode == 200 && result?.success == true) {
             setSearchData(result?.data);
             setIsSearchOpen(true);
+            setLoading(false)
           } else {
+            setLoading(false);
+            setIsSearchOpen(false);
             toast.error(result?.error?.data?.message);
           }
         });
     } else {
       setSearchTerm("");
       setSearchData([]);
+      setIsSearchOpen(false);
     }
   }, [searchTerm]);
 
@@ -74,10 +91,6 @@ const ProductListTable = () => {
     },
   }); // get All Product
 
-  if (isLoading) {
-    <BigSpinner />;
-  }
-
   const handleUpdate = (data) => {
     setUpdateModalValue(data);
     setIsUpdateModalOpen(true);
@@ -94,6 +107,10 @@ const ProductListTable = () => {
     setIsDeleteData(data);
     setIsDeleteOpen(true);
   };
+
+  if (isLoading || loading) {
+    return <BigSpinner />;
+  }
 
   return (
     <div>

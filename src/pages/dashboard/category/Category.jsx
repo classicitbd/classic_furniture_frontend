@@ -4,6 +4,7 @@ import AddCategory from "../../../components/dashboard/category/AddCategory";
 import CategoryTable from "../../../components/dashboard/category/CategoryTable";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
+import BigSpinner from "../../../shared/loader/BigSpinner";
 
 const Category = () => {
 
@@ -15,6 +16,10 @@ const Category = () => {
             return data;
         }
     }) // get Category type
+
+    if (isLoading) {
+        return <BigSpinner />
+    }
 
     return (
         <>
@@ -29,10 +34,10 @@ const Category = () => {
             </div>
 
             {/* Add Category Type*/}
-            <AddCategory refetch={refetch} isLoading={isLoading} />
+            <AddCategory refetch={refetch} />
 
             {/* delete and update And Show In Table  */}
-            <CategoryTable categoryTypes={categoryTypes} isLoading={isLoading} refetch={refetch} />
+            <CategoryTable categoryTypes={categoryTypes} refetch={refetch} />
 
         </>
     );

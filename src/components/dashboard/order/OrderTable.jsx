@@ -21,6 +21,7 @@ import { FaCartPlus, FaMoneyBillAlt } from "react-icons/fa";
 import OrderCompleteModal from "./OrderCompleteModal";
 
 const OrderTable = () => {
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   const [rows, setRows] = useState(10);
@@ -43,12 +44,14 @@ const OrderTable = () => {
   const calendarRef = useRef(null);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${BASE_URL}/order?page=${page}&limit=${rows}`)
       .then((response) => {
         setProducts(response?.data?.data);
         setAllProducts(response?.data?.data);
         setTotalData(Response?.data?.totalData);
+        setLoading(false);
       });
   }, [page, rows]);
 
@@ -104,6 +107,7 @@ const OrderTable = () => {
   } - ${selectionRange?.endDate?.toLocaleDateString() ?? ""}`;
 
   useEffect(() => {
+    setLoading(true);
     if (searchTerm != "") {
       fetch(`${BASE_URL}/order/searchOrder/${searchTerm}`)
         .then((response) => response.json())
@@ -111,12 +115,15 @@ const OrderTable = () => {
           if (result?.statusCode == 200 && result?.success == true) {
             setProducts(result?.data);
             setAllProducts(result?.data);
+            setLoading(false)
           } else {
             toast.error(result?.error?.data?.message);
+            setLoading(false)
           }
         });
     } else {
       setSearchTerm("");
+      setLoading(false);
     }
   }, [searchTerm]);
 
@@ -141,28 +148,29 @@ const OrderTable = () => {
     },
   }); // get Total order info type
 
-  if (isLoading) {
-    return <BigSpinner />;
-  }
-
+  
   // open view modal
   const handleView = (data) => {
     setIsViewData(data);
     setIsViewOpen(true);
   };
-
+  
   // open delete modal
   const handleDelete = (data) => {
     setIsDeleteData(data);
     setIsDeleteOpen(true);
   };
-
+  
   // open complete modal
   const handleOrderComplete = (data) => {
     setIsCompleteData(data);
     setIsCompleteOpen(true);
   };
-
+  
+  if (isLoading || loading) {
+    return <BigSpinner />;
+  }
+  
   return (
     <div>
       {/* Order info tabs */}
