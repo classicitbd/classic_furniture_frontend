@@ -78,9 +78,9 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                         </li>
                                         <li>
                                           <h4>
-                                            Customer Name :{" "}
+                                            Curior :{" "}
                                             <span>
-                                              {isViewData?.userInfo?.name}
+                                              {isViewData?.curior}
                                             </span>
                                           </h4>
                                         </li>
@@ -94,9 +94,9 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                         </li>
                                         <li>
                                           <h4>
-                                            Customer Number :{" "}
+                                            Customer Name :{" "}
                                             <span>
-                                              {isViewData?.userInfo?.phone}
+                                              {isViewData?.userInfo?.name}
                                             </span>
                                           </h4>
                                         </li>
@@ -243,7 +243,7 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                     </div>
 
                                     <h2 className="text-xl font-semibold text-sky-500 text-end mb-3">
-                                      Total Price:{" "}
+                                      Total Product Price:{" "}
                                       {isViewData?.order?.reduce(
                                         (prev, next) =>
                                           prev +
