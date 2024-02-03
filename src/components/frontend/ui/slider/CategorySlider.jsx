@@ -18,7 +18,7 @@ import "swiper/css/effect-fade";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import BigSpinner from "../../../../shared/loader/BigSpinner";
+import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const CategorySlider = () => {
   const { data: banners = [], isLoading } = useQuery({
@@ -31,7 +31,7 @@ const CategorySlider = () => {
   }); // get all banners
 
    if (isLoading) {
-     return <BigSpinner />;
+     return <ProductCardSkeleton />;
    }
 
   return (
