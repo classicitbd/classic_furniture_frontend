@@ -162,7 +162,7 @@ const OrderView = ({ setIsViewOpen, isViewData }) => {
                                     </div>
 
                                     <div
-                                      className="table__space najmul"
+                                      className="table__space najmul overflow-x-auto"
                                       style={{
                                         paddingBottom: "20px",
                                         borderTop: "1px solid #ddd",
