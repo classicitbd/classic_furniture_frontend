@@ -15,7 +15,7 @@ import "swiper/css/bundle";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 import ProductCard from "../../../common/card/ProductCard";
-import BigSpinner from "../../../../shared/loader/BigSpinner";
+import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const ArrivalBottomProducts = () => {
   const { data: products = [], isLoading } = useQuery({
@@ -28,7 +28,7 @@ const ArrivalBottomProducts = () => {
   }); // get All Product
 
    if (isLoading) {
-     return <BigSpinner />;
+     return <ProductCardSkeleton />;
    }
   return (
     <div className="px-[5px] lg:px-[10px] pb-[20px] pt-[5px]">

@@ -9,6 +9,7 @@ import CollectionTopCategory from "../../../components/frontend/ui/collectionCat
 import { useEffect, useState } from "react";
 import Header from "../../../shared/header/Header";
 import CategorySlider from "../../../components/frontend/ui/slider/CategorySlider";
+import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
 // import Navbar from "../../../components/frontend/ui/navbar/Navbar";
 
 const Home = () => {
@@ -46,6 +47,7 @@ const Home = () => {
       </div>
       <Slider />
       <Category />
+      <ProductCardSkeleton />
       <section>
         <ArrivalTopProducts />
         <ArrivalBottomProducts />

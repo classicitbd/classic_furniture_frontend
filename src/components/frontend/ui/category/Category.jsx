@@ -29,7 +29,7 @@ const Category = () => {
   }, [data?.data]);
 
   if (isLoading) {
-    return <BigSpinner />;
+    return <p></p>;
   }
 
   return (

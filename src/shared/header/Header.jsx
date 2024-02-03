@@ -24,7 +24,6 @@ import MobileMenu from "./MobileMenu";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import useUser from "../../hooks/useUser";
 import EmptyCart from "../../components/common/emptyCart/EmptyCart";
-import ProductCardSkeleton from "../loader/ProductCardSkeleton";
 const Header = () => {
   const [menu, setMenu] = useState("");
   const [gender, setGender] = useState("");
@@ -140,7 +139,7 @@ const Header = () => {
   }, [isDrawerOpen]);
 
   if (isLoading || logoLoading) {
-    return <ProductCardSkeleton />;
+    return <p></p>;
   }
 
   return (

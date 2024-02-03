@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
-import BigSpinner from "../../../../shared/loader/BigSpinner";
+import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const SubCategory = () => {
   const { data: subCategories = [], isLoading } = useQuery({
@@ -14,7 +14,7 @@ const SubCategory = () => {
   }); // get All subcategory
 
   if (isLoading) {
-    return <BigSpinner />;
+    return <ProductCardSkeleton />;
   }
 
   return (

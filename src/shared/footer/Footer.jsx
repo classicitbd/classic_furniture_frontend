@@ -25,7 +25,7 @@ const Footer = () => {
   });
 
   if (isLoading) {
-    return <BigSpinner />;
+    return <p></p>;
   }
 
   return (
