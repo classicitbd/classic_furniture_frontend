@@ -18,9 +18,10 @@ import "swiper/css/effect-fade";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import BigSpinner from "../../../../shared/loader/BigSpinner";
 
 const CategorySlider = () => {
-  const { data: banners = [] } = useQuery({
+  const { data: banners = [], isLoading } = useQuery({
     queryKey: ["/api/v1/banner"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/banner`);
@@ -28,6 +29,10 @@ const CategorySlider = () => {
       return data;
     },
   }); // get all banners
+
+   if (isLoading) {
+     return <BigSpinner />;
+   }
 
   return (
     <div className="relative">

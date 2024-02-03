@@ -15,6 +15,7 @@ import "swiper/css/bundle";
 import ProductCard from "../../../common/card/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
+import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const RelatedProducts = ({ relatedId, color }) => {
   const { data: product = [], isLoading } = useQuery({
@@ -31,6 +32,10 @@ const RelatedProducts = ({ relatedId, color }) => {
   const relatedProducts = product?.data?.filter(
     (product) => product?.colorId?.color !== color
   );
+
+  if (isLoading) {
+    return <ProductCardSkeleton />;
+  }
 
   return (
     <>

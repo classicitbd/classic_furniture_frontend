@@ -18,10 +18,11 @@ import "swiper/css/bundle";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import BigSpinner from "../../../../shared/loader/BigSpinner";
 // import Header from "../../../../shared/header/Header";
 
 const Slider = () => {
-  const { data: sliders = [] } = useQuery({
+  const { data: sliders = [], isLoading } = useQuery({
     queryKey: ["/api/v1/slider"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/slider`);
@@ -30,7 +31,9 @@ const Slider = () => {
     },
   }); // get all slider
 
-
+  if (isLoading) {
+    return <BigSpinner />;
+  }
   return (
     <div className="relative">
       {/* <div
@@ -65,7 +68,7 @@ const Slider = () => {
         onSwiper={() => {}}
         onSlideChange={() => {}}
       >
-        <div className="relative" data-swiper-parallax-duration="2000"> 
+        <div className="relative" data-swiper-parallax-duration="2000">
           {sliders?.data?.map((slider) => (
             <SwiperSlide key={slider._id}>
               <img

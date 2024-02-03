@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
+import BigSpinner from "../../../../shared/loader/BigSpinner";
 
 const SubCategory = () => {
-  const { data: subCategories = [] } = useQuery({
+  const { data: subCategories = [], isLoading } = useQuery({
     queryKey: [`/api/v1/sub_category`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/sub_category`);
@@ -11,6 +12,10 @@ const SubCategory = () => {
       return data;
     },
   }); // get All subcategory
+
+  if (isLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3">

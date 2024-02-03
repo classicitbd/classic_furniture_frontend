@@ -11,8 +11,8 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import { GoArrowRight } from "react-icons/go";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import Header from "../../../shared/header/Header";
+import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
 
 const AllProducts = () => {
   // get to top page all products page
@@ -45,7 +45,7 @@ const AllProducts = () => {
   const navigate = useNavigate();
 
   // get Category type
-  const { data = [] } = useQuery({
+  const { data = [], isLoading } = useQuery({
     queryKey: ["/api/v1/category"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/category`);
@@ -55,7 +55,7 @@ const AllProducts = () => {
   });
 
   // get Sub Category type
-  const { data: subData = [] } = useQuery({
+  const { data: subData = [], isLoading: subDataLoading } = useQuery({
     queryKey: ["/api/v1/sub_category"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/sub_category`);
@@ -65,7 +65,7 @@ const AllProducts = () => {
   });
 
   // get Collection type
-  const { data: collections = [] } = useQuery({
+  const { data: collections = [], isLoading: collectionsLoading } = useQuery({
     queryKey: ["/api/v1/collection"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/collection`);
@@ -75,7 +75,7 @@ const AllProducts = () => {
   });
 
   // get Style type
-  const { data: styles = [] } = useQuery({
+  const { data: styles = [], isLoading: stylesLoading } = useQuery({
     queryKey: ["/api/v1/style"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/style`);
@@ -272,6 +272,10 @@ const AllProducts = () => {
     const uniqueData = Array.from(uniqueMap.values());
     setCategoryTypes(uniqueData);
   }, [data]);
+
+  if (loading || isLoading) {
+    return <ProductCardSkeleton />;
+  }
 
   return (
     <div>
@@ -858,7 +862,7 @@ const AllProducts = () => {
 
         {/* ------ all products ------ start */}
         {loading ? (
-          <BigSpinner />
+          <ProductCardSkeleton />
         ) : (
           <div>
             {products?.length > 0 ? (

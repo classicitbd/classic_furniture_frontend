@@ -15,6 +15,7 @@ import "swiper/css/bundle";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 import ProductCard from "../../../common/card/ProductCard";
+import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const AlsoLikeProducts = () => {
   const { data: products = [], isLoading } = useQuery({
@@ -25,6 +26,10 @@ const AlsoLikeProducts = () => {
       return data;
     },
   });
+
+  if (isLoading) {
+    return <ProductCardSkeleton />;
+  }
 
   return (
     <div className="px-[5px] lg:px-[50px] pt-[5px]">
