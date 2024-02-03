@@ -22,8 +22,8 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-full md:w-[1000px] p-6 max-h-[100vh] overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 px-2">
+        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-full md:w-[1000px] p-6 max-h-[100vh]">
           <div className="flex items-center justify-between">
             <h3
               className="text-[26px] font-bold text-[#0A0A0A] capitalize"
@@ -47,80 +47,85 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
             data-menu="vertical-menu-modern"
             data-col=""
           >
-            <div className="app-content content " id="invoicePrintArea">
-              <table className="min-w-full divide-y-2 divide-gray-200 text-sm mb-10">
-                <thead>
-                  <tr>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                      #
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                      Item Image
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                      Item Name
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                      Unit Price
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                      Quantity
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                      Shipping Price
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                      Color
-                    </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                      Size
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {isViewData?.order?.map((order, index) => (
-                    <tr key={order?._id}>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {index + 1}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        <img
-                          loading="lazy"
-                          src={order?.thumbnail_image}
-                          alt="image"
-                          className="w-20 h-20"
-                        />
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {order?.title}
-                      </td>
-                      <td
-                        className={`whitespace-nowrap px-4 py-2 font-semibold`}
-                      >
-                        {order?.price}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {order?.quantity}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {isViewData?.shipping_price}
-                      </td>
-
-                      <td
-                        className={`whitespace-nowrap px-4 py-2 font-semibold`}
-                      >
-                        {order?.color}
-                      </td>
-
-                      <td
-                        className={`whitespace-nowrap px-4 py-2 font-semibold`}
-                      >
-                        {order?.size}
-                      </td>
+            <div
+              className="app-content content"
+              id="invoicePrintArea"
+            >
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y-2 divide-gray-200 text-sm mb-10">
+                  <thead>
+                    <tr>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                        #
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                        Item Image
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                        Item Name
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                        Unit Price
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                        Quantity
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                        Shipping Price
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                        Color
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                        Size
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {isViewData?.order?.map((order, index) => (
+                      <tr key={order?._id}>
+                        <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                          {index + 1}
+                        </td>
+                        <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                          <img
+                            loading="lazy"
+                            src={order?.thumbnail_image}
+                            alt="image"
+                            className="w-20 h-20"
+                          />
+                        </td>
+                        <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                          {order?.title}
+                        </td>
+                        <td
+                          className={`whitespace-nowrap px-4 py-2 font-semibold`}
+                        >
+                          {order?.price}
+                        </td>
+                        <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                          {order?.quantity}
+                        </td>
+                        <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                          {isViewData?.shipping_price}
+                        </td>
+
+                        <td
+                          className={`whitespace-nowrap px-4 py-2 font-semibold`}
+                        >
+                          {order?.color}
+                        </td>
+
+                        <td
+                          className={`whitespace-nowrap px-4 py-2 font-semibold`}
+                        >
+                          {order?.size}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
               <h2 className="text-xl font-semibold text-sky-500 text-end mb-3">
                 Total Price : {isViewData?.totalPrice}
               </h2>
