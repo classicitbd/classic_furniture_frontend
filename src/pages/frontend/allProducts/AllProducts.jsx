@@ -219,9 +219,6 @@ const AllProducts = () => {
       .map((key) => `${key}=${allQueryParams[key]}`)
       .join("&");
 
-    // return queryString.length > 0
-    //   ? setQuery(`all?${queryString}`)
-    //   : setQuery("all");
     setLoading(true);
     fetch(
       `${BASE_URL}/${queryString.length > 0 ? `all?${queryString}` : "all"}`
@@ -239,39 +236,27 @@ const AllProducts = () => {
     // You can perform any other logic based on all query parameters here
   }, [queryParameters]);
 
-  // useEffect(() => {
-  //   fetch(`${BASE_URL}/${query}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setProducts(data?.data))
-  //     .catch((error) => console.error(error));
-  //   setFilterDropdownOpen(false);
-  //   setSortDropdownOpen(false);
-  // }, [query]);
-
-  // unique sub category
+  // get unique category and sub_category
 
   useEffect(() => {
-    const uniqueMap = new Map();
-    subData?.data?.forEach((item) => {
-      uniqueMap.set(item.sub_category, item);
-    });
-
-    // Convert Map values back to an array
-    const uniqueData = Array.from(uniqueMap.values());
-    setSubCategoryTypes(uniqueData);
-  }, [subData]);
-
-  // unique category
-  useEffect(() => {
-    const uniqueMap = new Map();
+    const categoryMap = new Map();
     data?.data?.forEach((item) => {
-      uniqueMap.set(item.category, item);
+      categoryMap.set(item.category, item);
     });
 
     // Convert Map values back to an array
-    const uniqueData = Array.from(uniqueMap.values());
-    setCategoryTypes(uniqueData);
-  }, [data]);
+    const categoryData = Array.from(categoryMap.values());
+    setCategoryTypes(categoryData);
+
+    const subCategoryMap = new Map();
+    subData?.data?.forEach((item) => {
+      subCategoryMap.set(item.sub_category, item);
+    });
+
+    // Convert Map values back to an array
+    const subCategoryData = Array.from(subCategoryMap.values());
+    setSubCategoryTypes(subCategoryData);
+  }, [data?.data, subData?.data]);
 
   if (loading || isLoading) {
     return (

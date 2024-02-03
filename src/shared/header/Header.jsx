@@ -36,6 +36,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
   const [subCategoryData, setSubCategoryData] = useState([]);
+  const [categoryAndSubCategory, setCategoryAndSubCategory] = useState([]);
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const navigate = useNavigate();
@@ -73,28 +74,6 @@ const Header = () => {
     },
     suspense: false,
   }); // get Menu type
-
-  const { data: category = [] } = useQuery({
-    queryKey: [`/api/v1/category/menuId?menuId=${menu}`],
-    queryFn: async () => {
-      if (menu !== "") {
-        const res = await fetch(`${BASE_URL}/menu/${menu}`);
-        const data = await res.json();
-        return data;
-      } else {
-        // Return a default value when menu is empty
-        return { data: [] };
-      }
-    },
-    suspense: false,
-  }); // get category and sub category
-
-  // const handleLogOut = () => {
-  //   eraseCookie(authKey);
-  //   eraseCookie("user");
-  //   navigate("/");
-  //   window.location.reload();
-  // };
 
   const handleHover = (menu) => {
     setIsMenuOpen(true);
@@ -158,21 +137,23 @@ const Header = () => {
     const getCategoryData = categoryData.filter(
       (category) => category?.menuId?._id === menu
     );
-    console.log(getCategoryData);
 
-  // for(const category of getCategoryData){
-  //   const getSubCategoryData 
-  // }
+    let categoryAndSubCategoryData = [];
 
-    // const getSubCategoryData = getCategoryData.filter((category) =>
-    //   // console.log(category)
-    // );
+    getCategoryData.forEach((category) => {
+      const getSubCategoryData = subCategoryData.filter(
+        (subCategory) =>
+          category?._id === subCategory?.categoryId?._id &&
+          subCategory?.menuId?._id === menu
+      );
+      categoryAndSubCategoryData.push({
+        category,
+        subCategories: getSubCategoryData,
+      });
+    });
 
-    // console.log(getSubCategoryData);
-  }, [menu, categoryData]);
-
-  // console.log("category", categoryData);
-  // console.log("sub category", subCategoryData);
+    setCategoryAndSubCategory([...categoryAndSubCategoryData]);
+  }, [menu, categoryData, subCategoryData]);
 
   if (isLoading || logoLoading) {
     return <PreLoader />;
@@ -641,7 +622,7 @@ const Header = () => {
           {/* ------ category section ------ start */}
           <div className="border-r px-10 py-[5px]">
             <ul className="flex gap-5 py-10">
-              {category?.data?.map((category) => (
+              {categoryAndSubCategory?.map((category) => (
                 <li className="w-[200px]" key={category?.category?._id}>
                   <Link
                     to={`/all?gender=${gender}&category=${category?.category?.slug}`}
@@ -650,7 +631,7 @@ const Header = () => {
                     {category?.category?.category}
                   </Link>
                   <ul className="space-y-[2px] mt-2">
-                    {category?.subcategories?.map((subItem) => (
+                    {category?.subCategories?.map((subItem) => (
                       <li key={subItem?._id}>
                         <Link
                           to={`/all?gender=${gender}&category=${category?.category?.slug}&sub_category=${subItem?.slug}`}
