@@ -25,7 +25,6 @@ const AllProducts = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [categoryTypes, setCategoryTypes] = useState([]);
   const [subCategoryTypes, setSubCategoryTypes] = useState([]);
-  // const [query, setQuery] = useState(null);
 
   // selected options
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -37,7 +36,6 @@ const AllProducts = () => {
   const [selectedDiscount, setSelectedDiscount] = useState(null);
   const [selectedSort, setSelectedSort] = useState(null);
   const [products, setProducts] = useState([]);
-  // const [queryParameters, setQueryParameters] = useState({});
 
   // Add similar state variables for collection, color, features, and styles
   const [queryParameters] = useSearchParams();
