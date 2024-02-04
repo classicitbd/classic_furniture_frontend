@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import videoUploader from "./videoUploader";
+import VideoUploader from "./VideoUploader";
 import ImageUploader from "../product/productCreate/ImageUploader";
 import { useAddSiteSettingMutation } from "../../../redux/feature/setting/settingApi";
 
@@ -28,7 +28,7 @@ const LogoVidio = ({ refetch, initialData }) => {
       favicon = faviconUpload[0];
     }
     if (data?.video?.[0]) {
-      const videoUpload = await videoUploader(data?.video?.[0]);
+      const videoUpload = await VideoUploader(data?.video?.[0]);
       video = videoUpload[0];
     }
     const sendData = {

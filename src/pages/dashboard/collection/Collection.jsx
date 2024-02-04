@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import AddCollection from "../../../components/dashboard/collection/AddCollection";
-import CollectionTable from "../../../components/dashboard/collection/collectionTable";
 import BigSpinner from "../../../shared/loader/BigSpinner";
+import CollectionTables from "../../../components/dashboard/collection/CollectionTables";
 
 const Collection = () => {
 
@@ -37,7 +37,7 @@ const Collection = () => {
             <AddCollection refetch={refetch} />
 
             {/* update delete and show deails in table */}
-            <CollectionTable collections={collections} refetch={refetch} />
+            <CollectionTables collections={collections} refetch={refetch} />
 
         </>
     );

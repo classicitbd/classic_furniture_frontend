@@ -11,7 +11,7 @@ import ImageUploader from "../productCreate/ImageUploader";
 import { RxCross1 } from "react-icons/rx";
 import { MdDeleteForever } from "react-icons/md";
 import { AuthContext } from "../../../../context/AuthProvider";
-import videoUploader from "../../setting/videoUploader";
+import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
@@ -289,7 +289,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
     toast.error("Please wait a moment");
     let product_video;
     if (data?.product_video?.[0]) {
-      const videoUpload = await videoUploader(data?.product_video?.[0]);
+      const videoUpload = await VideoUploader(data?.product_video?.[0]);
       product_video = videoUpload[0];
     }
 

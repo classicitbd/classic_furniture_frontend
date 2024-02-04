@@ -9,7 +9,7 @@ import ImageUploader from "./ImageUploader";
 import slugify from "slugify";
 import { useAddProductMutation } from "../../../../redux/feature/product/productApi";
 import { AuthContext } from "../../../../context/AuthProvider";
-import videoUploader from "../../setting/videoUploader";
+import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
 import { VideoValidate } from "../../../../utils/VideoValidation";
 
@@ -303,7 +303,7 @@ const ProductAdd = () => {
     toast.error("Please wait a minute");
 
     if (data?.product_video?.[0]) {
-      const videoUpload = await videoUploader(data?.product_video?.[0]);
+      const videoUpload = await VideoUploader(data?.product_video?.[0]);
       product_video = videoUpload[0];
     }
     const hasEmptySizeOrColor = data.size_variation.some(

@@ -1,7 +1,7 @@
 import { FaBars, FaUserCircle } from "react-icons/fa";
 import { useContext, useRef, useState } from "react";
 import logo from "../../assets/dashboard/logo.png";
-import SideNavbarMenuItem from "../sideNavBar/sideNavbarMenuItem";
+import SideNavbarMenuItem from "../sideNavBar/SideNavbarMenuItem";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 

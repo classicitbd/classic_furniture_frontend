@@ -3,7 +3,7 @@ import axios from "axios";
 const CLOUDINARY_PRESET = "ml_default";
 const CLOUDINARY_CLOUDENAME = "dov60yweq";
 
-const videoUploader = async (file) => {
+const VideoUploader = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", CLOUDINARY_PRESET);
@@ -28,4 +28,4 @@ const videoUploader = async (file) => {
     }
 };
 
-export default videoUploader;
+export default VideoUploader;
