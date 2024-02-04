@@ -223,7 +223,7 @@ const ProductAdd = () => {
           autoClose: 1000,
         });
       } else {
-        toast.error("Please wait a minute", {
+        toast.error("Please wait a moment", {
           autoClose: 1000,
         });
         if (multiImage?.length == 0) {
