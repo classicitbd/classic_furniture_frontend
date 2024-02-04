@@ -90,15 +90,9 @@ const CheckoutPage = () => {
     }
   }, [carts?.length, navigate]);
 
-  // useEffect(() => {
-  //   if (district === "Dhaka") {
-  //     dispatch(setShippingType(district));
-  //   }
-  // }, [district, dispatch]);
-
   useEffect(() => {
     const insideDhakaCharge = 100;
-    const additionalChargePerQuantity = 50; // Adjust the value as needed
+    const additionalChargePerQuantity = 50;
     const outsideDhakaCharge = 160;
 
     if (user?.district === "Dhaka" || district === "Dhaka") {
