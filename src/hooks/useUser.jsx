@@ -4,6 +4,7 @@ import { getCookie } from "../utils/cookie-storage";
 const useUser = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     setLoading(true);
     const getData = getCookie("user");
