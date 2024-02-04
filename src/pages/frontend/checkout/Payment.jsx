@@ -90,13 +90,11 @@ const Payment = ({
     return <p className="text-error-300">There is an error!</p>;
   }
 
-  console.log(user);
-
   return (
     <div className="px-5 md:px-10">
       <div className="flex items-center gap-7">
         <p className="bg-black text-white h-8 w-8 rounded-full flex justify-center items-center font-bold">
-          3
+          2
         </p>
         <h2 className="text-xl font-semibold tracking-normal leading-5">
           Payment
