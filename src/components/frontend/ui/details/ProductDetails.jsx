@@ -14,13 +14,13 @@ import "swiper/css/pagination";
 import "swiper/css/bundle";
 import Breadcrumb from "../../../common/breadCrumb/BreadCrumb";
 import { useState } from "react";
-import ShippingInfoModal from "../../../common/modal/shippingInfoModal";
 import MaterialAndCare from "../materialAndCares/MaterialAndCare";
 import MaterialCareModal from "../../../common/modal/MaterialCareModal";
 import ShippingInfo from "../shippingInfo/ShippingInfo";
 import AddToCartModal from "../../../common/modal/AddToCartModal";
 import AddToCart from "../addToCart/AddToCart";
 import VideoModal from "../../../common/modal/VideoModal";
+import ShippingInfoModal from "../../../common/modal/shippingInfoModal";
 
 const ProductDetails = ({ product }) => {
   const [isModalOpen, setModalOpen] = useState(false);

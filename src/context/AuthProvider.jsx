@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useEffect, useState } from "react";
 import { eraseCookie, getCookie, setCookie } from "../utils/cookie-storage";
 import { authKey } from "../constants/storageKey";
