@@ -5,7 +5,8 @@ import SideNavbarMenuItem from "../sideNavBar/SideNavbarMenuItem";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
-const DashboardNavbar = () => {
+
+const DashboardNavbars = () => {
   const { user } = useContext(AuthContext);
 
   const [sidebarShow, setSidebarShow] = useState(false);
@@ -61,4 +62,5 @@ const DashboardNavbar = () => {
   );
 };
 
-export default DashboardNavbar;
+export default DashboardNavbars;
+
