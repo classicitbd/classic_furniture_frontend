@@ -18,6 +18,15 @@ const DetailsPage = () => {
     },
   }); // get All Product
 
+  const { data: sizeData = [] } = useQuery({
+    queryKey: ["socialMedia"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`);
+      const data = res.json();
+      return data;
+    },
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -28,7 +37,10 @@ const DetailsPage = () => {
 
   return (
     <main className="bg-white pb-10">
-      <ProductDetails product={product} />
+      <ProductDetails
+        sizePicture={sizeData?.data[0]?.product_size_picture}
+        product={product}
+      />
       <section>
         <RelatedProducts
           relatedId={product?.data?.related}

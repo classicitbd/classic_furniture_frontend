@@ -14,7 +14,7 @@ import {
 } from "../../../../redux/feature/cart/cartSlice";
 import { Link } from "react-router-dom";
 
-const AddToCart = ({ setModal, sizeType, id, product }) => {
+const AddToCart = ({ setModal, sizeType, id, product, sizePicture }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [sizeGuide, setSizeGuide] = useState(false);
   const [data, setData] = useState(null);
@@ -66,12 +66,11 @@ const AddToCart = ({ setModal, sizeType, id, product }) => {
           </h2>
           <img
             loading="lazy"
-            src="/assets/images/shoe-size-chart.png"
+            src={sizePicture}
             alt="size-guide-chart"
             className="w-3/4 mx-auto"
           />
           <div>
-            carts
             <button onClick={() => setSizeGuide(false)} className="underline">
               Size Selection
             </button>
