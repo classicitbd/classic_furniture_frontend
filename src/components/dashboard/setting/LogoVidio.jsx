@@ -15,6 +15,7 @@ const LogoVidio = ({ refetch, initialData }) => {
     let logo;
     let logo_name;
     let favicon;
+    let product_size_picture;
     if (data?.logo?.[0]) {
       const logoUpload = await ImageUploader(data?.logo?.[0]);
       logo = logoUpload[0];
@@ -27,6 +28,10 @@ const LogoVidio = ({ refetch, initialData }) => {
       const faviconUpload = await ImageUploader(data?.favicon?.[0]);
       favicon = faviconUpload[0];
     }
+    if (data?.product_size_picture?.[0]) {
+      const product_size_pictureUpload = await ImageUploader(data?.product_size_picture?.[0]);
+      product_size_picture = product_size_pictureUpload[0];
+    }
     if (data?.video?.[0]) {
       const videoUpload = await VideoUploader(data?.video?.[0]);
       video = videoUpload[0];
@@ -36,6 +41,7 @@ const LogoVidio = ({ refetch, initialData }) => {
       logo: logo || initialData?.logo,
       logo_name: logo_name || initialData?.logo_name,
       favicon: favicon || initialData?.favicon,
+      product_size_picture: product_size_picture || initialData?.product_size_picture,
       title: data?.title || initialData?.title,
       emergency_contact: data?.emergency_contact || initialData?.emergency_contact,
       _id: initialData?._id,
@@ -127,6 +133,17 @@ const LogoVidio = ({ refetch, initialData }) => {
               {...register("emergency_contact")}
               id="emergency_contact"
               type="number"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label className="font-semibold" htmlFor="product_size_picture">
+              Product Size Picture<span className="text-red-500"> if need</span>{" "}
+            </label>
+            <input
+              {...register("product_size_picture")}
+              id="product_size_picture"
+              type="file"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
