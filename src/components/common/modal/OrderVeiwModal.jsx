@@ -1,24 +1,22 @@
 import { RxCross1 } from "react-icons/rx";
 
 const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
-  const handlePrint = () => {
-    const printContent = document.getElementById("invoicePrintArea");
-    const originalBody = document.body.innerHTML;
+  // const handlePrint = () => {
+  //   const printContent = document.getElementById("invoicePrintArea");
+  //   const originalBody = document.body.innerHTML;
 
-    document.body.innerHTML = printContent.innerHTML;
+  //   document.body.innerHTML = printContent.innerHTML;
 
-    window.print();
+  //   window.print();
 
-    // Restore the original content after printing
-    document.body.innerHTML = originalBody;
+  //   // Restore the original content after printing
+  //   document.body.innerHTML = originalBody;
 
-    // Reload the page after printing
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
-
-    return () => clearTimeout();
-  };
+  //   // Reload the page after printing
+  //   setTimeout(() => {
+  //     location.reload();
+  //   }, 10);
+  // };
 
   return (
     <>
@@ -47,10 +45,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
             data-menu="vertical-menu-modern"
             data-col=""
           >
-            <div
-              className="app-content content"
-              id="invoicePrintArea"
-            >
+            <div className="app-content content" id="invoicePrintArea">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y-2 divide-gray-200 text-sm mb-10">
                   <thead>
@@ -129,19 +124,19 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
               <h2 className="text-xl font-semibold text-sky-500 text-end mb-3">
                 Total Price : {isViewData?.totalPrice}
               </h2>
-
-              <div className="text-center px-3 my-1">
-                <div className="mb-1 pb-1">
-                  <button
-                    type="button"
-                    onClick={() => handlePrint()}
-                    className="btn bg-sky-500 hover:bg-sky-400 px-4 py-2 text-white border rounded-lg"
-                  >
-                    Print
-                  </button>
-                </div>
-              </div>
             </div>
+
+            {/* <div className="text-center px-3 my-1">
+              <div className="mb-1 pb-1">
+                <button
+                  type="button"
+                  onClick={() => handlePrint()}
+                  className="btn bg-sky-500 hover:bg-sky-400 px-4 py-2 text-white border rounded-lg"
+                >
+                  Print
+                </button>
+              </div>
+            </div> */}
           </div>
 
           {/* end */}
