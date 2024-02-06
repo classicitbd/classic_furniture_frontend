@@ -259,7 +259,7 @@ const CheckoutPage = () => {
             )}
             <Link
               to={`/all`}
-              className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
+              className="block w-full text-center py-3 text-white bg-primaryColor hover:bg-opacity-70 rounded mt-4"
             >
               Shop More
             </Link>
