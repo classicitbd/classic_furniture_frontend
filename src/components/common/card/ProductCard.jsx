@@ -1,22 +1,49 @@
+import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, loading }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
-    <div>
+    <div className="">
       {product || loading ? (
         <Link to={`/${product?.slug}`}>
-          <div className="flex">
+          <div
+            className="flex group"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{ position: "relative", overflow: "hidden" }}
+          >
             <img
               loading="lazy"
               src={product?.thumbnail_image}
-              className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
+              style={{
+                width: "100%",
+                transition: "transform 0.7s",
+                transform: isHovered ? "translateX(-100%)" : "translateX(0)",
+              }}
               alt={product?.title}
             />
             <img
               loading="lazy"
               src={product?.hover_image}
-              className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
+              style={{
+                width: "100%",
+                position: "absolute",
+                top: 0,
+                left: "100%",
+                transition: "transform 0.7s",
+                transform: isHovered ? "translateX(-100%)" : "translateX(0)",
+              }}
               alt={product?.title}
             />
           </div>
