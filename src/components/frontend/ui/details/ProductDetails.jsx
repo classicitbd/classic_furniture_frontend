@@ -22,7 +22,7 @@ import AddToCart from "../addToCart/AddToCart";
 import VideoModal from "../../../common/modal/VideoModal";
 import ShippingInfoModal from "../../../common/modal/shippingInfoModal";
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product, sizePicture }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modal, setModal] = useState("");
 
@@ -216,6 +216,7 @@ const ProductDetails = ({ product }) => {
               id={product?.data?._id}
               product={product?.data}
               setModal={setModal}
+              sizePicture={sizePicture}
             />
           </div>
         </AddToCartModal>

@@ -86,9 +86,9 @@ const AlsoLikeProducts = () => {
           onSlideChange={() => {}}
         >
           <div>
-            {randomProducts?.map((product) => (
+            {randomProducts?.map((product, i) => (
               <SwiperSlide
-                key={product?._id}
+                key={i}
                 className="border hover:border-bgray-400 group rounded-md overflow-hidden shadow-2xl shadow-white"
               >
                 <ProductCard product={product} loading={isLoading} />
