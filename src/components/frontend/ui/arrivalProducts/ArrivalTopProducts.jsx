@@ -19,9 +19,9 @@ import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const ArrivalTopProducts = () => {
   const { data: products = [], isLoading } = useQuery({
-    queryKey: [`/api/v1/product?page=${1}&limit=${10}`],
+    queryKey: [`/api/v1/product?page=${1}&limit=${50}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product?page=${1}&limit=${10}`);
+      const res = await fetch(`${BASE_URL}/product?page=${1}&limit=${50}`);
       const data = await res.json();
       return data;
     },

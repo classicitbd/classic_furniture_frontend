@@ -19,13 +19,23 @@ import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const ArrivalBottomProducts = () => {
   const { data: products = [], isLoading } = useQuery({
-    queryKey: [`/api/v1/product?page=${1}&limit=${10}`],
+    queryKey: [`/api/v1/product?page=${1}&limit=${50}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product?page=${1}&limit=${10}`);
+      const res = await fetch(`${BASE_URL}/product?page=${1}&limit=${50}`);
       const data = await res.json();
       return data;
     },
   }); // get All Product
+
+  if (isLoading) {
+    return null;
+  }
+  const sortedProducts = [...products.data].reverse(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+  console.log(sortedProducts);
+  console.log(products?.data);
   return (
     <div className="px-[5px] lg:px-[10px] pb-[20px] pt-[5px]">
       {isLoading ? (
@@ -67,7 +77,7 @@ const ArrivalBottomProducts = () => {
           onSlideChange={() => {}}
         >
           <div>
-            {products?.data?.map((product) => (
+            {sortedProducts?.map((product) => (
               <SwiperSlide
                 key={product?._id}
                 className="border group rounded-md overflow-hidden bg-secondary"

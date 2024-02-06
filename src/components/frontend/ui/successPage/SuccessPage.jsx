@@ -20,7 +20,7 @@ const SuccessPage = () => {
           Thank you for your purchase.
         </p>
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          className="bg-primaryColor text-white px-4 py-2 rounded-md"
           onClick={() => handleNavigate()}
         >
           See your Order

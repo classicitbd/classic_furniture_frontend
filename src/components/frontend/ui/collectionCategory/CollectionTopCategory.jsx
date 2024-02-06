@@ -48,7 +48,7 @@ const CollectionTopCategory = () => {
           <p>Select Styles On Sale</p>
         </article>
         <Link
-          className="bg-black text-xl font-medium leading-6 -tracking-normal text-white w-[60vw] md:w-[20vw] py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm"
+          className="bg-primaryColor text-xl font-medium leading-6 -tracking-normal text-white w-[60vw] md:w-[20vw] py-[10px] lg:py-[20px] flex items-center justify-center rounded-sm"
           to={`/all?discount_price=true`}
         >
           Shop Now
