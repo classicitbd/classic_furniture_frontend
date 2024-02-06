@@ -11,7 +11,7 @@ import { useAddProductMutation } from "../../../../redux/feature/product/product
 import { AuthContext } from "../../../../context/AuthProvider";
 import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
-import { VideoValidate } from "../../../../utils/VideoValidation";
+import { VideoValidate } from "../../../../utils/VideoValidation"; 
 
 const ProductAdd = () => {
   const { user } = useContext(AuthContext);
