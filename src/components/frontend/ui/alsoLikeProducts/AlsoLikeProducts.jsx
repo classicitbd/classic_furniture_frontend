@@ -16,16 +16,34 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 import ProductCard from "../../../common/card/ProductCard";
 import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
+import { useEffect, useState } from "react";
 
 const AlsoLikeProducts = () => {
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product?page=${1}&limit=${10}`);
+      const res = await fetch(`${BASE_URL}/product?page=${1}&limit=${30}`);
       const data = res.json();
       return data;
     },
   });
+
+  const [randomProducts, setRandomProducts] = useState([]);
+
+  useEffect(() => {
+    if (!isLoading && products.data.length > 0) {
+      // setRandomProducts(getRandomProducts());
+      const numRandomProducts = 10; // Adjust the number of random products as needed
+      const randomProductsArray = [];
+
+      for (let i = 0; i < numRandomProducts; i++) {
+        const randomIndex = Math.floor(Math.random() * products.data.length);
+        randomProductsArray.push(products.data[randomIndex]);
+      }
+
+      setRandomProducts(randomProductsArray);
+    }
+  }, [isLoading, products.data]);
 
   if (isLoading) {
     return <ProductCardSkeleton />;
@@ -68,7 +86,7 @@ const AlsoLikeProducts = () => {
           onSlideChange={() => {}}
         >
           <div>
-            {products?.data?.map((product) => (
+            {randomProducts?.map((product) => (
               <SwiperSlide
                 key={product?._id}
                 className="border hover:border-bgray-400 group rounded-md overflow-hidden shadow-2xl shadow-white"

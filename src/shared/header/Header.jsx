@@ -492,7 +492,7 @@ const Header = () => {
                   <Link
                     to={`/all`}
                     onClick={toggleDrawer}
-                    className="block w-full text-center py-3 text-white bg-black hover:bg-opacity-70 rounded mt-4"
+                    className="block w-full text-center py-3 text-white bg-primaryColor hover:bg-opacity-70 rounded mt-4"
                   >
                     Shop More
                   </Link>
@@ -544,7 +544,7 @@ const Header = () => {
                   <Link
                     onClick={toggleDrawer}
                     to={`/checkout`}
-                    className="w-full text-center py-3 bg-black text-white rounded"
+                    className="w-full text-center py-3 bg-primaryColor text-white rounded"
                   >
                     Proceed to Checkout
                   </Link>
