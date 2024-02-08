@@ -12,6 +12,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { GoArrowRight } from "react-icons/go";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
+import ProductCard from "../../../components/common/card/ProductCard";
 
 const AllProducts = () => {
   // get to top page all products page
@@ -100,7 +101,7 @@ const AllProducts = () => {
       return data;
     },
   });
-
+ 
   const handleDiscountClick = (discount) => {
     setSelectedDiscount(discount);
 
@@ -842,7 +843,12 @@ const AllProducts = () => {
 
       {/* ------ all products ------ start */}
       {loading ? (
-        <ProductCardSkeleton />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
+          <ProductCardSkeleton />
+          <ProductCardSkeleton />
+          <ProductCardSkeleton />
+          <ProductCardSkeleton />
+        </div>
       ) : (
         <div>
           {products?.length > 0 ? (
@@ -850,46 +856,9 @@ const AllProducts = () => {
               {products?.map((product) => (
                 <div
                   key={product?._id}
-                  className="border group rounded overflow-hidden bg-[#F0F0F0]"
+                  className="border rounded overflow-hidden bg-[#F0F0F0]"
                 >
-                  <Link to={`/${product?.slug}`}>
-                    <div className="flex">
-                      <img
-                        loading="lazy"
-                        src={product?.thumbnail_image}
-                        className="w-full translate-x-0 group-hover:-translate-x-full transition-all duration-700"
-                        alt={product?.id}
-                      />
-                      <img
-                        loading="lazy"
-                        src={product?.hover_image}
-                        className="w-full translate-x-0 group-hover:-translate-x-full  transition-all duration-700"
-                        alt={product?.id}
-                      />
-                    </div>
-                    <article className="pb-[10px]">
-                      <h2 className="text-center">
-                        {product?.title} {product?.colorId?.color}
-                      </h2>
-                      <p className="text-center py-3 text-bgray-700">
-                        {product?.colorId?.color}
-                      </p>
-                      <p>
-                        <span
-                          className={`px-4 ${
-                            product?.discount_price ? "line-through" : ""
-                          }`}
-                        >
-                          BDT {product?.price}.00
-                        </span>
-                        {product?.discount_price && (
-                          <span className="text-error-300">
-                            BDT {product?.discount_price}.00
-                          </span>
-                        )}
-                      </p>
-                    </article>
-                  </Link>
+                  <ProductCard product={product} loading={isLoading} />
                 </div>
               ))}
             </div>

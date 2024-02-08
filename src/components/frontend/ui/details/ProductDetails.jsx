@@ -82,18 +82,22 @@ const ProductDetails = ({ product, sizePicture }) => {
         <div className="px-4">
           <article className="space-y-2 md:space-y-5 mt-8 border-bgray-500">
             <h1 className="text-xl font-semibold">{product?.data?.title}</h1>
-            <p className="space-x-4">
+            <p className="">
+              <span className="text-xl font-normal">৳ </span>
               <span
-                className={`text-xl font-normal ${
+                className={`text-xl font-normal mr-4 ${
                   product?.data?.discount_price ? "line-through" : ""
                 }`}
               >
-                BDT {product?.data?.price}.00
+                {product?.data?.price}
               </span>
               {product?.data?.discount_price && (
-                <span className={`text-xl font-normal text-error-300`}>
-                  BDT {product?.data?.discount_price}.00
-                </span>
+                <>
+                  <span className="text-xl font-normal text-error-300">৳ </span>
+                  <span className={`text-xl font-normal text-error-300`}>
+                    {product?.data?.discount_price}
+                  </span>
+                </>
               )}
             </p>
           </article>
@@ -237,12 +241,6 @@ const ProductDetails = ({ product, sizePicture }) => {
                 <IoCloseOutline className="text-2xl" />
               </button>
             </div>
-            {/* <AddToCart
-              sizeType={product?.data?.size_variation}
-              id={product?.data?._id}
-              product={product?.data}
-              setModal={setModal}
-            /> */}
             <div className="relative group overflow-hidden md:col-span-3 md:row-span-2">
               <div className="block w-full h-full">
                 <video
