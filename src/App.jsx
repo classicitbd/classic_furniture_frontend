@@ -14,7 +14,7 @@ function App() {
         setFavicon(data?.data[0]?.favicon);
       });
   }, []);
-  
+
   // effect to update favicon
   useEffect(() => {
     let link = document.querySelector("link[rel~='icon']");
@@ -25,6 +25,12 @@ function App() {
     }
     link.href = favicon;
   }, [favicon]);
+
+  useEffect(() => {
+    var chatbox = document.getElementById("fb-customer-chat");
+    chatbox.setAttribute("page_id", "");
+    chatbox.setAttribute("attribution", "biz_inbox");
+  }, []);
 
   return (
     <>

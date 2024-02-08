@@ -6,6 +6,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import BigSpinner from "../../../shared/loader/BigSpinner";
 import StoreDetails from "../../../components/dashboard/setting/StoreDetails";
 import AboutUs from "../../../components/dashboard/setting/AboutUs";
+import InformationUpdate from "../../../components/dashboard/setting/InformationUpdate";
 
 const SiteSetting = () => {
 
@@ -59,6 +60,14 @@ const SiteSetting = () => {
                     <h4 className="font-semibold text-[20px] mt-2">About Us</h4>
                     <hr className="mt-2 mb-4" />
                     <AboutUs refetch={refetch} initialData={initialData} />
+                </div>
+            </div>
+
+            <div className="md:mt-10 mt-8 bg-white mb-8">
+                <div className="p-5">
+                    <h4 className="font-semibold text-[20px] mt-2">Update Information</h4>
+                    <hr className="mt-2 mb-4" />
+                    <InformationUpdate refetch={refetch} initialData={initialData} />
                 </div>
             </div>
 

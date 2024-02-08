@@ -10,8 +10,8 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchUserData = async () => {
+    const token = getCookie(authKey);
     try {
-      const token = getCookie(authKey);
       if (!token) {
         throw new Error("No token found");
       }
