@@ -10,11 +10,11 @@ const DashboardLayout = () => {
             </div>
             <div className="grid lg:grid-cols-12 grid-cols-4">
                 <div className="lg:col-span-2 mt-[60px]">
-                    <div className="sticky scrollbar-hide top-[85px] left-0">
+                    <div className="max-h-screen scrollbar-hide fixed overflow-y-auto left-0 pb-20">
                         <SideNavBar></SideNavBar>
                     </div>
                 </div>
-                <div className="overflow-y-auto lg:col-span-10 col-span-4 min-h-screen w-full bg-gray-100 mt-[78px] rounded-tl-3xl rounded-tr-3xl">
+                <div className="overflow-y-auto lg:col-span-10 col-span-4 min-h-screen w-full bg-gray-100 mt-[70px] rounded-tl-3xl rounded-tr-3xl">
                     <div className="lg:mx-[30px] mx-4 mt-4"
                     >
                         <Outlet></Outlet>
