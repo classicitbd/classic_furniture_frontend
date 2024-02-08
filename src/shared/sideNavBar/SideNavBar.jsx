@@ -24,6 +24,11 @@ const SideNavBar = () => {
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [isProductOpen, setIsProductOpen] = useState(false);
 
+    const handleLogOut = () => {
+        eraseCookie(authKey);
+        window.location.reload();
+    }
+
     const navBar = (
         <>
             <div className="flex flex-col mt-6">
@@ -280,24 +285,19 @@ const SideNavBar = () => {
                     </div>
                 </Link>
 
+                <button onClick={() => handleLogOut()} type="button" className="flex items-center gap-3 font-semibold lg:text-[18px] text-red-500 xl:p-2 lg:p-0 xl:mt-1 lg:mt-3">
+                    <FiLogOut size={25} />
+                    Log Out
+                </button>
+
             </div>
         </>
     );
 
-    const handleLogOut = () =>{
-        eraseCookie(authKey);
-        window.location.reload();
-    }
-
     return (
-        <div className="hidden lg:block pl-5">
+        <div className="hidden lg:block pl-3">
 
             <div>{navBar}</div>
-
-            <button onClick={() => handleLogOut()} type="button" className="flex items-center gap-3 font-semibold lg:text-[18px] mt-4 p-2 text-red-500">
-                    <FiLogOut size={25} />
-                    Log Out
-            </button>
 
         </div>
     );
