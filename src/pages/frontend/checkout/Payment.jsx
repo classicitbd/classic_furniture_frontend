@@ -23,13 +23,14 @@ const Payment = ({
   const [order, { isLoading, isError }] = useOrderMutation();
   // const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
+  console.log("start", curior);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       let data;
-      if (!curior) {
+      if (curior === "Select...") {
         return toast.error("Select your curior !");
       } else {
         setCookie("curior", JSON.stringify(curior));
@@ -64,7 +65,6 @@ const Payment = ({
           curior,
         };
       }
-      console.log(data);
       const res = await order(data);
 
       if (res?.data?.statusCode == 200 && res?.data?.success == true) {
@@ -85,6 +85,8 @@ const Payment = ({
       setLoading(false);
     }
   };
+
+  console.log("end", curior);
 
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
