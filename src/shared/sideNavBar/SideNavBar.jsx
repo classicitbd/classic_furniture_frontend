@@ -12,6 +12,9 @@ import { RxFontStyle } from "react-icons/rx";
 import { PiSlideshowBold } from "react-icons/pi";
 import { FcBarChart, FcPieChart } from "react-icons/fc";
 import { BsKanban } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
+import { eraseCookie } from "../../utils/cookie-storage";
+import { authKey } from "../../constants/storageKey";
 
 
 const SideNavBar = () => {
@@ -281,10 +284,20 @@ const SideNavBar = () => {
         </>
     );
 
+    const handleLogOut = () =>{
+        eraseCookie(authKey);
+        window.location.reload();
+    }
+
     return (
         <div className="hidden lg:block pl-5">
 
             <div>{navBar}</div>
+
+            <button onClick={() => handleLogOut()} type="button" className="flex items-center gap-3 font-semibold lg:text-[18px] mt-4 p-2 text-red-500">
+                    <FiLogOut size={25} />
+                    Log Out
+            </button>
 
         </div>
     );
