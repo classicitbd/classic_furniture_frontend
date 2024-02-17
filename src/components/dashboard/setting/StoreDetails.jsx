@@ -16,6 +16,10 @@ const StoreDetails = ({ refetch, initialData }) => {
       youTube: data?.youTube || initialData?.youTube,
       inside_dhaka: data?.inside_dhaka || initialData?.inside_dhaka,
       outside_dhaka: data?.outside_dhaka || initialData?.outside_dhaka,
+      address: data?.address || initialData?.address,
+      email: data?.email || initialData?.email,
+      hours: data?.hours || initialData?.hours,
+      tin: data?.tin || initialData?.tin,
       _id: initialData?._id,
     };
     postSiteSettng(sendData).then((result) => {
@@ -110,6 +114,58 @@ const StoreDetails = ({ refetch, initialData }) => {
               defaultValue={initialData?.youTube}
               {...register("youTube")}
               id="youTube"
+              type="text"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid gap-6 grid-cols-2 md:grid-cols-4 my-6">
+          <div>
+            <label className="font-semibold" htmlFor="address">
+              Address
+              <span className="text-red-500"> if need</span>{" "}
+            </label>
+            <input
+              defaultValue={initialData?.address}
+              {...register("address")}
+              id="address"
+              type="text"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label className="font-semibold" htmlFor="email">
+              E-Mail
+              <span className="text-red-500"> if need</span>{" "}
+            </label>
+            <input
+              defaultValue={initialData?.email}
+              {...register("email")}
+              id="inside_dhaka"
+              type="text"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label className="font-semibold" htmlFor="hours">
+              Start And Close<span className="text-red-500"> if need</span>{" "}
+            </label>
+            <input
+              defaultValue={initialData?.hours}
+              {...register("hours")}
+              id="hours"
+              type="text"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label className="font-semibold" htmlFor="tin">
+              Tin Number<span className="text-red-500"> if need</span>{" "}
+            </label>
+            <input
+              defaultValue={initialData?.tin}
+              {...register("tin")}
+              id="tin"
               type="text"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
