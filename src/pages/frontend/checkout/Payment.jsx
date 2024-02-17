@@ -19,6 +19,7 @@ const Payment = ({
 }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
+  const [agree, setAgree] = useState(false);
   const carts = useSelector((state) => state.cart.products);
   const [order, { isLoading, isError }] = useOrderMutation();
   // const shippingType = useSelector((state) => state.cart.shippingType);
@@ -86,8 +87,6 @@ const Payment = ({
     }
   };
 
-  console.log("end", curior);
-
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
@@ -122,7 +121,7 @@ const Payment = ({
                 className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
                 tabIndex="0"
               >
-                <span className="text-sm"> Pay With SSL Commerz </span>
+                <span className="text-sm">Pay With SSL Commerz </span>
                 <img
                   loading="lazy"
                   src={`/assets/images/payment-gateways.png`}
@@ -153,15 +152,23 @@ const Payment = ({
         </fieldset>
 
         <p className="text-xs mt-2">
+          <input
+            type="checkbox"
+            className="text-xl mr-1 mt-2"
+            onChange={() => setAgree(!agree)}
+          />
           By making this purchase you agree to our
-          <Link to="/return-exchange" className="text-blue-500 underline">
+          <Link
+            to="/return-and-refunds-policy"
+            className="text-blue-500 underline"
+          >
             {" "}
             terms and conditions.
           </Link>
         </p>
         <button
           type="submit"
-          disabled={!user || addressUpdate}
+          disabled={!user || addressUpdate || !agree}
           className={`block w-full text-center py-3 text-textColor bg-primaryColor hover:bg-opacity-70 rounded mt-4 ${
             !user || addressUpdate ? "bg-opacity-70" : "bg-opacity-100"
           }`}

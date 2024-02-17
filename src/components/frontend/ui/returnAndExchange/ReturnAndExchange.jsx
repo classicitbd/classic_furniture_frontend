@@ -14,11 +14,11 @@ const ReturnAndExchange = () => {
   if (isLoading) {
     return null;
   }
-  
+
   return (
     <div className="py-10 w-full md:w-[768px] px-4 md:px-0 mx-auto">
       <h2 className="text-xl lg:text-2xl xl:text-3xl text-center tracking-tight font-medium">
-        Return and Exchange
+        Return & Refunds Policy
       </h2>
       <div
         className="mt-10"
