@@ -37,6 +37,8 @@ import MaterialAndCarePage from "../pages/frontend/materialAndCare/MaterialAndCa
 import AboutusPage from "../pages/frontend/aboutus/AboutusPage";
 import Banner from "../pages/dashboard/banner/Banner";
 import SecondMain from "../layout/SecondMain";
+import PrivacyPolicyPage from "../pages/frontend/privacypolicy/PrivacyPolicyPage";
+import TermAndConditionPage from "../pages/frontend/termandconditions/TermAndConditionPage";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +92,14 @@ const router = createBrowserRouter([
       {
         path: "/return-and-refunds-policy",
         element: <ReturnExchangePage />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicyPage />,
+      },
+      {
+        path: "/term-&-condition",
+        element: <TermAndConditionPage />,
       },
       {
         path: "/materials-care",

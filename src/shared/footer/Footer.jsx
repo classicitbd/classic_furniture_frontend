@@ -7,12 +7,13 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../utils/baseURL";
 import { BiSolidMap } from "react-icons/bi";
 import { TbClockPause } from "react-icons/tb";
+import { FaUmbraco } from "react-icons/fa";
 
 const quickLinks = [
   { path: "/about-us", label: "About Us" },
   { path: "/term-&-condition", label: "Terms & Condition" },
   { path: "/return-and-refunds-policy", label: "Return & Refunds policy" },
-  { path: "/privacy-policy", label: "privacy-policy" },
+  { path: "/privacy-policy", label: "Privacy Policy" },
 ];
 
 const helpfulLinks = [
@@ -37,6 +38,7 @@ const Footer = () => {
   if (isLoading) {
     return null;
   }
+  console.log(footerData);
 
   return (
     <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary">
@@ -166,10 +168,7 @@ const Footer = () => {
                 </span>
                 <address className="text-[14px] leading-4 font-[300]">
                   <strong>Address:</strong>
-                  <span>
-                    346 CDA Market (1st Floor), Pahartali, Chattogram,
-                    Bangladesh
-                  </span>
+                  <span>{footerData?.data[0]?.address}</span>
                 </address>
               </li>
               <li className="flex items-center gap-3 mb-2">
@@ -178,7 +177,7 @@ const Footer = () => {
                 </span>
                 <h3 className="text-[14px] leading-4 font-[300]">
                   <strong>Call Us: </strong>
-                  <span>+8801796682951</span>
+                  <span>{footerData?.data[0]?.emergency_contact}</span>
                 </h3>
               </li>
               <li className="flex items-center gap-3 mb-2">
@@ -190,7 +189,7 @@ const Footer = () => {
                   className="text-[14px] leading-4 font-[300]"
                 >
                   <strong>Email: </strong>
-                  <span>info@jananicomputers.com</span>
+                  <span>{footerData?.data[0]?.email}</span>
                 </h3>
               </li>
               <li className="flex items-center gap-3">
@@ -199,7 +198,16 @@ const Footer = () => {
                 </span>
                 <h3 className="text-[14px] leading-4 font-[300]">
                   <strong>Hours:</strong>
-                  <span>10:00 - 8:00, Sa - Thu</span>
+                  <span>{footerData?.data[0]?.hours}</span>
+                </h3>
+              </li>
+              <li className="flex items-center gap-3 mt-1">
+                <span>
+                  <FaUmbraco className="text-xl text-secondary" />
+                </span>
+                <h3 className="text-[14px] leading-4 font-[300]">
+                  <strong>TIN:</strong>
+                  <span className="ml-1">{footerData?.data[0]?.tin}</span>
                 </h3>
               </li>
             </ul>

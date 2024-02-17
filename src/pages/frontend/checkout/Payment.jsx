@@ -121,7 +121,7 @@ const Payment = ({
                 className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
                 tabIndex="0"
               >
-                <span className="text-sm"> Pay With SSL Commerz </span>
+                <span className="text-sm">Pay With SSL Commerz </span>
                 <img
                   loading="lazy"
                   src={`/assets/images/payment-gateways.png`}
@@ -154,11 +154,14 @@ const Payment = ({
         <p className="text-xs mt-2">
           <input
             type="checkbox"
-            className="text-xl"
+            className="text-xl mr-1 mt-2"
             onChange={() => setAgree(!agree)}
           />
           By making this purchase you agree to our
-          <Link to="/return-exchange" className="text-blue-500 underline">
+          <Link
+            to="/return-and-refunds-policy"
+            className="text-blue-500 underline"
+          >
             {" "}
             terms and conditions.
           </Link>
