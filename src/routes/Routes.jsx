@@ -88,7 +88,7 @@ const router = createBrowserRouter([
         element: <ShippingInfoPage />,
       },
       {
-        path: "/return-exchange",
+        path: "/return-and-refunds-policy",
         element: <ReturnExchangePage />,
       },
       {

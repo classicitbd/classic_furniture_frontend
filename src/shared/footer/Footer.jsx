@@ -1,15 +1,23 @@
 import { Link } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
 import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
+import { SiMinutemailer } from "react-icons/si";
+import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../utils/baseURL";
+import { BiSolidMap } from "react-icons/bi";
+import { TbClockPause } from "react-icons/tb";
 
-const quickLinks = [{ path: "/about-us", label: "Our Story" }];
+const quickLinks = [
+  { path: "/about-us", label: "About Us" },
+  { path: "/term-&-condition", label: "Terms & Condition" },
+  { path: "/return-and-refunds-policy", label: "Return & Refunds policy" },
+  { path: "/privacy-policy", label: "privacy-policy" },
+];
 
 const helpfulLinks = [
   { path: "/contact", label: "Contact Us" },
   { path: "/shipping-info", label: "Shipping Info" },
-  { path: "/return-exchange", label: "Return & Exchange" },
   { path: "/materials-care", label: "Materials & Care" },
 ];
 
@@ -22,9 +30,12 @@ const Footer = () => {
       return data;
     },
   });
+  const handleEmailClick = () => {
+    window.location.href = `mailto:masudranainfo99@gmail.com`;
+  };
 
   if (isLoading) {
-    return <p></p>;
+    return null;
   }
 
   return (
@@ -36,10 +47,10 @@ const Footer = () => {
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px] font-[500]">
               <h2
-                className="mb-6 text-secondary uppercase"
+                className="mb-3 lg:mb-6 text-secondary uppercase"
                 style={{ fontSize: "20px" }}
               >
-                Need Help?
+                Need Help
               </h2>
             </li>
             <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
@@ -72,7 +83,7 @@ const Footer = () => {
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px] font-[500]">
               <h2
-                className="mb-6 text-secondary uppercase"
+                className="mb-3 lg:mb-6 text-secondary uppercase"
                 style={{ fontSize: "20px" }}
               >
                 The Company
@@ -98,10 +109,10 @@ const Footer = () => {
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px]">
               <h2
-                className="mb-6 font-semibold text-secondary uppercase"
+                className="mb-3 lg:mb-6 text-secondary uppercase"
                 style={{ fontSize: "20px" }}
               >
-                Find Us On
+                Find us on
               </h2>
             </li>
 
@@ -141,21 +152,58 @@ const Footer = () => {
           {/* ------ social media link ------ end */}
 
           {/* payment gateway */}
-          <div className="md:col-span-2 pr-10">
-            <Link
-              className="mb-6 font-semibold text-secondary uppercase"
+          <div className="lg:col-span-2 pr-10">
+            <h2
+              className="mb-3 lg:mb-6 text-secondary uppercase"
               style={{ fontSize: "20px" }}
-              to={"/"}
             >
-              Traack
-            </Link>
-            <p className="text-[16px] leading-5 font-[400] mt-4 tracking-tighter">
-              We are provide our website all sslcommerce payment system in buy
-              any product easily. Welcome to Classic It.
-            </p>
-            <div>
-              <img loading="lazy" src={sslcommerceLogo} alt="sslcommerceLogo" />
-            </div>
+              Contact Details
+            </h2>
+            <ul className="flex flex-col gap-y-1 list-none mt-5">
+              <li className="flex items-center gap-3 mb-2">
+                <span>
+                  <BiSolidMap className="text-xl text-secondary" />
+                </span>
+                <address className="text-[14px] leading-4 font-[300]">
+                  <strong>Address:</strong>
+                  <span>
+                    346 CDA Market (1st Floor), Pahartali, Chattogram,
+                    Bangladesh
+                  </span>
+                </address>
+              </li>
+              <li className="flex items-center gap-3 mb-2">
+                <span>
+                  <TfiHeadphoneAlt className="text-xl text-secondary" />
+                </span>
+                <h3 className="text-[14px] leading-4 font-[300]">
+                  <strong>Call Us: </strong>
+                  <span>+8801796682951</span>
+                </h3>
+              </li>
+              <li className="flex items-center gap-3 mb-2">
+                <span>
+                  <SiMinutemailer className="text-xl text-secondary" />
+                </span>
+                <h3
+                  onClick={handleEmailClick}
+                  className="text-[14px] leading-4 font-[300]"
+                >
+                  <strong>Email: </strong>
+                  <span>info@jananicomputers.com</span>
+                </h3>
+              </li>
+              <li className="flex items-center gap-3">
+                <span>
+                  <TbClockPause className="text-xl text-secondary" />
+                </span>
+                <h3 className="text-[14px] leading-4 font-[300]">
+                  <strong>Hours:</strong>
+                  <span>10:00 - 8:00, Sa - Thu</span>
+                </h3>
+              </li>
+            </ul>
+            <img src={sslcommerceLogo} alt="" />
           </div>
         </div>
 
