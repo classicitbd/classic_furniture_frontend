@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 
 const PrivacyPolicy = () => {
-  const { data: returnExchange = [], isLoading } = useQuery({
-    queryKey: ["returnExchange"],
+  const { data: privacypolicy = [], isLoading } = useQuery({
+    queryKey: ["privacypolicy"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
       const data = res.json();
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
       <div
         className="mt-10"
         dangerouslySetInnerHTML={{
-          __html: returnExchange?.data[0]?.privacyPolicy,
+          __html: privacypolicy?.data[0]?.privacyPolicy,
         }}
       ></div>
     </div>

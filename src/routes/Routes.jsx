@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import DashboardLayout from "../layout/DashboardLayout";
-// import HomePage from "../pages/dashboard/homePage/HomePage";
 import Menu from "../pages/dashboard/menu/Menu";
 import Category from "../pages/dashboard/category/Category";
 import SubCategory from "../pages/dashboard/subCategory/SubCategory";
@@ -39,6 +38,8 @@ import Banner from "../pages/dashboard/banner/Banner";
 import SecondMain from "../layout/SecondMain";
 import PrivacyPolicyPage from "../pages/frontend/privacypolicy/PrivacyPolicyPage";
 import TermAndConditionPage from "../pages/frontend/termandconditions/TermAndConditionPage";
+import CancellationPolicyPage from "../pages/frontend/cancellationPolicy/CancellationPolicyPage";
+import RefundPolicyPage from "../pages/frontend/refundPolicy/RefundPolicy";
 
 const router = createBrowserRouter([
   {
@@ -90,24 +91,32 @@ const router = createBrowserRouter([
         element: <ShippingInfoPage />,
       },
       {
-        path: "/return-and-refunds-policy",
-        element: <ReturnExchangePage />,
-      },
-      {
-        path: "/privacy-policy",
-        element: <PrivacyPolicyPage />,
-      },
-      {
-        path: "/term-&-condition",
-        element: <TermAndConditionPage />,
-      },
-      {
         path: "/materials-care",
         element: <MaterialAndCarePage />,
       },
       {
         path: "/about-us",
         element: <AboutusPage />,
+      },
+      {
+        path: "/refund-policy",
+        element: <RefundPolicyPage />,
+      },
+      {
+        path: "/cancellation-policy",
+        element: <CancellationPolicyPage />,
+      },
+      {
+        path: "/term-&-condition",
+        element: <TermAndConditionPage />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicyPage />,
+      },
+      {
+        path: "/return-policy",
+        element: <ReturnExchangePage />,
       },
     ],
   },
