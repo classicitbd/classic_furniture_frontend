@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 
 const TermAndCondition = () => {
-  const { data: returnExchange = [], isLoading } = useQuery({
-    queryKey: ["returnExchange"],
+  const { data: termandcondition = [], isLoading } = useQuery({
+    queryKey: ["termandcondition"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
       const data = res.json();
@@ -23,7 +23,7 @@ const TermAndCondition = () => {
       <div
         className="mt-10"
         dangerouslySetInnerHTML={{
-          __html: returnExchange?.data[0]?.termAndCondition,
+          __html: termandcondition?.data[0]?.termAndCondition,
         }}
       ></div>
     </div>
