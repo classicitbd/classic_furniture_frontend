@@ -22,6 +22,12 @@ const AboutUs = ({ initialData, refetch }) => {
   const [privacyPolicy, setPrivacyPolicy] = useState(
     initialData?.privacyPolicy
   );
+  const [cancellationPolicy, setCancellationPolicy] = useState(
+    initialData?.cancellationPolicy
+  );
+  const [refundPolicy, setRefundPolicy] = useState(
+    initialData?.refundPolicy
+  );
 
   const [postSiteSettng] = useAddSiteSettingMutation();
 
@@ -195,6 +201,54 @@ const AboutUs = ({ initialData, refetch }) => {
     });
   };
 
+  // refundPolicy post
+  const handleDataPost8 = async () => {
+    toast.error("Please wait a moment");
+    const sendData = {
+      refundPolicy: refundPolicy,
+      _id: initialData?._id,
+    };
+    postSiteSettng(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Site update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message);
+      }
+    });
+  };
+
+  // cancellationPolicy post
+  const handleDataPost9 = async () => {
+    toast.error("Please wait a moment");
+    const sendData = {
+      cancellationPolicy: cancellationPolicy,
+      _id: initialData?._id,
+    };
+    postSiteSettng(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Site update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message);
+      }
+    });
+  };
+
   return (
     <>
       {/* About us */}
@@ -212,7 +266,7 @@ const AboutUs = ({ initialData, refetch }) => {
       </div>
 
       {/* Return and exchange */}
-      <h4 className="font-semibold text-[20px] mt-2">Return And Exchange</h4>
+      <h4 className="font-semibold text-[20px] mt-2">Return Policy</h4>
       <hr className="mt-2 mb-4" />
       <ReactQuill
         theme="snow"
@@ -317,6 +371,44 @@ const AboutUs = ({ initialData, refetch }) => {
       />
       <div
         onClick={() => handleDataPost7()}
+        className="mt-2 flex items-center justify-end"
+      >
+        <button
+          type="submit"
+          className="btn bg-green-500 hover:bg-green-400 text-white border border-gray-300 rounded-md px-5 py-2"
+        >
+          Submit
+        </button>
+      </div>
+
+      <h4 className="font-semibold text-[20px] mt-2">Refund Policy</h4>
+      <hr className="mt-2 mb-4" />
+      <ReactQuill
+        theme="snow"
+        value={refundPolicy}
+        onChange={setRefundPolicy}
+      />
+      <div
+        onClick={() => handleDataPost8()}
+        className="mt-2 flex items-center justify-end"
+      >
+        <button
+          type="submit"
+          className="btn bg-green-500 hover:bg-green-400 text-white border border-gray-300 rounded-md px-5 py-2"
+        >
+          Submit
+        </button>
+      </div>
+
+      <h4 className="font-semibold text-[20px] mt-2">Cancellation Policy</h4>
+      <hr className="mt-2 mb-4" />
+      <ReactQuill
+        theme="snow"
+        value={cancellationPolicy}
+        onChange={setCancellationPolicy}
+      />
+      <div
+        onClick={() => handleDataPost9()}
         className="mt-2 flex items-center justify-end"
       >
         <button
