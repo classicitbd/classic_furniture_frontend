@@ -74,7 +74,6 @@ const UpdateBanner = ({
             });
         } else {
             toast.error("Please wait a moment");
-            console.log(data)
             const sendData = {
                 title: data?.title || bannerUpdateModalValue?.title,
                 url: data?.url || bannerUpdateModalValue?.url,
