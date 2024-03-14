@@ -33,9 +33,6 @@ const ArrivalBottomProducts = () => {
   const sortedProducts = [...products.data].reverse(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
-
-  console.log(sortedProducts);
-  console.log(products?.data);
   return (
     <div className="px-[5px] lg:px-[10px] pb-[20px] pt-[5px]">
       {isLoading ? (

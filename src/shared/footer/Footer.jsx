@@ -40,7 +40,6 @@ const Footer = () => {
   if (isLoading) {
     return null;
   }
-  console.log(footerData);
 
   return (
     <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary">

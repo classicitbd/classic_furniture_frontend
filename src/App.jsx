@@ -5,14 +5,21 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "./utils/baseURL";
 import ChatIcon from "./components/common/chatIcon/ChatIcon";
+import CallIcon from "./components/common/callIcon/CallIcon";
+import TabIcon from "./components/common/tabIcon/TabIcon";
+import CallModal from "./components/common/modal/CallModal";
 
 function App() {
+  const [open, setOpen] = useState(true);
+  const [openCallModal, setOpenCallModal] = useState(false);
   const [favicon, setFavicon] = useState("");
+  const [phone, setPhone] = useState("");
   useEffect(() => {
     fetch(`${BASE_URL}/siteSetting`)
       .then((res) => res.json())
       .then((data) => {
         setFavicon(data?.data[0]?.favicon);
+        setPhone(data?.data[0]?.emergency_contact);
       });
   }, []);
 
@@ -52,29 +59,41 @@ function App() {
     <>
       <RouterProvider router={router} />
       <ToastContainer />
-      {/* <div
-        id="messenger-links"
-        className="messenger-links fixed bottom-0 right-0"
-      >
-        <a
-          title="Mobile"
-          href="https://m.me/1967734639964391/"
-          target="_blank"
-          rel="noreferrer"
+
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-center gap-2">
+        <div
+          className={`${
+            open ? "scale-0" : "scale-100"
+          } transition-all duration-300 ease-in-out space-y-2`}
         >
-          <i className="fa-brands fa-facebook-messenger"></i>
-        </a>
-      </div> */}
-      <div className="fixed bottom-4 right-4 text-white z-50">
-        <a
-          target="_blank"
-          href="https://m.me/113419485028827"
-          rel="noreferrer"
-          className="flex items-center bg-white rounded-full p-2.5 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
-        >
-          <ChatIcon />
-        </a>
+          <a
+            target="_blank"
+            href="https://m.me/113419485028827"
+            rel="noreferrer"
+            className="flex items-center justify-center bg-white rounded-full p-2 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
+          >
+            <ChatIcon />
+          </a>
+          <a
+            onClick={() => setOpenCallModal(true)}
+            className="flex items-center justify-center bg-white rounded-full p-2 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
+          >
+            <CallIcon />
+          </a>
+        </div>
+
+        <div>
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex items-center justify-center bg-white p-4 rounded-full shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
+          >
+            <TabIcon />
+          </button>
+        </div>
       </div>
+      {openCallModal && (
+        <CallModal phone={phone} setOpenCallModal={setOpenCallModal} />
+      )}
     </>
   );
 }

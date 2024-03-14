@@ -24,7 +24,6 @@ const Payment = ({
   const [order, { isLoading, isError }] = useOrderMutation();
   // const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
-  console.log("start", curior);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
