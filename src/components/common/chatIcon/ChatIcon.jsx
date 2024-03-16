@@ -2,8 +2,8 @@ const ChatIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="48"
-      height="48"
+      width="24"
+      height="24"
       fill="none"
       viewBox="0 0 48 48"
       id="messenger"

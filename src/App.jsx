@@ -64,22 +64,22 @@ function App() {
         <div
           className={`${
             open ? "scale-0" : "scale-100"
-          } transition-all duration-300 ease-in-out space-y-2`}
+          } transition-all duration-300 ease-in-out space-y-2 flex flex-col`}
         >
           <a
             target="_blank"
             href="https://m.me/113419485028827"
             rel="noreferrer"
-            className="flex items-center justify-center bg-white rounded-full p-2 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
+            className="flex items-center justify-center bg-white rounded-full p-4 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
           >
             <ChatIcon />
           </a>
-          <a
+          <button
             onClick={() => setOpenCallModal(true)}
-            className="flex items-center justify-center bg-white rounded-full p-2 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
+            className="shrink-0 flex items-center justify-center bg-white rounded-full p-4 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
           >
             <CallIcon />
-          </a>
+          </button>
         </div>
 
         <div>
