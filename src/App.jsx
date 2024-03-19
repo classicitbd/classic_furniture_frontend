@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "./utils/baseURL";
 import ChatIcon from "./components/common/chatIcon/ChatIcon";
 import CallIcon from "./components/common/callIcon/CallIcon";
-import TabIcon from "./components/common/tabIcon/TabIcon";
+// import TabIcon from "./components/common/tabIcon/TabIcon";
 import CallModal from "./components/common/modal/CallModal";
 
 function App() {
-  const [open, setOpen] = useState(true);
   const [openCallModal, setOpenCallModal] = useState(false);
   const [favicon, setFavicon] = useState("");
   const [phone, setPhone] = useState("");
@@ -62,9 +61,7 @@ function App() {
 
       <div className="fixed bottom-4 right-4 z-50 flex flex-col items-center gap-2">
         <div
-          className={`${
-            open ? "scale-0" : "scale-100"
-          } transition-all duration-300 ease-in-out space-y-2 flex flex-col`}
+          className={`transition-all duration-300 ease-in-out space-y-2 flex flex-col`}
         >
           <a
             target="_blank"
@@ -82,14 +79,14 @@ function App() {
           </button>
         </div>
 
-        <div>
+        {/* <div>
           <button
             onClick={() => setOpen(!open)}
             className="flex items-center justify-center bg-white p-4 rounded-full shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
           >
             <TabIcon />
           </button>
-        </div>
+        </div> */}
       </div>
       {openCallModal && (
         <CallModal phone={phone} setOpenCallModal={setOpenCallModal} />
