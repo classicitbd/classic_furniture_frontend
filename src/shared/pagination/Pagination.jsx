@@ -9,7 +9,7 @@ const Pagination = ({ rows, page, setPage, setRows, totalData }) => {
   };
 
   return (
-    <div className="flex justify-end my-6">
+    <div className="flex justify-center my-6">
       <div className="mr-10 flex items-center gap-2">
         <label className="text-gray-500 font-semibold" htmlFor="rows_number">
           Rows:
