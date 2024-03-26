@@ -6,8 +6,6 @@ const CustomerDeleteModal = ({
   isDeleteData,
   setIsDeleteOpen,
   refetch,
-  setIsSearchData,
-  setIsSearchOpen,
 }) => {
   const [deleteUser] = useDeleteUserMutation(); //delete Product
 
@@ -27,8 +25,6 @@ const CustomerDeleteModal = ({
         );
         refetch();
         setIsDeleteOpen(false);
-        setIsSearchOpen(false);
-        setIsSearchData({});
       } else {
         toast.error(result?.error?.data?.message);
       }
@@ -49,7 +45,7 @@ const CustomerDeleteModal = ({
           </div>
 
           <h2 className="text-red-500 text-center mt-8 text-xl">
-            Are you sure you want to delete this item?
+            Are you sure you want to delete this user?
           </h2>
 
           <div className="flex justify-end mt-4">

@@ -14,11 +14,12 @@ import axios from "axios";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import BigSpinner from "../../../shared/loader/BigSpinner";
 import { FaCartPlus, FaMoneyBillAlt } from "react-icons/fa";
 import OrderCompleteModal from "./OrderCompleteModal";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const OrderTable = () => {
   const [loading, setLoading] = useState(false);
@@ -36,8 +37,10 @@ const OrderTable = () => {
 
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
+  const [allResetProducts, setAllResetProducts] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [oneStartDate, setOneStartDate] = useState(new Date());
   const [totalData, setTotalData] = useState(0);
 
   const [calendarVisible, setCalendarVisible] = useState(false);
@@ -46,14 +49,15 @@ const OrderTable = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${BASE_URL}/order?page=${page}&limit=${rows}`)
+      .get(`${BASE_URL}/order?page=${page}&limit=${rows}&searchTerm=${searchTerm}`)
       .then((response) => {
         setProducts(response?.data?.data);
         setAllProducts(response?.data?.data);
-        setTotalData(Response?.data?.totalData);
+        setAllResetProducts(response?.data?.data);
+        setTotalData(response?.data?.totalData);
         setLoading(false);
       });
-  }, [page, rows]);
+  }, [page, rows, searchTerm]);
 
   const toggleCalendar = () => {
     setCalendarVisible(!calendarVisible);
@@ -94,38 +98,14 @@ const OrderTable = () => {
     key: "selection",
   };
 
-  //
-
   const handleSearch = (e) => {
     if (e.key === "Enter") {
       setSearchTerm(e.target.value);
     }
   };
 
-  const formattedDateRange = `${
-    selectionRange?.startDate?.toLocaleDateString() ?? ""
-  } - ${selectionRange?.endDate?.toLocaleDateString() ?? ""}`;
-
-  useEffect(() => {
-    setLoading(true);
-    if (searchTerm != "") {
-      fetch(`${BASE_URL}/order/searchOrder/${searchTerm}`)
-        .then((response) => response.json())
-        .then((result) => {
-          if (result?.statusCode == 200 && result?.success == true) {
-            setProducts(result?.data);
-            setAllProducts(result?.data);
-            setLoading(false)
-          } else {
-            toast.error(result?.error?.data?.message);
-            setLoading(false)
-          }
-        });
-    } else {
-      setSearchTerm("");
-      setLoading(false);
-    }
-  }, [searchTerm]);
+  const formattedDateRange = `${selectionRange?.startDate?.toLocaleDateString() ?? ""
+    } - ${selectionRange?.endDate?.toLocaleDateString() ?? ""}`;
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -133,6 +113,18 @@ const OrderTable = () => {
     const minutes = date.getMinutes();
     const formattedDate = `${date.toLocaleDateString()} ${hours}:${minutes}`;
     return formattedDate;
+  };
+
+  // if select one date then filter order
+  const handleOneDateSelect = (date) => {
+    setOneStartDate(date);
+    const selectDate = date.toISOString().split("T")[0]; // Extracts date part in 'YYYY-MM-DD' format
+
+    let filtered = allProducts?.filter((product) => {
+      let productDatePart = product.createdAt.split("T")[0];
+      return productDatePart === selectDate;
+    });
+    setProducts(filtered);
   };
 
   const {
@@ -148,29 +140,29 @@ const OrderTable = () => {
     },
   }); // get Total order info type
 
-  
+
   // open view modal
   const handleView = (data) => {
     setIsViewData(data);
     setIsViewOpen(true);
   };
-  
+
   // open delete modal
   const handleDelete = (data) => {
     setIsDeleteData(data);
     setIsDeleteOpen(true);
   };
-  
+
   // open complete modal
   const handleOrderComplete = (data) => {
     setIsCompleteData(data);
     setIsCompleteOpen(true);
   };
-  
+
   if (isLoading || loading) {
     return <BigSpinner />;
   }
-  
+
   return (
     <div>
       {/* Order info tabs */}
@@ -250,7 +242,7 @@ const OrderTable = () => {
 
       {/* Date and search field */}
 
-      <div className="flex items-center justify-between gap-1">
+      {/* <div className="flex items-center justify-between gap-1">
         <div ref={calendarRef}>
           <input
             type="text"
@@ -266,6 +258,50 @@ const OrderTable = () => {
               />
             </div>
           )}
+        </div>
+
+        <div className="flex items-center justify-end mb-4">
+          <div className="flex items-center gap-2 rounded-xl border border-[#E7E7E7] bg-gray-50 px-[5px] py-2 mt-[16px]">
+            <BiSearch className="text-[#717171]" size={20} />
+            <input
+              onKeyDown={(e) => handleSearch(e)}
+              type="text"
+              placeholder="Search..."
+              className="bg-gray-50 bg-none w-full outline-none text-[14px] font-semibold placeholder-[#717171]"
+            />
+          </div>
+        </div>
+      </div> */}
+      <div className="flex items-center justify-between gap-1 mt-2">
+        <div className="flex items-center gap-4">
+          <div ref={calendarRef}>
+            <input
+              type="text"
+              value={formattedDateRange}
+              className="border p-2 rounded-md"
+              onClick={toggleCalendar}
+            />
+            {calendarVisible && (
+              <div style={{ position: "absolute", zIndex: 1 }}>
+                <DateRangePicker
+                  ranges={[selectionRange]}
+                  onChange={handleSelect}
+                />
+              </div>
+            )}
+          </div>
+          <DatePicker
+            selected={oneStartDate}
+            className="border p-2 rounded-md"
+            onChange={(date) => handleOneDateSelect(date)}
+          />
+          <button
+            onClick={() => setProducts(allResetProducts)}
+            type="button"
+            className="btn bg-red-500 text-white py-2 px-4 rounded-md"
+          >
+            Reset
+          </button>
         </div>
 
         <div className="flex items-center justify-end mb-4">

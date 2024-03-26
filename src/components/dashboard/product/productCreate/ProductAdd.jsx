@@ -11,7 +11,7 @@ import { useAddProductMutation } from "../../../../redux/feature/product/product
 import { AuthContext } from "../../../../context/AuthProvider";
 import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
-import { VideoValidate } from "../../../../utils/VideoValidation"; 
+import { VideoValidate } from "../../../../utils/VideoValidation";
 
 const ProductAdd = () => {
   const { user } = useContext(AuthContext);
@@ -110,9 +110,9 @@ const ProductAdd = () => {
     setIsMenuIdForCategory(false);
     setIsOpenCategory(false);
     setTimeout(() => {
-    setMenuIdForCategory(menu?._id);
-    setIsMenuIdForCategory(true);
-    setIsOpenCategory(true);
+      setMenuIdForCategory(menu?._id);
+      setIsMenuIdForCategory(true);
+      setIsOpenCategory(true);
     }, 100)
   };
 
@@ -125,9 +125,9 @@ const ProductAdd = () => {
     setIsCategoryIdForSubCategory(false);
     setIsOpenSubCategory(false);
     setTimeout(() => {
-    setCategoryIdForSubCategory(category?._id);
-    setIsCategoryIdForSubCategory(true);
-    setIsOpenSubCategory(true);
+      setCategoryIdForSubCategory(category?._id);
+      setIsCategoryIdForSubCategory(true);
+      setIsOpenSubCategory(true);
     }, 100)
   };
 
@@ -282,7 +282,7 @@ const ProductAdd = () => {
 
   // data post in backend
   const handleDataPost = async (data) => {
-    if(!description){
+    if (!description) {
       toast.error(
         "Error: Please fill in the product description box."
       );
@@ -297,7 +297,7 @@ const ProductAdd = () => {
         errorEncountered = true;
       }
     }
-    if (errorEncountered == true){
+    if (errorEncountered == true) {
       toast.error("Must be a mp4 type video in product video field")
     }
     toast.error("Please wait a minute");
@@ -407,7 +407,7 @@ const ProductAdd = () => {
     });
   };
 
-  if (colorLoading || menuLoading ) {
+  if (colorLoading || menuLoading) {
     return <BigSpinner />;
   }
 
