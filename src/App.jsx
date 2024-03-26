@@ -4,14 +4,21 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "./utils/baseURL";
+import ChatIcon from "./components/common/chatIcon/ChatIcon";
+import CallIcon from "./components/common/callIcon/CallIcon";
+// import TabIcon from "./components/common/tabIcon/TabIcon";
+import CallModal from "./components/common/modal/CallModal";
 
 function App() {
+  const [openCallModal, setOpenCallModal] = useState(false);
   const [favicon, setFavicon] = useState("");
+  const [phone, setPhone] = useState("");
   useEffect(() => {
     fetch(`${BASE_URL}/siteSetting`)
       .then((res) => res.json())
       .then((data) => {
         setFavicon(data?.data[0]?.favicon);
+        setPhone(data?.data[0]?.emergency_contact);
       });
   }, []);
 
@@ -26,16 +33,64 @@ function App() {
     link.href = favicon;
   }, [favicon]);
 
-  useEffect(() => {
-    var chatbox = document.getElementById("fb-customer-chat");
-    chatbox.setAttribute("page_id", "");
-    chatbox.setAttribute("attribution", "biz_inbox");
-  }, []);
+  // useEffect(() => {
+  //   window.fbAsyncInit = function () {
+  //     window.FB.init({
+  //       xfbml: true,
+  //       version: "v10.0",
+  //     });
+  //   };
+
+  //   (function (d, s, id) {
+  //     var js,
+  //       fjs = d.getElementsByTagName(s)[0];
+  //     if (d.getElementById(id)) {
+  //       return;
+  //     }
+  //     js = d.createElement(s);
+  //     js.id = id;
+  //     js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+  //     fjs.parentNode.insertBefore(js, fjs);
+  //   })(document, "script", "facebook-jssdk");
+  // }, []);
 
   return (
     <>
       <RouterProvider router={router} />
       <ToastContainer />
+
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-center gap-2">
+        <div
+          className={`transition-all duration-300 ease-in-out space-y-2 flex flex-col`}
+        >
+          <a
+            target="_blank"
+            href="https://m.me/113419485028827"
+            rel="noreferrer"
+            className="flex items-center justify-center bg-white rounded-full p-4 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
+          >
+            <ChatIcon />
+          </a>
+          <button
+            onClick={() => setOpenCallModal(true)}
+            className="shrink-0 flex items-center justify-center bg-white rounded-full p-4 shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
+          >
+            <CallIcon />
+          </button>
+        </div>
+
+        {/* <div>
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex items-center justify-center bg-white p-4 rounded-full shadow-md hover:bg-blue-100 transition duration-300 ease-in-out"
+          >
+            <TabIcon />
+          </button>
+        </div> */}
+      </div>
+      {openCallModal && (
+        <CallModal phone={phone} setOpenCallModal={setOpenCallModal} />
+      )}
     </>
   );
 }

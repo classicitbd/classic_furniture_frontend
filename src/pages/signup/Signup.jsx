@@ -33,12 +33,15 @@ const SignUp = () => {
       }
       delete data.confirm_password;
       const res = await signUp(data);
+      console.log(res);
       if (res?.data?.success) {
         toast.info(res?.data?.message, {
           autoClose: 2000,
         });
         navigate(`/verify-user?phone=${res?.data?.data?.phone}`);
         reset();
+      } else {
+        toast.error(res?.error?.data?.message);
       }
     } catch (error) {
       console.error("sign-up error: ", error);

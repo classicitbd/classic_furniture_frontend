@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const CLOUDINARY_PRESET = "ml_default";
-const CLOUDINARY_CLOUDENAME = "dov60yweq";
+const CLOUDINARY_CLOUDENAME = "dykzl2grb";
 
 const ImageUploader = async (file) => {
   const formData = new FormData();

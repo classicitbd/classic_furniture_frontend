@@ -16,9 +16,9 @@ const Aboutus = () => {
   }
 
   return (
-    <div className="py-10 w-full md:w-[1024px] px-4 md:px-0 mx-auto">
+    <div className="py-10 w-full md:w-[1024px] px-4 md:px-0 mx-auto min-h-screen">
       <h2 className="text-xl lg:text-2xl xl:text-3xl text-center tracking-tight font-medium">
-        Our Story
+        About Us
       </h2>
       <div
         className="mt-10"
