@@ -111,6 +111,8 @@ const ProductAdd = () => {
     setIsOpenCategory(false);
     setTimeout(() => {
       setMenuIdForCategory(menu?._id);
+      setCategoryIdForSubCategory("");
+      setSubCategory("");
       setIsMenuIdForCategory(true);
       setIsOpenCategory(true);
     }, 100)
@@ -126,6 +128,7 @@ const ProductAdd = () => {
     setIsOpenSubCategory(false);
     setTimeout(() => {
       setCategoryIdForSubCategory(category?._id);
+      setSubCategory("");
       setIsCategoryIdForSubCategory(true);
       setIsOpenSubCategory(true);
     }, 100)
@@ -345,7 +348,7 @@ const ProductAdd = () => {
     const sendData = {
       phone: user?.phone,
       title: data?.title,
-      related: slugify(data.title, {
+      related: slugify(data?.title, {
         lower: true,
         replacement: "-",
       }),
@@ -364,28 +367,32 @@ const ProductAdd = () => {
       })),
       thumbnail_image: imageName,
       hover_image: hoverImageName,
-      product_video: product_video,
+      product_video: product_video !== undefined && product_video,
       images: allImage?.map((item) => ({
         image: item?.image,
       })),
-      colorId: colorId,
-      subCategoryId: subcategory,
-      menuId: menuIdForCategory,
-      categoryId: categoryIdForSubCategory,
+      colorId: colorId
     };
 
-    if (collection.trim() !== "") {
+    if (menuIdForCategory !== "" && menuIdForCategory !== undefined) {
+      sendData.menuId = menuIdForCategory;
+    }
+    if (categoryIdForSubCategory !== "" && categoryIdForSubCategory !== undefined) {
+      sendData.categoryId = categoryIdForSubCategory;
+    }
+    if (subcategory !== "" && subcategory !== undefined) {
+      sendData.subCategoryId = subcategory;
+    }
+    if (collection !== "" && collection !== undefined) {
       sendData.collectionId = collection;
     }
-
-    if (style.trim() !== "") {
+    if (style !== "" && style !== undefined) {
       sendData.styleId = style;
     }
 
-    if (feature.trim() !== "") {
+    if (feature !== "" && feature !== undefined) {
       sendData.featureId = feature;
     }
-
     addProduct(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
         toast.success(
@@ -582,6 +589,7 @@ const ProductAdd = () => {
                   id="menuId"
                   name="menuId"
                   required
+                  isClearable
                   aria-label="Select a menu"
                   options={menus?.data}
                   getOptionLabel={(x) => x?.menu}
@@ -600,7 +608,7 @@ const ProductAdd = () => {
                   <Select
                     id="categoryId"
                     name="categoryId"
-                    required
+                    isClearable
                     aria-label="Select a category"
                     options={categories?.data}
                     getOptionLabel={(x) => x?.category}
@@ -619,7 +627,7 @@ const ProductAdd = () => {
                   </label>
                   <Select
                     id="subCategoryId"
-                    required
+                    isClearable
                     name="subCategoryId"
                     aria-label="Select a sub category"
                     options={subCategories?.data}
@@ -641,6 +649,7 @@ const ProductAdd = () => {
                 <Select
                   id="collectionId"
                   name="collectionId"
+                  isClearable
                   aria-label="Select a Collection"
                   options={collections?.data}
                   getOptionLabel={(x) => x?.collection_name}
@@ -658,6 +667,7 @@ const ProductAdd = () => {
                 <Select
                   id="styleId"
                   name="styleId"
+                  isClearable
                   aria-label="Select a Style"
                   options={styles?.data}
                   getOptionLabel={(x) => x?.style}
@@ -673,6 +683,7 @@ const ProductAdd = () => {
                 <Select
                   id="featureId"
                   name="featureId"
+                  isClearable
                   aria-label="Select a Feature"
                   options={features?.data}
                   getOptionLabel={(x) => x?.feature}
