@@ -41,9 +41,34 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   const [categoryIdForSubCategory, setCategoryIdForSubCategory] = useState(
     updateModalValue?.categoryId?._id
   );
-  const [isOpenCategory, setIsOpenCategory] = useState(false);
 
-  const [isOpenSubCategory, setIsOpenSubCategory] = useState(false);
+  const colorNameValue =
+    updateModalValue?.colorId?.color;
+  const colorNameId = updateModalValue?.colorId?._id;
+  const menuNameValue =
+    updateModalValue?.menuId?.menu;
+  const menuNameId = updateModalValue?.menuId?._id;
+  let categoryNameValue =
+    updateModalValue?.categoryId?.category;
+  let categoryNameId = updateModalValue?.categoryId?._id;
+  let subCategoryNameValue =
+    updateModalValue?.subCategoryId?.sub_category;
+  let subCategoryNameId = updateModalValue?.subCategoryId?._id;
+  const collectionNameValue =
+    updateModalValue?.collectionId?.collection_name;
+  const collectionNameId = updateModalValue?.collectionId?._id;
+  const styleNameValue =
+    updateModalValue?.styleId?.style
+  const styleNameId = updateModalValue?.styleId?._id;
+  const featureNameValue =
+    updateModalValue?.featureId?.feature;
+  const featureNameId = updateModalValue?.featureId?._id;
+
+  const [isChangeMenu, setIsChangeMenu] = useState(false);
+  const [isOpenCategory, setIsOpenCategory] = useState(true);
+  const [isChangeCategory, setIsChangeCategory] = useState(true);
+
+  const [isOpenSubCategory, setIsOpenSubCategory] = useState(true);
 
   const {
     register,
@@ -116,8 +141,15 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   }); // get Feature type
 
   const handleMenuToCategory = (menu) => {
-    setMenuIdForCategory(menu?._id);
-    setIsOpenCategory(true);
+    setIsOpenSubCategory(false);
+    setIsOpenCategory(false);
+    setIsChangeMenu(true)
+    setTimeout(() => {
+      setMenuIdForCategory(menu?._id);
+      setIsOpenCategory(true);
+      setCategoryIdForSubCategory("");
+      setSubCategory("");
+    }, 100)
   };
 
   const setColorIdValue = (color) => {
@@ -126,8 +158,13 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   };
 
   const handleCategoryToSubCategory = (category) => {
-    setCategoryIdForSubCategory(category?._id);
-    setIsOpenSubCategory(true);
+    setIsOpenSubCategory(false);
+    setIsChangeCategory(true)
+    setTimeout(() => {
+      setCategoryIdForSubCategory(category?._id);
+      setSubCategory("");
+      setIsOpenSubCategory(true);
+    }, 100)
   };
 
   const { data: categories = [] } = useQuery({
@@ -286,7 +323,9 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   // data post in backend
   const handleDataPost = async (data) => {
-    toast.error("Please wait a moment");
+    toast.error("Please wait a moment", {
+      autoClose: 1000
+    });
     let product_video;
     if (data?.product_video?.[0]) {
       const videoUpload = await VideoUploader(data?.product_video?.[0]);
@@ -305,24 +344,32 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
     if (hasEmptySizeOrColor) {
       toast.error(
-        "Error: Please fill in the size and quantity for all size variations."
+        "Error: Please fill in the size and quantity for all size variations.", {
+        autoClose: 1000
+      }
       );
       return; // Stop the function
     }
 
     if (!imageName) {
-      toast.error("Error: Please fill the main image.");
+      toast.error("Error: Please fill the main image.", {
+        autoClose: 1000
+      });
       return; // Stop the function
     }
 
     if (!hoverImageName) {
-      toast.error("Error: Please fill the hover image.");
+      toast.error("Error: Please fill the hover image.", {
+        autoClose: 1000
+      });
       return; // Stop the function
     }
 
     if (multiImage?.length == 0) {
       toast.error(
-        "Error: Please fill atleast one image in another image field."
+        "Error: Please fill atleast one image in another image field.", {
+        autoClose: 1000
+      }
       );
       return; // Stop the function
     }
@@ -347,9 +394,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         ? description
         : updateModalValue?.description,
       price: data?.price ? data?.price : updateModalValue?.price,
-      discount_price: data?.discount_price
-        ? data?.discount_price
-        : updateModalValue?.discount_price,
+      discount_price: data?.discount_price ? data?.discount_price : null,
       size_variation: combinedVariation?.map((item) => ({
         size: item?.size,
         quantity: item?.quantity,
@@ -358,27 +403,39 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       })),
       thumbnail_image: imageName,
       hover_image: hoverImageName,
-      product_video: product_video
-        ? product_video
-        : updateModalValue?.product_video,
       images: multiImage?.map((item) => ({
         image: item?.image,
       })),
       colorId: colorId,
-      subCategoryId: subcategory,
-      menuId: menuIdForCategory,
-      categoryId: categoryIdForSubCategory,
-      collectionId: collection,
-      styleId: style,
-      featureId: feature,
+      menuId: menuIdForCategory
     };
-
+    if (product_video) {
+      sendData.product_video = product_video;
+    }
+    if (menuIdForCategory !== "" && menuIdForCategory !== undefined) {
+      sendData.menuId = menuIdForCategory;
+    }
+    if (categoryIdForSubCategory !== "" && categoryIdForSubCategory !== undefined) {
+      sendData.categoryId = categoryIdForSubCategory;
+    }
+    if (subcategory !== "" && subcategory !== undefined) {
+      sendData.subCategoryId = subcategory;
+    }
+    if (collection !== "" && collection !== undefined) {
+      sendData.collectionId = collection;
+    }
+    if (style !== "" && style !== undefined) {
+      sendData.styleId = style;
+    }
+    if (feature !== "" && feature !== undefined) {
+      sendData.featureId = feature;
+    }
     updateProduct(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
         toast.success(
           result?.data?.message
             ? result?.data?.message
-            : "Product Added successfully !",
+            : "Product Update successfully !",
           {
             autoClose: 1000,
           }
@@ -390,7 +447,9 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         refetch();
         setIsUpdateModalOpen(false);
       } else {
-        toast.error(result?.error?.data?.message);
+        toast.error(result?.error?.data?.message, {
+          autoClose: 1000
+        });
       }
     });
   };
@@ -398,7 +457,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[900px] p-6 max-h-[100vh] overflow-y-auto">
+        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-full lg:w-10/12 p-6 max-h-[90vh] overflow-y-auto">
           <div className="mt-4 bg-white">
             <div className="p-1">
               <div className="flex justify-between items-center">
@@ -437,16 +496,17 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
                   <div className="mt-3">
                     <label className="font-semibold" htmlFor="color">
-                      {" "}
-                      Select Color
-                      <span className="text-red-500">
-                        {" "}
-                        {updateModalValue?.colorId?.color}
-                      </span>{" "}
+                      Select Color<span className="text-red-500">*</span>{" "}
                     </label>
                     <Select
                       id="color"
                       name="color"
+                      isClearable
+                      required
+                      defaultValue={{
+                        _id: colorNameId,
+                        color: colorNameValue,
+                      }}
                       options={colors?.data}
                       getOptionLabel={(x) => x?.color}
                       getOptionValue={(x) => x?._id}
@@ -640,15 +700,17 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                 <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-3">
                   <div>
                     <label className="font-semibold" htmlFor="menuId">
-                      Menu Type{" "}
-                      <span className="text-red-500">
-                        {" "}
-                        {updateModalValue?.menuId?.menu}
-                      </span>{" "}
+                      Menu Type<span className="text-red-500">*</span>{" "}
                     </label>
                     <Select
                       id="menuId"
                       name="menuId"
+                      isClearable
+                      required
+                      defaultValue={{
+                        _id: menuNameId,
+                        menu: menuNameValue,
+                      }}
                       aria-label="Select a menu"
                       options={menus?.data}
                       getOptionLabel={(x) => x?.menu}
@@ -662,46 +724,80 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                   {isOpenCategory && (
                     <div>
                       <label className="font-semibold" htmlFor="categoryId">
-                        Category Type{" "}
-                        <span className="text-red-500">
-                          {updateModalValue?.categoryId?.category}
-                        </span>
+                        Category Type
                       </label>
-                      <Select
-                        id="categoryId"
-                        name="categoryId"
-                        required
-                        aria-label="Select a category"
-                        options={categories?.data}
-                        getOptionLabel={(x) => x?.category}
-                        getOptionValue={(x) => x?._id}
-                        onChange={(selectedOption) =>
-                          handleCategoryToSubCategory(selectedOption)
-                        }
-                      ></Select>
+                      {
+                        isChangeMenu == true ?
+                          <Select
+                            id="categoryId"
+                            name="categoryId"
+                            isClearable
+                            aria-label="Select a category"
+                            options={categories?.data}
+                            getOptionLabel={(x) => x?.category}
+                            getOptionValue={(x) => x?._id}
+                            onChange={(selectedOption) =>
+                              handleCategoryToSubCategory(selectedOption)
+                            }
+                          ></Select>
+                          :
+                          <Select
+                            id="categoryId"
+                            name="categoryId"
+                            isClearable
+                            defaultValue={{
+                              _id: categoryNameId,
+                              category: categoryNameValue,
+                            }}
+                            aria-label="Select a category"
+                            options={categories?.data}
+                            getOptionLabel={(x) => x?.category}
+                            getOptionValue={(x) => x?._id}
+                            onChange={(selectedOption) =>
+                              handleCategoryToSubCategory(selectedOption)
+                            }
+                          ></Select>
+                      }
                     </div>
                   )}
 
                   {isOpenSubCategory && (
                     <div>
                       <label className="font-semibold" htmlFor="subCategoryId">
-                        Sub Category Type{" "}
-                        <span className="text-red-500">
-                          {updateModalValue?.subCategoryId?.sub_category}
-                        </span>
+                        Sub Category Type
                       </label>
-                      <Select
-                        id="subCategoryId"
-                        name="subCategoryId"
-                        required
-                        aria-label="Select a sub category"
-                        options={subCategories?.data}
-                        getOptionLabel={(x) => x?.sub_category}
-                        getOptionValue={(x) => x?._id}
-                        onChange={(selectedOption) =>
-                          setSubCategory(selectedOption?._id)
-                        }
-                      ></Select>
+                      {
+                        isChangeCategory == true || isChangeMenu == true ?
+                          <Select
+                            id="subCategoryId"
+                            name="subCategoryId"
+                            aria-label="Select a sub category"
+                            isClearable
+                            options={subCategories?.data}
+                            getOptionLabel={(x) => x?.sub_category}
+                            getOptionValue={(x) => x?._id}
+                            onChange={(selectedOption) =>
+                              setSubCategory(selectedOption?._id)
+                            }
+                          ></Select>
+                          :
+                          <Select
+                            id="subCategoryId"
+                            name="subCategoryId"
+                            isClearable
+                            defaultValue={{
+                              _id: subCategoryNameId,
+                              sub_category: subCategoryNameValue,
+                            }}
+                            aria-label="Select a sub category"
+                            options={subCategories?.data}
+                            getOptionLabel={(x) => x?.sub_category}
+                            getOptionValue={(x) => x?._id}
+                            onChange={(selectedOption) =>
+                              setSubCategory(selectedOption?._id)
+                            }
+                          ></Select>
+                      }
                     </div>
                   )}
                 </div>
@@ -709,14 +805,16 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                 <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-3">
                   <div>
                     <label className="font-semibold" htmlFor="collectionId">
-                      Collection Type{" "}
-                      <span className="text-red-500">
-                        {updateModalValue?.collectionId?.collection_name}
-                      </span>
+                      Collection Type
                     </label>
                     <Select
                       id="collectionId"
                       name="collectionId"
+                      isClearable
+                      defaultValue={{
+                        _id: collectionNameId,
+                        collection_name: collectionNameValue,
+                      }}
                       aria-label="Select a Collection"
                       options={collections?.data}
                       getOptionLabel={(x) => x?.collection_name}
@@ -729,14 +827,16 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
                   <div>
                     <label className="font-semibold" htmlFor="styleId">
-                      Style Type{" "}
-                      <span className="text-red-500">
-                        {updateModalValue?.styleId?.style}
-                      </span>
+                      Style Type
                     </label>
                     <Select
                       id="styleId"
                       name="styleId"
+                      isClearable
+                      defaultValue={{
+                        _id: styleNameId,
+                        style: styleNameValue,
+                      }}
                       aria-label="Select a Style"
                       options={styles?.data}
                       getOptionLabel={(x) => x?.style}
@@ -749,14 +849,16 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
                   <div>
                     <label className="font-semibold" htmlFor="featureId">
-                      Feature Type{" "}
-                      <span className="text-red-500">
-                        {updateModalValue?.featureId?.feature}
-                      </span>
+                      Feature Type
                     </label>
                     <Select
                       id="featureId"
                       name="featureId"
+                      isClearable
+                      defaultValue={{
+                        _id: featureNameId,
+                        feature: featureNameValue,
+                      }}
                       aria-label="Select a Feature"
                       options={features?.data}
                       getOptionLabel={(x) => x?.feature}
@@ -773,7 +875,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                     {/* <Backlink link="/register/hotel/hotel-details-completion" text="Back" /> */}
                     <div>
-                      <p className="font-semibold">Upload main image</p>
+                      <p className="font-semibold">Upload main image<span className="text-red-500">*</span>{" "}</p>
                       {/*   */}
                       <div className="border border-gray-300 p-3 rounded-sm">
                         {imageName ? (
@@ -811,7 +913,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                     </div>
 
                     <div>
-                      <p className="font-semibold">Upload hover image</p>
+                      <p className="font-semibold">Upload hover image<span className="text-red-500">*</span>{" "}</p>
                       {/*   */}
                       <div className="border border-gray-300 p-3 rounded-sm">
                         {hoverImageName ? (
@@ -867,7 +969,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                 </div>
 
                 <div className="mt-3">
-                  <p className="font-semibold">Add other photos</p>
+                  <p className="font-semibold">Add other photos<span className="text-red-500">*</span>{" "}</p>
                   <div className="border border-gray-300 rounded-sm p-3">
                     <div className="">
                       {multiImage.length >= 0 ? (
