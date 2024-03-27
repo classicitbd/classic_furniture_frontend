@@ -20,7 +20,7 @@ const Tabs = ({ tabs }) => {
           </div>
           <div>
             <p className="text-end">Customer</p>
-            <h2 className="font-medium text-[24px]">{tabs?.allCustomerCount}</h2>
+            <h2 className="font-medium text-[24px]">{tabs?.allCustomerCount - 1}</h2>
           </div>
         </div>
       </Link>
