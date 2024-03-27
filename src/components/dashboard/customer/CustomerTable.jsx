@@ -105,36 +105,45 @@ const CustomerTable = () => {
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              {users?.data?.map((user) => (
-                <tr key={user?._id}>
-                  <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {user?.name}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {user?.phone}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {user?.division}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {user?.district}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {user?.city}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {user?.role}
-                  </td>
+              {users?.data?.map((user) => {
+                if (user?.phone !== '01753142981') {
+                  return (
+                    <tr key={user?._id}>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.name}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.phone}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.division}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.district}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.city}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.role}
+                      </td>
 
-                  <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
-                    <MdDeleteForever
-                      onClick={() => handleDelete(user)}
-                      className="cursor-pointer text-red-500 hover:text-red-300"
-                      size={25}
-                    />
-                  </td>
-                </tr>
-              ))}
+                      {user?.role !== 'admin' && (
+                        <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
+                          <MdDeleteForever
+                            onClick={() => handleDelete(user)}
+                            className="cursor-pointer text-red-500 hover:text-red-300"
+                            size={25}
+                          />
+                        </td>
+                      )}
+                    </tr>
+                  );
+                } else {
+                  return null; // Skip rendering this user
+                }
+              })}
+
             </tbody>
           </table>
         </div>
