@@ -3,7 +3,7 @@ import { GiBeachBag } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GoArrowRight, GoPlus } from "react-icons/go";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FormSearch from "../../components/frontend/form/FormSearch";
 import { CiTrash } from "react-icons/ci";
@@ -22,9 +22,9 @@ import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import MobileMenu from "./MobileMenu";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import useUser from "../../hooks/useUser";
 import EmptyCart from "../../components/common/emptyCart/EmptyCart";
 import PreLoader from "../loader/PreLoader";
+import { UserContext } from "../../context/UserProvider";
 
 const Header = () => {
   const [menu, setMenu] = useState("");
@@ -45,7 +45,8 @@ const Header = () => {
   const dispatch = useDispatch();
   // const isUser = isLoggedin();
   // const isUserLogin = isUserLoggedin();
-  const [user] = useUser();
+  // const [user] = useUser();
+  const { userData } = useContext(UserContext);
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -272,7 +273,7 @@ const Header = () => {
                 )}
               </button>
 
-              {user && (
+              {userData && (
                 <div className="relative">
                   <div className="inline-flex items-center overflow-hidden">
                     <Link

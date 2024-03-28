@@ -1,5 +1,5 @@
 // import react icons
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useOrderMutation } from "../../../redux/feature/payment/paymentApi";
@@ -8,22 +8,16 @@ import { cartKey } from "../../../constants/cartKey";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../../utils/cookie-storage";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../../context/UserProvider";
 
-const Payment = ({
-  user,
-  addressUpdate,
-  total,
-  addNote,
-  curior,
-  deliveryCharge,
-}) => {
+const Payment = ({ addressUpdate, total, addNote, curior, deliveryCharge }) => {
   const [payBy, setPayBy] = useState("");
   const [loading, setLoading] = useState(false);
   const [agree, setAgree] = useState(false);
   const carts = useSelector((state) => state.cart.products);
   const [order, { isLoading, isError }] = useOrderMutation();
-  // const shippingType = useSelector((state) => state.cart.shippingType);
   const navigate = useNavigate();
+  const { userData } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +31,7 @@ const Payment = ({
       }
       setCookie("addNote", JSON.stringify(addNote));
 
-      if (!user) {
+      if (!userData) {
         return toast.error("Must be provide your Information !");
       }
 
@@ -49,18 +43,18 @@ const Payment = ({
         return toast.error("select your payment method !");
       }
 
-      if (user && user?.address) {
+      if (userData && userData?.address) {
         data = {
-          userInfo: user?._id,
-          name: user?.name,
-          phone: user?.phone,
-          address: user?.address,
+          userInfo: userData?._id,
+          name: userData?.name,
+          phone: userData?.phone,
+          address: userData?.address,
           payment_type: payBy,
           order: carts,
           price: total,
           shipping_price: deliveryCharge,
-          district: user?.district,
-          division: user?.division,
+          district: userData?.district,
+          division: userData?.division,
           addNote,
           curior,
         };
@@ -89,11 +83,10 @@ const Payment = ({
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
-  console.log(user);
 
   return (
     <>
-      {user && user?.verify && (
+      {userData && userData?.verify && (
         <div className="px-5 md:px-12 bg-white py-[40px] rounded-lg shadow-md">
           <div className="flex items-center gap-7">
             <p className="bg-black text-white h-8 w-8 rounded-full flex justify-center items-center font-bold">
@@ -173,7 +166,7 @@ const Payment = ({
                 type="button"
                 disabled
                 className={`block w-full text-center py-3 text-textColor bg-primaryColor rounded mt-4 ${
-                  !user || addressUpdate || !agree
+                  !userData || addressUpdate || !agree
                     ? "bg-opacity-50"
                     : "bg-opacity-100"
                 }`}
@@ -183,9 +176,9 @@ const Payment = ({
             ) : (
               <button
                 type="submit"
-                disabled={!user || addressUpdate || !agree}
+                disabled={!userData || addressUpdate || !agree}
                 className={`block w-full text-center py-3 text-textColor bg-primaryColor rounded mt-4 ${
-                  !user || addressUpdate || !agree
+                  !userData || addressUpdate || !agree
                     ? "bg-opacity-50"
                     : "bg-opacity-100"
                 }`}
