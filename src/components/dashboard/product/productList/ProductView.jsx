@@ -27,7 +27,7 @@ const ProductView = ({ setIsViewOpen, isViewData }) => {
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[700px] p-6 max-h-[100vh] overflow-y-auto">
+        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-full lg:w-10/12 p-6 max-h-[90vh] overflow-y-auto">
           <div className="flex items-center justify-between">
             <h3
               className="text-[26px] font-bold text-[#0A0A0A] capitalize"
@@ -57,12 +57,12 @@ const ProductView = ({ setIsViewOpen, isViewData }) => {
 
               <div className="flex items-center justify-between mt-2">
                 <h2 className="text-red-400">
-                  Price: <strong>$ {isViewData?.price}</strong>{" "}
+                  Price: <strong>৳ {isViewData?.price}</strong>{" "}
                 </h2>
                 {isViewData?.discount_price && (
                   <h2 className="text-red-400">
                     Discount Price:{" "}
-                    <strong>$ {isViewData?.discount_price}</strong>{" "}
+                    <strong>৳ {isViewData?.discount_price}</strong>{" "}
                   </h2>
                 )}
               </div>
