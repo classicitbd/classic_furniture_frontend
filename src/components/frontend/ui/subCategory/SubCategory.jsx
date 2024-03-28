@@ -5,9 +5,9 @@ import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const SubCategory = () => {
   const { data: subCategories = [], isLoading } = useQuery({
-    queryKey: [`/api/v1/sub_category`],
+    queryKey: [`/api/v1/category`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/sub_category`);
+      const res = await fetch(`${BASE_URL}/category`);
       const data = await res.json();
       return data;
     },
@@ -17,16 +17,18 @@ const SubCategory = () => {
     return <ProductCardSkeleton />;
   }
 
+  console.log(subCategories);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3">
-      {subCategories?.data?.slice(0, 3)?.map((subCategory) => (
-        <div className="relative group overflow-hidden" key={subCategory?._id}>
-          <Link to={`/all?sub_category=${subCategory?.slug}`}>
+      {subCategories?.data?.slice(0, 3)?.map((category) => (
+        <div className="relative group overflow-hidden" key={category?._id}>
+          <Link to={`/all?category=${category?.slug}`}>
             <img
               loading="lazy"
               className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110"
-              src={subCategory?.sub_category_image}
-              alt={subCategory?.sub_category}
+              src={category?.category_image}
+              alt={category?.category}
             />
             <h1
               style={{
@@ -35,7 +37,7 @@ const SubCategory = () => {
               }}
               className="absolute uppercase text-white bottom-0 px-5 py-3 w-full text-xl lg:text-3xl font-semibold"
             >
-              {subCategory?.sub_category}
+              {category?.category}
             </h1>
           </Link>
         </div>

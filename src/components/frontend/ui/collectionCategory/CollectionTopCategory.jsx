@@ -4,10 +4,10 @@ import { BASE_URL } from "../../../../utils/baseURL";
 import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const CollectionTopCategory = () => {
-  const { data: collections = [], isLoading } = useQuery({
-    queryKey: [`/api/v1/collection?collection`],
+  const { data: categories = [], isLoading } = useQuery({
+    queryKey: [`/api/v1/category`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/collection`);
+      const res = await fetch(`${BASE_URL}/category`);
       const data = await res.json();
       return data;
     },
@@ -40,7 +40,7 @@ const CollectionTopCategory = () => {
       </div>
 
       {/* Second Section */}
-      <div className="relative group overflow-hidden md:col-span-4 row-span-1 flex flex-col items-center justify-center space-y-5 py-20 md:py-0">
+      <div className="border-l relative group overflow-hidden md:col-span-4 row-span-1 flex flex-col items-center justify-center space-y-5 py-20 md:py-0">
         <article className="text-center uppercase leading-tight space-y-1">
           <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold">
             Regular Sale
@@ -56,17 +56,17 @@ const CollectionTopCategory = () => {
       </div>
 
       {/* Third Section */}
-      {collections?.data?.slice(3, 4).map((collection) => (
+      {categories?.data?.slice(3, 4).map((category) => (
         <div
           className="relative group overflow-hidden md:col-span-4 row-span-1"
-          key={collection?._id}
+          key={category?._id}
         >
-          <Link to={`/all?collection=${collection?.slug}`}>
+          <Link to={`/all?category=${category?.slug}`}>
             <img
               loading="lazy"
               className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110 object-cover md:h-[200px] lg:h-[300px] 2xl:h-[400px] w-full"
-              src={collection?.collection_image}
-              alt={collection?.collection_name}
+              src={category?.category_image}
+              alt={category?.category}
             />
             <h1
               style={{
@@ -75,7 +75,7 @@ const CollectionTopCategory = () => {
               }}
               className="absolute uppercase text-white bottom-0 px-5 py-3 w-full text-xl lg:text-3xl font-semibold"
             >
-              {collection?.collection_name}
+              {category?.category}
             </h1>
           </Link>
         </div>

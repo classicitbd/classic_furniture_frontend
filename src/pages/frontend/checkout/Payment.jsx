@@ -89,98 +89,103 @@ const Payment = ({
   if (isLoading && isError) {
     return <p className="text-error-300">There is an error!</p>;
   }
+  console.log(user);
 
   return (
-    <div className="px-5 md:px-10">
-      <div className="flex items-center gap-7">
-        <p className="bg-black text-white h-8 w-8 rounded-full flex justify-center items-center font-bold">
-          2
-        </p>
-        <h2 className="text-xl font-semibold tracking-normal leading-5">
-          Payment
-        </h2>
-      </div>
-      <p className="py-5 font-normal tracking-tight">BDT {total}.00</p>
-      <form className="space-y-5" onSubmit={handleSubmit}>
-        <fieldset className="space-y-4">
-          <legend className="sr-only">Delivery</legend>
-
-          <div className="space-y-2 text-center">
-            <div onClick={() => setPayBy("online")}>
-              <input
-                className="peer sr-only"
-                id="online"
-                type="radio"
-                tabIndex="-1"
-                name="payment"
-              />
-
-              <label
-                htmlFor="online"
-                className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
-                tabIndex="0"
-              >
-                <span className="text-sm">Pay With SSL Commerz </span>
-                <img
-                  loading="lazy"
-                  src={`/assets/images/payment-gateways.png`}
-                  alt="ssl commerze"
-                  className="h-[30px]"
-                />
-              </label>
-            </div>
-
-            <div onClick={() => setPayBy("cod")}>
-              <input
-                className="peer sr-only"
-                id="cod"
-                type="radio"
-                tabIndex="-1"
-                name="payment"
-              />
-
-              <label
-                htmlFor="cod"
-                className="block w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 py-4"
-                tabIndex="0"
-              >
-                <span className="text-sm"> Cash On Delivery </span>
-              </label>
-            </div>
+    <>
+      {user && user?.verify && (
+        <div className="px-5 md:px-12 bg-white py-[40px] rounded-lg shadow-md">
+          <div className="flex items-center gap-7">
+            <p className="bg-black text-white h-8 w-8 rounded-full flex justify-center items-center font-bold">
+              2
+            </p>
+            <h2 className="text-xl font-semibold tracking-normal leading-5">
+              Payment
+            </h2>
           </div>
-        </fieldset>
+          <p className="py-5 font-normal tracking-tight">BDT {total}.00</p>
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <fieldset className="space-y-4">
+              <legend className="sr-only">Delivery</legend>
 
-        <p className="text-xs mt-2">
-          <input
-            type="checkbox"
-            className="text-xl mr-1 mt-2"
-            onChange={() => setAgree(!agree)}
-          />
-          By making this purchase you agree to our
-          <Link
-            to="/return-and-refunds-policy"
-            className="text-blue-500 underline"
-          >
-            {" "}
-            terms and conditions.
-          </Link>
-        </p>
-        <button
-          type="submit"
-          disabled={!user || addressUpdate || !agree}
-          className={`block w-full text-center py-3 text-textColor bg-primaryColor hover:bg-opacity-70 rounded mt-4 ${
-            !user || addressUpdate ? "bg-opacity-70" : "bg-opacity-100"
-          }`}
-        >
-          {loading || isLoading ? <MiniSpinner /> : "Place Order"}
-        </button>
-      </form>
+              <div className="space-y-2 text-center">
+                <div onClick={() => setPayBy("online")}>
+                  <input
+                    className="peer sr-only"
+                    id="online"
+                    type="radio"
+                    tabIndex="-1"
+                    name="payment"
+                  />
 
-      <p className="text-xs mt-5">
-        I agree that placing the order places me under an obligation to make a
-        payment in accordance with the General Terms and Conditions.
-      </p>
-    </div>
+                  <label
+                    htmlFor="online"
+                    className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
+                    tabIndex="0"
+                  >
+                    <span className="text-sm">Pay With SSL Commerz </span>
+                    <img
+                      loading="lazy"
+                      src={`/assets/images/payment-gateways.png`}
+                      alt="ssl commerze"
+                      className="h-[30px]"
+                    />
+                  </label>
+                </div>
+
+                <div onClick={() => setPayBy("cod")}>
+                  <input
+                    className="peer sr-only"
+                    id="cod"
+                    type="radio"
+                    tabIndex="-1"
+                    name="payment"
+                  />
+
+                  <label
+                    htmlFor="cod"
+                    className="block w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 py-4"
+                    tabIndex="0"
+                  >
+                    <span className="text-sm"> Cash On Delivery </span>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+            <p className="text-xs mt-2">
+              <input
+                type="checkbox"
+                className="text-xl mr-1 mt-2"
+                onChange={() => setAgree(!agree)}
+              />
+              By making this purchase you agree to our
+              <Link
+                to="/return-and-refunds-policy"
+                className="text-blue-500 underline"
+              >
+                {" "}
+                terms and conditions.
+              </Link>
+            </p>
+            <button
+              type="submit"
+              disabled={!user || addressUpdate || !agree}
+              className={`block w-full text-center py-3 text-textColor bg-primaryColor hover:bg-opacity-70 rounded mt-4 ${
+                !user || addressUpdate ? "bg-opacity-70" : "bg-opacity-100"
+              }`}
+            >
+              {loading || isLoading ? <MiniSpinner /> : "Place Order"}
+            </button>
+          </form>
+
+          <p className="text-xs mt-5">
+            I agree that placing the order places me under an obligation to make
+            a payment in accordance with the General Terms and Conditions.
+          </p>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -57,12 +57,12 @@ const RecipientForm = ({
       const res = await orderRegUser(data);
 
       if (res?.data?.success) {
+        setUser({ ...res?.data?.data, deliveryPoint });
         setAddressUpdate(!addressUpdate);
         setCookie(
           "user",
           JSON.stringify({ ...res?.data?.data, deliveryPoint })
         );
-        setUser({ ...res?.data?.data, deliveryPoint });
 
         toast.success("Your Information is done!", {
           autoClose: 2,
@@ -88,7 +88,6 @@ const RecipientForm = ({
       setDistrictsData(districtData);
     }
   }, [districtId]);
-
 
   return (
     <>
