@@ -22,13 +22,13 @@ ChartJS.register(
 const WeekSell = ({ thisWeekSellData }) => {
   const [chartData, setChartData] = useState({
     labels: [
-      "Saturday",
       "Sunday",
       "Monday",
       "Tuesday",
       "Wednesday",
       "Thursday",
       "Friday",
+      "Saturday",
     ],
     datasets: [
       {
@@ -83,9 +83,9 @@ const WeekSell = ({ thisWeekSellData }) => {
 
     // Update the total sell count and total order count for each day
     thisWeekSellData.forEach((order) => {
-      const dayOfWeek = new Date(order.createdAt).getDay();
+      const dayOfWeek = new Date(order?.createdAt).getDay();
       dailySellData[dayOfWeek] += 1; // Assuming each order contributes to the sell count
-      dailyOrderCountData[dayOfWeek] += order.order.length;
+      dailyOrderCountData[dayOfWeek] += order?.order.length;
     });
 
     // Update the chart data only if it has changed
