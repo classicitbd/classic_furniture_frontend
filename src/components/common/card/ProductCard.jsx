@@ -28,6 +28,7 @@ const ProductCard = ({ product, loading }) => {
               src={product?.thumbnail_image}
               style={{
                 width: "100%",
+                height: "350px",
                 transition: "transform 0.7s",
                 transform: isHovered ? "translateX(-100%)" : "translateX(0)",
               }}
@@ -38,6 +39,7 @@ const ProductCard = ({ product, loading }) => {
               src={product?.hover_image}
               style={{
                 width: "100%",
+                height: "350px",
                 position: "absolute",
                 top: 0,
                 left: "100%",
@@ -47,8 +49,8 @@ const ProductCard = ({ product, loading }) => {
               alt={product?.title}
             />
           </div>
-          <article className="pb-[10px]">
-            <h2 className="text-center">{product?.title}</h2>
+          <article className="py-[10px]">
+            <h2 className="text-center h-10">{product?.title}</h2>
             <p className="text-center py-3 text-bgray-700">
               {product?.colorId?.color}
             </p>

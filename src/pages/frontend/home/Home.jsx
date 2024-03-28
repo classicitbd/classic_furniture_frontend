@@ -46,7 +46,7 @@ const Home = () => {
       </div>
       <Slider />
       <Category />
-      <section>
+      <section className="py-5 lg:py-10">
         <ArrivalTopProducts />
         <ArrivalBottomProducts />
       </section>

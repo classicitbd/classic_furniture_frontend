@@ -69,7 +69,7 @@ const Slider = () => {
                 <img
                   loading="lazy"
                   src={slider?.slider}
-                  className="w-full h-[60vh] md:h-[100vh] object-fill"
+                  className="w-full h-[40vh] md:h-[50vh] lg:h-[100vh] object-fill"
                   alt={slider.id}
                 />
 

@@ -21,7 +21,7 @@ const CollectionCategory = () => {
     <div className="grid grid-cols-1 md:grid-cols-3">
       {collections?.data?.slice(0, 3).map((collection) => (
         <div className="relative group overflow-hidden" key={collection?._id}>
-          <Link to={`/all?sub_category=${collection?.slug}`}>
+          <Link to={`/all?collection=${collection?.slug}`}>
             <img
               loading="lazy"
               className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110"

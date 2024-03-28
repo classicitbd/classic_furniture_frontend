@@ -61,7 +61,7 @@ const CollectionTopCategory = () => {
           className="relative group overflow-hidden md:col-span-4 row-span-1"
           key={collection?._id}
         >
-          <Link to={`/all?sub_category=${collection?.slug}`}>
+          <Link to={`/all?collection=${collection?.slug}`}>
             <img
               loading="lazy"
               className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110 object-cover md:h-[200px] lg:h-[300px] 2xl:h-[400px] w-full"
