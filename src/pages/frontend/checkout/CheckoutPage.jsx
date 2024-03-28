@@ -5,7 +5,7 @@ import { FiMinus } from "react-icons/fi";
 
 import { Link, useNavigate } from "react-router-dom";
 import Recipient from "./Recipient";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Payment from "./Payment";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,6 +22,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { getCookie } from "../../../utils/cookie-storage";
 import EmptyCart from "../../../components/common/emptyCart/EmptyCart";
 import BigSpinner from "../../../shared/loader/BigSpinner";
+import { UserContext } from "../../../context/UserProvider";
 
 const CheckoutPage = () => {
   useEffect(() => {
@@ -33,7 +34,6 @@ const CheckoutPage = () => {
   const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [curior, setCurior] = useState("Select...");
   const [addNote, setAddNote] = useState("home");
-  const [user, setUser] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(null);
   const carts = useSelector((state) => state.cart.products);
@@ -41,8 +41,8 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [addressUpdate, setAddressUpdate] = useState(false);
-  // const shippingCharge = useSelector((state) => state.cart.shippingCharge);
   const quantity = useSelector((state) => state.cart.quantity);
+  const { userData } = useContext(UserContext);
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: [`/api/v1/product`],
@@ -77,14 +77,6 @@ const CheckoutPage = () => {
   const total = subTotal + deliveryCharge;
 
   useEffect(() => {
-    const getData = getCookie("user");
-    if (getData) {
-      const userData = JSON.parse(getData);
-      setUser(userData);
-    }
-  }, []);
-
-  useEffect(() => {
     if (carts.length <= 0) {
       navigate("/all");
     }
@@ -95,7 +87,7 @@ const CheckoutPage = () => {
     const additionalChargePerQuantity = 50;
     const outsideDhakaCharge = 160;
 
-    if (user?.district === "Dhaka" || district === "Dhaka") {
+    if (userData?.district === "Dhaka" || district === "Dhaka") {
       localStorage.setItem("charge", deliveryCharge);
       return setDeliveryCharge(
         insideDhakaCharge +
@@ -105,7 +97,7 @@ const CheckoutPage = () => {
       localStorage.setItem("charge", deliveryCharge);
       setDeliveryCharge(outsideDhakaCharge);
     }
-  }, [district, quantity, deliveryCharge, user?.district]);
+  }, [district, quantity, deliveryCharge, userData]);
 
   useEffect(() => {
     const chargeData = localStorage.getItem("charge");
@@ -131,11 +123,9 @@ const CheckoutPage = () => {
           <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
             <Recipient
               setCurior={setCurior}
-              user={user}
               addNote={addNote}
               setAddNote={setAddNote}
               curior={curior}
-              setUser={setUser}
               setDivision={setDivision}
               setDistrict={setDistrict}
               district={district}
@@ -148,9 +138,7 @@ const CheckoutPage = () => {
             <Payment
               district={district}
               division={division}
-              user={user}
               curior={curior}
-              setUser={setUser}
               addressUpdate={addressUpdate}
               subTotal={subTotal}
               total={total}
@@ -172,12 +160,12 @@ const CheckoutPage = () => {
                     className="flex items-center gap-2 border-b pb-3"
                     key={i}
                   >
-                    <div className="w-[70px] h-[70px] border rounded mr-3">
+                    <div className="w-[70px] h-[70px] rounded-sm mr-3">
                       <img
                         loading="lazy"
                         src={product?.thumbnail_image}
                         alt={product?.title}
-                        className="object-fill rounded"
+                        className="rounded"
                       />
                     </div>
                     <div className="flex flex-col flex-1 space-y-2">

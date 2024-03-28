@@ -7,7 +7,7 @@ import { PiAddressBook } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
 import RecipientForm from "./RecipientForm";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { setCookie } from "../../../utils/cookie-storage";
 import { SlPhone } from "react-icons/sl";
 import VerifyModal from "../../../components/common/modal/VerifyModal";
@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import BigSpinner from "../../../shared/loader/BigSpinner";
+import { UserContext } from "../../../context/UserProvider";
 
 const options = [
   {
@@ -39,10 +40,6 @@ const options = [
 ];
 
 const Recipient = ({
-  addressUpdate,
-  setAddressUpdate,
-  user,
-  setUser,
   setDivision,
   setDistrict,
   district,
@@ -62,17 +59,19 @@ const Recipient = ({
   const [otpVeriy, { isLoading }] = useOtpVerifyMutation();
   const [resendOtp] = useResendOtpMutation();
   const navigate = useNavigate();
+  const { userData, setUserData, addressUpdate, setAddressUpdate } =
+    useContext(UserContext);
 
   const { data: informations = [], refetch } = useQuery({
-    queryKey: [`/api/v1/getMe/${user?.phone}`],
+    queryKey: [`/api/v1/getMe/${userData?.phone}`],
     queryFn: async () => {
       // Check if user?.phone is defined before making the query
-      if (!user?.phone) {
+      if (!userData?.phone) {
         // Handle the case where user?.phone is undefined or null
         return [];
       }
 
-      const res = await fetch(`${BASE_URL}/getMe/${user?.phone}`);
+      const res = await fetch(`${BASE_URL}/getMe/${userData?.phone}`);
       const data = await res.json();
       return data;
     },
@@ -96,15 +95,15 @@ const Recipient = ({
         return;
       }
       const data = {
-        phone: user?.phone,
+        phone: userData?.phone,
         otp,
       };
       const res = await otpVeriy(data);
 
       if (res?.data?.success) {
-        setCookie("user", JSON.stringify({ ...user, verify: true }));
-        setAddressUpdate(!addressUpdate);
-        setUser({ ...user, verify: true });
+        setUserData({ ...userData, verify: true });
+        setCookie("user", JSON.stringify({ ...userData, verify: true }));
+        setAddressUpdate(false);
         toast.success(res?.data?.message, {
           autoClose: 1,
         });
@@ -124,7 +123,7 @@ const Recipient = ({
     try {
       if (disable) return;
       const data = {
-        phone: user?.phone,
+        phone: userData?.phone,
       };
       const res = await resendOtp(data);
       if (res?.data?.data?.success) {
@@ -188,7 +187,7 @@ const Recipient = ({
       </div>
       <div className="flex justify-between">
         <p className="py-5 font-semibold tracking-tight">Delivery Address</p>
-        {user && user?.veriry && (
+        {userData && userData?.verify && (
           <div>
             {addressUpdate ? (
               <button
@@ -209,17 +208,13 @@ const Recipient = ({
           </div>
         )}
       </div>
-      {!user || addressUpdate ? (
+      {!userData || addressUpdate ? (
         <RecipientForm
           setDivision={setDivision}
           setDistrict={setDistrict}
           district={district}
           division={division}
-          setUser={setUser}
-          userData={user}
           refetch={refetch}
-          setAddressUpdate={setAddressUpdate}
-          addressUpdate={addressUpdate}
         />
       ) : (
         <div>
@@ -231,7 +226,7 @@ const Recipient = ({
                   <span>Name</span>
                 </td>
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  {user?.name}
+                  {userData?.name}
                 </td>
               </tr>
 
@@ -242,7 +237,7 @@ const Recipient = ({
                 </td>
 
                 <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  {user?.phone}
+                  {userData?.phone}
                 </td>
               </tr>
               <tr>
@@ -272,22 +267,12 @@ const Recipient = ({
                   {informations?.data?.district}
                 </td>
               </tr>
-              {/* <tr>
-                <td className="whitespace-nowrap pr-4 py-1 font-medium text-gray-900 flex items-center gap-1">
-                  <CiLocationOn />
-                  <span>Delivery Point</span>
-                </td>
-
-                <td className="whitespace-nowrap px-4 py-1 text-gray-700">
-                  {user?.deliveryPoint ? user?.deliveryPoint : "N/A"}
-                </td>
-              </tr> */}
             </tbody>
           </table>
         </div>
       )}
 
-      {user && (
+      {userData && (
         <>
           <fieldset className="mb-5">
             <legend className="mb-2">Add Note</legend>
@@ -412,8 +397,8 @@ const Recipient = ({
         </Link>
       </p>
 
-      {user && !user?.verify && (
-        <VerifyModal isOpen={!user?.verify}>
+      {userData && !userData?.verify && (
+        <VerifyModal isOpen={!userData?.verify}>
           <div className="p-6">
             <div className="w-full">
               <div className="mx-auto flex w-full max-w-md flex-col ">
@@ -423,7 +408,7 @@ const Recipient = ({
                   </div>
                   <div className="flex flex-row text-sm font-medium text-textColor">
                     <p>
-                      We have sent a code to your Phone Number {user?.phone}
+                      We have sent a code to your Phone Number {userData?.phone}
                     </p>
                   </div>
                 </div>
