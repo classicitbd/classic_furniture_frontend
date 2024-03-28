@@ -261,8 +261,11 @@ const CheckoutPage = () => {
                     <td className="whitespace-nowrap px-4 py- text-gray-700">
                       BDT
                     </td>
-                    <td className="whitespace-nowrap px-4 py- text-gray-700">
-                      ৳{subTotal}.00
+                    <td className="whitespace-nowrap px-4 py- text-gray-700 text-right">
+                      <p>
+                        <span>৳</span>
+                        <span>{subTotal}</span>
+                      </p>
                     </td>
                   </tr>
                   <tr>
@@ -273,8 +276,11 @@ const CheckoutPage = () => {
                     <td className="whitespace-nowrap px-4 py- text-gray-700">
                       BDT
                     </td>
-                    <td className="whitespace-nowrap px-4 py- text-gray-700">
-                      ৳{deliveryCharge}.00
+                    <td className="whitespace-nowrap px-4 py- text-gray-700 text-right">
+                      <p>
+                        <span>৳</span>
+                        <span>{deliveryCharge}</span>
+                      </p>
                     </td>
                   </tr>
                   <tr>
@@ -285,8 +291,11 @@ const CheckoutPage = () => {
                     <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
                       BDT
                     </td>
-                    <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium">
-                      ৳{total}.00
+                    <td className="whitespace-nowrap px-4 py- text-gray-700 font-medium text-right">
+                      <p>
+                        <span>৳</span>
+                        <span>{total}</span>
+                      </p>
                     </td>
                   </tr>
                 </tbody>
