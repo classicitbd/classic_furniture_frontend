@@ -34,7 +34,7 @@ const ArrivalBottomProducts = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
   return (
-    <div className="px-[5px] lg:px-[10px] pb-[20px] pt-[5px]">
+    <div className="px-[5px] lg:px-[10px] pt-[5px]">
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
           <ProductCardSkeleton />

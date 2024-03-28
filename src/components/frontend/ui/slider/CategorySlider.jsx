@@ -70,7 +70,7 @@ const CategorySlider = () => {
               <img
                 loading="lazy"
                 src={banner?.banner}
-                className="w-full h-[60vh] lg:h-[100vh] object-top"
+                className="w-full h-[40vh] md:h-[50vh] lg:h-[100vh] object-top"
                 alt={banner._id}
               />
 

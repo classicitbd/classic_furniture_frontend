@@ -269,7 +269,7 @@ const AllProducts = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-5">
       <div className="flex justify-between py-4 sticky top-[72px] sm:top-[81px] z-20 bg-white px-4 sm:px-10 md:px-16 lg:px-20 xl:px-24 2xl:px-48 shadow-sm border-b border-bgray-500">
         <div>
           <h1>Products {products?.length}</h1>
