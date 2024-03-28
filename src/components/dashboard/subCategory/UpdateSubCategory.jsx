@@ -3,7 +3,6 @@ import { useUpdateSub_CategoryMutation } from "../../../redux/feature/subCategor
 import { toast } from "react-toastify";
 import slugify from "slugify";
 import { RxCross1 } from "react-icons/rx";
-import { ImageValidate } from "../../../utils/ImageValidation";
 
 const UpdateSubCategory = ({
   refetch,
@@ -21,85 +20,34 @@ const UpdateSubCategory = ({
 
   // post a User details
   const handleDataPost = (data) => {
-    if (data?.sub_category_image[0]) {
-      const formData = new FormData();
-      let errorEncountered = false;
-
-      const sub_category_image = data?.sub_category_image[0];
-      const result = ImageValidate(sub_category_image, "sub_category_image"); //check image type
-      if (result == true) {
-        formData.append("sub_category_image", sub_category_image);
-      } else {
-        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
-        errorEncountered = true;
-      }
-
-      if (errorEncountered == true) {
-        return;
-      }
-
-      Object.entries(data).forEach(([key, value]) => {
-        if (key !== "sub_category_image") {
-          formData.append(key, value);
-        }
-      });
-      const slug = slugify(data.sub_category, {
+    const sendData = {
+      categoryId: subCategoryUpdateModalValue?.categoryId?._id,
+      menuId: subCategoryUpdateModalValue?.menuId?._id,
+      _id: subCategoryUpdateModalValue?._id,
+      sub_category: data?.sub_category,
+      slug: slugify(data.sub_category, {
         lower: true,
         replacement: "-",
-      });
-      formData.append("slug", slug);
-      formData.append("_id", subCategoryUpdateModalValue?._id);
-      formData.append(
-        "categoryId",
-        subCategoryUpdateModalValue?.categoryId?._id
-      );
-      formData.append("menuId", subCategoryUpdateModalValue?.menuId?._id);
-      updateSubCategory(formData).then((result) => {
-        if (result?.data?.statusCode == 200 && result?.data?.success == true) {
-          toast.success(
-            result?.data?.message
-              ? result?.data?.message
-              : "Sub Category update successfully !",
-            {
-              autoClose: 1000,
-            }
-          );
-          refetch();
-          reset();
-          setSubCategoryUpdateModal(false);
-        } else {
-          toast.error(result?.error?.data?.message);
-        }
-      });
-    } else {
-      const sendData = {
-        categoryId: subCategoryUpdateModalValue?.categoryId?._id,
-        menuId: subCategoryUpdateModalValue?.menuId?._id,
-        _id: subCategoryUpdateModalValue?._id,
-        sub_category: data?.sub_category,
-        slug: slugify(data.sub_category, {
-          lower: true,
-          replacement: "-",
-        }),
-      };
-      updateSubCategory(sendData).then((result) => {
-        if (result?.data?.statusCode == 200 && result?.data?.success == true) {
-          toast.success(
-            result?.data?.message
-              ? result?.data?.message
-              : "Sub category update successfully !",
-            {
-              autoClose: 1000,
-            }
-          );
-          refetch();
-          reset();
-          setSubCategoryUpdateModal(false);
-        } else {
-          toast.error(result?.error?.data?.message);
-        }
-      });
-    }
+      }),
+    };
+    updateSubCategory(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Sub category update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+        reset();
+        setSubCategoryUpdateModal(false);
+      } else {
+        toast.error(result?.error?.data?.message);
+      }
+    });
+
   };
 
   return (
@@ -141,21 +89,6 @@ const UpdateSubCategory = ({
             {errors.sub_category && (
               <p className="text-red-600">{errors.sub_category?.message}</p>
             )}
-          </div>
-
-          <div className="mt-3">
-            <label
-              className="font-semibold text-red-500"
-              htmlFor="sub_category_image"
-            >
-              If need change image
-            </label>
-            <input
-              {...register("sub_category_image")}
-              id="sub_category_image"
-              type="file"
-              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-            />
           </div>
 
           <div className="flex justify-end mt-6 gap-4">

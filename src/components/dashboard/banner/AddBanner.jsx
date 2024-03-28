@@ -72,13 +72,16 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
             <div className="fixed inset-0 z-50 flex items-center justify-end bg-black bg-opacity-30">
                 <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[550px] p-6 max-h-[100vh] overflow-y-auto">
                     <div className="flex items-center justify-between">
-                        <h3
-                            className="text-[26px] font-bold text-[#0A0A0A] capitalize"
-                            id="modal-title"
-                        >
-                            {" "}
-                            Add Banner{" "}
-                        </h3>
+                        <div>
+                            <h3
+                                className="text-[26px] font-bold text-[#0A0A0A] capitalize"
+                                id="modal-title"
+                            >
+                                {" "}
+                                Add Banner{" "}
+                            </h3>
+                            <p className="text-red-500">Image size: 3220px X 1920px</p>
+                        </div>
                         <button className="btn bg-white hover:bg-white border p-1">
                             <RxCross1
                                 onClick={() => setAddBannerModalOpen(false)}
