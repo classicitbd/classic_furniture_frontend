@@ -11,6 +11,8 @@ import { IoEyeOutline } from "react-icons/io5";
 import ProductView from "./ProductView";
 import ProductDelete from "./ProductDelete";
 import ProductUpdate from "./ProductUpdate";
+import { toast } from "react-toastify";
+import { useUpdateProductMutation } from "../../../../redux/feature/product/productApi";
 
 const ProductListTable = () => {
 
@@ -62,6 +64,57 @@ const ProductListTable = () => {
     setIsDeleteOpen(true);
   };
 
+  const [updateProductStatus] =
+    useUpdateProductMutation(); //Update Category status for explore
+
+  const updateProductStatusFalse = (_id, status) => {
+    const sendData = {
+      _id,
+      status,
+    };
+    updateProductStatus(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Status Update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message, {
+          autoClose: 1000,
+        });
+      }
+    });
+  };
+
+  const updateProductStatusTrues = (_id, status) => {
+    const sendData = {
+      _id,
+      status,
+    };
+    updateProductStatus(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Status Update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message, {
+          autoClose: 1000,
+        });
+      }
+    });
+  };
+
   if (isLoading) {
     return <BigSpinner />;
   }
@@ -106,6 +159,9 @@ const ProductListTable = () => {
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Menu
                 </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Status
+                </th>
                 <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
                   Action
                 </th>
@@ -139,6 +195,35 @@ const ProductListTable = () => {
                   <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                     {product?.menuId?.menu}
                   </td>
+                  {product?.status == "active" ? (
+                    <td className="whitespace-nowrap px-4 py-2">
+                      <button
+                        onClick={() =>
+                          updateProductStatusFalse(
+                            product?._id,
+                            "in-active"
+                          )
+                        }
+                        className="btn bg-green-500 text-white border rounded-md px-2 py-1"
+                      >
+                        Active
+                      </button>
+                    </td>
+                  ) : (
+                    <td className="whitespace-nowrap px-4 py-2">
+                      <button
+                        onClick={() =>
+                          updateProductStatusTrues(
+                            product?._id,
+                            "active"
+                          )
+                        }
+                        className="btn bg-red-500 text-white border rounded-md px-2 py-1"
+                      >
+                        Active ?
+                      </button>
+                    </td>
+                  )}
                   <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                     <div className="flex items-center justify-center gap-4">
                       <IoEyeOutline
