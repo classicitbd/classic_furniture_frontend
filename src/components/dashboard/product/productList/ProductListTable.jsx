@@ -38,9 +38,9 @@ const ProductListTable = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: [`/api/v1/product?page=${page}&limit=${rows}&searchTerm=${searchTerm}`],
+    queryKey: [`/api/v1/product/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product?page=${page}&limit=${rows}&searchTerm=${searchTerm}`);
+      const res = await fetch(`${BASE_URL}/product/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`);
       const data = await res.json();
       setProducts(data?.data);
       return data;
