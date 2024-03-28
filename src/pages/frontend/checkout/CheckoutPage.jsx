@@ -41,7 +41,6 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [addressUpdate, setAddressUpdate] = useState(false);
-  // const shippingCharge = useSelector((state) => state.cart.shippingCharge);
   const quantity = useSelector((state) => state.cart.quantity);
 
   const { data: products = [], isLoading } = useQuery({
@@ -172,12 +171,12 @@ const CheckoutPage = () => {
                     className="flex items-center gap-2 border-b pb-3"
                     key={i}
                   >
-                    <div className="w-[70px] h-[70px] border rounded mr-3">
+                    <div className="w-[70px] h-[70px] rounded-sm mr-3">
                       <img
                         loading="lazy"
                         src={product?.thumbnail_image}
                         alt={product?.title}
-                        className="object-fill rounded"
+                        className="rounded"
                       />
                     </div>
                     <div className="flex flex-col flex-1 space-y-2">

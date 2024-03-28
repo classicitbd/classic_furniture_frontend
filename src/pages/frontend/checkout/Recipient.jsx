@@ -188,7 +188,7 @@ const Recipient = ({
       </div>
       <div className="flex justify-between">
         <p className="py-5 font-semibold tracking-tight">Delivery Address</p>
-        {user && user?.veriry && (
+        {user && user?.verify && (
           <div>
             {addressUpdate ? (
               <button

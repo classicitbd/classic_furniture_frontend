@@ -168,15 +168,31 @@ const Payment = ({
                 terms and conditions.
               </Link>
             </p>
-            <button
-              type="submit"
-              disabled={!user || addressUpdate || !agree}
-              className={`block w-full text-center py-3 text-textColor bg-primaryColor hover:bg-opacity-70 rounded mt-4 ${
-                !user || addressUpdate ? "bg-opacity-70" : "bg-opacity-100"
-              }`}
-            >
-              {loading || isLoading ? <MiniSpinner /> : "Place Order"}
-            </button>
+            {loading || isLoading ? (
+              <button
+                type="button"
+                disabled
+                className={`block w-full text-center py-3 text-textColor bg-primaryColor rounded mt-4 ${
+                  !user || addressUpdate || !agree
+                    ? "bg-opacity-50"
+                    : "bg-opacity-100"
+                }`}
+              >
+                <MiniSpinner />
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={!user || addressUpdate || !agree}
+                className={`block w-full text-center py-3 text-textColor bg-primaryColor rounded mt-4 ${
+                  !user || addressUpdate || !agree
+                    ? "bg-opacity-50"
+                    : "bg-opacity-100"
+                }`}
+              >
+                Place Order
+              </button>
+            )}
           </form>
 
           <p className="text-xs mt-5">
