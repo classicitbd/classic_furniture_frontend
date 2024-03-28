@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDeleteCollectionMutation } from "../../../redux/feature/collection/collectionApi";
+import { useDeleteCollectionMutation, useUpdateCollectionMutation } from "../../../redux/feature/collection/collectionApi";
 import { toast } from "react-toastify";
 import UpdateCollection from "./UpdateCollection";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
@@ -38,6 +38,57 @@ const CollectionTables = ({ refetch, collections }) => {
         });
     };
 
+    const [updateCollectionStatusForMainPage] =
+        useUpdateCollectionMutation(); //Update Collection status for explore
+
+    const updateCollectionStatusForMainPageFalse = (_id, show_card) => {
+        const sendData = {
+            _id,
+            show_card,
+        };
+        updateCollectionStatusForMainPage(sendData).then((result) => {
+            if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+                toast.success(
+                    result?.data?.message
+                        ? result?.data?.message
+                        : "Status Update successfully !",
+                    {
+                        autoClose: 1000,
+                    }
+                );
+                refetch();
+            } else {
+                toast.error(result?.error?.data?.message, {
+                    autoClose: 1000,
+                });
+            }
+        });
+    };
+
+    const updateCollectionStatusForMainPageTrues = (_id, show_card) => {
+        const sendData = {
+            _id,
+            show_card,
+        };
+        updateCollectionStatusForMainPage(sendData).then((result) => {
+            if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+                toast.success(
+                    result?.data?.message
+                        ? result?.data?.message
+                        : "Status Update successfully !",
+                    {
+                        autoClose: 1000,
+                    }
+                );
+                refetch();
+            } else {
+                toast.error(result?.error?.data?.message, {
+                    autoClose: 1000,
+                });
+            }
+        });
+    };
+
     return (
         <div>
             {/* Table for showing data */}
@@ -51,6 +102,9 @@ const CollectionTables = ({ refetch, collections }) => {
                                 </th>
                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                                     Collection Image
+                                </th>
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                                    Card Show
                                 </th>
                                 <th className="px-4 py-2 text-center">Action</th>
                             </tr>
@@ -69,6 +123,35 @@ const CollectionTables = ({ refetch, collections }) => {
                                             className="w-12 rounded-full"
                                         />
                                     </td>
+                                    {collection?.show_card == "active" ? (
+                                        <td className="whitespace-nowrap px-4 py-2">
+                                            <button
+                                                onClick={() =>
+                                                    updateCollectionStatusForMainPageFalse(
+                                                        collection?._id,
+                                                        "in-active"
+                                                    )
+                                                }
+                                                className="btn bg-green-500 text-white border rounded-md px-2 py-1"
+                                            >
+                                                Select
+                                            </button>
+                                        </td>
+                                    ) : (
+                                        <td className="whitespace-nowrap px-4 py-2">
+                                            <button
+                                                onClick={() =>
+                                                    updateCollectionStatusForMainPageTrues(
+                                                        collection?._id,
+                                                        "active"
+                                                    )
+                                                }
+                                                className="btn bg-red-500 text-white border rounded-md px-2 py-1"
+                                            >
+                                                Selected ?
+                                            </button>
+                                        </td>
+                                    )}
                                     <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                                         <MdDeleteForever
                                             onClick={() => handleDeleteCollection(collection)}
