@@ -144,7 +144,7 @@ const CheckoutPage = () => {
               setAddressUpdate={setAddressUpdate}
             />
           </div>
-          <div className="bg-white py-[40px] md:px-[12px] rounded-lg shadow-md">
+          <div>
             <Payment
               district={district}
               division={division}

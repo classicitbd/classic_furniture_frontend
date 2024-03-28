@@ -5,7 +5,7 @@ import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const CollectionCategory = () => {
   const { data: collections = [], isLoading } = useQuery({
-    queryKey: [`/api/v1/collection?collection`],
+    queryKey: [`/api/v1/collection`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/collection`);
       const data = await res.json();
