@@ -234,7 +234,7 @@ const OrderTable = () => {
           <div>
             <p className="text-end">Revenue</p>
             <h2 className="font-medium text-[24px]">
-              $ {totalOrderInfo?.data?.totalPrice}
+              ৳ {totalOrderInfo?.data?.totalPrice}
             </h2>
           </div>
         </div>
