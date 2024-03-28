@@ -49,9 +49,6 @@ const SubCategoryTable = ({ refetch, subCategoryTypes }) => {
                   Type Name
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Image
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Menu Name
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
@@ -66,13 +63,6 @@ const SubCategoryTable = ({ refetch, subCategoryTypes }) => {
                 <tr key={subCategory?._id}>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
                     {subCategory?.sub_category}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    <img
-                      src={subCategory?.sub_category_image}
-                      alt={subCategory.sub_category}
-                      className="w-12 rounded-full"
-                    />
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
                     {subCategory?.menuId?.menu}
