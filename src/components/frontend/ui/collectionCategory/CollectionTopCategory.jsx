@@ -56,30 +56,33 @@ const CollectionTopCategory = () => {
       </div>
 
       {/* Third Section */}
-      {categories?.data?.slice(3, 4).map((category) => (
-        <div
-          className="relative group overflow-hidden md:col-span-4 row-span-1"
-          key={category?._id}
-        >
-          <Link to={`/all?category=${category?.slug}`}>
-            <img
-              loading="lazy"
-              className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110 object-cover md:h-[200px] lg:h-[300px] 2xl:h-[400px] w-full"
-              src={category?.category_image}
-              alt={category?.category}
-            />
-            <h1
-              style={{
-                backgroundImage:
-                  "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.7))",
-              }}
-              className="absolute uppercase text-white bottom-0 px-5 py-3 w-full text-xl lg:text-3xl font-semibold"
-            >
-              {category?.category}
-            </h1>
-          </Link>
-        </div>
-      ))}
+      {categories?.data
+        ?.filter((item) => item.show_card === "active")
+        ?.slice(3, 4)
+        .map((category) => (
+          <div
+            className="relative group overflow-hidden md:col-span-4 row-span-1"
+            key={category?._id}
+          >
+            <Link to={`/all?category=${category?.slug}`}>
+              <img
+                loading="lazy"
+                className="transition-transform transform duration-1500 ease-in-out group-hover:scale-110 object-cover md:h-[200px] lg:h-[300px] 2xl:h-[400px] w-full"
+                src={category?.category_image}
+                alt={category?.category}
+              />
+              <h1
+                style={{
+                  backgroundImage:
+                    "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.7))",
+                }}
+                className="absolute uppercase text-white bottom-0 px-5 py-3 w-full text-xl lg:text-3xl font-semibold"
+              >
+                {category?.category}
+              </h1>
+            </Link>
+          </div>
+        ))}
     </div>
   );
 };

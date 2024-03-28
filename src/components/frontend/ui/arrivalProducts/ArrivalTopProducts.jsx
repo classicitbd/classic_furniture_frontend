@@ -18,7 +18,11 @@ import ProductCard from "../../../common/card/ProductCard";
 import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
 
 const ArrivalTopProducts = () => {
-  const { data: products = [], isLoading } = useQuery({
+  const {
+    data: products = [],
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: [`/api/v1/product?page=${1}&limit=${50}`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/product?page=${1}&limit=${50}`);
@@ -47,7 +51,7 @@ const ArrivalTopProducts = () => {
           </button>
         </div>
       </div>
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
           <ProductCardSkeleton />
           <ProductCardSkeleton />
