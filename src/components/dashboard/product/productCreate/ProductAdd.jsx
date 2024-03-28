@@ -23,12 +23,13 @@ const ProductAdd = () => {
   const [collection, setCollection] = useState("");
   const [style, setStyle] = useState("");
   const [feature, setFeature] = useState("");
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
 
   const [isMenuIdForCategory, setIsMenuIdForCategory] = useState(false);
-  const [menuIdForCategory, setMenuIdForCategory] = useState('');
+  const [menuIdForCategory, setMenuIdForCategory] = useState("");
 
-  const [isCategoryIdForSubCategory, setIsCategoryIdForSubCategory] = useState(false);
+  const [isCategoryIdForSubCategory, setIsCategoryIdForSubCategory] =
+    useState(false);
   const [categoryIdForSubCategory, setCategoryIdForSubCategory] = useState("");
   const [isOpenCategory, setIsOpenCategory] = useState(false);
 
@@ -115,7 +116,7 @@ const ProductAdd = () => {
       setSubCategory("");
       setIsMenuIdForCategory(true);
       setIsOpenCategory(true);
-    }, 100)
+    }, 100);
   };
 
   const setColorIdValue = (color) => {
@@ -131,7 +132,7 @@ const ProductAdd = () => {
       setSubCategory("");
       setIsCategoryIdForSubCategory(true);
       setIsOpenSubCategory(true);
-    }, 100)
+    }, 100);
   };
 
   const { data: categories = [] } = useQuery({
@@ -286,9 +287,7 @@ const ProductAdd = () => {
   // data post in backend
   const handleDataPost = async (data) => {
     if (!description) {
-      toast.error(
-        "Error: Please fill in the product description box."
-      );
+      toast.error("Error: Please fill in the product description box.");
     }
     let product_video;
     let errorEncountered;
@@ -301,7 +300,7 @@ const ProductAdd = () => {
       }
     }
     if (errorEncountered == true) {
-      toast.error("Must be a mp4 type video in product video field")
+      toast.error("Must be a mp4 type video in product video field");
     }
     toast.error("Please wait a minute");
 
@@ -371,13 +370,16 @@ const ProductAdd = () => {
       images: allImage?.map((item) => ({
         image: item?.image,
       })),
-      colorId: colorId
+      colorId: colorId,
     };
 
     if (menuIdForCategory !== "" && menuIdForCategory !== undefined) {
       sendData.menuId = menuIdForCategory;
     }
-    if (categoryIdForSubCategory !== "" && categoryIdForSubCategory !== undefined) {
+    if (
+      categoryIdForSubCategory !== "" &&
+      categoryIdForSubCategory !== undefined
+    ) {
       sendData.categoryId = categoryIdForSubCategory;
     }
     if (subcategory !== "" && subcategory !== undefined) {
@@ -470,7 +472,12 @@ const ProductAdd = () => {
               <label className="font-semibold" htmlFor="description">
                 Description<span className="text-red-500">*</span>
               </label>
-              <ReactQuill className='mt-4' theme="snow" value={description} onChange={setDescription} />
+              <ReactQuill
+                className="mt-4"
+                theme="snow"
+                value={description}
+                onChange={setDescription}
+              />
             </div>
 
             <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-2">
@@ -698,7 +705,9 @@ const ProductAdd = () => {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                 {/* <Backlink link="/register/hotel/hotel-details-completion" text="Back" /> */}
                 <div>
-                  <p className="font-semibold">Upload main image</p>
+                  <p className="font-semibold text-red-500">
+                    Main image size: 1280px X 1280px
+                  </p>
                   {/*   */}
                   <div className="border border-gray-300 p-3 rounded-sm">
                     {imageName ? (
@@ -736,7 +745,9 @@ const ProductAdd = () => {
                 </div>
 
                 <div>
-                  <p className="font-semibold">Upload hover image</p>
+                  <p className="font-semibold text-red-500">
+                    Hover image size: 1280px X 1280px
+                  </p>
                   {/*   */}
                   <div className="border border-gray-300 p-3 rounded-sm">
                     {hoverImageName ? (
@@ -789,7 +800,9 @@ const ProductAdd = () => {
             </div>
 
             <div className="mt-2">
-              <p className="font-semibold">Add other photos</p>
+              <p className="font-semibold text-red-500">
+                Other images size: 1280px X 1280px{" "}
+              </p>
               <div className="border border-gray-300 rounded-sm p-3">
                 <div className="">
                   {multiImage.length >= 0 ? (

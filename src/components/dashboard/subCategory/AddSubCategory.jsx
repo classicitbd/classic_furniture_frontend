@@ -47,7 +47,7 @@ const AddSubCategory = ({ refetch }) => {
     setTimeout(() => {
       setMenuId(selectedOption?._id);
       setIsCategoryOpen(true);
-    }, 100)
+    }, 100);
   };
 
   const [postSubCategoryType] = useAddSub_CategoryMutation(); //post Sub Category type
@@ -143,8 +143,8 @@ const AddSubCategory = ({ refetch }) => {
               </div>
 
               <div>
-                <label className="font-semibold" htmlFor="sub_category_image">
-                  Sub Category Image
+                <label className="font-semibold text-red-500" htmlFor="sub_category_image">
+                  Image size: 1280px X 1280px
                 </label>
                 <input
                   {...register("sub_category_image", {

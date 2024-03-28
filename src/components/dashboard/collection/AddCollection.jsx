@@ -79,6 +79,7 @@ const AddCollection = ({ refetch }) => {
             <h2 className="font-semibold text-[20px]">
               Add A Collection Type:{" "}
             </h2>
+            <p className="text-red-500">Image size: 1280px X 1280px</p>
 
             <form
               onSubmit={handleSubmit(handleDataPost)}
