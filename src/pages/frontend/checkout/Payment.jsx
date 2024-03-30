@@ -102,30 +102,6 @@ const Payment = ({ addressUpdate, total, addNote, curior, deliveryCharge }) => {
               <legend className="sr-only">Delivery</legend>
 
               <div className="space-y-2 text-center">
-                <div onClick={() => setPayBy("online")}>
-                  <input
-                    className="peer sr-only"
-                    id="online"
-                    type="radio"
-                    tabIndex="-1"
-                    name="payment"
-                  />
-
-                  <label
-                    htmlFor="online"
-                    className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
-                    tabIndex="0"
-                  >
-                    <span className="text-sm">Pay With SSL Commerz </span>
-                    <img
-                      loading="lazy"
-                      src={`/assets/images/payment-gateways.png`}
-                      alt="ssl commerze"
-                      className="h-[30px]"
-                    />
-                  </label>
-                </div>
-
                 <div onClick={() => setPayBy("cod")}>
                   <input
                     className="peer sr-only"
@@ -199,3 +175,27 @@ const Payment = ({ addressUpdate, total, addNote, curior, deliveryCharge }) => {
 };
 
 export default Payment;
+
+{/* <div onClick={() => setPayBy("online")}>
+  <input
+    className="peer sr-only"
+    id="online"
+    type="radio"
+    tabIndex="-1"
+    name="payment"
+  />
+
+  <label
+    htmlFor="online"
+    className="w-full rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black peer-checked:border-success-400 flex justify-between items-center"
+    tabIndex="0"
+  >
+    <span className="text-sm">Pay With SSL Commerz </span>
+    <img
+      loading="lazy"
+      src={`/assets/images/payment-gateways.png`}
+      alt="ssl commerze"
+      className="h-[30px]"
+    />
+  </label>
+</div>; */}

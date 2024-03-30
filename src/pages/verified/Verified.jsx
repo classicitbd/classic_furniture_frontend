@@ -31,6 +31,7 @@ const Verified = () => {
         phone,
         otp,
       };
+      console.log(data)
       const res = await otpVerify(data);
       if (res?.data?.success) {
         toast.success(res?.data?.message, {
