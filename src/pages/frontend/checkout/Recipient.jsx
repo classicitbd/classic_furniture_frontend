@@ -126,9 +126,9 @@ const Recipient = ({
         phone: userData?.phone,
       };
       const res = await resendOtp(data);
-      if (res?.data?.data?.success) {
+      if (res?.data?.success) {
         setDisable(true);
-        toast.info(res?.data?.data?.message);
+        toast.info(res?.data?.message);
         setTimer(60);
       }
     } catch (error) {
@@ -174,6 +174,8 @@ const Recipient = ({
   if (isLoading || dataLoading) {
     return <BigSpinner />;
   }
+
+  // console.log(disable)
 
   return (
     <div className="px-5 md:px-10">
