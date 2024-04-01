@@ -22,11 +22,10 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [signIn, { isLoading }] = useSignInMutation();
   const handleSignIn = async (data) => {
-
     try {
       setLoading(true);
       const res = await signIn(data);
-      
+
       if (res?.data?.success) {
         setCookie(authKey, res?.data?.data?.token);
         toast.success(res?.data?.message, {
@@ -61,12 +60,16 @@ const SignIn = () => {
             </label>
             <input
               id="phone"
-              type="text"
-              maxLength={11}
-              minLength={11}
+              type="number"
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
-              {...register("phone", { required: "Phone number is required" })}
+              {...register("phone", {
+                required: "Phone number is required",
+                pattern: {
+                  value: /^\d{11}$/,
+                  message: "Phone number must be 11 digits long",
+                },
+              })}
             />
             {errors.phone && (
               <p className="text-red-600"> {errors?.phone?.message}</p>
