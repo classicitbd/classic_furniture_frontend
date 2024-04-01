@@ -108,13 +108,17 @@ const RecipientForm = ({ refetch }) => {
             </label>
             <input
               id="phone"
-              type="text"
-              minLength={11}
-              maxLength={11}
+              type="number"
               defaultValue={userData?.phone}
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
-              {...register("phone", { required: "Phone number is required" })}
+              {...register("phone", {
+                required: "Phone number is required",
+                pattern: {
+                  value: /^\d{11}$/,
+                  message: "Phone number must be 11 digits long",
+                },
+              })}
             />
             {errors.phone && (
               <p className="text-red-600"> {errors?.phone?.message}</p>
