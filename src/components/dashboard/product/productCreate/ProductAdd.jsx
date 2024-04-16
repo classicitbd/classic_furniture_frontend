@@ -327,17 +327,14 @@ const ProductAdd = () => {
       return; // Stop the function
     }
     let product_video;
-    let errorEncountered;
-
+    
     if (data?.product_video?.[0]) {
       const productVideoValidate = data?.product_video?.[0];
       const result = VideoValidate(productVideoValidate); //check image type
       if (result == false) {
-        errorEncountered = true;
+        toast.error("Must be a mp4 type video in product video field");
+        return;
       }
-    }
-    if (errorEncountered == true) {
-      toast.error("Must be a mp4 type video in product video field");
     }
     toast.error("Please wait a minute");
 
