@@ -4,6 +4,8 @@ import slugify from "slugify";
 import { RxCross1 } from "react-icons/rx";
 import { ImageValidate } from "../../../utils/ImageValidation";
 import { useUpdateCollectionMutation } from "../../../redux/feature/collection/collectionApi";
+import { useState } from "react";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 const UpdateCollection = ({
   refetch,
@@ -16,11 +18,13 @@ const UpdateCollection = ({
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [loading, setLoading] = useState(false);
 
   const [updateCollection] = useUpdateCollectionMutation(); //Update Collection
 
   // post a User details
   const handleDataPost = (data) => {
+    setLoading(true)
     if (data?.collection_image[0]) {
       const formData = new FormData();
       let errorEncountered = false;
@@ -48,6 +52,7 @@ const UpdateCollection = ({
         replacement: "-",
       });
       formData.append("slug", slug);
+      formData.append("image_key", collectionUpdateModalValue?.image_key);
       formData.append("_id", collectionUpdateModalValue?._id);
       updateCollection(formData).then((result) => {
         if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -60,15 +65,18 @@ const UpdateCollection = ({
             }
           );
           refetch();
+          setLoading(false)
           reset();
           setCollectionUpdateModal(false);
         } else {
           toast.error(result?.error?.data?.message);
+          setLoading(false)
         }
       });
     } else {
       const sendData = {
         _id: collectionUpdateModalValue?._id,
+        image_key: collectionUpdateModalValue?.image_key,
         collection_name: data?.collection_name,
         slug: slugify(data.collection_name, {
           lower: true,
@@ -88,8 +96,10 @@ const UpdateCollection = ({
           refetch();
           reset();
           setCollectionUpdateModal(false);
+          setLoading(false)
         } else {
           toast.error(result?.error?.data?.message);
+          setLoading(false)
         }
       });
     }
@@ -162,7 +172,7 @@ const UpdateCollection = ({
               type="Submit"
               className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
             >
-              Update
+              {loading ? <MiniSpinner /> : "Update"}
             </button>
           </div>
         </form>

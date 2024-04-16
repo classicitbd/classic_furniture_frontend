@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import VideoUploader from "./VideoUploader";
 import ImageUploader from "../product/productCreate/ImageUploader";
 import { useAddSiteSettingMutation } from "../../../redux/feature/setting/settingApi";
+import { ImageValidate } from "../../../utils/ImageValidation";
 
 const LogoVidio = ({ refetch, initialData }) => {
   const { register, reset, handleSubmit } = useForm(); //get data in form
@@ -17,18 +18,42 @@ const LogoVidio = ({ refetch, initialData }) => {
     let favicon;
     let product_size_picture;
     if (data?.logo?.[0]) {
+      const validate_image = data?.logo?.[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       const logoUpload = await ImageUploader(data?.logo?.[0]);
       logo = logoUpload[0];
     }
     if (data?.logo_name?.[0]) {
+      const validate_image = data?.logo_name?.[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       const logoUpload = await ImageUploader(data?.logo_name?.[0]);
       logo_name = logoUpload[0];
     }
     if (data?.favicon?.[0]) {
+      const validate_image = data?.favicon?.[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       const faviconUpload = await ImageUploader(data?.favicon?.[0]);
       favicon = faviconUpload[0];
     }
     if (data?.product_size_picture?.[0]) {
+      const validate_image = data?.product_size_picture?.[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       const product_size_pictureUpload = await ImageUploader(data?.product_size_picture?.[0]);
       product_size_picture = product_size_pictureUpload[0];
     }

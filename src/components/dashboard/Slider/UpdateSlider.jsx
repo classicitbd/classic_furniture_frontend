@@ -5,6 +5,7 @@ import { useUpdateSliderMutation } from "../../../redux/feature/slider/sliderApi
 import { ImageValidate } from "../../../utils/ImageValidation";
 import ReactQuill from "react-quill";
 import { useState } from "react";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 const UpdateSlider = ({
   refetch,
@@ -18,11 +19,13 @@ const UpdateSlider = ({
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [loading, setLoading] = useState(false);
 
   const [updateSlider] = useUpdateSliderMutation(); //Update Slider
 
   // post a Slider details
   const handleDataPost = (data) => {
+    setLoading(true);
     if (data?.slider[0]) {
       const formData = new FormData();
       let errorEncountered = false;
@@ -37,6 +40,7 @@ const UpdateSlider = ({
       }
 
       if (errorEncountered == true) {
+        setLoading(false);
         return;
       }
 
@@ -45,15 +49,16 @@ const UpdateSlider = ({
           formData.append(key, value);
         }
       });
-      if(!data?.title){
+      if (!data?.title) {
         formData.append("title", sliderUpdateModalValue?.title);
       }
-      if(!description){
+      if (!description) {
         toast.error("Please fill up description")
         return;
       }
       formData.append('description', description);
       formData.append("_id", sliderUpdateModalValue?._id);
+      formData.append("image_key", sliderUpdateModalValue?.image_key);
       updateSlider(formData).then((result) => {
         if (result?.data?.statusCode == 200 && result?.data?.success == true) {
           toast.success(
@@ -67,7 +72,9 @@ const UpdateSlider = ({
           refetch();
           reset();
           setSliderUpdateModal(false);
+          setLoading(false);
         } else {
+          setLoading(false);
           toast.error(result?.error?.data?.message);
         }
       });
@@ -77,7 +84,8 @@ const UpdateSlider = ({
         url: data?.url || sliderUpdateModalValue?.url,
         description: description || sliderUpdateModalValue?.description,
         slider: sliderUpdateModalValue?.slider,
-        _id: sliderUpdateModalValue?._id
+        _id: sliderUpdateModalValue?._id,
+        image_key: sliderUpdateModalValue?.image_key,
       }
       updateSlider(sendData).then((result) => {
         if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -89,10 +97,12 @@ const UpdateSlider = ({
               autoClose: 1000,
             }
           );
+          setLoading(false);
           refetch();
           reset();
           setSliderUpdateModal(false);
         } else {
+          setLoading(false);
           toast.error(result?.error?.data?.message);
         }
       });
@@ -182,7 +192,7 @@ const UpdateSlider = ({
               type="Submit"
               className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
             >
-              Update
+              {loading ? <MiniSpinner /> : "Update"}
             </button>
           </div>
         </form>

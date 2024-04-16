@@ -5,6 +5,7 @@ import ReactQuill from "react-quill";
 import { useState } from "react";
 import { ImageValidate } from "../../../utils/ImageValidation";
 import { useUpdateBannerMutation } from "../../../redux/feature/banner/bannerApi";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 const UpdateBanner = ({
     refetch,
@@ -18,11 +19,13 @@ const UpdateBanner = ({
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const [loading, setLoading] = useState(false);
 
     const [updateBanner] = useUpdateBannerMutation(); //Update Banner
 
     // post a Banner details
     const handleDataPost = (data) => {
+        setLoading(true);
         if (data?.banner[0]) {
             const formData = new FormData();
             let errorEncountered = false;
@@ -37,6 +40,7 @@ const UpdateBanner = ({
             }
 
             if (errorEncountered == true) {
+                setLoading(false);
                 return;
             }
 
@@ -54,6 +58,7 @@ const UpdateBanner = ({
             }
             formData.append('description', description);
             formData.append("_id", bannerUpdateModalValue?._id);
+            formData.append("image_key", bannerUpdateModalValue?.image_key);
             toast.error("Please wait a moment");
             updateBanner(formData).then((result) => {
                 if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -67,8 +72,10 @@ const UpdateBanner = ({
                     );
                     refetch();
                     reset();
+                    setLoading(false);
                     setBannerUpdateModal(false);
                 } else {
+                    setLoading(false);
                     toast.error(result?.error?.data?.message);
                 }
             });
@@ -79,7 +86,8 @@ const UpdateBanner = ({
                 url: data?.url || bannerUpdateModalValue?.url,
                 description: description || bannerUpdateModalValue?.description,
                 banner: bannerUpdateModalValue?.banner,
-                _id: bannerUpdateModalValue?._id
+                _id: bannerUpdateModalValue?._id,
+                image_key: bannerUpdateModalValue?.image_key,
             }
             updateBanner(sendData).then((result) => {
                 if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -94,7 +102,9 @@ const UpdateBanner = ({
                     refetch();
                     reset();
                     setBannerUpdateModal(false);
+                    setLoading(false);
                 } else {
+                    setLoading(false);
                     toast.error(result?.error?.data?.message);
                 }
             });
@@ -184,7 +194,7 @@ const UpdateBanner = ({
                             type="Submit"
                             className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
                         >
-                            Update
+                            {loading ? <MiniSpinner /> : "Update"}
                         </button>
                     </div>
                 </form>

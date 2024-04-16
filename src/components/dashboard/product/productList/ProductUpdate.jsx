@@ -13,6 +13,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { AuthContext } from "../../../../context/AuthProvider";
 import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
+import { ImageValidate } from "../../../../utils/ImageValidation";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   const { user } = useContext(AuthContext);
@@ -207,6 +208,12 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   const handleOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       if (!imageName) {
         toast.error("Please wait a minute", {
           autoClose: 1000,
@@ -233,6 +240,12 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   const handleHoverImageOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       if (!hoverImageName) {
         toast.error("Please wait a minute", {
           autoClose: 1000,
@@ -259,6 +272,12 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   const handleMuilOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       if (multiImage.length >= 11) {
         toast.error("only 10 images are allowed", {
           autoClose: 1000,
