@@ -16,8 +16,9 @@ const ImageUploader = async (file) => {
         },
       }
     );
+    console.log(response)
     const imageUrl = response?.data?.data?.Location;
-    return [imageUrl, response?.statusText];
+    return [imageUrl, response?.data?.success];
   } catch (error) {
     console.error("Error uploading image:", error);
   }

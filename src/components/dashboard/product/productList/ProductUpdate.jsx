@@ -222,7 +222,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
           autoClose: 1000,
         });
         const image = await ImageUploader(fieldName[0]);
-        if (image[1] == "OK") {
+        if (image[1] == true) {
           const updatedImage = image[0];
           setImageName(updatedImage);
           toast.success("Now Add Another Picture", {
@@ -254,7 +254,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
           autoClose: 1000,
         });
         const image = await ImageUploader(fieldName[0]);
-        if (image[1] == "OK") {
+        if (image[1] == true) {
           const updatedImage = image[0];
           sethoverImageName(updatedImage);
           toast.success("Now Add Another Picture", {
@@ -291,7 +291,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         });
         if (multiImage?.length == 0) {
           const image = await ImageUploader(fieldName[0]);
-          if (image[1] == "OK") {
+          if (image[1] == true) {
             const updatedImage = [...multiImage, image[0]];
             setMultiImage(updatedImage);
             toast.success("Now Add Another Picture", {
@@ -303,7 +303,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
             });
         } else {
           const image = await ImageUploader(fieldName[0]);
-          if (image[1] == "OK") {
+          if (image[1] == true) {
             const updatedImage = [...multiImage, image[0]];
             setMultiImage(updatedImage);
             toast.success("Now Add Another Picture", {
