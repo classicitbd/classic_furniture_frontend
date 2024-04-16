@@ -5,6 +5,7 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import { useAddBannerMutation } from "../../../redux/feature/banner/bannerApi";
 import { ImageValidate } from "../../../utils/ImageValidation";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
     const [description, setDescription] = useState('');
@@ -14,11 +15,13 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const [loading, setLoading] = useState(false);
 
     const [postBanner] = useAddBannerMutation(); //post Banner type
 
     // post a Banner
     const handleDataPost = (data) => {
+        setLoading(true);
         const formData = new FormData();
         let errorEncountered = false;
 
@@ -34,6 +37,7 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
         }
 
         if (errorEncountered == true) {
+            setLoading(false);
             return;
         }
 
@@ -60,9 +64,10 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
                 reset();
                 refetch();
                 setAddBannerModalOpen(false);
+                setLoading(false);
             } else {
                 toast.error(result?.error?.data?.message);
-                setAddBannerModalOpen(false);
+                setLoading(false);
             }
         });
     };
@@ -147,7 +152,7 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
                                 type="Submit"
                                 className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
                             >
-                                Add
+                                {loading ? <MiniSpinner /> : "Add"}
                             </button>
                         </div>
                     </form>

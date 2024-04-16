@@ -5,6 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { ImageValidate } from "../../../utils/ImageValidation";
 import { useState } from "react";
 import ReactQuill from "react-quill";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
   const [description, setDescription] = useState('');
@@ -14,11 +15,13 @@ const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [loading, setLoading] = useState(false);
 
   const [postSlider] = useAddSliderMutation(); //post Slider type
 
   // post a Slider
   const handleDataPost = (data) => {
+    setLoading(true);
     const formData = new FormData();
     let errorEncountered = false;
 
@@ -34,6 +37,7 @@ const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
     }
 
     if (errorEncountered == true) {
+      setLoading(false);
       return;
     }
 
@@ -42,7 +46,7 @@ const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
         formData.append(key, value);
       }
     });
-    if(!description){
+    if (!description) {
       toast.error("Please fill up description !")
     }
     formData.append("description", description);
@@ -59,9 +63,10 @@ const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
         reset();
         refetch();
         setAddSliderModalOpen(false);
+        setLoading(false);
       } else {
         toast.error(result?.error?.data?.message);
-        setAddSliderModalOpen(false);
+        setLoading(false);
       }
     });
   };
@@ -146,7 +151,7 @@ const AddSlider = ({ refetch, setAddSliderModalOpen }) => {
                 type="Submit"
                 className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
               >
-                Add
+                {loading ? <MiniSpinner /> : "Add"}
               </button>
             </div>
           </form>

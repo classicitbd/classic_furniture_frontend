@@ -4,6 +4,8 @@ import { RxCross1 } from "react-icons/rx";
 import slugify from "slugify";
 import { useUpdateCategoryMutation } from "../../../redux/feature/category/categoryApi";
 import { ImageValidate } from "../../../utils/ImageValidation";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
+import { useState } from "react";
 
 const UpdateCategory = ({
   setCategoryUpdateModal,
@@ -16,11 +18,13 @@ const UpdateCategory = ({
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [loading, setLoading] = useState(false);
 
   const [updateCategory] = useUpdateCategoryMutation(); //Update Category
 
   // post a User details
   const handleDataPost = (data) => {
+    setLoading(true);
     if (data?.category_image[0]) {
       const formData = new FormData();
       let errorEncountered = false;
@@ -48,6 +52,7 @@ const UpdateCategory = ({
         replacement: "-",
       });
       formData.append("slug", slug);
+      formData.append("image_key", categoryUpdateModalValue?.image_key);
       formData.append("_id", categoryUpdateModalValue?._id);
       formData.append("menuId", categoryUpdateModalValue?.menuId?._id);
       updateCategory(formData).then((result) => {
@@ -63,13 +68,16 @@ const UpdateCategory = ({
           refetch();
           reset();
           setCategoryUpdateModal(false);
+          setLoading(false);
         } else {
+          setLoading(false);
           toast.error(result?.error?.data?.message);
         }
       });
     } else {
       const sendData = {
         _id: categoryUpdateModalValue?._id,
+        image_key: categoryUpdateModalValue?.image_key,
         menuId: categoryUpdateModalValue?.menuId,
         category: data?.category,
         slug: slugify(data.category, {
@@ -90,7 +98,9 @@ const UpdateCategory = ({
           refetch();
           reset();
           setCategoryUpdateModal(false);
+          setLoading(false);
         } else {
+          setLoading(false);
           toast.error(result?.error?.data?.message);
         }
       });
@@ -164,7 +174,7 @@ const UpdateCategory = ({
               type="Submit"
               className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
             >
-              Update
+              {loading ? <MiniSpinner /> : "Update"}
             </button>
           </div>
         </form>

@@ -13,9 +13,13 @@ import { MdDeleteForever } from "react-icons/md";
 import { AuthContext } from "../../../../context/AuthProvider";
 import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
+import { ImageValidate } from "../../../../utils/ImageValidation";
+import { VideoValidate } from "../../../../utils/VideoValidation";
+import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const [description, setDescription] = useState(updateModalValue?.description);
 
@@ -207,6 +211,12 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   const handleOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       if (!imageName) {
         toast.error("Please wait a minute", {
           autoClose: 1000,
@@ -233,6 +243,12 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   const handleHoverImageOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       if (!hoverImageName) {
         toast.error("Please wait a minute", {
           autoClose: 1000,
@@ -259,6 +275,12 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   const handleMuilOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       if (multiImage.length >= 11) {
         toast.error("only 10 images are allowed", {
           autoClose: 1000,
@@ -323,15 +345,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   // data post in backend
   const handleDataPost = async (data) => {
-    toast.error("Please wait a moment", {
-      autoClose: 1000
-    });
-    let product_video;
-    if (data?.product_video?.[0]) {
-      const videoUpload = await VideoUploader(data?.product_video?.[0]);
-      product_video = videoUpload[0];
-    }
-
+    setLoading(true)
     const hasEmptySizeOrColor = data.size_variation.some(
       (variation) =>
         variation.size === "" ||
@@ -348,13 +362,32 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         autoClose: 1000
       }
       );
+      setLoading(false)
       return; // Stop the function
+    }
+    toast.error("Please wait a moment", {
+      autoClose: 1000
+    });
+    let product_video;
+    if (data?.product_video?.[0]) {
+      const productVideoValidate = data?.product_video?.[0];
+      const result = VideoValidate(productVideoValidate); //check image type
+      if (result == false) {
+        toast.error("Must be a mp4 type video in product video field");
+        setLoading(false)
+        return;
+      }
+    }
+    if (data?.product_video?.[0]) {
+      const videoUpload = await VideoUploader(data?.product_video?.[0]);
+      product_video = videoUpload[0];
     }
 
     if (!imageName) {
       toast.error("Error: Please fill the main image.", {
         autoClose: 1000
       });
+      setLoading(false)
       return; // Stop the function
     }
 
@@ -362,6 +395,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       toast.error("Error: Please fill the hover image.", {
         autoClose: 1000
       });
+      setLoading(false)
       return; // Stop the function
     }
 
@@ -371,6 +405,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         autoClose: 1000
       }
       );
+      setLoading(false)
       return; // Stop the function
     }
     const combinedVariation = oldVariation.concat(data?.size_variation || []);
@@ -445,11 +480,13 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         sethoverImageName("");
         setMultiImage([]);
         refetch();
+        setLoading(false)
         setIsUpdateModalOpen(false);
       } else {
         toast.error(result?.error?.data?.message, {
           autoClose: 1000
         });
+        setLoading(false)
       }
     });
   };
@@ -1019,7 +1056,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                     type="Submit"
                     className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
                   >
-                    Update Now
+                    {loading ? <MiniSpinner /> : "Update"}
                   </button>
                 </div>
               </form>

@@ -25,6 +25,7 @@ const SliderTable = ({ sliders, refetch }) => {
   const handleDeleteSlider = (slider) => {
     const sendData = {
       _id: slider?._id,
+      image_key: slider?.image_key,
     };
     deleteSlider(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {

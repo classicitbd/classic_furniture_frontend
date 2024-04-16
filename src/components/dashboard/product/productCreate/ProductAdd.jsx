@@ -12,6 +12,7 @@ import { AuthContext } from "../../../../context/AuthProvider";
 import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
 import { VideoValidate } from "../../../../utils/VideoValidation";
+import { ImageValidate } from "../../../../utils/ImageValidation";
 
 const ProductAdd = () => {
   const { user } = useContext(AuthContext);
@@ -170,6 +171,13 @@ const ProductAdd = () => {
 
   const handleOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
+
       if (!imageName) {
         toast.error("Please wait a minute", {
           autoClose: 1000,
@@ -196,6 +204,12 @@ const ProductAdd = () => {
 
   const handleHoverImageOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       if (!hoverImageName) {
         toast.error("Please wait a minute", {
           autoClose: 1000,
@@ -222,6 +236,12 @@ const ProductAdd = () => {
 
   const handleMuilOnChange = async (fieldName) => {
     if (fieldName[0]) {
+      const validate_image = fieldName[0];
+      const result = ImageValidate(validate_image, "category_image"); //check image type
+      if (result == false) {
+        toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
+        return;
+      }
       if (multiImage.length >= 11) {
         toast.error("only 10 images are allowed", {
           autoClose: 1000,
@@ -288,25 +308,7 @@ const ProductAdd = () => {
   const handleDataPost = async (data) => {
     if (!description) {
       toast.error("Error: Please fill in the product description box.");
-    }
-    let product_video;
-    let errorEncountered;
-
-    if (data?.product_video?.[0]) {
-      const productVideoValidate = data?.product_video?.[0];
-      const result = VideoValidate(productVideoValidate); //check image type
-      if (result == false) {
-        errorEncountered = true;
-      }
-    }
-    if (errorEncountered == true) {
-      toast.error("Must be a mp4 type video in product video field");
-    }
-    toast.error("Please wait a minute");
-
-    if (data?.product_video?.[0]) {
-      const videoUpload = await VideoUploader(data?.product_video?.[0]);
-      product_video = videoUpload[0];
+      return;
     }
     const hasEmptySizeOrColor = data.size_variation.some(
       (variation) =>
@@ -323,6 +325,22 @@ const ProductAdd = () => {
         "Error: Please fill in the size and quantity for all size variations."
       );
       return; // Stop the function
+    }
+    let product_video;
+    
+    if (data?.product_video?.[0]) {
+      const productVideoValidate = data?.product_video?.[0];
+      const result = VideoValidate(productVideoValidate); //check image type
+      if (result == false) {
+        toast.error("Must be a mp4 type video in product video field");
+        return;
+      }
+    }
+    toast.error("Please wait a minute");
+
+    if (data?.product_video?.[0]) {
+      const videoUpload = await VideoUploader(data?.product_video?.[0]);
+      product_video = videoUpload[0];
     }
 
     if (!imageName) {
