@@ -87,7 +87,6 @@ const UpdateBanner = ({
                 description: description || bannerUpdateModalValue?.description,
                 banner: bannerUpdateModalValue?.banner,
                 _id: bannerUpdateModalValue?._id,
-                image_key: bannerUpdateModalValue?.image_key,
             }
             updateBanner(sendData).then((result) => {
                 if (result?.data?.statusCode == 200 && result?.data?.success == true) {
