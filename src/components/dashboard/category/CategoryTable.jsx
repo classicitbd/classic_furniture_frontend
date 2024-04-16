@@ -89,6 +89,54 @@ const CategoryTable = ({ refetch, categoryTypes }) => {
     });
   };
 
+  const updateCategoryStatusForMainTitleFalse = (_id, show_title) => {
+    const sendData = {
+      _id,
+      show_title,
+    };
+    updateCategoryStatusForMainPage(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Status Update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message, {
+          autoClose: 1000,
+        });
+      }
+    });
+  };
+
+  const updateCategoryStatusForMainTitleTrues = (_id, show_title) => {
+    const sendData = {
+      _id,
+      show_title,
+    };
+    updateCategoryStatusForMainPage(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Status Update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message, {
+          autoClose: 1000,
+        });
+      }
+    });
+  };
+
   return (
     <div>
       {/* Table for showing data */}
@@ -108,6 +156,9 @@ const CategoryTable = ({ refetch, categoryTypes }) => {
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Show Card
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Show Title
                 </th>
                 <th className="px-4 py-2 text-center">Action</th>
               </tr>
@@ -148,6 +199,35 @@ const CategoryTable = ({ refetch, categoryTypes }) => {
                       <button
                         onClick={() =>
                           updateCategoryStatusForMainPageTrues(
+                            category?._id,
+                            "active"
+                          )
+                        }
+                        className="btn bg-red-500 text-white border rounded-md px-2 py-1"
+                      >
+                        Selected ?
+                      </button>
+                    </td>
+                  )}
+                  {category?.show_title == "active" ? (
+                    <td className="whitespace-nowrap px-4 py-2">
+                      <button
+                        onClick={() =>
+                          updateCategoryStatusForMainTitleFalse(
+                            category?._id,
+                            "in-active"
+                          )
+                        }
+                        className="btn bg-green-500 text-white border rounded-md px-2 py-1"
+                      >
+                        Select
+                      </button>
+                    </td>
+                  ) : (
+                    <td className="whitespace-nowrap px-4 py-2">
+                      <button
+                        onClick={() =>
+                          updateCategoryStatusForMainTitleTrues(
                             category?._id,
                             "active"
                           )
