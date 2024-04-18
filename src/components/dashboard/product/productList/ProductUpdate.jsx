@@ -291,6 +291,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         });
         if (multiImage?.length == 0) {
           const image = await ImageUploader(fieldName[0]);
+          console.log(image)
           if (image[1] == true) {
             const updatedImage = [...multiImage, image[0]];
             setMultiImage(updatedImage);
@@ -303,6 +304,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
             });
         } else {
           const image = await ImageUploader(fieldName[0]);
+          console.log(image)
           if (image[1] == true) {
             const updatedImage = [...multiImage, image[0]];
             setMultiImage(updatedImage);
