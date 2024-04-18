@@ -54,6 +54,15 @@ const CheckoutPage = () => {
     suspense: false,
   }); // get All Product
 
+  const { data: siteSettingData = [] } = useQuery({
+    queryKey: ["siteSetting"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`);
+      const data = res.json();
+      return data;
+    },
+  });
+
   const openModal = (product) => {
     setData(product);
     setModalOpen(true);
@@ -81,23 +90,24 @@ const CheckoutPage = () => {
       navigate("/all");
     }
   }, [carts?.length, navigate]);
-
   useEffect(() => {
-    const insideDhakaCharge = 100;
-    const additionalChargePerQuantity = 50;
-    const outsideDhakaCharge = 160;
+    const insideDhakaCharge = siteSettingData?.data?.[0]?.inside_dhaka_charge;
+    const outsideDhakaCharge = siteSettingData?.data?.[0]?.outside_dhaka_charge;
 
     if (userData?.district === "Dhaka" || district === "Dhaka") {
       localStorage.setItem("charge", deliveryCharge);
       return setDeliveryCharge(
         insideDhakaCharge +
-          (quantity > 1 ? (quantity - 1) * additionalChargePerQuantity : 0)
+        (quantity > 1 ? (quantity - 1) * insideDhakaCharge : 0)
       );
     } else {
       localStorage.setItem("charge", deliveryCharge);
-      setDeliveryCharge(outsideDhakaCharge);
+      return setDeliveryCharge(
+        outsideDhakaCharge +
+        (quantity > 1 ? (quantity - 1) * outsideDhakaCharge : 0)
+      );
     }
-  }, [district, quantity, deliveryCharge, userData]);
+  }, [district, quantity, deliveryCharge, userData, siteSettingData]);
 
   useEffect(() => {
     const chargeData = localStorage.getItem("charge");
@@ -191,27 +201,27 @@ const CheckoutPage = () => {
                             selectedItem.size === product?.size &&
                             selectedItem.productId === product?.productId
                         )?.quantity === 1 && (
-                          <button
-                            onClick={() => {
-                              openModal(product);
-                            }}
-                            className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
-                          >
-                            <CiTrash />
-                          </button>
-                        )}
+                            <button
+                              onClick={() => {
+                                openModal(product);
+                              }}
+                              className="text-error-200 px-1 py-1 border rounded hover:bg-bgray-300"
+                            >
+                              <CiTrash />
+                            </button>
+                          )}
                         {carts.find(
                           (selectedItem) =>
                             selectedItem.size === product?.size &&
                             selectedItem.productId === product?.productId
                         )?.quantity > 1 && (
-                          <button
-                            onClick={() => dispatch(decrementQuantity(product))}
-                            className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
-                          >
-                            <FiMinus />
-                          </button>
-                        )}
+                            <button
+                              onClick={() => dispatch(decrementQuantity(product))}
+                              className="text-bgray-700 px-1 py-1 border rounded hover:bg-bgray-300"
+                            >
+                              <FiMinus />
+                            </button>
+                          )}
                         <span className="px-2 py-1">{product?.quantity}</span>
                         <button
                           onClick={() => {

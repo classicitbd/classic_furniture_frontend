@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useAddSiteSettingMutation } from "../../../redux/feature/setting/settingApi";
 
 const StoreDetails = ({ refetch, initialData }) => {
-  const { register, reset, handleSubmit } = useForm(); //get data in form
+  const { register, reset, handleSubmit, formState: { errors }, } = useForm(); //get data in form
 
   const [postSiteSettng] = useAddSiteSettingMutation();
 
@@ -16,6 +16,8 @@ const StoreDetails = ({ refetch, initialData }) => {
       youTube: data?.youTube || initialData?.youTube,
       inside_dhaka: data?.inside_dhaka || initialData?.inside_dhaka,
       outside_dhaka: data?.outside_dhaka || initialData?.outside_dhaka,
+      inside_dhaka_charge: data?.inside_dhaka_charge || initialData?.inside_dhaka_charge,
+      outside_dhaka_charge: data?.outside_dhaka_charge || initialData?.outside_dhaka_charge,
       address: data?.address || initialData?.address,
       email: data?.email || initialData?.email,
       hours: data?.hours || initialData?.hours,
@@ -46,29 +48,59 @@ const StoreDetails = ({ refetch, initialData }) => {
         <div className="grid gap-6 grid-cols-2 md:grid-cols-3">
           <div>
             <label className="font-semibold" htmlFor="inside_dhaka">
-              Delivery Inside Dhaka
+              Delivery Inside Dhaka Days
               <span className="text-red-500"> if need</span>{" "}
             </label>
             <input
               defaultValue={initialData?.inside_dhaka}
               {...register("inside_dhaka")}
               id="inside_dhaka"
-              type="number"
+              type="string"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
           <div>
             <label className="font-semibold" htmlFor="outside_dhaka">
-              Delivery Outside Dhaka
+              Delivery Outside Dhaka days
               <span className="text-red-500"> if need</span>{" "}
             </label>
             <input
               defaultValue={initialData?.outside_dhaka}
               {...register("outside_dhaka")}
-              id="inside_dhaka"
+              id="outside_dhaka"
+              type="string"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label className="font-semibold" htmlFor="inside_dhaka_charge">
+              Delivery Charge Inside Dhaka
+            </label>
+            <input
+              defaultValue={initialData?.inside_dhaka_charge}
+              {...register("inside_dhaka_charge", { required: "Inside delivery charge must be required" })}
+              id="inside_dhaka_charge"
               type="number"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
+            {errors.inside_dhaka_charge && (
+              <p className="text-red-600">{errors.inside_dhaka_charge?.message}</p>
+            )}
+          </div>
+          <div>
+            <label className="font-semibold" htmlFor="outside_dhaka_charge">
+              Delivery Charge Outside Dhaka
+            </label>
+            <input
+              defaultValue={initialData?.outside_dhaka_charge}
+              {...register("outside_dhaka_charge", { required: "Outside delivery charge must be required" })}
+              id="outside_dhaka_charge"
+              type="number"
+              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+            {errors.outside_dhaka_charge && (
+              <p className="text-red-600">{errors.outside_dhaka_charge?.message}</p>
+            )}
           </div>
           <div>
             <label className="font-semibold" htmlFor="location">
@@ -118,8 +150,6 @@ const StoreDetails = ({ refetch, initialData }) => {
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
-        </div>
-        <div className="grid gap-6 grid-cols-2 md:grid-cols-4 my-6">
           <div>
             <label className="font-semibold" htmlFor="address">
               Address

@@ -1028,7 +1028,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                               <button
                                 className="absolute top-0 left-0 bg-gray-100 w-7 h-7 rounded-full text-sm hover:text-red-500 mb-3"
                                 type="button"
-                                onClick={() => handleMuilDelete(image?.image)}
+                                onClick={() => handleMuilDelete(image)}
                               >
                                 X
                               </button>

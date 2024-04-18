@@ -16,7 +16,6 @@ const ImageUploader = async (file) => {
         },
       }
     );
-    console.log(response)
     const imageUrl = response?.data?.data?.Location;
     return [imageUrl, response?.data?.success];
   } catch (error) {
