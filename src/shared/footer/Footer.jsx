@@ -10,17 +10,18 @@ import { TbClockPause } from "react-icons/tb";
 import { FaUmbraco } from "react-icons/fa";
 
 const quickLinks = [
-  { path: "/about-us", label: "About Us" },
-  { path: "/refund-policy", label: "Refund Policy" },
-  { path: "/cancellation-policy", label: "Cancellation Policy" },
-  { path: "/term-&-condition", label: "Terms & Condition" },
-  { path: "/privacy-policy", label: "Privacy Policy" },
-  { path: "/return-policy", label: "Return policy" },
+  { path: "/about-us", label: "Our Story" },
+  // { path: "/refund-policy", label: "Refund Policy" },
+  // { path: "/cancellation-policy", label: "Cancellation Policy" },
+  // { path: "/term-&-condition", label: "Terms & Condition" },
+  // { path: "/privacy-policy", label: "Privacy Policy" },
+  // { path: "/return-policy", label: "Return policy" },
 ];
 
 const helpfulLinks = [
   { path: "/contact", label: "Contact Us" },
   { path: "/shipping-info", label: "Shipping Info" },
+  { path: "/return-policy", label: "Return & Exchange" },
   { path: "/materials-care", label: "Materials & Care" },
 ];
 
