@@ -13,9 +13,11 @@ import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
 import { VideoValidate } from "../../../../utils/VideoValidation";
 import { ImageValidate } from "../../../../utils/ImageValidation";
+import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 
 const ProductAdd = () => {
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   // select field data
   const [colorName, setColorName] = useState("");
@@ -306,8 +308,10 @@ const ProductAdd = () => {
 
   // data post in backend
   const handleDataPost = async (data) => {
+    setLoading(true)
     if (!description) {
       toast.error("Error: Please fill in the product description box.");
+      setLoading(false)
       return;
     }
     const hasEmptySizeOrColor = data.size_variation.some(
@@ -324,6 +328,7 @@ const ProductAdd = () => {
       toast.error(
         "Error: Please fill in the size and quantity for all size variations."
       );
+      setLoading(false)
       return; // Stop the function
     }
     let product_video;
@@ -333,11 +338,11 @@ const ProductAdd = () => {
       const result = VideoValidate(productVideoValidate); //check image type
       if (result == false) {
         toast.error("Must be a mp4 type video in product video field");
+        setLoading(false)
         return;
       }
     }
     toast.error("Please wait a minute");
-
     if (data?.product_video?.[0]) {
       const videoUpload = await VideoUploader(data?.product_video?.[0]);
       product_video = videoUpload[0];
@@ -345,11 +350,13 @@ const ProductAdd = () => {
 
     if (!imageName) {
       toast.error("Error: Please fill the main image.");
+      setLoading(false)
       return; // Stop the function
     }
 
     if (!hoverImageName) {
       toast.error("Error: Please fill the hover image.");
+      setLoading(false)
       return; // Stop the function
     }
 
@@ -357,6 +364,7 @@ const ProductAdd = () => {
       toast.error(
         "Error: Please fill atleast one image in another image field."
       );
+      setLoading(false)
       return; // Stop the function
     }
 
@@ -428,8 +436,10 @@ const ProductAdd = () => {
         sethoverImageName("");
         setMultiImage([]);
         refetch();
+        setLoading(false)
       } else {
         toast.error(result?.error?.data?.message);
+        setLoading(false)
       }
     });
   };
@@ -870,7 +880,7 @@ const ProductAdd = () => {
                 type="Submit"
                 className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
               >
-                Create Now
+                {loading ? <MiniSpinner /> : "Create"}
               </button>
             </div>
           </form>
