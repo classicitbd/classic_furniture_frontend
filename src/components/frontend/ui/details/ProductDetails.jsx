@@ -23,12 +23,12 @@ import VideoModal from "../../../common/modal/VideoModal";
 import ShippingInfoModal from "../../../common/modal/shippingInfoModal";
 
 const ProductDetails = ({ product, sizePicture }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [modal, setModal] = useState("");
+  const [isModalOpen, setModalOpen] = useState(true);
+  const [modal, setModal] = useState("video");
 
   const openModal = (value) => {
     setModalOpen(true);
-    setModal(value);
+    setModal(value ? value : product?.data?.product_video);
   };
 
   const closeModal = () => {
@@ -37,9 +37,8 @@ const ProductDetails = ({ product, sizePicture }) => {
   };
 
   const allImages = [...product.data.images];
-  allImages.push({ image: product?.data?.thumbnail_image });
-  allImages.push({ image: product?.data?.hover_image });
-  console.log(product);
+  allImages?.push({ image: product?.data?.thumbnail_image });
+  allImages?.push({ image: product?.data?.hover_image });
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2">
@@ -57,8 +56,8 @@ const ProductDetails = ({ product, sizePicture }) => {
         }}
         keyboard={{ enabled: true }}
         pagination={{ clickable: true }}
-        onSwiper={() => {}}
-        onSlideChange={() => {}}
+        onSwiper={() => { }}
+        onSlideChange={() => { }}
         className="h-[50vh] md:h-[90vh] w-full"
       >
         {allImages?.map((image, i) => (
@@ -86,9 +85,8 @@ const ProductDetails = ({ product, sizePicture }) => {
             <p className="">
               <span className="text-xl font-normal">৳ </span>
               <span
-                className={`text-xl font-normal mr-4 ${
-                  product?.data?.discount_price ? "line-through" : ""
-                }`}
+                className={`text-xl font-normal mr-4 ${product?.data?.discount_price ? "line-through" : ""
+                  }`}
               >
                 {product?.data?.price}
               </span>
