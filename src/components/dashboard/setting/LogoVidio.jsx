@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import VideoUploader from "./VideoUploader";
 import ImageUploader from "../product/productCreate/ImageUploader";
 import { useAddSiteSettingMutation } from "../../../redux/feature/setting/settingApi";
 import { ImageValidate } from "../../../utils/ImageValidation";
+import VideoUploaders from "./VideoUploaders";
 
 const LogoVidio = ({ refetch, initialData }) => {
   const { register, reset, handleSubmit } = useForm(); //get data in form
@@ -58,7 +58,7 @@ const LogoVidio = ({ refetch, initialData }) => {
       product_size_picture = product_size_pictureUpload[0];
     }
     if (data?.video?.[0]) {
-      const videoUpload = await VideoUploader(data?.video?.[0]);
+      const videoUpload = await VideoUploaders(data?.video?.[0]);
       video = videoUpload[0];
     }
     const sendData = {

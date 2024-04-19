@@ -9,11 +9,11 @@ import ImageUploader from "./ImageUploader";
 import slugify from "slugify";
 import { useAddProductMutation } from "../../../../redux/feature/product/productApi";
 import { AuthContext } from "../../../../context/AuthProvider";
-import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
 import { VideoValidate } from "../../../../utils/VideoValidation";
 import { ImageValidate } from "../../../../utils/ImageValidation";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import VideoUploaders from "../../setting/VideoUploaders";
 
 const ProductAdd = () => {
   const { user } = useContext(AuthContext);
@@ -344,7 +344,7 @@ const ProductAdd = () => {
     }
     toast.error("Please wait a minute");
     if (data?.product_video?.[0]) {
-      const videoUpload = await VideoUploader(data?.product_video?.[0]);
+      const videoUpload = await VideoUploaders(data?.product_video?.[0]);
       product_video = videoUpload[0];
     }
 

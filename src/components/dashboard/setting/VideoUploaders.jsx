@@ -1,7 +1,8 @@
+
 import axios from "axios";
 import { BASE_URL } from "../../../utils/baseURL";
 
-const VideoUploader = async (file) => {
+const VideoUploaders = async (file) => {
     const formData = new FormData();
     formData.append("video", file);
 
@@ -23,7 +24,7 @@ const VideoUploader = async (file) => {
     }
 };
 
-export default VideoUploader;
+export default VideoUploaders;
 
 
 
@@ -32,7 +33,7 @@ export default VideoUploader;
 // const CLOUDINARY_PRESET = "ml_default";
 // const CLOUDINARY_CLOUDENAME = "dykzl2grb";
 
-// const VideoUploader = async (file) => {
+// const VideoUploaders = async (file) => {
 //     const formData = new FormData();
 //     formData.append("file", file);
 //     formData.append("upload_preset", CLOUDINARY_PRESET);
@@ -57,4 +58,4 @@ export default VideoUploader;
 //     }
 // };
 
-// export default VideoUploader;
+// export default VideoUploaders;

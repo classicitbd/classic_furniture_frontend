@@ -11,11 +11,11 @@ import ImageUploader from "../productCreate/ImageUploader";
 import { RxCross1 } from "react-icons/rx";
 import { MdDeleteForever } from "react-icons/md";
 import { AuthContext } from "../../../../context/AuthProvider";
-import VideoUploader from "../../setting/VideoUploader";
 import ReactQuill from "react-quill";
 import { ImageValidate } from "../../../../utils/ImageValidation";
 import { VideoValidate } from "../../../../utils/VideoValidation";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import VideoUploaders from "../../setting/VideoUploaders";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   const { user } = useContext(AuthContext);
@@ -380,7 +380,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       }
     }
     if (data?.product_video?.[0]) {
-      const videoUpload = await VideoUploader(data?.product_video?.[0]);
+      const videoUpload = await VideoUploaders(data?.product_video?.[0]);
       product_video = videoUpload[0];
     }
 
