@@ -304,9 +304,8 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
             });
         } else {
           const image = await ImageUploader(fieldName[0]);
-          console.log(image)
           if (image[1] == true) {
-            const updatedImage = [...multiImage, image[0]];
+            const updatedImage = [...multiImage, { image: image[0] }];
             setMultiImage(updatedImage);
             toast.success("Now Add Another Picture", {
               autoClose: 1000,
