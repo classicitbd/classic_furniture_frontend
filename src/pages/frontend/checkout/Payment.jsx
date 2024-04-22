@@ -130,7 +130,7 @@ const Payment = ({ addressUpdate, total, addNote, curior, deliveryCharge }) => {
               />
               By making this purchase you agree to our
               <Link
-                to="/return-and-refunds-policy"
+                to="/term-&-condition"
                 className="text-blue-500 underline"
               >
                 {" "}

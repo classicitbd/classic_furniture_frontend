@@ -6,6 +6,9 @@ import { useUpdateCategoryMutation } from "../../../redux/feature/category/categ
 import { ImageValidate } from "../../../utils/ImageValidation";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
+import Select from "react-select";
 
 const UpdateCategory = ({
   setCategoryUpdateModal,
@@ -19,6 +22,20 @@ const UpdateCategory = ({
     formState: { errors },
   } = useForm();
   const [loading, setLoading] = useState(false);
+  const [menuId, setMenuId] = useState(categoryUpdateModalValue?.menuId?._id);
+
+  const menuNameValue =
+    categoryUpdateModalValue?.menuId?.menu;
+  const menuNameId = categoryUpdateModalValue?.menuId?._id;
+
+  const { data: menuTypes = [], isLoading } = useQuery({
+    queryKey: ["/api/v1/menu"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/menu`);
+      const data = await res.json();
+      return data;
+    },
+  }); // get All Menu type
 
   const [updateCategory] = useUpdateCategoryMutation(); //Update Category
 
@@ -54,7 +71,7 @@ const UpdateCategory = ({
       formData.append("slug", slug);
       formData.append("image_key", categoryUpdateModalValue?.image_key);
       formData.append("_id", categoryUpdateModalValue?._id);
-      formData.append("menuId", categoryUpdateModalValue?.menuId?._id);
+      formData.append("menuId", menuId);
       updateCategory(formData).then((result) => {
         if (result?.data?.statusCode == 200 && result?.data?.success == true) {
           toast.success(
@@ -78,7 +95,7 @@ const UpdateCategory = ({
       const sendData = {
         _id: categoryUpdateModalValue?._id,
         image_key: categoryUpdateModalValue?.image_key,
-        menuId: categoryUpdateModalValue?.menuId,
+        menuId: menuId,
         category: data?.category,
         slug: slugify(data.category, {
           lower: true,
@@ -106,6 +123,10 @@ const UpdateCategory = ({
       });
     }
   };
+
+  if (isLoading) {
+    return <MiniSpinner />
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-end bg-black bg-opacity-30">
@@ -161,6 +182,26 @@ const UpdateCategory = ({
               type="file"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
+          </div>
+
+          <div className="mt-4">
+            <p className="font-medium"> menu Name: </p>
+            <Select
+              id="menuId"
+              name="menuId"
+              required
+              aria-label="Select a Menu"
+              options={menuTypes?.data}
+              defaultValue={{
+                _id: menuNameId,
+                menu: menuNameValue,
+              }}
+              getOptionLabel={(x) => x?.menu}
+              getOptionValue={(x) => x?._id}
+              onChange={(selectedOption) =>
+                setMenuId(selectedOption?._id)
+              }
+            ></Select>
           </div>
 
           <div className="flex justify-end mt-6 gap-4">
