@@ -13,9 +13,9 @@ import { MdDeleteForever } from "react-icons/md";
 import { AuthContext } from "../../../../context/AuthProvider";
 import ReactQuill from "react-quill";
 import { ImageValidate } from "../../../../utils/ImageValidation";
-import { VideoValidate } from "../../../../utils/VideoValidation";
+// import { VideoValidate } from "../../../../utils/VideoValidation";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
-import VideoUploaders from "../../setting/VideoUploaders";
+// import VideoUploaders from "../../setting/VideoUploaders";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   const { user } = useContext(AuthContext);
@@ -369,20 +369,20 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
     toast.error("Please wait a moment", {
       autoClose: 1000
     });
-    let product_video;
-    if (data?.product_video?.[0]) {
-      const productVideoValidate = data?.product_video?.[0];
-      const result = VideoValidate(productVideoValidate); //check image type
-      if (result == false) {
-        toast.error("Must be a mp4 type video in product video field");
-        setLoading(false)
-        return;
-      }
-    }
-    if (data?.product_video?.[0]) {
-      const videoUpload = await VideoUploaders(data?.product_video?.[0]);
-      product_video = videoUpload[0];
-    }
+    // let product_video;
+    // if (data?.product_video?.[0]) {
+    //   const productVideoValidate = data?.product_video?.[0];
+    //   const result = VideoValidate(productVideoValidate); //check image type
+    //   if (result == false) {
+    //     toast.error("Must be a mp4 type video in product video field");
+    //     setLoading(false)
+    //     return;
+    //   }
+    // }
+    // if (data?.product_video?.[0]) {
+    //   const videoUpload = await VideoUploaders(data?.product_video?.[0]);
+    //   product_video = videoUpload[0];
+    // }
 
     if (!imageName) {
       toast.error("Error: Please fill the main image.", {
@@ -418,6 +418,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       _id: updateModalValue?._id,
       phone: user?.phone,
       title: data?.title ? data?.title : updateModalValue?.title,
+      product_video: data?.product_video,
       related: slugify(data?.title ? data?.title : updateModalValue?.title, {
         lower: true,
         replacement: "-",
@@ -445,9 +446,6 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       colorId: colorId,
       menuId: menuIdForCategory
     };
-    if (product_video) {
-      sendData.product_video = product_video;
-    }
     if (menuIdForCategory !== "" && menuIdForCategory !== undefined) {
       sendData.menuId = menuIdForCategory;
     }
@@ -990,7 +988,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                       </div>
                     </div>
 
-                    <div>
+                    {/* <div>
                       <label className="font-semibold" htmlFor="product_video">
                         {" "}
                         Product Video{" "}
@@ -1001,6 +999,19 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                         id="product_video"
                         type="file"
                         className="block w-full p-3 mt-2 text-gray-700 bg-white border border-gray-200 rounded-sm"
+                      />
+                    </div> */}
+                    <div>
+                      <label className="font-semibold" htmlFor="product_video">
+                        {" "}
+                        Product Video Link
+                      </label>
+                      <input
+                        defaultValue={updateModalValue?.product_video}
+                        {...register("product_video")}
+                        id="product_video"
+                        type="text"
+                        className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
                       />
                     </div>
                   </div>

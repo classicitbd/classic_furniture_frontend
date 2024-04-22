@@ -13,7 +13,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/bundle";
 import Breadcrumb from "../../../common/breadCrumb/BreadCrumb";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MaterialAndCare from "../materialAndCares/MaterialAndCare";
 import MaterialCareModal from "../../../common/modal/MaterialCareModal";
 import ShippingInfo from "../shippingInfo/ShippingInfo";
@@ -21,10 +21,19 @@ import AddToCartModal from "../../../common/modal/AddToCartModal";
 import AddToCart from "../addToCart/AddToCart";
 import VideoModal from "../../../common/modal/VideoModal";
 import ShippingInfoModal from "../../../common/modal/shippingInfoModal";
+import YouTube from 'react-youtube';
+
 
 const ProductDetails = ({ product, sizePicture }) => {
-  const [isModalOpen, setModalOpen] = useState(true);
-  const [modal, setModal] = useState("video");
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modal, setModal] = useState("");
+
+  useEffect(() => {
+    if (product?.data?.product_video) {
+      setModalOpen(true)
+      setModal("video")
+    }
+  }, [product?.data?.product_video]);
 
   const openModal = (value) => {
     setModalOpen(true);
@@ -244,16 +253,15 @@ const ProductDetails = ({ product, sizePicture }) => {
             </div>
             <div className="relative group overflow-hidden md:col-span-3 md:row-span-2">
               <div className="block w-full h-full">
-                <video
+                {/* <video
                   className="w-full h-full object-cover"
                   autoPlay
                   muted
                   loop
                 >
-                  {/* <source src={product.data.product_video} type="video/mp4" /> */}
                   <source src={product?.data?.product_video} type="video/mp4" />
-                  {/* Your browser does not support the video tag. */}
-                </video>
+                </video> */}
+                <YouTube videoId={product?.data?.product_video} />
               </div>
             </div>
           </div>
