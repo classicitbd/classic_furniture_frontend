@@ -10,10 +10,10 @@ import slugify from "slugify";
 import { useAddProductMutation } from "../../../../redux/feature/product/productApi";
 import { AuthContext } from "../../../../context/AuthProvider";
 import ReactQuill from "react-quill";
-import { VideoValidate } from "../../../../utils/VideoValidation";
+// import { VideoValidate } from "../../../../utils/VideoValidation";
 import { ImageValidate } from "../../../../utils/ImageValidation";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
-import VideoUploaders from "../../setting/VideoUploaders";
+// import VideoUploaders from "../../setting/VideoUploaders";
 
 const ProductAdd = () => {
   const { user } = useContext(AuthContext);
@@ -331,22 +331,22 @@ const ProductAdd = () => {
       setLoading(false)
       return; // Stop the function
     }
-    let product_video;
+    // let product_video;
 
-    if (data?.product_video?.[0]) {
-      const productVideoValidate = data?.product_video?.[0];
-      const result = VideoValidate(productVideoValidate); //check image type
-      if (result == false) {
-        toast.error("Must be a mp4 type video in product video field");
-        setLoading(false)
-        return;
-      }
-    }
+    // if (data?.product_video?.[0]) {
+    //   const productVideoValidate = data?.product_video?.[0];
+    //   const result = VideoValidate(productVideoValidate); //check image type
+    //   if (result == false) {
+    //     toast.error("Must be a mp4 type video in product video field");
+    //     setLoading(false)
+    //     return;
+    //   }
+    // }
+    // if (data?.product_video?.[0]) {
+    //   const videoUpload = await VideoUploaders(data?.product_video?.[0]);
+    //   product_video = videoUpload[0];
+    // }
     toast.error("Please wait a minute");
-    if (data?.product_video?.[0]) {
-      const videoUpload = await VideoUploaders(data?.product_video?.[0]);
-      product_video = videoUpload[0];
-    }
 
     if (!imageName) {
       toast.error("Error: Please fill the main image.");
@@ -392,7 +392,7 @@ const ProductAdd = () => {
       })),
       thumbnail_image: imageName,
       hover_image: hoverImageName,
-      product_video: product_video !== undefined && product_video,
+      product_video: data?.product_video,
       images: allImage?.map((item) => ({
         image: item?.image,
       })),
@@ -812,7 +812,7 @@ const ProductAdd = () => {
                   </div>
                 </div>
 
-                <div>
+                {/* <div>
                   <label className="font-semibold" htmlFor="product_video">
                     {" "}
                     Product Video
@@ -822,6 +822,19 @@ const ProductAdd = () => {
                     id="product_video"
                     type="file"
                     className="block w-full p-3 mt-2 text-gray-700 bg-white border border-gray-200 rounded-sm"
+                  />
+                </div> */}
+                <div>
+                  <label className="font-semibold" htmlFor="product_video">
+                    {" "}
+                    Product Video Link
+                  </label>
+                  <input
+                    placeholder="Product Video Link...."
+                    {...register("product_video")}
+                    id="product_video"
+                    type="text"
+                    className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
                   />
                 </div>
               </div>
