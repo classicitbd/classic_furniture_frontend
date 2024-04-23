@@ -173,7 +173,7 @@ const ProductListTable = () => {
                 <tr key={product?._id}>
                   <td className="whitespace-nowrap px-4 py-2">
                     <img
-                    src={product?.thumbnail_image}
+                      src={product?.thumbnail_image}
                       alt=""
                       className="w-20"
                     />

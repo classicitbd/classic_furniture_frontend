@@ -3,7 +3,7 @@ import { BASE_URL } from "../../../../utils/baseURL";
 
 const TermAndCondition = () => {
   const { data: termandcondition = [], isLoading } = useQuery({
-    queryKey: ["termandcondition"],
+    queryKey: ["/api/v1/siteSetting"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
       const data = res.json();

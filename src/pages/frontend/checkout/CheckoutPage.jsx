@@ -101,11 +101,16 @@ const CheckoutPage = () => {
         (quantity > 1 ? (quantity - 1) * insideDhakaCharge : 0)
       );
     } else {
-      localStorage.setItem("charge", deliveryCharge);
-      return setDeliveryCharge(
-        outsideDhakaCharge +
-        (quantity > 1 ? (quantity - 1) * outsideDhakaCharge : 0)
-      );
+      if (!userData?.phone) {
+        setDeliveryCharge(0)
+      }
+      else {
+        localStorage.setItem("charge", deliveryCharge);
+        return setDeliveryCharge(
+          outsideDhakaCharge +
+          (quantity > 1 ? (quantity - 1) * outsideDhakaCharge : 0)
+        );
+      }
     }
   }, [district, quantity, deliveryCharge, userData, siteSettingData]);
 

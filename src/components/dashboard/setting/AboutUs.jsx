@@ -16,9 +16,9 @@ const AboutUs = ({ initialData, refetch }) => {
   const [material_care, setMaterial_care] = useState(
     initialData?.material_care
   );
-  // const [termAndCondition, setTermAndCondition] = useState(
-  //   initialData?.termAndCondition
-  // );
+  const [termAndCondition, setTermAndCondition] = useState(
+    initialData?.termAndCondition
+  );
   // const [privacyPolicy, setPrivacyPolicy] = useState(
   //   initialData?.privacyPolicy
   // );
@@ -153,28 +153,28 @@ const AboutUs = ({ initialData, refetch }) => {
 
 
   // termAndCondition post
-  // const handleDataPost6 = async () => {
-  //   toast.error("Please wait a moment");
-  //   const sendData = {
-  //     termAndCondition: termAndCondition,
-  //     _id: initialData?._id,
-  //   };
-  //   postSiteSettng(sendData).then((result) => {
-  //     if (result?.data?.statusCode == 200 && result?.data?.success == true) {
-  //       toast.success(
-  //         result?.data?.message
-  //           ? result?.data?.message
-  //           : "Site update successfully !",
-  //         {
-  //           autoClose: 1000,
-  //         }
-  //       );
-  //       refetch();
-  //     } else {
-  //       toast.error(result?.error?.data?.message);
-  //     }
-  //   });
-  // };
+  const handleDataPost6 = async () => {
+    toast.error("Please wait a moment");
+    const sendData = {
+      termAndCondition: termAndCondition,
+      _id: initialData?._id,
+    };
+    postSiteSettng(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Site update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message);
+      }
+    });
+  };
 
 
   // privacyPolicy post
@@ -342,7 +342,7 @@ const AboutUs = ({ initialData, refetch }) => {
       </div>
 
       {/* termAndCondition Info */}
-      {/* <h4 className="font-semibold text-[20px] mt-2">Terms And Condition</h4>
+      <h4 className="font-semibold text-[20px] mt-2">Terms And Condition</h4>
       <hr className="mt-2 mb-4" />
       <ReactQuill
         theme="snow"
@@ -359,7 +359,7 @@ const AboutUs = ({ initialData, refetch }) => {
         >
           Submit
         </button>
-      </div> */}
+      </div>
 
       {/* privacyPolicy Info */}
       {/* <h4 className="font-semibold text-[20px] mt-2">Privacy And Policy</h4>
