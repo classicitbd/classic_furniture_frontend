@@ -65,7 +65,7 @@ const ProductListTable = () => {
   };
 
   const [updateProductStatus] =
-    useUpdateProductMutation(); //Update Category status for explore
+    useUpdateProductMutation(); //Update Category status for explore page
 
   const updateProductStatusFalse = (_id, status) => {
     const sendData = {
