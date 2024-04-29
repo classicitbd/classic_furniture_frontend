@@ -5,8 +5,10 @@ import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useState } from "react";
 import UpdateCategory from "./UpdateCategory";
 import { FiEdit } from "react-icons/fi";
+import { BiSearch } from "react-icons/bi";
+import Pagination from "../../../shared/pagination/Pagination";
 
-const CategoryTable = ({ refetch, categoryTypes }) => {
+const CategoryTable = ({ refetch, categoryTypes, setSearchTerm, rows, page, setPage, setRows }) => {
   const [categoryUpdateModal, setCategoryUpdateModal] = useState(false);
   const [categoryUpdateModalValue, setCategoryUpdateModalValue] =
     useState(false);
@@ -137,8 +139,26 @@ const CategoryTable = ({ refetch, categoryTypes }) => {
     });
   };
 
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      setSearchTerm(e.target.value);
+    }
+  };
+
   return (
     <div>
+      {/* Search and create */}
+      <div className="flex items-center justify-end my-5 gap-2">
+        <div className="flex items-center gap-2 rounded-xl border border-[#E7E7E7] bg-gray-50 px-[5px] py-2">
+          <BiSearch className="text-[#717171]" size={20} />
+          <input
+            onKeyDown={(e) => handleSearch(e)}
+            type="text"
+            placeholder="Search..."
+            className="bg-gray-50 bg-none w-full outline-none text-[14px] font-semibold placeholder-[#717171]"
+          />
+        </div>
+      </div>
       {/* Table for showing data */}
       {categoryTypes?.data?.length > 0 ? (
         <div className="mt-5 overflow-x-auto rounded">
@@ -152,7 +172,10 @@ const CategoryTable = ({ refetch, categoryTypes }) => {
                   Image
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Menu Name
+                  Serial
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Status
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Show Card
@@ -168,17 +191,20 @@ const CategoryTable = ({ refetch, categoryTypes }) => {
               {categoryTypes?.data?.map((category) => (
                 <tr key={category?._id}>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {category?.category}
+                    {category?.category_name}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
                     <img
-                      src={category?.category_image}
-                      alt={category.category}
-                      className="w-12 rounded-full"
+                      src={category?.category_logo}
+                      alt={category.category_name}
+                      className="w-16 rounded-full"
                     />
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {category?.menuId?.menu}
+                    {category?.category_serial}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                    {category?.category_status}
                   </td>
                   {category?.show_card == "active" ? (
                     <td className="whitespace-nowrap px-4 py-2">
@@ -238,7 +264,7 @@ const CategoryTable = ({ refetch, categoryTypes }) => {
                       </button>
                     </td>
                   )}
-                  <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
+                  <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4 mt-4">
                     <MdDeleteForever
                       onClick={() => handleDeleteCategory(category)}
                       className="cursor-pointer text-red-500 hover:text-red-300"
@@ -258,6 +284,18 @@ const CategoryTable = ({ refetch, categoryTypes }) => {
       ) : (
         <NoDataFound />
       )}
+
+      <hr />
+
+      {/* Pagination */}
+      <Pagination
+        rows={rows}
+        page={page}
+        setPage={setPage}
+        setRows={setRows}
+        totalData={categoryTypes?.totalData}
+      />
+
       {/* Update Category */}
       {categoryUpdateModal && (
         <UpdateCategory

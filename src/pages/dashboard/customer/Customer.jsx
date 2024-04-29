@@ -9,9 +9,9 @@ const Customer = () => {
             <div className="flex items-center justify-between bg-white p-4 rounded-xl">
                 <h3 className="text-[20px] font-semibold">Customer List</h3>
                 <div className="flex items-center gap-2">
-                    <Link to='/istiak'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
+                    <Link to='/admin'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
                     <p className="font-semibold text-xl">/</p>
-                    <Link to='/istiak/customer'><p className="font-semibold">Customer List</p></Link>
+                    <Link to='/admin/customer'><p className="font-semibold">Customer List</p></Link>
                 </div>
             </div>
 

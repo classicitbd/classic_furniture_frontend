@@ -1,15 +1,10 @@
 import { useForm } from "react-hook-form";
-import BigSpinner from "../../../shared/loader/BigSpinner";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
-import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../../../utils/baseURL";
 import { useAddCategoryMutation } from "../../../redux/feature/category/categoryApi";
-import { Link } from "react-router-dom";
 import slugify from "slugify";
 import { ImageValidate } from "../../../utils/ImageValidation";
-import Select from "react-select";
 
 const AddCategory = ({ refetch }) => {
   const {
@@ -19,20 +14,6 @@ const AddCategory = ({ refetch }) => {
     formState: { errors },
   } = useForm();
   const [loading, setLoading] = useState(false);
-  const [menuLength, setMenuLength] = useState(1);
-  const [menuId, setMenuId] = useState("");
-
-  const { data: menuTypes = [], isLoading } = useQuery({
-    queryKey: ["/api/v1/menu"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/menu`);
-      const data = await res.json();
-      if (data?.data?.length === 0) {
-        setMenuLength(0);
-      }
-      return data;
-    },
-  }); // get All Menu type
 
   const [postCategoryType] = useAddCategoryMutation(); //post Category type
 
@@ -42,11 +23,11 @@ const AddCategory = ({ refetch }) => {
     const formData = new FormData();
     let errorEncountered = false;
 
-    if (data?.category_image[0]) {
-      const category_image = data?.category_image[0];
-      const result = ImageValidate(category_image, "category_image"); //check image type
+    if (data?.category_logo[0]) {
+      const category_logo = data?.category_logo[0];
+      const result = ImageValidate(category_logo, "category_logo"); //check image type
       if (result == true) {
-        formData.append("category_image", category_image);
+        formData.append("category_logo", category_logo);
       } else {
         toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
         errorEncountered = true;
@@ -59,16 +40,15 @@ const AddCategory = ({ refetch }) => {
     }
 
     Object.entries(data).forEach(([key, value]) => {
-      if (key !== "category_image") {
+      if (key !== "category_logo") {
         formData.append(key, value);
       }
     });
-    const slug = slugify(data.category, {
+    const slug = slugify(data.category_name, {
       lower: true,
       replacement: "-",
     });
-    formData.append("slug", slug);
-    formData.append("menuId", menuId);
+    formData.append("category_slug", slug);
     postCategoryType(formData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
         setLoading(false);
@@ -89,10 +69,6 @@ const AddCategory = ({ refetch }) => {
     });
   };
 
-  if (isLoading) {
-    return <BigSpinner />;
-  }
-
   return (
     <>
       <div className="my-10 bg-white border border-gray-200 rounded-xl">
@@ -100,88 +76,91 @@ const AddCategory = ({ refetch }) => {
           {/* Add A Category Type */}
           <div>
             <h2 className="font-semibold text-[20px]">Add A Category Type: </h2>
-            <p className="text-red-500">Image Size: 1280px X 1280px</p>
+            <p className="text-red-500">Image Size: 500px X 500px</p>
 
             <form
               onSubmit={handleSubmit(handleDataPost)}
-              className="grid md:grid-cols-4 grid-cols-2 items-center gap-2 md:gap-6 mt-3"
+              className="grid md:grid-cols-5 grid-cols-2 items-center gap-2 md:gap-6 mt-3"
             >
               <div>
                 <input
-                  placeholder="Type Name"
-                  {...register("category", {
-                    required: "Type Name is required",
+                  placeholder="Category Name"
+                  {...register("category_name", {
+                    required: "Category Name is required",
                   })}
-                  id="category"
+                  id="category_name"
                   type="text"
                   className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
                 />
-                {errors.category && (
-                  <p className="text-red-600">{errors.category?.message}</p>
+                {errors.category_name && (
+                  <p className="text-red-600">{errors.category_name?.message}</p>
                 )}
               </div>
 
               <div>
                 <input
-                  {...register("category_image", {
-                    required: "Image is required",
+                  {...register("category_logo", {
+                    required: "Logo is required",
                   })}
-                  id="category_image"
+                  id="category_logo"
                   type="file"
                   className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
                 />
-                {errors.category_image && (
+                {errors.category_logo && (
                   <p className="text-red-600">
-                    {errors.category_image?.message}
+                    {errors.category_logo?.message}
                   </p>
                 )}
               </div>
 
               <div>
-                {menuTypes?.data?.length > 0 ? (
-                  // <>
-                  // <select  {...register('menuId', { required: 'Menu type is required' })} id="menuId" className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl">
-                  // {
-                  // menuTypes?.data?.map(menu =>
-                  //     <option key={menu?._id} value={menu?._id}>{menu?.menu}</option> )
-                  // }
-                  // </select>
-                  // {errors.menuId && <p className='text-red-600'>{errors.menuId?.message}</p>}
-                  // </>
-                  <Select
-                    id="menuId"
-                    name="menuId"
-                    required
-                    aria-label="Select a Menu"
-                    options={menuTypes?.data}
-                    getOptionLabel={(x) => x?.menu}
-                    getOptionValue={(x) => x?._id}
-                    onChange={(selectedOption) =>
-                      setMenuId(selectedOption?._id)
-                    }
-                  ></Select>
-                ) : (
-                  ""
+                <input
+                  placeholder="Category Serial"
+                  {...register("category_serial", {
+                    required: "Category Serial is required",
+                  })}
+                  id="category_serial"
+                  type="number"
+                  className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                />
+                {errors.category_serial && (
+                  <p className="text-red-600">{errors.category_serial?.message}</p>
                 )}
               </div>
 
-              {menuLength == 0 ? (
-                <Link to="/istiak/menu">
+              <div>
+                <select
+                  {...register("category_status", {
+                    required: "Category Status is required",
+                  })}
+                  id="category_status"
+                  className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                >
+                  <option value="active">Active</option>
+                  <option value="in-active">In-Active</option>
+                </select>
+                {errors.category_status && (
+                  <p className="text-red-600">{errors.category_status?.message}</p>
+                )}
+              </div>
+
+              {
+                loading ?
+                  <button
+                    type="button"
+                    className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
+                  >
+                    <MiniSpinner />
+                  </button>
+                  :
                   <button
                     type="Submit"
-                    className="px-6 py-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-400"
+                    className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
                   >
-                    Please create a menu
+                    Create
                   </button>
-                </Link>
-              ) : (
-                <button
-                  type="Submit"
-                  className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
-                >
-                  {loading ? <MiniSpinner /> : "Create"}
-                </button>
-              )}
+              }
+
             </form>
           </div>
         </div>

@@ -1,13 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import DashboardLayout from "../layout/DashboardLayout";
-import Menu from "../pages/dashboard/menu/Menu";
 import Category from "../pages/dashboard/category/Category";
 import SubCategory from "../pages/dashboard/subCategory/SubCategory";
 import Color from "../pages/dashboard/color/Color";
-import Collection from "../pages/dashboard/collection/Collection";
-import Feature from "../pages/dashboard/feature/Feature";
-import Style from "../pages/dashboard/style/Style";
 import Signup from "../pages/signup/Signup";
 import Signin from "../pages/signin/Signin";
 import Verified from "../pages/verified/Verified";
@@ -23,7 +19,6 @@ import AllProducts from "../pages/frontend/allProducts/AllProducts";
 import Order from "../pages/dashboard/order/Order";
 import CheckoutPage from "../pages/frontend/checkout/CheckoutPage";
 import NotFound from "../shared/notFound/NotFound";
-import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
 import SiteSetting from "../pages/dashboard/setting/SiteSetting";
 import SuccessPage from "../components/frontend/ui/successPage/SuccessPage";
 import FailPage from "../components/frontend/ui/failPage/FailPage";
@@ -141,76 +136,53 @@ const router = createBrowserRouter([
     element: <NewPassword />,
   },
   {
-    path: "/istiak",
-    element: (
-      <PrivateDashboardRoute>
-        <DashboardLayout />
-      </PrivateDashboardRoute>
-    ),
+    path: "/admin",
+    element:
+      <DashboardLayout />,
     errorElement: <NotFound />,
     children: [
       {
-        path: "/istiak",
+        path: "/admin",
         element: <HomePage />,
       },
       {
-        path: "/istiak/order",
+        path: "/admin/order",
         element: <Order />,
       },
       {
-        path: "/istiak/slider",
+        path: "/admin/slider",
         element: <Slider />,
       },
       {
-        path: "/istiak/banner",
+        path: "/admin/banner",
         element: <Banner />,
       },
       {
-        path: "/istiak/menu",
-        element: <Menu />,
-      },
-      {
-        path: "/istiak/category",
+        path: "/admin/category",
         element: <Category />,
       },
       {
-        path: "/istiak/sub_category",
+        path: "/admin/sub_category",
         element: <SubCategory />,
       },
       {
-        path: "/istiak/color",
+        path: "/admin/color",
         element: <Color />,
       },
       {
-        path: "/istiak/collection",
-        element: <Collection />,
-      },
-      {
-        path: "/istiak/feature",
-        element: <Feature />,
-      },
-      {
-        path: "/istiak/style",
-        element: <Style />,
-      },
-      {
-        path: "/istiak/slider",
-        element: <Slider />,
-      },
-      {
-        path: "/istiak/product",
+        path: "/admin/product",
         element: <ProductList />,
       },
       {
-        path: "/istiak/product/create",
+        path: "/admin/product/create",
         element: <ProductCreate />,
       },
       {
-        path: "/istiak/customer",
+        path: "/admin/customer",
         element: <Customer />,
       },
       {
-        path: "/istiak/setting",
+        path: "/admin/setting",
         element: <SiteSetting />,
       },
     ],

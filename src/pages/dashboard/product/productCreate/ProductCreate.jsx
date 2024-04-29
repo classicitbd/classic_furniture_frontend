@@ -5,16 +5,16 @@ import ProductAdd from "../../../../components/dashboard/product/productCreate/P
 const ProductCreate = () => {
     return (
         <>
-        {/* Product Create Page Navbar */}
+            {/* Product Create Page Navbar */}
             <div className="flex items-center justify-between bg-white p-4 rounded-xl">
                 <h3 className="text-[20px] font-semibold">Product Create</h3>
                 <div className="flex items-center gap-2">
-                    <Link to='/istiak'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
+                    <Link to='/admin'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
                     <p className="font-semibold text-xl">/</p>
-                    <Link to='/istiak/product/create'><p className="font-semibold">Product Create</p></Link>
+                    <Link to='/admin/product/create'><p className="font-semibold">Product Create</p></Link>
                 </div>
             </div>
-            
+
             {/* Create a product */}
             <ProductAdd />
 
