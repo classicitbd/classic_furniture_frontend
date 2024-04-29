@@ -197,7 +197,7 @@ const UpdateCategory = ({
             {
               loading ?
                 <button
-                  type="Submit"
+                  type="button"
                   className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
                 >
                   <MiniSpinner />

@@ -9,9 +9,9 @@ import BannerTable from "../../../components/dashboard/banner/BannerTable";
 const Banner = () => {
 
     const { data: banners = [], isLoading, refetch } = useQuery({
-        queryKey: ['/api/v1/banner'],
+        queryKey: ['/api/v1/banner/dashboard'],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}/banner`)
+            const res = await fetch(`${BASE_URL}/banner/dashboard`)
             const data = await res.json();
             return data;
         }

@@ -8,31 +8,32 @@ import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useDeleteBannerMutation } from "../../../redux/feature/banner/bannerApi";
 import AddBanner from "./AddBanner";
 import UpdateBanner from "./UpdateBanner";
+import { Link } from "react-router-dom";
 
 const BannerTable = ({ banners, refetch }) => {
     const [addBannerModalOpen, setAddBannerModalOpen] = useState(false);
     const [bannerUpdateModal, setBannerUpdateModal] = useState(false);
     const [bannerUpdateModalValue, setBannerUpdateModalValue] = useState("");
 
-    const [deleteBanner] = useDeleteBannerMutation(); //delete Slider type
+    const [deleteBanner] = useDeleteBannerMutation(); //delete banner type
 
-    const updatebannerModal = (slider) => {
+    const updatebannerModal = (banner) => {
         setBannerUpdateModal(true);
-        setBannerUpdateModalValue(slider);
+        setBannerUpdateModalValue(banner);
     };
 
-    // delete a Slider
-    const handleDeleteBanner = (slider) => {
+    // delete a banner
+    const handleDeleteBanner = (banner) => {
         const sendData = {
-            _id: slider?._id,
-            image_key: slider?.image_key,
+            _id: banner?._id,
+            image_key: banner?.image_key,
         };
         deleteBanner(sendData).then((result) => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 toast.success(
                     result?.data?.message
                         ? result?.data?.message
-                        : "Slider Delete successfully !",
+                        : "banner Delete successfully !",
                     {
                         autoClose: 1000,
                     }
@@ -67,9 +68,16 @@ const BannerTable = ({ banners, refetch }) => {
                         >
                             <img
                                 className="object-cover w-full h-64"
-                                src={banner?.banner}
+                                src={banner?.banner_image}
                                 alt="banner"
                             />
+
+                            <h3 className="mt-2 text-2xl font-medium">{banner?.banner_title}</h3>
+                            <div className="flex items-center justify-between mx-4 font-medium">
+                                <p>Serial: {banner?.banner_serial}</p>
+                                <p>Status: {banner?.banner_status}</p>
+                            </div>
+                            <p className="mt-2 ml-4">Path: <Link to={banner?.banner_path}>{banner?.banner_path}</Link></p>
 
                             <div className="p-6">
                                 <div className="mt-4">

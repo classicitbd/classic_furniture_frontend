@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { RxCross1 } from "react-icons/rx";
-import ReactQuill from "react-quill";
 import { useState } from "react";
 import { ImageValidate } from "../../../utils/ImageValidation";
 import { useUpdateBannerMutation } from "../../../redux/feature/banner/bannerApi";
@@ -12,7 +11,6 @@ const UpdateBanner = ({
     setBannerUpdateModal,
     bannerUpdateModalValue,
 }) => {
-    const [description, setDescription] = useState(bannerUpdateModalValue?.description);
     const {
         register,
         reset,
@@ -26,14 +24,14 @@ const UpdateBanner = ({
     // post a Banner details
     const handleDataPost = (data) => {
         setLoading(true);
-        if (data?.banner[0]) {
+        if (data?.banner_image[0]) {
             const formData = new FormData();
             let errorEncountered = false;
 
-            const banner = data?.banner[0];
-            const result = ImageValidate(banner, "banner"); //check image type
+            const banner_image = data?.banner_image[0];
+            const result = ImageValidate(banner_image, "banner_image"); //check image type
             if (result == true) {
-                formData.append("banner", banner);
+                formData.append("banner_image", banner_image);
             } else {
                 toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
                 errorEncountered = true;
@@ -45,18 +43,10 @@ const UpdateBanner = ({
             }
 
             Object.entries(data).forEach(([key, value]) => {
-                if (key !== "banner") {
+                if (key !== "banner_image") {
                     formData.append(key, value);
                 }
             });
-            if (!data?.title) {
-                formData.append("title", bannerUpdateModalValue?.title);
-            }
-            if (!description) {
-                toast.error("Please fill up description")
-                return;
-            }
-            formData.append('description', description);
             formData.append("_id", bannerUpdateModalValue?._id);
             formData.append("image_key", bannerUpdateModalValue?.image_key);
             toast.error("Please wait a moment");
@@ -82,10 +72,12 @@ const UpdateBanner = ({
         } else {
             toast.error("Please wait a moment");
             const sendData = {
-                title: data?.title || bannerUpdateModalValue?.title,
-                url: data?.url || bannerUpdateModalValue?.url,
-                description: description || bannerUpdateModalValue?.description,
-                banner: bannerUpdateModalValue?.banner,
+                banner_title: data?.banner_title,
+                banner_path: data?.banner_path,
+                banner_serial: data?.banner_serial,
+                banner_status: data?.banner_status,
+                banner_image: bannerUpdateModalValue?.banner_image,
+                image_key: bannerUpdateModalValue?.image_key,
                 _id: bannerUpdateModalValue?._id,
             }
             updateBanner(sendData).then((result) => {
@@ -131,55 +123,72 @@ const UpdateBanner = ({
 
                 <hr className="mt-2 mb-4" />
 
-                <form onSubmit={handleSubmit(handleDataPost)}>
-                    <div className="mt-3">
-                        <label className="font-semibold" htmlFor="banner">
-                            Banner Image<span className="text-red-500"> if need</span>
-                        </label>
+                <form onSubmit={handleSubmit(handleDataPost)} className="mt-3">
+                    <div>
                         <input
-                            placeholder="Image"
-                            {...register("banner")}
-                            id="banner"
+                            {...register("banner_image")}
+                            id="banner_image"
                             type="file"
-                            className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                            className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
                         />
                     </div>
 
-                    <div className="mt-3">
-                        <label className="font-semibold" htmlFor="title">
-                            Banner Title
-                        </label>
+                    <div>
                         <input
-                            defaultValue={bannerUpdateModalValue?.title}
-                            {...register("title", { required: "Banner Title is required" })}
-                            id="title"
+                            placeholder="Banner Title"
+                            {...register("banner_title", { required: "Banner Title is required" })}
+                            id="banner_title"
+                            defaultValue={bannerUpdateModalValue?.banner_title}
                             type="text"
-                            className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-1"
+                            className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-3"
                         />
-                        {errors.title && (
-                            <p className="text-red-600">{errors.title?.message}</p>
+                        {errors.banner_title && (
+                            <p className="text-red-600">{errors.banner_title?.message}</p>
                         )}
                     </div>
 
-                    <div className="mt-3">
-                        <label className="font-semibold" htmlFor="url">
-                            Banner Path
-                        </label>
+                    <div>
                         <input
-                            defaultValue={bannerUpdateModalValue?.url}
-                            {...register("url", { required: "Banner Path is required" })}
-                            id="url"
+                            placeholder="Banner Path"
+                            {...register("banner_path", { required: "Banner Path is required" })}
+                            id="banner_path"
+                            defaultValue={bannerUpdateModalValue?.banner_path}
                             type="text"
-                            className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-1"
+                            className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-3"
                         />
-                        {errors.url && (
-                            <p className="text-red-600">{errors.url?.message}</p>
+                        {errors.banner_path && (
+                            <p className="text-red-600">{errors.banner_path?.message}</p>
                         )}
                     </div>
 
-                    <div className="mt-3">
-                        <p className="mb-2 font-medium">Banner Description: </p>
-                        <ReactQuill theme="snow" value={description} onChange={setDescription} />
+                    <div>
+                        <input
+                            placeholder="Banner Serial"
+                            {...register("banner_serial", { required: "Banner Serial is required" })}
+                            id="banner_serial"
+                            defaultValue={bannerUpdateModalValue?.banner_serial}
+                            type="number"
+                            className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-3"
+                        />
+                        {errors.banner_serial && (
+                            <p className="text-red-600">{errors.banner_serial?.message}</p>
+                        )}
+                    </div>
+
+                    <div className="mt-4">
+                        <select
+                            {...register("banner_status", {
+                                required: "Sub Category Status is required",
+                            })}
+                            id="banner_status"
+                            className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                        >
+                            <option value="active">Active</option>
+                            <option value="in-active">In-Active</option>
+                        </select>
+                        {errors.banner_status && (
+                            <p className="text-red-600">{errors.banner_status?.message}</p>
+                        )}
                     </div>
 
                     <div className="flex justify-end mt-6 gap-4">
@@ -189,12 +198,22 @@ const UpdateBanner = ({
                         >
                             Cancel
                         </button>
-                        <button
-                            type="Submit"
-                            className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
-                        >
-                            {loading ? <MiniSpinner /> : "Update"}
-                        </button>
+                        {
+                            loading ?
+                                <button
+                                    type="button"
+                                    className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
+                                >
+                                    <MiniSpinner />
+                                </button>
+                                :
+                                <button
+                                    type="Submit"
+                                    className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
+                                >
+                                    Update
+                                </button>
+                        }
                     </div>
                 </form>
             </div>

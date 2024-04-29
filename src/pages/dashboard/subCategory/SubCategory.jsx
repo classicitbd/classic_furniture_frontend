@@ -9,9 +9,9 @@ import BigSpinner from "../../../shared/loader/BigSpinner";
 const SubCategory = () => {
 
     const { data: subCategoryTypes = [], isLoading, refetch } = useQuery({
-        queryKey: ['/api/v1/sub_category'],
+        queryKey: ['/api/v1/sub_category/dashboard'],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}/sub_category`)
+            const res = await fetch(`${BASE_URL}/sub_category/dashboard`)
             const data = await res.json();
             return data;
         }

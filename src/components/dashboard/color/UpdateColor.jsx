@@ -3,12 +3,15 @@ import { toast } from "react-toastify";
 import slugify from "slugify";
 import { RxCross1 } from "react-icons/rx";
 import { useUpdateColorMutation } from "../../../redux/feature/color/colorApi";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
+import { useState } from "react";
 
 const UpdateColor = ({
   refetch,
   setColorUpdateModal,
   colorUpdateModalValue,
 }) => {
+  const [loading, setLoading] = useState()
   const {
     register,
     reset,
@@ -20,10 +23,11 @@ const UpdateColor = ({
 
   // post a User details
   const handleDataPost = (data) => {
+    setLoading(true);
     const sendData = {
       _id: colorUpdateModalValue?._id,
-      color: data?.color,
-      slug: slugify(data.color, {
+      color_name: data?.color_name,
+      color_slug: slugify(data.color_name, {
         lower: true,
         replacement: "-",
       }),
@@ -40,8 +44,10 @@ const UpdateColor = ({
         );
         refetch();
         reset();
+        setLoading(false);
         setColorUpdateModal(false);
       } else {
+        setLoading(false);
         toast.error(result?.error?.data?.message);
       }
     });
@@ -70,19 +76,19 @@ const UpdateColor = ({
 
         <form onSubmit={handleSubmit(handleDataPost)}>
           <div className="mt-3">
-            <label className="font-semibold" htmlFor="color">
+            <label className="font-semibold" htmlFor="color_name">
               Color Type<span className="text-red-500">*</span>
             </label>
             <input
               placeholder="Color Types"
-              {...register("color", { required: "Color Types is required" })}
-              id="color"
+              {...register("color_name", { required: "Color Types is required" })}
+              id="color_name"
               type="text"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-              defaultValue={colorUpdateModalValue?.color}
+              defaultValue={colorUpdateModalValue?.color_name}
             />
-            {errors.color && (
-              <p className="text-red-600">{errors.color?.message}</p>
+            {errors.color_name && (
+              <p className="text-red-600">{errors.color_name?.message}</p>
             )}
           </div>
 
@@ -93,12 +99,12 @@ const UpdateColor = ({
             >
               Cancel
             </button>
-            <button
-              type="Submit"
-              className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
-            >
-              Update
-            </button>
+            {
+              loading ?
+                <button type="button" className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"><MiniSpinner /></button>
+                :
+                <button type="Submit" className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]">Update</button>
+            }
           </div>
         </form>
       </div>

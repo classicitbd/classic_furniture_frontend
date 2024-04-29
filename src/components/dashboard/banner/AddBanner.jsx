@@ -2,13 +2,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { RxCross1 } from "react-icons/rx";
 import { useState } from "react";
-import ReactQuill from "react-quill";
 import { useAddBannerMutation } from "../../../redux/feature/banner/bannerApi";
 import { ImageValidate } from "../../../utils/ImageValidation";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
-    const [description, setDescription] = useState('');
     const {
         register,
         reset,
@@ -25,11 +23,11 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
         const formData = new FormData();
         let errorEncountered = false;
 
-        if (data?.banner[0]) {
-            const banner = data?.banner[0];
-            const result = ImageValidate(banner, "banner"); //check image type
+        if (data?.banner_image[0]) {
+            const banner_image = data?.banner_image[0];
+            const result = ImageValidate(banner_image, "banner_image"); //check image type
             if (result == true) {
-                formData.append("banner", banner);
+                formData.append("banner_image", banner_image);
             } else {
                 toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
                 errorEncountered = true;
@@ -42,15 +40,13 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
         }
 
         Object.entries(data).forEach(([key, value]) => {
-            if (key !== "banner") {
+            if (key !== "banner_image") {
                 formData.append(key, value);
             }
         });
-        if (!description) {
-            toast.error("Please fill up description !")
-        }
-        formData.append("description", description);
-        toast.error("Please wait a moment !")
+        toast.error("Please wait a moment !", {
+            autoClose: 1000,
+        })
         postBanner(formData).then((result) => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
                 toast.success(
@@ -100,45 +96,69 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
                     <form onSubmit={handleSubmit(handleDataPost)} className="mt-3">
                         <div>
                             <input
-                                {...register("banner", { required: "Banner is required" })}
-                                id="banner"
+                                {...register("banner_image", { required: "Banner image is required" })}
+                                id="banner_image"
                                 type="file"
                                 className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
                             />
-                            {errors.banner && (
-                                <p className="text-red-600">{errors.banner?.message}</p>
+                            {errors.banner_image && (
+                                <p className="text-red-600">{errors.banner_image?.message}</p>
                             )}
                         </div>
 
                         <div>
                             <input
                                 placeholder="Banner Title"
-                                {...register("title", { required: "Banner Title is required" })}
-                                id="title"
+                                {...register("banner_title", { required: "Banner Title is required" })}
+                                id="banner_title"
                                 type="text"
                                 className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-3"
                             />
-                            {errors.title && (
-                                <p className="text-red-600">{errors.title?.message}</p>
+                            {errors.banner_title && (
+                                <p className="text-red-600">{errors.banner_title?.message}</p>
                             )}
                         </div>
 
                         <div>
                             <input
                                 placeholder="Banner Path"
-                                {...register("url", { required: "Banner Path is required" })}
-                                id="url"
+                                {...register("banner_path", { required: "Banner Path is required" })}
+                                id="banner_path"
                                 type="text"
                                 className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-3"
                             />
-                            {errors.url && (
-                                <p className="text-red-600">{errors.url?.message}</p>
+                            {errors.banner_path && (
+                                <p className="text-red-600">{errors.banner_path?.message}</p>
                             )}
                         </div>
 
-                        <div className="mt-3">
-                            <p className="mb-2 font-medium">Banner Description: </p>
-                            <ReactQuill theme="snow" value={description} onChange={setDescription} />
+                        <div>
+                            <input
+                                placeholder="Banner Serial"
+                                {...register("banner_serial", { required: "Banner Serial is required" })}
+                                id="banner_serial"
+                                type="number"
+                                className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl mt-3"
+                            />
+                            {errors.banner_serial && (
+                                <p className="text-red-600">{errors.banner_serial?.message}</p>
+                            )}
+                        </div>
+
+                        <div className="mt-4">
+                            <select
+                                {...register("banner_status", {
+                                    required: "Sub Category Status is required",
+                                })}
+                                id="banner_status"
+                                className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                            >
+                                <option value="active">Active</option>
+                                <option value="in-active">In-Active</option>
+                            </select>
+                            {errors.banner_status && (
+                                <p className="text-red-600">{errors.banner_status?.message}</p>
+                            )}
                         </div>
 
                         <div className="flex justify-end mt-6 gap-4">
@@ -148,12 +168,22 @@ const AddBanner = ({ refetch, setAddBannerModalOpen }) => {
                             >
                                 Cancel
                             </button>
-                            <button
-                                type="Submit"
-                                className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
-                            >
-                                {loading ? <MiniSpinner /> : "Add"}
-                            </button>
+                            {
+                                loading ?
+                                    <button
+                                        type="button"
+                                        className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
+                                    >
+                                        <MiniSpinner />
+                                    </button>
+                                    :
+                                    <button
+                                        type="Submit"
+                                        className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
+                                    >
+                                        Add
+                                    </button>
+                            }
                         </div>
                     </form>
                 </div>

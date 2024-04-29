@@ -5,15 +5,12 @@ import { useState } from "react";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
-import { Link } from "react-router-dom";
 import slugify from "slugify";
 import { useAddSub_CategoryMutation } from "../../../redux/feature/subCategory/subCategoryApi";
 import Select from "react-select";
 
 const AddSubCategory = ({ refetch }) => {
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [menuId, setMenuId] = useState(false);
-  const [categoryId, setcategoryId] = useState("");
+  const [category_id, setcategory_id] = useState("");
 
   const {
     register,
@@ -23,46 +20,30 @@ const AddSubCategory = ({ refetch }) => {
   } = useForm();
   const [loading, setLoading] = useState(false);
 
-  const { data: menuTypes = [], isLoading } = useQuery({
-    queryKey: ["/api/v1/menu"],
+  const { data: categoryTypes = [], isLoading } = useQuery({
+    queryKey: [`/api/v1/category/dashboard`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/menu`);
-      const data = await res.json();
-      return data;
-    },
-  }); // get All Menu type
-
-  const { data: categoryTypes = [] } = useQuery({
-    queryKey: [`/api/v1/category/menuId?menuId=${menuId}`],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/category/menuId?menuId=${menuId}`);
+      const res = await fetch(`${BASE_URL}/category/dashboard`);
       const data = await res.json();
       return data;
     },
   }); // get Category type
-
-  const handleSelectChange = (selectedOption) => {
-    setIsCategoryOpen(false);
-    setTimeout(() => {
-      setMenuId(selectedOption?._id);
-      setIsCategoryOpen(true);
-    }, 100);
-  };
 
   const [postSubCategoryType] = useAddSub_CategoryMutation(); //post Sub Category type
 
   // post a Sub Category
   const handleDataPost = (data) => {
     setLoading(true);
-    const slug = slugify(data.sub_category, {
+    const slug = slugify(data.sub_category_name, {
       lower: true,
       replacement: "-",
     });
     const sendData = {
-      menuId: menuId,
-      categoryId: categoryId,
-      sub_category: data?.sub_category,
-      slug: slug
+      category_id: category_id,
+      sub_category_name: data?.sub_category_name,
+      sub_category_serial: data?.sub_category_serial,
+      sub_category_status: data?.sub_category_status,
+      sub_category_slug: slug
     }
     postSubCategoryType(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -103,91 +84,82 @@ const AddSubCategory = ({ refetch }) => {
               className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 items-center gap-2 md:gap-6 mt-3"
             >
               <div>
-                <label className="font-semibold" htmlFor="sub_category">
-                  Sub Category Type
-                </label>
                 <input
                   placeholder="Type Name"
-                  {...register("sub_category", {
+                  {...register("sub_category_name", {
                     required: "Type Name is required",
                   })}
-                  id="sub_category"
+                  id="sub_category_name"
                   type="text"
                   className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
                 />
-                {errors.sub_category && (
-                  <p className="text-red-600">{errors.sub_category?.message}</p>
+                {errors.sub_category_name && (
+                  <p className="text-red-600">{errors.sub_category_name?.message}</p>
                 )}
               </div>
 
               <div>
-                <label className="font-semibold" htmlFor="menuId">
-                  Menu Type
-                </label>
+                <input
+                  placeholder="Sub Category Serial"
+                  {...register("sub_category_serial", {
+                    required: "Sub Category Serial is required",
+                  })}
+                  id="sub_category_serial"
+                  type="number"
+                  className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                />
+                {errors.sub_category_serial && (
+                  <p className="text-red-600">{errors.sub_category_serial?.message}</p>
+                )}
+              </div>
+
+              <div>
+                <select
+                  {...register("sub_category_status", {
+                    required: "Sub Category Status is required",
+                  })}
+                  id="sub_category_status"
+                  className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                >
+                  <option value="active">Active</option>
+                  <option value="in-active">In-Active</option>
+                </select>
+                {errors.sub_category_status && (
+                  <p className="text-red-600">{errors.sub_category_status?.message}</p>
+                )}
+              </div>
+
+              <div>
                 <Select
-                  id="menuId"
-                  name="menuId"
+                  id="category_id"
+                  name="category_id"
                   required
-                  aria-label="Select a Menu"
-                  options={menuTypes?.data}
-                  getOptionLabel={(x) => x?.menu}
+                  aria-label="Category Type"
+                  options={categoryTypes?.data}
+                  getOptionLabel={(x) => x?.category_name}
                   getOptionValue={(x) => x?._id}
                   onChange={(selectedOption) =>
-                    handleSelectChange(selectedOption)
+                    setcategory_id(selectedOption?._id)
                   }
                 ></Select>
               </div>
 
-              {isCategoryOpen && (
-                <div>
-                  <label className="font-semibold" htmlFor="categoryId">
-                    Category Type
-                  </label>
-                  {categoryTypes?.data?.length > 0 ? (
-                    <Select
-                      id="categoryId"
-                      name="categoryId"
-                      required
-                      aria-label="Select a Category"
-                      options={categoryTypes?.data}
-                      getOptionLabel={(x) => x?.category}
-                      getOptionValue={(x) => x?._id}
-                      onChange={(selectedOption) =>
-                        setcategoryId(selectedOption?._id)
-                      }
-                    ></Select>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              )}
-
-              {menuTypes?.data?.length === 0 ? (
-                <Link to="/admin/menu">
+              {
+                loading ?
+                  <button
+                    type="button"
+                    className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
+                  >
+                    <MiniSpinner />
+                  </button>
+                  :
                   <button
                     type="Submit"
-                    className="px-6 py-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-400"
+                    className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
                   >
-                    Please create a menu
+                    Create
                   </button>
-                </Link>
-              ) : categoryTypes?.data?.length === 0 ? (
-                <Link to="/admin/category">
-                  <button
-                    type="Submit"
-                    className="px-6 py-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-400"
-                  >
-                    Please create a category
-                  </button>
-                </Link>
-              ) : (
-                <button
-                  type="Submit"
-                  className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
-                >
-                  {loading ? <MiniSpinner /> : "Create"}
-                </button>
-              )}
+              }
             </form>
           </div>
         </div>
