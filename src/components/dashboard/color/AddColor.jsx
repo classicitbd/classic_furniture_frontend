@@ -5,7 +5,7 @@ import MiniSpinner from '../../../shared/loader/MiniSpinner';
 import slugify from 'slugify';
 import { useAddColorMutation } from '../../../redux/feature/color/colorApi';
 
-const AddColor = ({refetch}) => {
+const AddColor = ({ refetch }) => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
 
@@ -15,11 +15,11 @@ const AddColor = ({refetch}) => {
     const handleDataPost = (data) => {
         setLoading(true)
         const sendData = {
-            slug: slugify(data.color, {
+            color_slug: slugify(data.color_name, {
                 lower: true,
                 replacement: '-',
-            } ),
-            color: data.color,
+            }),
+            color_name: data.color_name,
         }
         postColorType(sendData).then(result => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -48,11 +48,16 @@ const AddColor = ({refetch}) => {
                         <form onSubmit={handleSubmit(handleDataPost)} className='flex items-center gap-2 md:gap-6 mt-3'>
 
                             <div>
-                                <input placeholder="Type Name" {...register("color", { required: 'Type Name is required' })} id="color" type="text" className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl" />
-                                {errors.color && <p className='text-red-600'>{errors.color?.message}</p>}
+                                <input placeholder="Type Name" {...register("color_name", { required: 'Type Name is required' })} id="color_name" type="text" className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl" />
+                                {errors.color_name && <p className='text-red-600'>{errors.color_name?.message}</p>}
                             </div>
 
-                                <button type="Submit" className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]">{loading ? <MiniSpinner /> : "Create"}</button>
+                            {
+                                loading ?
+                                    <button type="button" className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"><MiniSpinner /></button>
+                                    :
+                                    <button type="Submit" className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]">Create</button>
+                            }
                         </form>
                     </div>
 

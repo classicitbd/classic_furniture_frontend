@@ -55,7 +55,7 @@ const ColorTable = ({ refetch, colors }) => {
               {colors?.data?.map((color) => (
                 <tr key={color?._id}>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {color?.color}
+                    {color?.color_name}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-end gap-4">
                     <MdDeleteForever

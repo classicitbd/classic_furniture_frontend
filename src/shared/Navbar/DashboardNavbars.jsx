@@ -52,8 +52,8 @@ const DashboardNavbars = () => {
               <FaUserCircle size={35} />
             </div>
             <div className="w-[170px] h-[40px] hidden lg:block">
-              <h2 className="text-white text-sm font-semibold">{user?.name}</h2>
-              <p className="text-white text-sm font-normal">{user?.phone}</p>
+              <h2 className="text-white text-sm font-semibold">{user?.user_name}</h2>
+              <p className="text-white text-sm font-normal">{user?.user_phone}</p>
             </div>
           </div>
         </div>

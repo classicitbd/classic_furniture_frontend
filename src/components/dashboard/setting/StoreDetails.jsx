@@ -10,17 +10,15 @@ const StoreDetails = ({ refetch, initialData }) => {
   const handleDataPost = async (data) => {
     toast.error("Please wait a moment");
     const sendData = {
-      location: data?.location || initialData?.location,
+      delivery_time_inside_dhaka: data?.delivery_time_inside_dhaka || initialData?.delivery_time_inside_dhaka,
+      delivery_time_outside_dhaka: data?.delivery_time_outside_dhaka || initialData?.delivery_time_outside_dhaka,
+      delivery_amount_inside_dhaka: data?.delivery_amount_inside_dhaka || initialData?.delivery_amount_inside_dhaka,
+      delivery_amount_outside_dhaka: data?.delivery_amount_outside_dhaka || initialData?.delivery_amount_outside_dhaka,
       facebook: data?.facebook || initialData?.facebook,
       instagram: data?.instagram || initialData?.instagram,
       youTube: data?.youTube || initialData?.youTube,
-      inside_dhaka: data?.inside_dhaka || initialData?.inside_dhaka,
-      outside_dhaka: data?.outside_dhaka || initialData?.outside_dhaka,
-      inside_dhaka_charge: data?.inside_dhaka_charge || initialData?.inside_dhaka_charge,
-      outside_dhaka_charge: data?.outside_dhaka_charge || initialData?.outside_dhaka_charge,
-      address: data?.address || initialData?.address,
-      email: data?.email || initialData?.email,
-      hours: data?.hours || initialData?.hours,
+      watsapp: data?.watsapp || initialData?.watsapp,
+      location: data?.location || initialData?.location,
       tin: data?.tin || initialData?.tin,
       _id: initialData?._id,
     };
@@ -47,59 +45,59 @@ const StoreDetails = ({ refetch, initialData }) => {
       <form onSubmit={handleSubmit(handleDataPost)}>
         <div className="grid gap-6 grid-cols-2 md:grid-cols-3">
           <div>
-            <label className="font-semibold" htmlFor="inside_dhaka">
+            <label className="font-semibold" htmlFor="delivery_time_inside_dhaka">
               Delivery Inside Dhaka Days
               <span className="text-red-500"> if need</span>{" "}
             </label>
             <input
-              defaultValue={initialData?.inside_dhaka}
-              {...register("inside_dhaka")}
-              id="inside_dhaka"
+              defaultValue={initialData?.delivery_time_inside_dhaka}
+              {...register("delivery_time_inside_dhaka")}
+              id="delivery_time_inside_dhaka"
               type="string"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
           <div>
-            <label className="font-semibold" htmlFor="outside_dhaka">
+            <label className="font-semibold" htmlFor="delivery_time_outside_dhaka">
               Delivery Outside Dhaka days
               <span className="text-red-500"> if need</span>{" "}
             </label>
             <input
-              defaultValue={initialData?.outside_dhaka}
-              {...register("outside_dhaka")}
-              id="outside_dhaka"
+              defaultValue={initialData?.delivery_time_outside_dhaka}
+              {...register("delivery_time_outside_dhaka")}
+              id="delivery_time_outside_dhaka"
               type="string"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
           <div>
-            <label className="font-semibold" htmlFor="inside_dhaka_charge">
+            <label className="font-semibold" htmlFor="delivery_amount_inside_dhaka">
               Delivery Charge Inside Dhaka
             </label>
             <input
-              defaultValue={initialData?.inside_dhaka_charge}
-              {...register("inside_dhaka_charge", { required: "Inside delivery charge must be required" })}
-              id="inside_dhaka_charge"
+              defaultValue={initialData?.delivery_amount_inside_dhaka}
+              {...register("delivery_amount_inside_dhaka", { required: "Inside delivery charge must be required" })}
+              id="delivery_amount_inside_dhaka"
               type="number"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
-            {errors.inside_dhaka_charge && (
-              <p className="text-red-600">{errors.inside_dhaka_charge?.message}</p>
+            {errors.delivery_amount_inside_dhaka && (
+              <p className="text-red-600">{errors.delivery_amount_inside_dhaka?.message}</p>
             )}
           </div>
           <div>
-            <label className="font-semibold" htmlFor="outside_dhaka_charge">
+            <label className="font-semibold" htmlFor="delivery_amount_outside_dhaka">
               Delivery Charge Outside Dhaka
             </label>
             <input
-              defaultValue={initialData?.outside_dhaka_charge}
-              {...register("outside_dhaka_charge", { required: "Outside delivery charge must be required" })}
-              id="outside_dhaka_charge"
+              defaultValue={initialData?.delivery_amount_outside_dhaka}
+              {...register("delivery_amount_outside_dhaka", { required: "Outside delivery charge must be required" })}
+              id="delivery_amount_outside_dhaka"
               type="number"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
-            {errors.outside_dhaka_charge && (
-              <p className="text-red-600">{errors.outside_dhaka_charge?.message}</p>
+            {errors.delivery_amount_outside_dhaka && (
+              <p className="text-red-600">{errors.delivery_amount_outside_dhaka?.message}</p>
             )}
           </div>
           <div>
@@ -151,43 +149,18 @@ const StoreDetails = ({ refetch, initialData }) => {
             />
           </div>
           <div>
-            <label className="font-semibold" htmlFor="address">
-              Address
-              <span className="text-red-500"> if need</span>{" "}
+            <label className="font-semibold" htmlFor="watsapp">
+              Watsapp<span className="text-red-500"> if need</span>{" "}
             </label>
             <input
-              defaultValue={initialData?.address}
-              {...register("address")}
-              id="address"
+              defaultValue={initialData?.watsapp}
+              {...register("watsapp")}
+              id="watsapp"
               type="text"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
-          <div>
-            <label className="font-semibold" htmlFor="email">
-              E-Mail
-              <span className="text-red-500"> if need</span>{" "}
-            </label>
-            <input
-              defaultValue={initialData?.email}
-              {...register("email")}
-              id="inside_dhaka"
-              type="text"
-              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-            />
-          </div>
-          <div>
-            <label className="font-semibold" htmlFor="hours">
-              Start And Close<span className="text-red-500"> if need</span>{" "}
-            </label>
-            <input
-              defaultValue={initialData?.hours}
-              {...register("hours")}
-              id="hours"
-              type="text"
-              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-            />
-          </div>
+          
           <div>
             <label className="font-semibold" htmlFor="tin">
               Tin Number<span className="text-red-500"> if need</span>{" "}

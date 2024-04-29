@@ -2,14 +2,11 @@
 import { useState } from "react";
 // import { AiFillHome } from "react-icons/ai";
 import { FaChevronDown, FaListUl, FaUsers } from "react-icons/fa";
-import { BiMaleFemale, BiSolidCategory } from "react-icons/bi";
+import { BiSolidCategory } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { TbCategoryPlus } from "react-icons/tb";
-import { MdControlPointDuplicate, MdOutlineFeaturedPlayList } from "react-icons/md";
+import { MdControlPointDuplicate } from "react-icons/md";
 import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp, IoSettingsOutline } from "react-icons/io5"
-import { MdOutlineCollectionsBookmark } from "react-icons/md"
-import { RxFontStyle } from "react-icons/rx";
-import { PiSlideshowBold } from "react-icons/pi";
 import { FcBarChart, FcPieChart } from "react-icons/fc";
 import { BsKanban } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
@@ -169,17 +166,6 @@ const SideNavBar = () => {
                         </div>
                     }
                 </div>
-
-                <Link className={
-                    pathname === "/admin/slider"
-                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
-                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/admin/slider">
-                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
-                        <PiSlideshowBold size={30} className="text-sky-500" />
-                        Slider
-                    </div>
-                </Link>
 
                 <Link className={
                     pathname === "/admin/banner"

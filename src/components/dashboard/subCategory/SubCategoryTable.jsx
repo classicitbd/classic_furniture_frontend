@@ -49,7 +49,10 @@ const SubCategoryTable = ({ refetch, subCategoryTypes }) => {
                   Type Name
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Menu Name
+                  Serial
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Status
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Category Name
@@ -62,13 +65,16 @@ const SubCategoryTable = ({ refetch, subCategoryTypes }) => {
               {subCategoryTypes?.data?.map((subCategory) => (
                 <tr key={subCategory?._id}>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {subCategory?.sub_category}
+                    {subCategory?.sub_category_name}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {subCategory?.menuId?.menu}
+                    {subCategory?.sub_category_serial}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                    {subCategory?.sub_category_status}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {subCategory?.categoryId?.category}
+                    {subCategory?.category_id?.category_name}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                     <MdDeleteForever
