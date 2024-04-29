@@ -18,9 +18,9 @@ const SiteSetting = () => {
             return data;
         }
     }) // get Site Settings
-    
-    if (isLoading){
-       return <BigSpinner />
+
+    if (isLoading) {
+        return <BigSpinner />
     }
 
     const initialData = settings?.data[0]
@@ -33,9 +33,9 @@ const SiteSetting = () => {
             <div className="flex items-center justify-between bg-white p-4 rounded-xl">
                 <h3 className="text-[20px] font-semibold">Site Seeting</h3>
                 <div className="flex items-center gap-2">
-                    <Link to='/istiak'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
+                    <Link to='/admin'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
                     <p className="font-semibold text-xl">/</p>
-                    <Link to='/istiak/seeting'><p className="font-semibold">Site Seeting</p></Link>
+                    <Link to='/admin/seeting'><p className="font-semibold">Site Seeting</p></Link>
                 </div>
             </div>
 

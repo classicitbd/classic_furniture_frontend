@@ -6,79 +6,79 @@ const SideNavbarMenuItem = () => {
         {
             id: 1,
             text: "Dashboard",
-            link: "/istiak",
+            link: "/admin",
         },
         {
             id: 2,
             text: "Order",
-            link: "/istiak/order",
+            link: "/admin/order",
         },
         {
             id: 3,
             text: "Customer",
-            link: "/istiak/customer",
+            link: "/admin/customer",
         },
         {
             id: 4,
             text: "Product",
-            link: "/istiak/product",
+            link: "/admin/product",
         },
         {
             id: 5,
             text: "Create Product",
-            link: "/istiak/product/create",
+            link: "/admin/product/create",
         },
         {
             id: 5,
             text: "Slider",
-            link: "/istiak/slider",
+            link: "/admin/slider",
         },
         {
             id: 6,
             text: "Banner",
-            link: "/istiak/banner",
+            link: "/admin/banner",
         },
         {
             id: 7,
             text: "Menu",
-            link: "/istiak/menu",
+            link: "/admin/menu",
         },
         {
             id: 15,
             text: "Category",
-            link: "/istiak/category",
+            link: "/admin/category",
         },
         {
             id: 8,
             text: "Sub Category",
-            link: "/istiak/sub_category",
+            link: "/admin/sub_category",
         },
         {
             id: 9,
             text: "Color",
-            link: "/istiak/color",
+            link: "/admin/color",
         },
         {
             id: 10,
             text: "Collection",
-            link: "/istiak/collection",
+            link: "/admin/collection",
         },
         {
             id: 11,
             text: "Feature",
-            link: "/istiak/feature",
+            link: "/admin/feature",
         },
         {
             id: 12,
             text: "Style",
-            link: "/istiak/style",
+            link: "/admin/style",
         },
         {
             id: 13,
             text: "Setting",
-            link: "/istiak/setting",
+            link: "/admin/setting",
         },
-        
+
     ];
 
     return (

@@ -27,8 +27,8 @@ const HomePage = () => {
         thisMonthSellCount: data?.thisMonthSellCount
     }
 
-    if (isLoading){
-       return <BigSpinner />
+    if (isLoading) {
+        return <BigSpinner />
     }
 
 
@@ -38,24 +38,24 @@ const HomePage = () => {
             <div className="flex items-center justify-between bg-white p-4 rounded-xl">
                 <h3 className="text-[20px] font-semibold">Dashboard</h3>
                 <div className="flex items-center gap-2">
-                    <Link to='/istiak'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
+                    <Link to='/admin'><p><PiHouseBold size={25} color="#3EA2FA" /></p></Link>
                     <p className="font-semibold text-xl">/</p>
-                    <Link to='/istiak'><p className="font-semibold">Dashboard</p></Link>
+                    <Link to='/admin'><p className="font-semibold">Dashboard</p></Link>
                 </div>
             </div>
 
             {/* Tabs */}
-            <Tabs tabs={tabs} />
+            {/* <Tabs tabs={tabs} /> */}
 
             {/* Week sell chart and year sell chart */}
-            <div className="grid md:grid-cols-12 grid-cols-1 gap-5 mt-4">
+            {/* <div className="grid md:grid-cols-12 grid-cols-1 gap-5 mt-4">
                 <div className="md:col-span-7 bg-white border border-gray-300 rounded-lg">
-                    <YearSell thisYearSellData={data?.thisYearSellData}  />
+                    <YearSell thisYearSellData={data?.thisYearSellData} />
                 </div>
                 <div className="md:col-span-5 bg-white border border-gray-300 rounded-lg">
                     <WeekSell thisWeekSellData={data?.thisWeekSellData} />
                 </div>
-            </div>
+            </div> */}
 
 
         </div>

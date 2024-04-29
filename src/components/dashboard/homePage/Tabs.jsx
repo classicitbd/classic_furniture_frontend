@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Tabs = ({ tabs }) => {
   return (
     <div className="grid lg:grid-cols-4 grid-cols-2 mt-6 gap-3">
-      <Link to='/istiak/customer'>
+      <Link to='/admin/customer'>
         <div className="bg-[#D4F3FB] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] bg-[#00B7E9] rounded-full">
@@ -25,7 +25,7 @@ const Tabs = ({ tabs }) => {
         </div>
       </Link>
 
-      <Link to='/istiak/product'>
+      <Link to='/admin/product'>
         <div className="bg-[#DEF6EE] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] bg-[#3EC99E] rounded-full">
@@ -43,7 +43,7 @@ const Tabs = ({ tabs }) => {
         </div>
       </Link>
 
-      <Link to='/istiak/order'>
+      <Link to='/admin/order'>
         <div className="bg-[#EAE9FE] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] bg-[#837DFB] rounded-full">
@@ -61,7 +61,7 @@ const Tabs = ({ tabs }) => {
         </div>
       </Link>
 
-      <Link to='/istiak/order'>
+      <Link to='/admin/order'>
         <div className="bg-teal-100 rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] bg-teal-500 rounded-full">

@@ -6,9 +6,6 @@ import { useUpdateCategoryMutation } from "../../../redux/feature/category/categ
 import { ImageValidate } from "../../../utils/ImageValidation";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../../../utils/baseURL";
-import Select from "react-select";
 
 const UpdateCategory = ({
   setCategoryUpdateModal,
@@ -22,34 +19,20 @@ const UpdateCategory = ({
     formState: { errors },
   } = useForm();
   const [loading, setLoading] = useState(false);
-  const [menuId, setMenuId] = useState(categoryUpdateModalValue?.menuId?._id);
-
-  const menuNameValue =
-    categoryUpdateModalValue?.menuId?.menu;
-  const menuNameId = categoryUpdateModalValue?.menuId?._id;
-
-  const { data: menuTypes = [], isLoading } = useQuery({
-    queryKey: ["/api/v1/menu"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/menu`);
-      const data = await res.json();
-      return data;
-    },
-  }); // get All Menu type
 
   const [updateCategory] = useUpdateCategoryMutation(); //Update Category
 
   // post a User details
   const handleDataPost = (data) => {
     setLoading(true);
-    if (data?.category_image[0]) {
+    if (data?.category_logo[0]) {
       const formData = new FormData();
       let errorEncountered = false;
 
-      const category_image = data?.category_image[0];
-      const result = ImageValidate(category_image, "category_image"); //check image type
+      const category_logo = data?.category_logo[0];
+      const result = ImageValidate(category_logo, "category_logo"); //check image type
       if (result == true) {
-        formData.append("category_image", category_image);
+        formData.append("category_logo", category_logo);
       } else {
         toast.error(`Must be a png/jpg/webp/jpeg image In Image`);
         errorEncountered = true;
@@ -60,18 +43,17 @@ const UpdateCategory = ({
       }
 
       Object.entries(data).forEach(([key, value]) => {
-        if (key !== "category_image") {
+        if (key !== "category_logo") {
           formData.append(key, value);
         }
       });
-      const slug = slugify(data.category, {
+      const slug = slugify(data.category_name, {
         lower: true,
         replacement: "-",
       });
-      formData.append("slug", slug);
+      formData.append("category_slug", slug);
       formData.append("image_key", categoryUpdateModalValue?.image_key);
       formData.append("_id", categoryUpdateModalValue?._id);
-      formData.append("menuId", menuId);
       updateCategory(formData).then((result) => {
         if (result?.data?.statusCode == 200 && result?.data?.success == true) {
           toast.success(
@@ -95,9 +77,11 @@ const UpdateCategory = ({
       const sendData = {
         _id: categoryUpdateModalValue?._id,
         image_key: categoryUpdateModalValue?.image_key,
-        menuId: menuId,
-        category: data?.category,
-        slug: slugify(data.category, {
+        category_logo: categoryUpdateModalValue?.category_logo,
+        category_name: data?.category_name,
+        category_serial: data?.category_serial,
+        category_status: data?.category_status,
+        category_slug: slugify(data.category_name, {
           lower: true,
           replacement: "-",
         }),
@@ -124,10 +108,6 @@ const UpdateCategory = ({
     }
   };
 
-  if (isLoading) {
-    return <MiniSpinner />
-  }
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-end bg-black bg-opacity-30">
       <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[550px] p-6 max-h-[100vh] overflow-y-auto">
@@ -150,58 +130,61 @@ const UpdateCategory = ({
         <hr className="mt-2 mb-4" />
 
         <form onSubmit={handleSubmit(handleDataPost)}>
-          <div className="mt-3">
-            <label className="font-semibold" htmlFor="category">
-              Category Type<span className="text-red-500">*</span>
-            </label>
+          <div className="mt-4">
             <input
-              placeholder="Category Types"
-              {...register("category", {
-                required: "Category Types is required",
+              placeholder="Category Name"
+              {...register("category_name", {
+                required: "Category Name is required",
               })}
-              id="category"
+              defaultValue={categoryUpdateModalValue?.category_name}
+              id="category_name"
               type="text"
-              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-              defaultValue={categoryUpdateModalValue?.category}
+              className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
-            {errors.category && (
-              <p className="text-red-600">{errors.category?.message}</p>
+            {errors.category_name && (
+              <p className="text-red-600">{errors.category_name?.message}</p>
             )}
           </div>
 
-          <div className="mt-3">
-            <label
-              className="font-semibold text-red-500"
-              htmlFor="category_image"
-            >
-              If need change image
-            </label>
+          <div className="mt-4">
             <input
-              {...register("category_image")}
-              id="category_image"
+              {...register("category_logo")}
+              id="category_logo"
               type="file"
-              className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+              className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
 
           <div className="mt-4">
-            <p className="font-medium"> menu Name: </p>
-            <Select
-              id="menuId"
-              name="menuId"
-              required
-              aria-label="Select a Menu"
-              options={menuTypes?.data}
-              defaultValue={{
-                _id: menuNameId,
-                menu: menuNameValue,
-              }}
-              getOptionLabel={(x) => x?.menu}
-              getOptionValue={(x) => x?._id}
-              onChange={(selectedOption) =>
-                setMenuId(selectedOption?._id)
-              }
-            ></Select>
+            <input
+              placeholder="Category Serial"
+              {...register("category_serial", {
+                required: "Category Serial is required",
+              })}
+              defaultValue={categoryUpdateModalValue?.category_serial}
+              id="category_serial"
+              type="number"
+              className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            />
+            {errors.category_serial && (
+              <p className="text-red-600">{errors.category_serial?.message}</p>
+            )}
+          </div>
+
+          <div className="mt-4">
+            <select
+              {...register("category_status", {
+                required: "Category Status is required",
+              })}
+              id="category_status"
+              className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
+            >
+              <option value="active">Active</option>
+              <option value="in-active">In-Active</option>
+            </select>
+            {errors.category_status && (
+              <p className="text-red-600">{errors.category_status?.message}</p>
+            )}
           </div>
 
           <div className="flex justify-end mt-6 gap-4">
@@ -211,12 +194,22 @@ const UpdateCategory = ({
             >
               Cancel
             </button>
-            <button
-              type="Submit"
-              className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
-            >
-              {loading ? <MiniSpinner /> : "Update"}
-            </button>
+            {
+              loading ?
+                <button
+                  type="Submit"
+                  className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
+                >
+                  <MiniSpinner />
+                </button>
+                :
+                <button
+                  type="Submit"
+                  className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
+                >
+                  Update
+                </button>
+            }
           </div>
         </form>
       </div>
