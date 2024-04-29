@@ -57,7 +57,7 @@ const SiteSetting = () => {
 
             <div className="md:mt-10 mt-8 bg-white mb-8">
                 <div className="p-5">
-                    <h4 className="font-semibold text-[20px] mt-2">Our Story</h4>
+                    <h4 className="font-semibold text-[20px] mt-2">About Us</h4>
                     <hr className="mt-2 mb-4" />
                     <AboutUs refetch={refetch} initialData={initialData} />
                 </div>

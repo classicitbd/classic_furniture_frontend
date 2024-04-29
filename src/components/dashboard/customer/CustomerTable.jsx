@@ -93,10 +93,13 @@ const CustomerTable = () => {
                   District
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  City
+                  Address
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Role
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Status
                 </th>
                 <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
                   Action
@@ -110,25 +113,28 @@ const CustomerTable = () => {
                   return (
                     <tr key={user?._id}>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {user?.name}
+                        {user?.user_name}
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {user?.phone}
+                        {user?.user_phone}
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {user?.division}
+                        {user?.user_division}
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {user?.district}
+                        {user?.user_district}
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {user?.city}
+                        {user?.user_address}
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                        {user?.role}
+                        {user?.user_role}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.user_status}
                       </td>
 
-                      {user?.role !== 'admin' && (
+                      {user?.user_role === 'admin' && (
                         <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                           <MdDeleteForever
                             onClick={() => handleDelete(user)}

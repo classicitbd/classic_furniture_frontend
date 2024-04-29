@@ -8,7 +8,7 @@ const InformationUpdate = ({ refetch }) => {
     const { register, reset, handleSubmit, formState: { errors }, } = useForm(); //get data in form
 
     const { user } = useContext(AuthContext)
-    const [name, setName] = useState(user?.name)
+    const [name, setName] = useState(user?.user_name)
 
     const [passwordChange] = useChangePasswordMutation();
     const [userUpdate] = useUpdateUserMutation();
@@ -18,7 +18,7 @@ const InformationUpdate = ({ refetch }) => {
         const current_password = data?.current_password;
         const new_password = data?.new_password;
         const sendData = {
-            phone: user?.phone,
+            user_phone: user?.user_phone,
             current_password: current_password,
             new_password: new_password,
         };
@@ -42,8 +42,8 @@ const InformationUpdate = ({ refetch }) => {
 
     const handleChangeName = () =>{
         const sendData = {
-            name: name,
-            phone: user?.phone
+            user_name: name,
+            user_phone: user?.user_phone
         }
         userUpdate(sendData).then((result) => {
             if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -67,18 +67,18 @@ const InformationUpdate = ({ refetch }) => {
         <>
             <div className="mb-4">
                 <div>
-                    <label className="font-semibold" htmlFor="name">
+                    <label className="font-semibold" htmlFor="user_name">
                         Name<span className="text-red-500"> *</span>{" "}
                     </label>
                     <input
                         defaultValue={name}
                         onChange={(e) => setName(e.target.value)}
-                        id="name"
+                        id="user_name"
                         type="text"
                         className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
                     />
-                    {errors.name && (
-                        <p className="text-red-600">{errors.name?.message}</p>
+                    {errors.user_name && (
+                        <p className="text-red-600">{errors.user_name?.message}</p>
                     )}
                 </div>
                 <div className="mt-2 flex items-center justify-end">

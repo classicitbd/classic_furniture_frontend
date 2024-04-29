@@ -5,13 +5,18 @@ import { PiHouseBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import BannerImage from "../../../components/dashboard/banner/BannerImage";
 import BannerTable from "../../../components/dashboard/banner/BannerTable";
+import { useState } from "react";
 
 const Banner = () => {
 
+    const [rows, setRows] = useState(10);
+    const [page, setPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const { data: banners = [], isLoading, refetch } = useQuery({
-        queryKey: ['/api/v1/banner/dashboard'],
+        queryKey: [`/api/v1/banner/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}/banner/dashboard`)
+            const res = await fetch(`${BASE_URL}/banner/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`)
             const data = await res.json();
             return data;
         }
@@ -37,7 +42,7 @@ const Banner = () => {
             <BannerImage banners={banners} />
 
             {/* Show all image in a table */}
-            <BannerTable banners={banners} refetch={refetch} />
+            <BannerTable banners={banners} refetch={refetch} rows={rows} page={page} setPage={setPage} setRows={setRows} setSearchTerm={setSearchTerm} />
 
         </>
     );
