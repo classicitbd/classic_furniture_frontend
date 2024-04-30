@@ -134,7 +134,7 @@ const CustomerTable = () => {
                         {user?.user_status}
                       </td>
 
-                      {user?.user_role === 'admin' && (
+                      {user?.user_role !== 'admin' && (
                         <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                           <MdDeleteForever
                             onClick={() => handleDelete(user)}

@@ -19,8 +19,8 @@ export const authApi = api.injectEndpoints({
     //user otp verify
     otpVerify: build.mutation({
       query: (data) => ({
-        url: `${AUTH_URL}/otpVerify`,
-        method: "POST",
+        url: `${AUTH_URL}`,
+        method: "PATCH",
         body: data,
       }),
       invalidatesTags: [tagTypes.user],
@@ -29,7 +29,7 @@ export const authApi = api.injectEndpoints({
     //user otp verify
     resendOtp: build.mutation({
       query: (data) => ({
-        url: `${AUTH_URL}/resendOTP`,
+        url: `${AUTH_URL}/resend_otp`,
         method: "POST",
         body: data,
       }),

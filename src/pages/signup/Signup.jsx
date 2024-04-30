@@ -26,19 +26,19 @@ const SignUp = () => {
   const handleSignUp = async (data) => {
     try {
       setLoading(true);
-      const { password, confirm_password } = data;
-      if (password !== confirm_password) {
+      const { user_password, confirm_password } = data;
+      if (user_password !== confirm_password) {
         setError("Does not match password!");
         return;
       }
-      delete data.confirm_password;
+      delete data?.confirm_password;
       const res = await signUp(data);
       console.log(res);
       if (res?.data?.success) {
         toast.info(res?.data?.message, {
           autoClose: 2000,
         });
-        navigate(`/verify-user?phone=${res?.data?.data?.phone}`);
+        navigate(`/verify-user?phone=${res?.data?.data?.user_phone}`);
         reset();
       } else {
         toast.error(res?.error?.data?.message);
@@ -59,30 +59,30 @@ const SignUp = () => {
 
         <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
           <div className="w-full">
-            <label htmlFor="name" className="label">
+            <label htmlFor="user_name" className="label">
               <span className="label-text">Full Name</span>
             </label>
             <input
-              id="name"
+              id="user_name"
               type="text"
               placeholder="Enter your name"
               className="border rounded px-3 py-2 w-full"
-              {...register("name", { required: "Name is required" })}
+              {...register("user_name", { required: "Name is required" })}
             />
-            {errors.name && (
-              <p className="text-red-600"> {errors.name.message}</p>
+            {errors.user_name && (
+              <p className="text-red-600"> {errors.user_name.message}</p>
             )}
           </div>
           <div className="w-full">
-            <label htmlFor="phone" className="label">
+            <label htmlFor="user_phone" className="label">
               <span className="label-text">Phone Number</span>
             </label>
             <input
-              id="phone"
+              id="user_phone"
               type="number"
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
-              {...register("phone", {
+              {...register("user_phone", {
                 required: "Phone number is required",
                 pattern: {
                   value: /^\d{11}$/,
@@ -90,8 +90,8 @@ const SignUp = () => {
                 },
               })}
             />
-            {errors.phone && (
-              <p className="text-red-600"> {errors.phone?.message}</p>
+            {errors.user_phone && (
+              <p className="text-red-600"> {errors.user_phone?.message}</p>
             )}
           </div>
           {/* <div className="w-full">
@@ -110,15 +110,15 @@ const SignUp = () => {
             )}
           </div> */}
           <div className="w-full">
-            <label htmlFor="password" className="label">
+            <label htmlFor="user_password" className="label">
               <span className="label-text">Password</span>
             </label>
             <input
-              id="password"
+              id="user_password"
               type={`${isChecked ? "text" : "password"}`}
               placeholder="* * * * *"
               className="border rounded px-3 py-2 w-full"
-              {...register("password", {
+              {...register("user_password", {
                 required: "Password is required",
                 minLength: {
                   value: 6,
@@ -126,8 +126,8 @@ const SignUp = () => {
                 },
               })}
             />
-            {errors.password && (
-              <p className="text-red-600"> {errors.password.message}</p>
+            {errors.user_password && (
+              <p className="text-red-600"> {errors.user_password.message}</p>
             )}
           </div>
           <div className="w-full">
