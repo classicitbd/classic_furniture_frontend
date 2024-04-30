@@ -11,7 +11,7 @@ const PrivateDashboardRoute = ({ children }) => {
     return <BigSpinner />;
   }
 
-  if (user && user.role === "admin") {
+  if (user && user?.user_role === "admin") {
     return children;
   }
 

@@ -28,10 +28,9 @@ const Verified = () => {
       setLoading(true);
       const otp = OTPinput.join("");
       const data = {
-        phone,
-        otp,
+        user_phone: phone,
+        user_otp: otp,
       };
-      console.log(data)
       const res = await otpVerify(data);
       if (res?.data?.success) {
         toast.success(res?.data?.message, {
@@ -53,12 +52,12 @@ const Verified = () => {
     try {
       if (disable) return;
       const data = {
-        phone,
+        user_phone: phone,
       };
       const res = await resendOtp(data);
-      if (res?.data?.data?.success) {
+      if (res?.data?.success) {
         setDisable(true);
-        toast.info(res?.data?.data?.message);
+        toast.info(res?.data?.message);
         setTimer(60);
       }
     } catch (error) {
@@ -144,11 +143,10 @@ const Verified = () => {
                   <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
                     <p>Did not receive code?</p>{" "}
                     <a
-                      className={`flex flex-row items-center ${
-                        disable
-                          ? "text-gray-500 cursor-not-allowed"
-                          : "text-textColor cursor-pointer underline"
-                      }`}
+                      className={`flex flex-row items-center ${disable
+                        ? "text-gray-500 cursor-not-allowed"
+                        : "text-blue-500 cursor-pointer underline"
+                        }`}
                       onClick={() => handleResend()}
                     >
                       {disable ? `Resend OTP in ${timerCount}s` : "Resend OTP"}

@@ -35,6 +35,8 @@ import PrivacyPolicyPage from "../pages/frontend/privacypolicy/PrivacyPolicyPage
 import TermAndConditionPage from "../pages/frontend/termandconditions/TermAndConditionPage";
 import CancellationPolicyPage from "../pages/frontend/cancellationPolicy/CancellationPolicyPage";
 import RefundPolicyPage from "../pages/frontend/refundPolicy/RefundPolicy";
+import PrivateRoute from "./privateRoute/PrivateRoute";
+import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
 
 const router = createBrowserRouter([
   {
@@ -138,7 +140,7 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element:
-      <DashboardLayout />,
+      <PrivateRoute><PrivateDashboardRoute><DashboardLayout /></PrivateDashboardRoute></PrivateRoute>,
     errorElement: <NotFound />,
     children: [
       {

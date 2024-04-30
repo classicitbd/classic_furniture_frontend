@@ -55,15 +55,15 @@ const SignIn = () => {
 
         <form onSubmit={handleSubmit(handleSignIn)} className="space-y-4">
           <div className="form-control w-full">
-            <label htmlFor="phone" className="label">
-              <span className="label-text">Phone Number</span>
+            <label htmlFor="user_phone" className="label">
+              <span className="label-text">user_ Number</span>
             </label>
             <input
-              id="phone"
+              id="user_phone"
               type="number"
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
-              {...register("phone", {
+              {...register("user_phone", {
                 required: "Phone number is required",
                 pattern: {
                   value: /^\d{11}$/,
@@ -71,20 +71,20 @@ const SignIn = () => {
                 },
               })}
             />
-            {errors.phone && (
-              <p className="text-red-600"> {errors?.phone?.message}</p>
+            {errors.user_phone && (
+              <p className="text-red-600"> {errors?.user_phone?.message}</p>
             )}
           </div>
           <div className="form-control w-full">
-            <label htmlFor="password" className="label">
+            <label htmlFor="user_password" className="label">
               <span className="label-text">Password</span>
             </label>
             <input
-              id="password"
+              id="user_password"
               type="password"
               placeholder="* * * * *"
               className="border rounded px-3 py-2 w-full"
-              {...register("password", {
+              {...register("user_password", {
                 required: "Password is required",
                 minLength: {
                   value: 6,
@@ -92,8 +92,8 @@ const SignIn = () => {
                 },
               })}
             />
-            {errors.password && (
-              <p className="text-red-600"> {errors.password.message}</p>
+            {errors.user_password && (
+              <p className="text-red-600"> {errors.user_password.message}</p>
             )}
           </div>
           <div className="text-[14px] flex justify-between">
