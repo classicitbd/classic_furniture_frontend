@@ -6,44 +6,23 @@ import ArrivalTopProducts from "../../../components/frontend/ui/arrivalProducts/
 import SubCategory from "../../../components/frontend/ui/subCategory/SubCategory";
 import CollectionCategory from "../../../components/frontend/ui/collectionCategory/CollectionCategory";
 import CollectionTopCategory from "../../../components/frontend/ui/collectionCategory/CollectionTopCategory";
-import { useEffect, useState } from "react";
-import Header from "../../../shared/header/Header";
+// import Header from "../../../shared/header/Header";
 import CategorySlider from "../../../components/frontend/ui/slider/CategorySlider";
+// import TopHeader from "../../../shared/header/TopHeader";
+
 
 const Home = () => {
-  const [isHeaderFixed, setIsHeaderFixed] = useState(false);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const isScrolled = scrollTop > 100;
-
-      setIsHeaderFixed(isScrolled);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []); // useEffect will run once when the component mounts
+  
 
   return (
     <main className="">
-      {/* <Navbar /> */}
+      {/* <div className="hidden lg:block">
+        <TopHeader />
+      </div>
       <div
-        className={`${
-          isHeaderFixed
-            ? "sticky bg-primaryColor"
-            : "fixed hover:bg-primaryColor"
-        } top-0 transition-all duration-500 ease-in-out z-30 w-full `}
       >
         <Header />
-      </div>
+      </div> */}
       <Slider />
       <Category />
       <section className="py-5 lg:py-10">

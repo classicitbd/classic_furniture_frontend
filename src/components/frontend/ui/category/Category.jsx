@@ -37,7 +37,7 @@ const Category = () => {
     <section>
       <article className="text-wrap py-[30px]">
         <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-center align-baseline px-[10px]">
-          LUXURY HANDCRAFTED FOOTWEAR & FASHION RETAIL
+          LUXURY FURNITURE
         </h2>
         <p className="text-center">Step into the fusion of fine materials</p>
       </article>
@@ -49,9 +49,8 @@ const Category = () => {
               <li key={item._id}>
                 <Link
                   to={`/all?category=${item?.slug}`}
-                  className={`text-lg ${
-                    data?.data?.length === i && "text-error-300"
-                  } uppercase text-textColor`}
+                  className={`text-lg ${data?.data?.length === i && "text-error-300"
+                    } uppercase text-textColor`}
                   style={{
                     opacity: hoveredCategory === i ? 0.75 : 1,
                     transition: "opacity 0.2s ease-in-out", // Optional: Add a transition for a smoother effect
