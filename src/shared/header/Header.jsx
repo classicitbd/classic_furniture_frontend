@@ -39,7 +39,7 @@ export default function Header() {
                 defaultValue=""
               />
               <button
-                className="px-5 text-white rounded-r bg-ftPrimaryColor hover:bg-opacity-80"
+                className="px-2  text-white rounded-r bg-ftPrimaryColor hover:bg-opacity-80"
                 type="search"
               >
                 <svg
@@ -47,7 +47,7 @@ export default function Header() {
                   fill="currentColor"
                   strokeWidth={0}
                   viewBox="0 0 512 512"
-                  className="text-whiteColor text-xl text-black"
+                  className="text-whiteColor text-2xl font-extrabold text-black"
                   height="1em"
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
@@ -92,11 +92,11 @@ export default function Header() {
                 </span>
               </div>
             </Link>
-            <Link className="account flex items-center gap-2 text-black">
+            <Link to={"/sign-up"} className="account flex items-center gap-2 text-black">
               <span className="icon">
                 <CiUser className="text-ftPrimaryColor text-[26px]" />
               </span>
-              <Link to={"/sign-up"}><div className="flex flex-col text-black  md:me-20  xl:me-0">
+              <Link ><div className="flex flex-col text-black  md:me-20  xl:me-0">
                 <p className="text-[14px] leading-[14px] font-medium hidden lg:block">
                   Account
                 </p>
