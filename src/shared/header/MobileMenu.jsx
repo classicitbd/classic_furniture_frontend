@@ -30,31 +30,34 @@ const MobileMenu = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
 
   return (
     <div className={`text-xl menu-container ${isMobileMenuOpen ? 'menu-visible' : 'menu-hidden'}`} ref={menuRef}>
-      <div className='flex justify-end'>
+      <div className='flex items-center justify-between'>
+        <ul>
+          <li
+            onClick={() => handleMenuItemClick('/')}
+            className='flex items-center gap-2 text-lg ps-5 py-2 menu-item'
+          >
+            Home
+          </li>
+        </ul>
         <button type='button' className='text-xl px-4 p-3' onClick={() => setIsMobileMenuOpen(false)}>
-          <FaRegTimesCircle className='text-2xl'/>
+          <FaRegTimesCircle className='text-xl text-white bg-blue-700 rounded-full bottom-none' />
         </button>
 
       </div>
 
-      <ul className='flex flex-col gap-4 px-5'>
-        <li
-          onClick={() => handleMenuItemClick('/')}
-          className='flex items-center gap-1 text-xl menu-item hover:bg-[#008140]'
-        >
-          Home
-        </li>
+      <ul className='flex flex-col gap-2 px-5'>
+
         <li
           onClick={() => handleMenuItemClick('/about')}
-          className='flex items-center gap-1 text-xl menu-item hover:bg-[#008140]'
+          className='flex items-center gap-1 text-lg menu-item'
         >
           About
         </li>
         <li
           onClick={() => handleMenuItemClick('/sign-out')}
-          className='flex items-center gap-1 text-xl menu-item hover:bg-[#008140]'
+          className='flex items-center gap-1 text-lg menu-item'
         >
-           Logout
+          Logout
         </li>
       </ul>
 

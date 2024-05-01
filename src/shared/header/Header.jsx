@@ -28,7 +28,7 @@ export default function Header() {
 
             <form className="flex flex-1 justify-between lg:max-w-5xl items-center">
               <div className='block lg:hidden text-black me-5  max-w-[200px]'>
-                <MobileMenu isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} /> <FaBars className='text-2xl' onClick={handleMobileMenu} />
+                <MobileMenu isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} /> <FaBars className='text-2xl text-[#817777]' onClick={handleMobileMenu} />
               </div>
               <input
                 id="search"
@@ -39,7 +39,7 @@ export default function Header() {
                 defaultValue=""
               />
               <button
-                className="px-5 text-white rounded-r bg-ftPrimaryColor hover:bg-opacity-80"
+                className="px-2  text-white rounded-r bg-ftPrimaryColor hover:bg-opacity-80"
                 type="search"
               >
                 <svg
@@ -47,7 +47,7 @@ export default function Header() {
                   fill="currentColor"
                   strokeWidth={0}
                   viewBox="0 0 512 512"
-                  className="text-whiteColor text-xl text-black"
+                  className="text-whiteColor text-2xl font-extrabold text-black"
                   height="1em"
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
@@ -70,22 +70,33 @@ export default function Header() {
             </form>
           </div>
           <div className="header-right flex gap-4 text-black ">
-            <div className="offer lg:flex items-center gap-3 hidden ">
+            <div className="offer lg:flex items-center gap-3">
               <span className="icon">
-                <IoMdGift className="text-ftPrimaryColor text-[26px]" />
+                <IoMdGift className="text-ftPrimaryColor text-[26px] text-[#008140]" />
               </span>
-              <Link className="flex flex-col text-black ">
+              <Link className="lg:flex flex-col text-black hidden xl:block ">
                 <p className="text-[14px] leading-[14px] font-medium hidden lg:block">Offer</p>
                 <span className="text-ftMuteColor text-[13px] font-light ">
                   Latest Offer
                 </span>
               </Link>
             </div>
-            <Link className="account flex items-center gap-2 text-black">
+            <Link className="cart flex items-center gap-2 text-black">
+              <span className="icon">
+                <RiShoppingBagFill className="text-[#47504c] text-[26px]" />
+              </span>
+              <div className="flex flex-col text-black ">
+                <p className="text-[14px] leading-[14px] font-medium hidden xl:block">Cart</p>
+                <span className="text-ftMuteColor text-[13px] font-light hidden lg:block">
+                  Products
+                </span>
+              </div>
+            </Link>
+            <Link to={"/sign-up"} className="account flex items-center gap-2 text-black">
               <span className="icon">
                 <CiUser className="text-ftPrimaryColor text-[26px]" />
               </span>
-              <Link to={"/sign-up"}><div className="flex flex-col text-black">
+              <Link ><div className="flex flex-col text-black  md:me-20  xl:me-0">
                 <p className="text-[14px] leading-[14px] font-medium hidden lg:block">
                   Account
                 </p>
@@ -95,17 +106,7 @@ export default function Header() {
               </div></Link>
 
             </Link>
-            <Link className="cart flex items-center gap-2 text-black">
-              <span className="icon">
-                <RiShoppingBagFill className="text-ftPrimaryColor text-[26px]" />
-              </span>
-              <div className="flex flex-col text-black me-20 xl:me-0">
-                <p className="text-[14px] leading-[14px] font-medium hidden lg:block">Cart</p>
-                <span className="text-ftMuteColor text-[13px] font-light hidden lg:block">
-                  Products
-                </span>
-              </div>
-            </Link>
+
 
           </div>
         </div>

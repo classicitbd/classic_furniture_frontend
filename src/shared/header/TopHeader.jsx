@@ -26,7 +26,7 @@ export default function TopHeader() {
                                 to="mailto: develoer@dev.com"
                                 className=" text-ftMuteColor text-[13px] font-light"
                             >
-                                develoer@dev.com
+                                classicit@gmail.com
                             </Link>
                         </div>
 
