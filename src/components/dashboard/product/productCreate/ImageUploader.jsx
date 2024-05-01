@@ -8,7 +8,7 @@ const ImageUploader = async (file) => {
   try {
     const response = await axios.post(
       // Endpoint URL of your server where the file will be uploaded to DigitalOcean Spaces
-      `${BASE_URL}/imageUpload`,
+      `${BASE_URL}/image_upload`,
       formData,
       {
         headers: {
