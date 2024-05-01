@@ -219,12 +219,12 @@ const ProductAdd = () => {
     if (data?.product_size_variation?.length > 0) {
       const hasEmptySizeOrColor = data?.product_size_variation.some(
         (variation) =>
-          variation.size === "" ||
-          variation.size === null ||
-          variation.size === undefined ||
-          variation.quantity === "" ||
-          variation.quantity === null ||
-          variation.quantity === undefined
+          variation?.size === "" ||
+          variation?.size === null ||
+          variation?.size === undefined ||
+          variation?.quantity === "" ||
+          variation?.quantity === null ||
+          variation?.quantity === undefined
       );
       if (hasEmptySizeOrColor) {
         toast.error(
@@ -259,56 +259,55 @@ const ProductAdd = () => {
 
     const sendData = {
       product_name: data?.product_name,
-      related: slugify(data?.product_name, {
+      product_related_slug: slugify(data?.product_name, {
         lower: true,
         replacement: "-",
       }),
-      slug: slugify(slug, {
+      product_slug: slugify(slug, {
         lower: true,
         replacement: "-",
       }),
-      description: description,
-      price: data?.price,
+      product_description: description,
+      product_price: data?.product_price,
       product_discount_price: data?.product_discount_price,
       product_size_variation: data?.product_size_variation?.map((item) => ({
         size: item?.size,
         quantity: item?.quantity,
         price: item?.price,
-        product_discount_price: item?.product_discount_price,
+        discount_price: item?.discount_price,
+        description: item?.description
       })),
-      thumbnail_image: imageName,
-      product_video: data?.product_video,
-      images: allImage?.map((item) => ({
+      product_thumbnail: imageName,
+      product_images: allImage?.map((item) => ({
         image: item?.image,
       })),
-      colorId: colorId,
+      product_color_id: colorId,
+      category_id: categoryIdForSubCategory
     };
 
     if (subcategory !== "" && subcategory !== undefined) {
-      sendData.subCategoryId = subcategory;
+      sendData.sub_category_id = subcategory;
     }
-    console.log(sendData)
-    // addProduct(sendData).then((result) => {
-    //   if (result?.data?.statusCode == 200 && result?.data?.success == true) {
-    //     toast.success(
-    //       result?.data?.message
-    //         ? result?.data?.message
-    //         : "Product Added successfully !",
-    //       {
-    //         autoClose: 1000,
-    //       }
-    //     );
-    //     reset();
-    //     setImageName("");
-    //     sethoverImageName("");
-    //     setMultiImage([]);
-    //     refetch();
-    //     setLoading(false)
-    //   } else {
-    //     toast.error(result?.error?.data?.message);
-    //     setLoading(false)
-    //   }
-    // });
+    addProduct(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Product Added successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        reset();
+        setImageName("");
+        setMultiImage([]);
+        refetch();
+        setLoading(false)
+      } else {
+        toast.error(result?.error?.data?.message);
+        setLoading(false)
+      }
+    });
   };
 
   if (colorLoading) {
@@ -639,15 +638,13 @@ const ProductAdd = () => {
                     >
                       +
                     </button>
-                    {index > 0 && (
-                      <button
-                        type="button"
-                        className="mt-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-600 h-10"
-                        onClick={() => remove(index)}
-                      >
-                        -
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      className="mt-2 text-white transition-colors duration-300 transform bg-red-500 rounded-xl hover:bg-red-600 h-10"
+                      onClick={() => remove(index)}
+                    >
+                      -
+                    </button>
                   </div>
                 </div>
               ))}
