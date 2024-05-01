@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { FaHome, FaShoppingBag, FaUser } from 'react-icons/fa';
+import { FaRegTimesCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import "./header.css"
 
@@ -30,24 +30,31 @@ const MobileMenu = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
 
   return (
     <div className={`text-xl menu-container ${isMobileMenuOpen ? 'menu-visible' : 'menu-hidden'}`} ref={menuRef}>
-      <ul className='flex flex-col gap-4 p-10'>
+      <div className='flex justify-end'>
+        <button type='button' className='text-xl px-4 p-3' onClick={() => setIsMobileMenuOpen(false)}>
+          <FaRegTimesCircle className='text-2xl'/>
+        </button>
+
+      </div>
+
+      <ul className='flex flex-col gap-4 px-5'>
         <li
           onClick={() => handleMenuItemClick('/')}
-          className='flex items-center gap-1 text-xl menu-item'
+          className='flex items-center gap-1 text-xl menu-item hover:bg-[#008140]'
         >
-          <FaHome className='text-xl' /> Home
+          Home
         </li>
         <li
-          onClick={() => handleMenuItemClick('/sign-up')}
-          className='flex items-center gap-1 text-xl menu-item'
+          onClick={() => handleMenuItemClick('/about')}
+          className='flex items-center gap-1 text-xl menu-item hover:bg-[#008140]'
         >
-          <FaUser className='text-xl' /> Sign-up
+          About
         </li>
         <li
           onClick={() => handleMenuItemClick('/sign-out')}
-          className='flex items-center gap-1 text-xl menu-item'
+          className='flex items-center gap-1 text-xl menu-item hover:bg-[#008140]'
         >
-          <FaShoppingBag className='text-xl' /> Logout
+           Logout
         </li>
       </ul>
 

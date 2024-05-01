@@ -40,7 +40,7 @@ export default function Header() {
               />
               <button
                 className="px-5 text-white rounded-r bg-ftPrimaryColor hover:bg-opacity-80"
-                type="submit"
+                type="search"
               >
                 <svg
                   stroke="currentColor"
