@@ -38,9 +38,9 @@ const ProductListTable = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: [`/api/v1/product/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`],
+    queryKey: [`/api/v1/product/dashboard_product?page=${page}&limit=${rows}&searchTerm=${searchTerm}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`);
+      const res = await fetch(`${BASE_URL}/product/dashboard_product?page=${page}&limit=${rows}&searchTerm=${searchTerm}`);
       const data = await res.json();
       setProducts(data?.data);
       return data;
@@ -70,7 +70,7 @@ const ProductListTable = () => {
   const updateProductStatusFalse = (_id, status) => {
     const sendData = {
       _id,
-      status,
+      product_status: status,
     };
     updateProductStatus(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -94,7 +94,7 @@ const ProductListTable = () => {
   const updateProductStatusTrues = (_id, status) => {
     const sendData = {
       _id,
-      status,
+      product_status: status,
     };
     updateProductStatus(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -157,7 +157,7 @@ const ProductListTable = () => {
                   Color
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Menu
+                  Category
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Status
@@ -173,29 +173,29 @@ const ProductListTable = () => {
                 <tr key={product?._id}>
                   <td className="whitespace-nowrap px-4 py-2">
                     <img
-                      src={product?.thumbnail_image}
+                      src={product?.product_thumbnail}
                       alt=""
                       className="w-20"
                     />
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {product?.title}
+                    {product?.product_name}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {product?.price}
+                    {product?.product_price}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                    {product?.discount_price}
+                    {product?.product_discount_price}
                   </td>
                   <td
                     className={`whitespace-nowrap px-4 py-2 font-semibold text-${product?.colorId?.color.toLowerCase()}-500`}
                   >
-                    {product?.colorId?.color}
+                    {product?.product_color_id?.color_name}
                   </td>
                   <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
-                    {product?.menuId?.menu}
+                    {product?.category_id?.category_name}
                   </td>
-                  {product?.status == "active" ? (
+                  {product?.product_status == "active" ? (
                     <td className="whitespace-nowrap px-4 py-2">
                       <button
                         onClick={() =>
