@@ -282,11 +282,13 @@ const ProductAdd = () => {
         image: item?.image,
       })),
       product_color_id: colorId,
-      category_id: categoryIdForSubCategory
+      category_id: categoryIdForSubCategory,
+      sub_category_id: subcategory,
+      product_quantity: data?.product_quantity
     };
 
-    if (subcategory !== "" && subcategory !== undefined) {
-      sendData.sub_category_id = subcategory;
+    if (subcategory !== "" && subcategory !== undefined && subcategory !== null) {
+      delete sendData.sub_category_id;
     }
     addProduct(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -651,14 +653,26 @@ const ProductAdd = () => {
             </div>
 
 
-            <div className="flex justify-end mt-6">
-              <button
-                type="Submit"
-                className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
-              >
-                {loading ? <MiniSpinner /> : "Create"}
-              </button>
-            </div>
+            {
+              loading ?
+                <div className="flex justify-end mt-6">
+                  <button
+                    type="button"
+                    className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
+                  >
+                    <MiniSpinner />
+                  </button>
+                </div>
+                :
+                <div className="flex justify-end mt-6">
+                  <button
+                    type="Submit"
+                    className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
+                  >
+                    Create
+                  </button>
+                </div>
+            }
           </form>
         </div>
       </div>
