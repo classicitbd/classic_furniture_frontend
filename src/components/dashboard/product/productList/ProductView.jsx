@@ -6,18 +6,17 @@ import Select from "react-select";
 const ProductView = ({ setIsViewOpen, isViewData }) => {
   // send all image for sliding
   const allImages = [
-    isViewData?.hover_image,
-    isViewData?.thumbnail_image,
-    ...isViewData?.images?.map((item) => item.image),
+    isViewData?.product_thumbnail,
+    ...isViewData?.product_images?.map((item) => item?.image),
   ];
 
   function formatSizeVariation(option) {
-    const baseString = `Size: ${option.size}, Quantity: ${option.quantity}`;
+    const baseString = `Size: ${option?.size}, Quantity: ${option?.quantity}`;
 
     // Check if price and discount_price is not null before including it in the string
-    const priceString = option.price ? `, Price: ${option.price}` : "";
+    const priceString = option?.price ? `, Price: ${option?.price}` : "";
 
-    const discountString = option.discount_price
+    const discountString = option?.discount_price
       ? `, Discount Price: ${option.discount_price}`
       : "";
 
@@ -52,59 +51,46 @@ const ProductView = ({ setIsViewOpen, isViewData }) => {
             {/* Show data */}
             <div className="md:col-span-6 col-span-12">
               <h3 className="text-xl font-semibold text-bgray-900">
-                {isViewData?.title}
+                {isViewData?.product_name}
               </h3>
 
               <div className="flex items-center justify-between mt-2">
                 <h2 className="text-red-400">
-                  Price: <strong>৳ {isViewData?.price}</strong>{" "}
+                  Price: <strong>৳ {isViewData?.product_price}</strong>{" "}
                 </h2>
-                {isViewData?.discount_price && (
+                {isViewData?.product_discount_price && (
                   <h2 className="text-red-400">
                     Discount Price:{" "}
-                    <strong>৳ {isViewData?.discount_price}</strong>{" "}
+                    <strong>৳ {isViewData?.product_discount_price}</strong>{" "}
                   </h2>
                 )}
               </div>
 
               <div className="flex items-center justify-between mt-1">
-                <h2>Color: {isViewData?.colorId?.color} </h2>
-                <h2>Menu: {isViewData?.menuId?.menu} </h2>
+                <h2>Color: {isViewData?.product_color_id?.color_name} </h2>
+                <h2>Category: {isViewData?.category_id?.category_name} </h2>
               </div>
-
               <h2 className="mt-1">
-                Category: {isViewData?.categoryId?.category}{" "}
+                Sub Category: {isViewData?.sub_category_id?.sub_category_name}{" "}
               </h2>
-              <h2 className="mt-1">
-                Sub Category: {isViewData?.subCategoryId?.sub_category}{" "}
-              </h2>
-              {isViewData?.featureId?.feature && (
-                <h2 className="mt-1">
-                  Feature: {isViewData?.featureId?.feature}{" "}
-                </h2>
-              )}
-              {isViewData?.collectionId?.collection_name && (
-                <h2 className="mt-1">
-                  Collection: {isViewData?.collectionId?.collection_name}{" "}
-                </h2>
-              )}
-              {isViewData?.styleId?.style && (
-                <h2 className="mt-1">Style: {isViewData?.styleId?.style} </h2>
-              )}
 
-              <p className="mt-4">See Variation: </p>
-              <Select
-                id="variation"
-                name="variation"
-                required
-                aria-label="See all variation"
-                options={isViewData?.size_variation}
-                getOptionLabel={(option) => formatSizeVariation(option)}
-                getOptionValue={(x) => x?._id}
-              ></Select>
+              {isViewData?.product_size_variation?.length > 0 &&
+                <div>
+                  <p className="mt-4">See Variation: </p>
+                  <Select
+                    id="variation"
+                    name="variation"
+                    required
+                    aria-label="See all variation"
+                    options={isViewData?.product_size_variation}
+                    getOptionLabel={(option) => formatSizeVariation(option)}
+                    getOptionValue={(x) => x?._id}
+                  ></Select>
+                </div>
+              }
             </div>
           </div>
-          <div className="text-gray-400" dangerouslySetInnerHTML={{ __html: isViewData?.description }}></div>
+          <div className="text-gray-400" dangerouslySetInnerHTML={{ __html: isViewData?.product_description }}></div>
         </div>
       </div>
     </>
