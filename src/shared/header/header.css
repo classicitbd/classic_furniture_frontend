@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.es_container {
+    max-width: 1320px;
+    width: 100%;
+    margin: 0px auto;
+
+}
+
+
+.menu-hidden {
+    display: none;
+    transition: display 0.5s ease-out;
+    
+}
+
+.menu-visible {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 200px;
+    background-color: white;
+    box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transition: width 0.5s ease-out, box-shadow 0.5s ease-out;
+
+}
+
+
+
+.menu-item:hover {
+    background-color: #008140;
+    cursor: progress;
+
+}
