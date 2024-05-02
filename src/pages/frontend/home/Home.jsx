@@ -8,11 +8,12 @@ import CollectionCategory from "../../../components/frontend/ui/collectionCatego
 import CollectionTopCategory from "../../../components/frontend/ui/collectionCategory/CollectionTopCategory";
 // import Header from "../../../shared/header/Header";
 import CategorySlider from "../../../components/frontend/ui/slider/CategorySlider";
+import PopularCategory from "./PopularCategory";
 // import TopHeader from "../../../shared/header/TopHeader";
 
 
 const Home = () => {
-  
+
 
   return (
     <main className="">
@@ -24,6 +25,7 @@ const Home = () => {
         <Header />
       </div> */}
       <Slider />
+      <PopularCategory />
       <Category />
       <section className="py-5 lg:py-10">
         <ArrivalTopProducts />

@@ -8,6 +8,7 @@ import ChatIcon from "./components/common/chatIcon/ChatIcon";
 import CallIcon from "./components/common/callIcon/CallIcon";
 // import TabIcon from "./components/common/tabIcon/TabIcon";
 import CallModal from "./components/common/modal/CallModal";
+import PopularCategory from "./pages/frontend/home/PopularCategory";
 
 function App() {
   const [openCallModal, setOpenCallModal] = useState(false);
@@ -38,6 +39,7 @@ function App() {
     <>
       <RouterProvider router={router} />
       <ToastContainer />
+      <PopularCategory/>
 
       {/* <div className="fixed bottom-4 right-4 z-50 flex flex-col items-center gap-2">
         <div

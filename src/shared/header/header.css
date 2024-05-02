@@ -46,3 +46,12 @@
     padding: 10px;
 
   }
+
+  .modal-content {
+    position: absolute;
+    background-color: white;
+    z-index: 1000;
+    max-width: 1320px;
+    left: 294px;
+    
+}

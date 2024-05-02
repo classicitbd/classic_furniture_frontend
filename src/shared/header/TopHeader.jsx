@@ -1,7 +1,6 @@
 import { IoCallOutline } from 'react-icons/io5'
 import { CiMail } from 'react-icons/ci'
 import "./header.css"
-import { FaShoppingCart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 
@@ -34,7 +33,6 @@ export default function TopHeader() {
                     <div className="right  me-20 xl:me-0">
                         <div className="left flex items-center gap-4">
                             <div className="email flex items-center">
-                                <FaShoppingCart className="text-ftPrimaryColor" />
                                 <Link
                                     to="mailto: develoer@dev.com"
                                     className="ml-2 text-ftMuteColor text-[13px] font-light"

@@ -1,8 +1,19 @@
+import { useState } from "react";
 import "./header.css"
 import { Link, NavLink } from 'react-router-dom'
 
 
 export default function BottomHeader() {
+    const [showCategoryModal, setShowCategoryModal] = useState(false);
+
+    const handleMouseEnter = () => {
+        setShowCategoryModal(true);
+    };
+
+    const handleMouseLeave = () => {
+        setShowCategoryModal(false);
+    };
+
     return (
         <div className="text-green-900 font-medium">
             <div className="es_container">
@@ -25,12 +36,19 @@ export default function BottomHeader() {
                             </NavLink>
                         </nav>
                         <nav className="email flex items-center">
-                            <NavLink
-                                to={"/category"}
-                                className="  text-[14px]"
-                            >
-                                Category
-                            </NavLink>
+                            <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                                <NavLink to={"/category"} className="text-[14px]">Category</NavLink>
+                                {showCategoryModal && (
+                                    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="bg-[#D4D3D3] shadow-xl  modal-content w-full grid grid-cols-6 gap-4 p-4 rounded">
+                                        {Array.from({ length: 16 }).map((_, index) => (
+                                            <Link key={index} to={`/category/${index}`} className="text-blue-500 hover:underline">
+                                                Categories {index + 1}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+
+                            </div>
                         </nav>
                         <nav className="email flex items-center">
                             <NavLink
@@ -45,6 +63,8 @@ export default function BottomHeader() {
 
                 </div>
             </div>
+
+
         </div>
     )
 }

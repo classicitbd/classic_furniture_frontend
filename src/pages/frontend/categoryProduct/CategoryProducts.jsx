@@ -1,4 +1,3 @@
-
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
@@ -64,7 +63,7 @@ export default function CategoryProducts() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
     return (
-        <div className="bg-white">
+        <div className="">
             <div>
                 {/* Mobile filter dialog */}
                 <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -253,7 +252,7 @@ export default function CategoryProducts() {
                                             {({ open }) => (
                                                 <>
                                                     <h3 className="-my-3 flow-root">
-                                                        <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                        <Disclosure.Button className="flex w-full items-center justify-between  py-3 text-sm text-gray-400 hover:text-gray-500">
                                                             <span className="font-medium text-gray-900">{section.name}</span>
                                                             <span className="ml-6 flex items-center">
                                                                 {open ? (
