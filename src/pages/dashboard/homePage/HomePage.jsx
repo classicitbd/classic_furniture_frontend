@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import WeekSell from "../../../components/dashboard/homePage/WeekSell";
 import YearSell from "../../../components/dashboard/homePage/YearSell";
 
+
 const HomePage = () => {
 
     const { data: datas = [], isLoading } = useQuery({
@@ -34,6 +35,7 @@ const HomePage = () => {
 
     return (
         <div>
+
 
             <div className="flex items-center justify-between bg-white p-4 rounded-xl">
                 <h3 className="text-[20px] font-semibold">Dashboard</h3>
