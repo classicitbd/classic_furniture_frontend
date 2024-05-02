@@ -16,6 +16,7 @@ import ProductList from "../pages/dashboard/product/productList/ProductList";
 import ProductCreate from "../pages/dashboard/product/productCreate/ProductCreate";
 import Customer from "../pages/dashboard/customer/Customer";
 import AllProducts from "../pages/frontend/allProducts/AllProducts";
+import CategoryProducts from "../pages/frontend/categoryProduct/CategoryProducts";
 import Order from "../pages/dashboard/order/Order";
 import CheckoutPage from "../pages/frontend/checkout/CheckoutPage";
 import NotFound from "../shared/notFound/NotFound";
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      {
+        path: "/category",
+        element:<CategoryProducts />,
+      },
     ],
   },
   {
@@ -63,6 +68,7 @@ const router = createBrowserRouter([
         path: "/all",
         element: <AllProducts />,
       },
+     
       {
         path: "/checkout",
         element: <CheckoutPage />,

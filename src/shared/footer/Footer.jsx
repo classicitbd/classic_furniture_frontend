@@ -43,10 +43,10 @@ const Footer = () => {
   }
 
   return (
-    <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary">
+    <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary ">
       <div className="container pt-10">
         {/* footer top */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 es_container mx-auto md:px-20 xl:px-0 px-5">
           {/* helpful links */}
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px] font-[500]">

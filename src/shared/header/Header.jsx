@@ -7,6 +7,7 @@ import MobileMenu from './MobileMenu'
 import { FaBars } from 'react-icons/fa'
 import { useState } from 'react'
 import "./header.css"
+import logo from "../../assets/images/furniture-logo.png"
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -19,9 +20,16 @@ export default function Header() {
     <div className="bg-ftSecoundColor text-white shadow-sm">
       <div className="es_container">
 
-        <div className="flex items-center justify-between gap-4 py-2">
-          <Link to={'/'} className="logo">
-            <h1 className='text-[#008140] font-extrabold text-2xl hidden lg:block ms-20 xl:ms-0'> Classic Furniture</h1>
+        <div className="flex items-center justify-between gap-2 py-2">
+          <Link className="cart flex items-center gap-2  md:ms-20  xl:ms-0">
+            <span className="icon hidden lg:block">
+              <img className='w-16' src={logo} alt="" />
+            </span>
+            <div className="flex flex-col text-[#008140] ">
+              <span className="text-ftMuteColor text-[20px] font-bold hidden lg:block">
+                Classic Furniture
+              </span>
+            </div>
           </Link>
           <div className="search flex-1">
 
@@ -30,6 +38,7 @@ export default function Header() {
               <div className='block lg:hidden text-black me-5  max-w-[200px]'>
                 <MobileMenu isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} /> <FaBars className='text-2xl text-[#817777]' onClick={handleMobileMenu} />
               </div>
+
               <input
                 id="search"
                 type="search"
