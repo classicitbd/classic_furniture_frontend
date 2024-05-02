@@ -39,7 +39,7 @@ export default function BottomHeader() {
                             <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                                 <NavLink to={"/category"} className="text-[14px]">Category</NavLink>
                                 {showCategoryModal && (
-                                    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="bg-[#D4D3D3] shadow-xl  modal-content w-full grid grid-cols-6 gap-4 p-4 rounded">
+                                    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="bg-[#ffffff] shadow  modal-content w-full grid grid-cols-6 gap-4 p-4 rounded">
                                         {Array.from({ length: 16 }).map((_, index) => (
                                             <Link key={index} to={`/category/${index}`} className="text-blue-500 hover:underline">
                                                 Categories {index + 1}
