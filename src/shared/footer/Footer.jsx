@@ -12,11 +12,11 @@ import { FaUmbraco } from "react-icons/fa";
 
 const quickLinks = [
   { path: "/about-us", label: "Our Story" },
-  // { path: "/refund-policy", label: "Refund Policy" },
-  // { path: "/cancellation-policy", label: "Cancellation Policy" },
-  // { path: "/term-&-condition", label: "Terms & Condition" },
-  // { path: "/privacy-policy", label: "Privacy Policy" },
-  // { path: "/return-policy", label: "Return policy" },
+  { path: "/refund-policy", label: "Refund Policy" },
+  { path: "/cancellation-policy", label: "Cancellation Policy" },
+  { path: "/term-&-condition", label: "Terms & Condition" },
+  { path: "/privacy-policy", label: "Privacy Policy" },
+  { path: "/return-policy", label: "Return policy" },
 ];
 
 const helpfulLinks = [
@@ -44,10 +44,10 @@ const Footer = () => {
   }
 
   return (
-    <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary">
-      <div className="container pt-10">
+    <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary ">
+      <div className=" es_container mx-auto md:px-20 xl:px-0 px-5 pt-10">
         {/* footer top */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 es_container mx-auto md:px-20 xl:px-0 px-5">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 xl:grid-cols-6">
           {/* helpful links */}
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px] font-[500]">
@@ -92,6 +92,31 @@ const Footer = () => {
                 style={{ fontSize: "20px" }}
               >
                 The Company
+              </h2>
+            </li>
+            {quickLinks?.map((item, index) => (
+              <li
+                key={index}
+                className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1"
+              >
+                <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+                <Link
+                  to={item?.path}
+                  className="flex flex-col text-[15px] hover:decoration-primaryColor"
+                >
+                  {item?.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {/* Goal */}
+          <ul className="list-none ml-0 mb-0">
+            <li className="leading-[30px] font-[500]">
+              <h2
+                className="mb-3 lg:mb-6 text-secondary uppercase"
+                style={{ fontSize: "20px" }}
+              >
+                The Goal
               </h2>
             </li>
             {quickLinks?.map((item, index) => (
