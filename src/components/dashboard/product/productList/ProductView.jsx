@@ -4,6 +4,7 @@ import ProductViewImageSlider from "./ProductViewImageSlider";
 import Select from "react-select";
 
 const ProductView = ({ setIsViewOpen, isViewData }) => {
+  
   // send all image for sliding
   const allImages = [
     isViewData?.product_thumbnail,
@@ -70,9 +71,12 @@ const ProductView = ({ setIsViewOpen, isViewData }) => {
                 <h2>Color: {isViewData?.product_color_id?.color_name} </h2>
                 <h2>Category: {isViewData?.category_id?.category_name} </h2>
               </div>
-              <h2 className="mt-1">
-                Sub Category: {isViewData?.sub_category_id?.sub_category_name}{" "}
-              </h2>
+              <div className="flex items-center justify-between mt-1">
+                <h2 className="mt-1">
+                  Sub Category: {isViewData?.sub_category_id?.sub_category_name}
+                </h2>
+                <h2>Partial Payment Amount: {isViewData?.product_partial_payment_amount} </h2>
+              </div>
 
               {isViewData?.product_size_variation?.length > 0 &&
                 <div>

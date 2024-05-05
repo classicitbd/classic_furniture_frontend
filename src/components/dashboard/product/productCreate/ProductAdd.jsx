@@ -25,6 +25,7 @@ const ProductAdd = () => {
   const [description, setDescription] = useState("");
   const [categoryIdForSubCategory, setCategoryIdForSubCategory] = useState("");
   const [isOpenSubCategory, setIsOpenSubCategory] = useState(true);
+  const [partialPayment, setPartialPayment] = useState(false)
 
   const {
     register,
@@ -211,6 +212,11 @@ const ProductAdd = () => {
   // data post in backend
   const handleDataPost = async (data) => {
     setLoading(true)
+    if (data?.product_partial_payment == true && !data?.product_partial_payment_amount) {
+      toast.error("Error: Please fill in the product partial amount.");
+      setLoading(false)
+      return;
+    }
     if (!description) {
       toast.error("Error: Please fill in the product description box.");
       setLoading(false)
@@ -284,7 +290,9 @@ const ProductAdd = () => {
       product_color_id: colorId,
       category_id: categoryIdForSubCategory,
       sub_category_id: subcategory,
-      product_quantity: data?.product_quantity
+      product_quantity: data?.product_quantity,
+      product_partial_payment: data?.product_partial_payment,
+      product_partial_payment_amount: data?.product_partial_payment_amount
     };
 
     if (subcategory == "" || subcategory == undefined || subcategory == null) {
@@ -650,6 +658,36 @@ const ProductAdd = () => {
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              <div className="mt-4 flex items-center gap-2">
+                <input
+                  {...register("product_partial_payment")}
+                  id="product_partial_payment"
+                  type="checkbox"
+                  className="w-5 h-5"
+                  onChange={() => setPartialPayment(!partialPayment)} // Call handlePCBuilderChange when the checkbox is clicked
+                />
+                <label htmlFor="product_partial_payment" className="font-medium text-xl">
+                  Partial payment ?
+                </label>
+              </div>
+              {partialPayment == true && (
+                <div>
+                  <label className="font-semibold" htmlFor="product_partial_payment_amount">
+                    Partial Payment Amount
+                  </label>
+                  <input
+                    placeholder="0.000"
+                    {...register("product_partial_payment_amount")}
+                    id="product_partial_payment_amount"
+                    min={1}
+                    type="number"
+                    className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                  />
+                </div>
+              )}
             </div>
 
 
