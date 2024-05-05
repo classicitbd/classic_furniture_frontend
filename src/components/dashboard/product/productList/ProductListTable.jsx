@@ -154,6 +154,9 @@ const ProductListTable = () => {
                   D-Price
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Quantity
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Color
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
@@ -186,6 +189,9 @@ const ProductListTable = () => {
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
                     {product?.product_discount_price}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                    {product?.product_quantity}
                   </td>
                   <td
                     className={`whitespace-nowrap px-4 py-2 font-semibold text-${product?.colorId?.color.toLowerCase()}-500`}

@@ -28,7 +28,7 @@ const helpfulLinks = [
 
 const Footer = () => {
   const { data: footerData = [], isLoading } = useQuery({
-    queryKey: ["socialMedia"],
+    queryKey: ["siteSetting"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
       const data = res.json();

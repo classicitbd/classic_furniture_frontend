@@ -42,8 +42,8 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
     updateModalValue?.category_id?.category_name;
   let categoryNameId = updateModalValue?.category_id?._id;
   let subCategoryNameValue =
-    updateModalValue?.subCategory_id?.sub_category_name;
-  let subCategoryNameId = updateModalValue?.subCategory_id?._id;
+    updateModalValue?.sub_category_id?.sub_category_name;
+  let subCategoryNameId = updateModalValue?.sub_category_id?._id;
   const [isOpenSubCategory, setIsOpenSubCategory] = useState(true);
 
   const {
@@ -309,34 +309,30 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       sub_category_id: subcategory,
       product_quantity: data?.product_quantity
     };
-    console.log(subcategory)
-    console.log(sendData)
-    if (subcategory !== "" && subcategory !== undefined && subcategory !== null) {
+    if (subcategory == "" || subcategory == undefined || subcategory == null) {
       delete sendData.sub_category_id
     }
-    console.log(sendData)
-    setLoading(false)
-    // updateProduct(sendData).then((result) => {
-    //   if (result?.data?.statusCode == 200 && result?.data?.success == true) {
-    //     toast.success(
-    //       result?.data?.message
-    //         ? result?.data?.message
-    //         : "Product Added successfully !",
-    //       {
-    //         autoClose: 1000,
-    //       }
-    //     );
-    //     reset();
-    //     setImageName("");
-    //     setMultiImage([]);
-    //     refetch();
-    //     setLoading(false)
-    //     setIsUpdateModalOpen(false);
-    //   } else {
-    //     toast.error(result?.error?.data?.message);
-    //     setLoading(false)
-    //   }
-    // });
+    updateProduct(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Product Added successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        reset();
+        setImageName("");
+        setMultiImage([]);
+        refetch();
+        setLoading(false)
+        setIsUpdateModalOpen(false);
+      } else {
+        toast.error(result?.error?.data?.message);
+        setLoading(false)
+      }
+    });
   };
 
 
