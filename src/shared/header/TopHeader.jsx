@@ -47,16 +47,16 @@ export default function TopHeader() {
                                     className=" text-ftMuteColor text-[13px] font-light"
                                 >
                                     Help Center
-                                </Link><span className='ms-3'>|</span>
+                                </Link>
                             </div>
-                            <div className="email flex items-center">
+                            {/* <div className="email flex items-center">
                                 <Link
                                     to="mailto: develoer@dev.com"
                                     className="text-ftMuteColor text-[13px] font-light"
                                 >
                                     Wish List
                                 </Link>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
