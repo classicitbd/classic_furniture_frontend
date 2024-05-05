@@ -56,7 +56,7 @@ const SignIn = () => {
         <form onSubmit={handleSubmit(handleSignIn)} className="space-y-4">
           <div className="form-control w-full">
             <label htmlFor="user_phone" className="label">
-              <span className="label-text">user_ Number</span>
+              <span className="label-text">Phone Number</span>
             </label>
             <input
               id="user_phone"

@@ -287,7 +287,7 @@ const ProductAdd = () => {
       product_quantity: data?.product_quantity
     };
 
-    if (subcategory !== "" && subcategory !== undefined && subcategory !== null) {
+    if (subcategory == "" || subcategory == undefined || subcategory == null) {
       delete sendData.sub_category_id;
     }
     addProduct(sendData).then((result) => {
