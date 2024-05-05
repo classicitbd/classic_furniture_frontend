@@ -101,8 +101,8 @@ const PopularCategory = () => {
     return (
         <div className="es_container mx-auto md:px-20 xl:px-0 px-5">
             <div>
-                <div className="flex justify-between items-center">
-                    <h1 className="text-xl my-6 font-semibold text-[#008140]">Popular Categories</h1>
+                <div className="flex justify-between items-center py-6 ">
+                    <h1 className="text-xl  font-semibold text-[#008140]">Popular Categories</h1>
                     <div onClick={handleViewAll} className="cursor-pointer font-medium flex items-center gap-1"><span>View All</span> {showAll ? <FaAngleDown /> : <FaAngleRight />}</div>
                 </div>
             </div>

@@ -30,7 +30,7 @@ export default function BottomHeader() {
                         <nav className="email flex items-center">
                             <NavLink
                                 to={"/all"}
-                                className="  text-[14px]"
+                                className="text-[14px]"
                             >
                                 All Products
                             </NavLink>

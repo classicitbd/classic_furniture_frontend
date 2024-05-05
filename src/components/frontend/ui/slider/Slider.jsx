@@ -10,32 +10,71 @@ import {
 import { FcNext, FcPrevious } from "react-icons/fc";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import banner1 from "../../../../assets/banner/banner1.jpg"
+import banner2 from "../../../../assets/banner/banner2.jpg"
+import banner3 from "../../../../assets/banner/banner3.jpg"
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/bundle";
 // import "swiper/css/keyboard";
-import { BASE_URL } from "../../../../utils/baseURL";
-import { useQuery } from "@tanstack/react-query";
+// import { BASE_URL } from "../../../../utils/baseURL";
+// import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import PreLoader from "../../../../shared/loader/PreLoader";
+// import PreLoader from "../../../../shared/loader/PreLoader";
 // import Header from "../../../../shared/header/Header";
 
 const Slider = () => {
-  const { data: sliders = [], isLoading } = useQuery({
-    queryKey: ["/api/v1/slider"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/slider`);
-      const data = await res.json();
-      return data;
+  // const { data: sliders = [], isLoading } = useQuery({
+  //   queryKey: ["/api/v1/slider"],
+  //   queryFn: async () => {
+  //     const res = await fetch(`${BASE_URL}/slider`);
+  //     const data = await res.json();
+  //     return data;
+  //   },
+  // }); // get all slider
+  const sliders = [
+    {
+      _id: 1,
+      slider:banner1,
+      title: "Banner 1 Title",
+      description: "Description for Banner 1",
+      url: "/banner1",
     },
-  }); // get all slider
+    {
+      _id: 2,
+      slider: banner2,
+      title: "Banner 2 Title",
+      description: "Description for Banner 2",
+      url: "/banner2",
+    },
+    {
+      _id: 3,
+      slider:banner3,
+      title: "Banner 3 Title",
+      description: "Description for Banner 3",
+      url: "/banner3",
+    },
+    {
+      _id: 4,
+      slider:banner1,
+      title: "Banner 4 Title",
+      description: "Description for Banner 4",
+      url: "/banner4",
+    },
+    {
+      _id: 5,
+      slider: banner2,
+      title: "Banner 5 Title",
+      description: "Description for Banner 5",
+      url: "/banner5",
+    },
+  ];
+
 
   return (
-    <div className="relative">
-      {isLoading ? (
-        <PreLoader />
-      ) : (
+    <div className="relative mt-2">
+      
         <Swiper
           // install Swiper modules
           modules={[
@@ -64,12 +103,12 @@ const Slider = () => {
           onSlideChange={() => {}}
         >
           <div className="relative" data-swiper-parallax-duration="2000">
-            {sliders?.data?.map((slider) => (
+            {sliders?.map((slider) => (
               <SwiperSlide key={slider._id}>
                 <img
                   loading="lazy"
                   src={slider?.slider}
-                  className="w-full h-[40vh] md:h-[50vh] lg:h-[100vh] object-fill"
+                  className="w-full h-[40vh] md:h-[30vh] lg:h-[83vh] object-fill"
                   alt={slider.id}
                 />
 
@@ -111,7 +150,6 @@ const Slider = () => {
             </button>
           </div>
         </Swiper>
-      )}
     </div>
   );
 };

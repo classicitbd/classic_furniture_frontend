@@ -7,9 +7,9 @@ import Header from '../../../shared/header/Header';
 export default function ProductSale() {
     const [showAll, setShowAll] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const initialDisplayCount = 5;
+    const initialDisplayCount = 10;
     const [displayedProducts, setdisplayedProducts] = useState([]);
-    const [showMoreCount, setShowMoreCount] = useState(5);
+    const [showMoreCount, setShowMoreCount] = useState(10);
     const [cartQuantity, setCartQuantity] = useState(0);
 
 
@@ -132,12 +132,12 @@ export default function ProductSale() {
 
     const handleViewAll = () => {
         setShowAll(!showAll);
-        setdisplayedProducts(productSale.slice(0, 10));
-        setShowMoreCount(10);
+        setdisplayedProducts(productSale.slice(0, 20));
+        setShowMoreCount(20);
     };
 
     const handleShowMore = () => {
-        const newCount = showMoreCount + 10;
+        const newCount = showMoreCount + 20;
         setdisplayedProducts(productSale.slice(0, newCount));
         setShowMoreCount(newCount);
     };
@@ -252,7 +252,7 @@ export default function ProductSale() {
                 <div className="hidden">
                     <Header cartQuantity={cartQuantity} />
                 </div>
-                {displayedProducts.length >= 10 && displayedProducts.length < productSale.length && (
+                {displayedProducts.length >= 20 && displayedProducts.length < productSale.length && (
                     <div className="text-center ">
                         <button
                             onClick={handleShowMore}
@@ -264,8 +264,8 @@ export default function ProductSale() {
                     </div>
                 )}
             </div>
-            
-            </>
+
+        </>
 
     )
 }

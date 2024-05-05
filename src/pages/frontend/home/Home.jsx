@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <main className="">
       <Slider />
-      <PopularCategory />
+      <PopularCategory className="mt-6" />
       <ProductSale/>
       {/* <Category /> */}
       {/* <section className="py-5 lg:py-10">
