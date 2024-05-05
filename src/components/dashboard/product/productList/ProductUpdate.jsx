@@ -18,6 +18,7 @@ import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   const [loading, setLoading] = useState(false);
+  const [partialPayment, setPartialPayment] = useState(updateModalValue?.product_partial_payment == true ? true : false)
 
   const [description, setDescription] = useState(updateModalValue?.product_description);
 
@@ -307,7 +308,9 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       category_id: categoryIdForSubCategory,
       _id: updateModalValue?._id,
       sub_category_id: subcategory,
-      product_quantity: data?.product_quantity
+      product_quantity: data?.product_quantity,
+      product_partial_payment: data?.product_partial_payment,
+      product_partial_payment_amount: data?.product_partial_payment_amount
     };
     if (subcategory == "" || subcategory == undefined || subcategory == null) {
       delete sendData.sub_category_id
@@ -761,6 +764,38 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                       </div>
                     </div>
                   ))}
+                </div>
+
+
+                <div className="grid grid-cols-2 gap-4 mt-6">
+                  <div className="mt-4 flex items-center gap-2">
+                    <input
+                      {...register("product_partial_payment")}
+                      id="product_partial_payment"
+                      type="checkbox"
+                      className="w-5 h-5"
+                      checked={updateModalValue?.product_partial_payment}
+                      onChange={() => setPartialPayment(!partialPayment)} // Call handlePCBuilderChange when the checkbox is clicked
+                    />
+                    <label htmlFor="product_partial_payment" className="font-medium text-xl">
+                      Partial payment ?
+                    </label>
+                  </div>
+                  {partialPayment == true && (
+                    <div>
+                      <label className="font-semibold" htmlFor="product_partial_payment_amount">
+                        Partial Payment Amount
+                      </label>
+                      <input
+                        defaultValue={updateModalValue?.product_partial_payment_amount}
+                        {...register("product_partial_payment_amount")}
+                        id="product_partial_payment_amount"
+                        min={1}
+                        type="number"
+                        className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                      />
+                    </div>
+                  )}
                 </div>
 
 
