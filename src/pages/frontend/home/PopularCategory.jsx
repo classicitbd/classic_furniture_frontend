@@ -57,9 +57,9 @@ const PopularCategory = () => {
         { id: 10, name: "Cabinet" }
     ];
 
-    const initialDisplayCount = 12;
+    const initialDisplayCount = 6;
     const [displayedCategories, setDisplayedCategories] = useState([]);
-    const [showMoreCount, setShowMoreCount] = useState(12);
+    const [showMoreCount, setShowMoreCount] = useState(6);
 
     useEffect(() => {
         setDisplayedCategories(categories?.slice(0, initialDisplayCount));
@@ -67,8 +67,8 @@ const PopularCategory = () => {
 
     const handleViewAll = () => {
         setShowAll(!showAll);
-        setDisplayedCategories(categories.slice(0, 24));
-        setShowMoreCount(24);
+        setDisplayedCategories(categories.slice(0, 12));
+        setShowMoreCount(12);
     };
 
     const handleShowMore = () => {
@@ -115,7 +115,7 @@ const PopularCategory = () => {
                     </div>
                 ))}
             </div>
-            {displayedCategories.length >= 18 && displayedCategories.length < categories.length && (
+            {displayedCategories.length >= 12 && displayedCategories.length < categories.length && (
                 <div className="text-center ">
                     <button
                         onClick={handleShowMore}
