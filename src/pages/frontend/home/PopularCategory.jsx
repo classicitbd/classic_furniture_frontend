@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import chairImage from "../../../assets/images/furniture-logo.png";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const PopularCategory = () => {
     const [showAll, setShowAll] = useState(false);
@@ -108,10 +109,12 @@ const PopularCategory = () => {
             <div className={`grid gap-4 ${gridCols}`}>
                 {displayedCategories.map((category) => (
                     <div key={category.id} className="bg-white shadow p-5 rounded-md">
-                        <div className="text-center">
-                            <img className="w-24 mx-auto" src={chairImage} alt={category.name} />
-                            <p className="mt-2">{category.name}</p>
-                        </div>
+                        <Link to={"/category"}>
+                            <div className="text-center">
+                                <img className="w-24 mx-auto" src={chairImage} alt={category.name} />
+                                <p className="mt-2">{category.name}</p>
+                            </div>
+                        </Link>
                     </div>
                 ))}
             </div>
