@@ -111,8 +111,8 @@ const PopularCategory = () => {
                     <div key={category.id} className="bg-white shadow p-5 rounded-md">
                         <Link to={"/category"}>
                             <div className="text-center">
-                                <img className="w-24 mx-auto" src={chairImage} alt={category.name} />
-                                <p className="mt-2">{category.name}</p>
+                                <img className="w-28 mx-auto" src={chairImage} alt={category.name} />
+                                <p className="mt-2 text-[14px] font-medium">{category.name}</p>
                             </div>
                         </Link>
                     </div>
