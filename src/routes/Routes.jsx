@@ -15,7 +15,6 @@ import DetailsPage from "../pages/frontend/details/DetailsPage";
 import ProductList from "../pages/dashboard/product/productList/ProductList";
 import ProductCreate from "../pages/dashboard/product/productCreate/ProductCreate";
 import Customer from "../pages/dashboard/customer/Customer";
-import AllProducts from "../pages/frontend/allProducts/AllProducts";
 import CategoryProducts from "../pages/frontend/categoryProduct/CategoryProducts";
 import Order from "../pages/dashboard/order/Order";
 import CheckoutPage from "../pages/frontend/checkout/CheckoutPage";
@@ -38,6 +37,7 @@ import CancellationPolicyPage from "../pages/frontend/cancellationPolicy/Cancell
 import RefundPolicyPage from "../pages/frontend/refundPolicy/RefundPolicy";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
+import AllProducts from "../pages/frontend/allProducts/AllProducts";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +53,10 @@ const router = createBrowserRouter([
         path: "/category",
         element:<CategoryProducts />,
       },
+      {
+        path: "/all",
+        element: <AllProducts />,
+      },
     ],
   },
   {
@@ -64,10 +68,7 @@ const router = createBrowserRouter([
         path: "/:slug",
         element: <DetailsPage />,
       },
-      {
-        path: "/all",
-        element: <AllProducts />,
-      },
+      
      
       {
         path: "/checkout",

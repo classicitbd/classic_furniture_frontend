@@ -263,7 +263,9 @@ export default function ProductSale() {
 
                     </div>
                 )}
-            </div></>
+            </div>
+            
+            </>
 
     )
 }

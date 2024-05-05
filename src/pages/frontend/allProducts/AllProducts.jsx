@@ -1,875 +1,569 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Fragment, useEffect, useState } from 'react'
+import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
+import { FaAngleDown, FaAngleRight, FaShoppingCart, FaStar, FaStarHalfAlt } from 'react-icons/fa'
+import { IoCartOutline } from 'react-icons/io5'
+import images from '../../../assets/images/furniture-logo.png'
+import Header from '../../../shared/header/Header';
 
-// import react icons
-import { HiOutlineAdjustmentsVertical } from "react-icons/hi2";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { RxReload } from "react-icons/rx";
-import { BiSolidDiscount } from "react-icons/bi";
-
-import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../../../utils/baseURL";
-import { GoArrowRight } from "react-icons/go";
-import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
-import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
-import ProductCard from "../../../components/common/card/ProductCard";
-
-const AllProducts = () => {
-  // get to top page all products page
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const [loading, setLoading] = useState(false);
-  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
-  const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [categoryTypes, setCategoryTypes] = useState([]);
-  const [subCategoryTypes, setSubCategoryTypes] = useState([]);
-
-  // selected options
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-  const [selectedCollection, setSelectedCollection] = useState(null);
-  const [selectedStyle, setSelectedStyle] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedFeature, setSelectedFeature] = useState(null);
-  const [selectedDiscount, setSelectedDiscount] = useState(null);
-  const [selectedSort, setSelectedSort] = useState(null);
-  const [products, setProducts] = useState([]);
-
-  // Add similar state variables for collection, color, features, and styles
-  const [queryParameters] = useSearchParams();
-  const navigate = useNavigate();
-
-  // get Category type
-  const { data = [], isLoading } = useQuery({
-    queryKey: ["/api/v1/category"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/category`);
-      const data = await res.json();
-      return data;
+const sortOptions = [
+    { name: 'Most Popular', href: '#', current: true },
+    { name: 'Best Rating', href: '#', current: false },
+    { name: 'Newest', href: '#', current: false },
+    { name: 'Price: Low to High', href: '#', current: false },
+    { name: 'Price: High to Low', href: '#', current: false },
+]
+const subCategories = [
+    { name: 'Totes', href: '#' },
+    { name: 'Backpacks', href: '#' },
+    { name: 'Travel Bags', href: '#' },
+    { name: 'Hip Bags', href: '#' },
+    { name: 'Laptop Sleeves', href: '#' },
+]
+const filters = [
+    {
+        id: 'color',
+        name: 'Color',
+        options: [
+            { value: 'white', label: 'White', checked: false },
+            { value: 'beige', label: 'Beige', checked: false },
+            { value: 'blue', label: 'Blue', checked: true },
+            { value: 'brown', label: 'Brown', checked: false },
+            { value: 'green', label: 'Green', checked: false },
+            { value: 'purple', label: 'Purple', checked: false },
+        ],
     },
-  });
-
-  // get Sub Category type
-  const { data: subData = [] } = useQuery({
-    queryKey: ["/api/v1/sub_category"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/sub_category`);
-      const data = await res.json();
-      return data;
+    {
+        id: 'category',
+        name: 'Category',
+        options: [
+            { value: 'new-arrivals', label: 'New Arrivals', checked: false },
+            { value: 'sale', label: 'Sale', checked: false },
+            { value: 'travel', label: 'Travel', checked: true },
+            { value: 'organization', label: 'Organization', checked: false },
+            { value: 'accessories', label: 'Accessories', checked: false },
+        ],
     },
-  });
-
-  // get Collection type
-  const { data: collections = [] } = useQuery({
-    queryKey: ["/api/v1/collection"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/collection`);
-      const data = await res.json();
-      return data;
+    {
+        id: 'size',
+        name: 'Size',
+        options: [
+            { value: '2l', label: '2L', checked: false },
+            { value: '6l', label: '6L', checked: false },
+            { value: '12l', label: '12L', checked: false },
+            { value: '18l', label: '18L', checked: false },
+            { value: '20l', label: '20L', checked: false },
+            { value: '40l', label: '40L', checked: true },
+        ],
     },
-  });
+]
 
-  // get Style type
-  const { data: styles = [] } = useQuery({
-    queryKey: ["/api/v1/style"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/style`);
-      const data = await res.json();
-      return data;
-    },
-  });
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
-  // get Color type
-  const { data: colors = [] } = useQuery({
-    queryKey: ["/api/v1/color"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/color`);
-      const data = await res.json();
-      return data;
-    },
-  });
+export default function AllProducts() {
+    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
-  // get Feature type
-  const { data: features = [] } = useQuery({
-    queryKey: ["/api/v1/feature"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/feature`);
-      const data = await res.json();
-      return data;
-    },
-  });
- 
-  const handleDiscountClick = (discount) => {
-    setSelectedDiscount(discount);
+    // products
+    const [showAll, setShowAll] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const initialDisplayCount = 10;
+    const [displayedProducts, setdisplayedProducts] = useState([]);
+    const [showMoreCount, setShowMoreCount] = useState(10);
+    const [cartQuantity, setCartQuantity] = useState(0);
 
-    // Update the query parameters
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("discount_price", discount);
 
-    // Update the URL using navigate
-    navigate(`/all?${queryParams.toString()}`);
-  };
+    const productSale = [
+        {
+            id: 1,
+            product_id: 'P001',
+            title: 'Horitoki Special all',
+            new_price: 49.99,
+            old_price: 59.99,
+            image: images,
+            rating: 4.5,
+        },
+        {
+            id: 2,
+            product_id: 'P002',
+            title: 'Traditional Red and Gold',
+            new_price: 39.99,
+            old_price: 49.99,
+            image: images,
+            rating: 4.2,
+        },
+        {
+            id: 3,
+            product_id: 'P003',
+            title: 'Traditional Red and Gold',
+            new_price: 79.99,
+            old_price: 99.99,
+            image: images,
+            rating: 4.7,
+        },
+        {
+            id: 4,
+            product_id: 'P004',
+            title: "Stylish Black ",
+            new_price: 99.99,
+            old_price: 69.99,
+            image: images,
+            rating: 4.4,
+        },
+        {
+            id: 5,
+            product_id: 'P005',
+            title: 'Vintage Denim ',
+            new_price: 29.99,
+            old_price: 39.99,
+            image: images,
+            rating: 4.0,
+        },
+        {
+            id: 6,
+            product_id: 'P006',
+            title: 'Casual Striped',
+            new_price: 19.99,
+            old_price: 24.99,
+            image: images.sharee1,
+            rating: 4.3,
+        },
+        {
+            id: 7,
+            product_id: 'P007',
+            title: 'Bohemian Style',
+            new_price: 34.99,
+            old_price: 44.99,
+            image: images,
+            rating: 4.6,
+        },
+        {
+            id: 8,
+            product_id: 'P008',
+            title: 'Classic Aviator ',
+            new_price: 14.99,
+            old_price: 19.99,
+            image: images,
+            rating: 4.8,
+        },
+        {
+            id: 9,
+            product_id: 'P009',
+            title: 'Chic Floral',
+            new_price: 9.99,
+            old_price: 6.99,
+            image: images,
+            rating: 4.1,
+        },
+        {
+            id: 10,
+            product_id: 'P010',
+            title: 'Retro Style Leather',
+            new_price: 54.99,
+            old_price: 64.99,
+            image: images,
+            rating: 4.9,
+        },
+        {
+            id: 15,
+            product_id: 'P009',
+            title: 'Chic Floral',
+            new_price: 9.99,
+            old_price: 6.99,
+            image: images,
+            rating: 4.1,
+        },
+        {
+            id: 16,
+            product_id: 'P010',
+            title: 'Retro Style Leather',
+            new_price: 54.99,
+            old_price: 64.99,
+            image: images,
+            rating: 4.9,
+        },
+    ]
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
 
-    // Update the query parameters
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("category", category);
 
-    // Update the URL using navigate
-    navigate(`/all?${queryParams.toString()}`);
-  };
+    useEffect(() => {
+        setdisplayedProducts(productSale?.slice(0, initialDisplayCount));
+    }, []);
 
-  const handleSubCategoryClick = (subCategory) => {
-    setSelectedSubCategory(subCategory);
+    const handleViewAll = () => {
+        setShowAll(!showAll);
+        setdisplayedProducts(productSale.slice(0, 20));
+        setShowMoreCount(20);
+    };
 
-    // Update the query parameters
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("sub_category", subCategory);
+    const handleShowMore = () => {
+        const newCount = showMoreCount + 10;
+        setdisplayedProducts(productSale.slice(0, newCount));
+        setShowMoreCount(newCount);
+    };
 
-    // Update the URL using navigate
-    navigate(`/all?${queryParams.toString()}`);
-  };
 
-  const handleCollectionClick = (collection) => {
-    setSelectedCollection(collection);
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
 
-    // Update the query parameters
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("collection", collection);
+        window.addEventListener('resize', handleResize);
 
-    // Update the URL using navigate
-    navigate(`/all?${queryParams.toString()}`);
-  };
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
-  const handleStyleClick = (style) => {
-    setSelectedStyle(style);
+    let gridCols = "grid-cols-2";
+    if (windowWidth >= 640) gridCols = "sm:grid-cols-2";
+    if (windowWidth >= 768) gridCols = "md:grid-cols-3";
+    if (windowWidth >= 1024) gridCols = "lg:grid-cols-4";
+    if (windowWidth >= 1280) gridCols = "2xl:grid-cols-5";
 
-    // Update the query parameters
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("style", style);
 
-    // Update the URL using navigate
-    navigate(`/all?${queryParams.toString()}`);
-  };
 
-  const handleColorsClick = (color) => {
-    setSelectedColor(color);
+    const handleAddToCart = () => {
+        setCartQuantity(prevQuantity => prevQuantity + 1);
+    };
 
-    // Update the query parameters
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("color", color);
+    console.log("cartQuantity", cartQuantity);
 
-    // Update the URL using navigate
-    navigate(`/all?${queryParams.toString()}`);
-  };
+    // products end
 
-  const handleFeatureClick = (feature) => {
-    setSelectedFeature(feature);
-
-    // Update the query parameters
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("feature", feature);
-
-    // Update the URL using navigate
-    navigate(`/all?${queryParams.toString()}`);
-  };
-
-  const handleSortClick = (sort) => {
-    setSelectedSort(sort);
-
-    // Update the query parameters
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("sort", sort);
-
-    // Update the URL using navigate
-    navigate(`/all?${queryParams.toString()}`);
-  };
-  // Add similar functions for collection, color, features, and styles
-
-  // reset function
-  const handleResetFilter = () => {
-    setSelectedCategory(null);
-    setSelectedSubCategory(null);
-    setSelectedCollection(null);
-    setSelectedColor(null);
-    setSelectedFeature(null);
-    setSelectedStyle(null);
-    setSelectedDiscount(false);
-  };
-
-  const toggleFilter = () => {
-    setIsFilterOpen(!isFilterOpen);
-  };
-
-  useEffect(() => {
-    // Get all query parameters
-    const allQueryParams = {};
-    for (const [key, value] of queryParameters.entries()) {
-      allQueryParams[key] = value;
-    }
-
-    const queryString = Object.keys(allQueryParams)
-      .filter((key) => allQueryParams[key] !== undefined)
-      .map((key) => `${key}=${allQueryParams[key]}`)
-      .join("&");
-
-    setLoading(true);
-    fetch(
-      `${BASE_URL}/${queryString.length > 0 ? `all?${queryString}` : "all"}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data?.data);
-        setLoading(false);
-      })
-      .catch((error) => console.error(error));
-
-    setFilterDropdownOpen(false);
-    setSortDropdownOpen(false);
-
-    // You can perform any other logic based on all query parameters here
-  }, [queryParameters]);
-
-  // get unique category and sub_category
-
-  useEffect(() => {
-    const categoryMap = new Map();
-    data?.data?.forEach((item) => {
-      categoryMap.set(item.category, item);
-    });
-
-    // Convert Map values back to an array
-    const categoryData = Array.from(categoryMap.values());
-    setCategoryTypes(categoryData);
-
-    const subCategoryMap = new Map();
-    subData?.data?.forEach((item) => {
-      subCategoryMap.set(item.sub_category, item);
-    });
-
-    // Convert Map values back to an array
-    const subCategoryData = Array.from(subCategoryMap.values());
-    setSubCategoryTypes(subCategoryData);
-  }, [data?.data, subData?.data]);
-
-  if (loading || isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-      </div>
-    );
-  }
+        <div className="">
+            <div>
+                {/* Mobile filter dialog */}
+                <Transition.Root show={mobileFiltersOpen} as={Fragment}>
+                    <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="transition-opacity ease-linear duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="transition-opacity ease-linear duration-300"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        </Transition.Child>
 
-  return (
-    <div className="min-h-screen pb-5">
-      <div className="flex justify-between py-4 sticky top-[72px] sm:top-[81px] z-20 bg-white px-4 sm:px-10 md:px-16 lg:px-20 xl:px-24 2xl:px-48 shadow-sm border-b border-bgray-500">
-        <div>
-          <h1>Products {products?.length}</h1>
-        </div>
+                        <div className="fixed inset-0 z-40 flex">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="transition ease-in-out duration-300 transform"
+                                enterFrom="translate-x-full"
+                                enterTo="translate-x-0"
+                                leave="transition ease-in-out duration-300 transform"
+                                leaveFrom="translate-x-0"
+                                leaveTo="translate-x-full"
+                            >
+                                <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+                                    <div className="flex items-center justify-between px-4">
+                                        <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                                        <button
+                                            type="button"
+                                            className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                                            onClick={() => setMobileFiltersOpen(false)}
+                                        >
+                                            <span className="sr-only">Close menu</span>
+                                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                                        </button>
+                                    </div>
 
-        <ul className="flex items-center gap-3 sm:gap-5 text-sm">
-          {queryParameters.size > 0 && (
-            <li>
-              <Link
-                className="hidden sm:block"
-                onClick={handleResetFilter}
-                to={`/all`}
-              >
-                Reset Filter
-              </Link>
-              <Link
-                onClick={handleResetFilter}
-                to={`/all`}
-                className="block sm:hidden"
-              >
-                <RxReload />
-              </Link>
-            </li>
-          )}
-          <li>
-            <span className="w-[1px] h-4 bg-bgray-400 text-green inline-block"></span>
-          </li>
-          <li>
-            <button
-              onClick={() => handleDiscountClick("true")}
-              className={`${
-                selectedDiscount === "true" ? "text-error-200" : ""
-              } hidden sm:block`}
-            >
-              On Sale
-            </button>
-            <button
-              onClick={() => handleDiscountClick("true")}
-              className={`${
-                selectedDiscount ? "text-error-200" : ""
-              } block sm:hidden`}
-            >
-              <BiSolidDiscount />
-            </button>
-          </li>
-          <li>
-            <span className="w-[1px] h-4 bg-bgray-400 inline-block"></span>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                setFilterDropdownOpen(!filterDropdownOpen);
-                setSortDropdownOpen(false);
-              }}
-              className="sm:flex items-center gap-1 hidden"
-            >
-              <HiOutlineAdjustmentsVertical />
-              <span>Filters</span>
-            </button>
-            <button
-              onClick={() => {
-                setSortDropdownOpen(false);
-                toggleFilter(!isFilterOpen);
-              }}
-              className="flex items-center gap-1 sm:hidden"
-            >
-              <HiOutlineAdjustmentsVertical />
-            </button>
-            <div
-              className={`absolute top-[50px] left-0 w-full border bg-[#FFFFFF] ${
-                filterDropdownOpen ? "block" : "hidden"
-              }`}
-            >
-              <div className="grid grid-cols-6 min-h-[460px] border-b">
-                {/* ------ category section ------ start */}
-                <div className="border-r px-4 py-[5px]">
-                  <ul className="space-y-1">
-                    <li className="text-lg font-medium tracking-normal mb-2">
-                      <button>Categories</button>
-                    </li>
-                    {categoryTypes?.map((category) => (
-                      <li key={category._id}>
-                        <button
-                          onClick={() => handleCategoryClick(category?.slug)}
-                          className={`${
-                            selectedCategory === category?.slug
-                              ? "bg-bgray-100 border"
-                              : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                        >
-                          {category?.category}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                {/* ------ category section ------ end */}
-                {/* ------ sub category section ------ start */}
-                <div className="border-r px-4 py-[5px]">
-                  <ul className="space-y-1">
-                    <li className="text-lg font-medium tracking-normal mb-2">
-                      <button>Sub Categories</button>
-                    </li>
-                    {subCategoryTypes?.map((subCategory) => (
-                      <li key={subCategory?._id}>
-                        <button
-                          onClick={() =>
-                            handleSubCategoryClick(subCategory?.slug)
-                          }
-                          className={`${
-                            selectedSubCategory === subCategory?.slug
-                              ? "bg-bgray-100 border"
-                              : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                        >
-                          {subCategory?.sub_category}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                {/* ------ sub category section ------ end */}
-                {/* ------ collections section ------ start */}
-                <div className="border-r px-4 py-[5px]">
-                  <ul className="space-y-1">
-                    <li className="text-lg font-medium tracking-normal mb-2">
-                      <button>Collections</button>
-                    </li>
-                    {collections?.data?.map((collection) => (
-                      <li key={collection?._id}>
-                        <button
-                          onClick={() =>
-                            handleCollectionClick(collection?.slug)
-                          }
-                          className={`${
-                            selectedCollection === collection?.slug
-                              ? "bg-bgray-100 border"
-                              : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                        >
-                          {collection?.collection_name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                {/* ------ collections section ------ end */}
-                {/* ------ styles section ------ start */}
-                <div className="border-r px-4 py-[5px]">
-                  <ul className="space-y-1">
-                    <li className="text-lg font-medium tracking-normal mb-2">
-                      <button>Styles</button>
-                    </li>
-                    {styles?.data?.map((style) => (
-                      <li key={style?._id}>
-                        <button
-                          onClick={() => handleStyleClick(style?.slug)}
-                          className={`${
-                            selectedStyle === style?.slug
-                              ? "bg-bgray-100 border"
-                              : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                        >
-                          {style?.style}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                {/* ------ styles section ------ end */}
-                {/* ------ color section ------ start */}
-                <div className="border-r px-4 py-[5px]">
-                  <ul className="space-y-1">
-                    <li className="text-lg font-medium tracking-normal mb-2">
-                      <button>Colors</button>
-                    </li>
-                    {colors?.data?.map((color) => (
-                      <li key={color?._id}>
-                        <button
-                          onClick={() => handleColorsClick(color?.slug)}
-                          className={`${
-                            selectedColor === color?.slug
-                              ? "bg-bgray-100 border"
-                              : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                        >
-                          {color?.color}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                {/* ------ color section ------ end */}
-                {/* ------ features section ------ start */}
-                <div className="border-r px-4 py-[5px]">
-                  <ul className="space-y-1">
-                    <li className="text-lg font-medium tracking-normal mb-2">
-                      <button>Features</button>
-                    </li>
-                    {features?.data?.map((feature) => (
-                      <li key={feature?._id}>
-                        <button
-                          onClick={() => handleFeatureClick(feature?.slug)}
-                          className={`${
-                            selectedFeature === feature?.slug
-                              ? "bg-bgray-100 border"
-                              : ""
-                          } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                        >
-                          {feature?.feature}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                {/* ------ features section ------ end */}
-              </div>
-              <div
-                onClick={() => setFilterDropdownOpen(false)}
-                className="flex justify-center py-2 cursor-pointer"
-              >
-                <button className="text-center">Hide Filter</button>
-              </div>
+                                    {/* Filters */}
+                                    <form className="mt-4 border-t border-gray-200">
+                                        <h3 className="sr-only">All Products</h3>
+                                        <ul role="list" className="px-2 py-3 font-medium text-gray-900">
+                                            {subCategories.map((category) => (
+                                                <li key={category.name}>
+                                                    <a href={category.href} className="block px-2 py-3">
+                                                        {category.name}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        {filters.map((section) => (
+                                            <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                                                {({ open }) => (
+                                                    <>
+                                                        <h3 className="-mx-2 -my-3 flow-root">
+                                                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                                                <span className="font-medium text-gray-900">{section.name}</span>
+                                                                <span className="ml-6 flex items-center">
+                                                                    {open ? (
+                                                                        <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                    ) : (
+                                                                        <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                    )}
+                                                                </span>
+                                                            </Disclosure.Button>
+                                                        </h3>
+                                                        <Disclosure.Panel className="pt-6">
+                                                            <div className="space-y-6">
+                                                                {section.options.map((option, optionIdx) => (
+                                                                    <div key={option.value} className="flex items-center">
+                                                                        <input
+                                                                            id={`filter-mobile-${section.id}-${optionIdx}`}
+                                                                            name={`${section.id}[]`}
+                                                                            defaultValue={option.value}
+                                                                            type="checkbox"
+                                                                            defaultChecked={option.checked}
+                                                                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                                                        />
+                                                                        <label
+                                                                            htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                                                            className="ml-3 min-w-0 flex-1 text-gray-500"
+                                                                        >
+                                                                            {option.label}
+                                                                        </label>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </Disclosure.Panel>
+                                                    </>
+                                                )}
+                                            </Disclosure>
+                                        ))}
+                                    </form>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </Dialog>
+                </Transition.Root>
+
+                <main className=" es_container mx-auto md:px-20 xl:px-0 px-5">
+                    <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10 ">
+                        <h1 className="text-2xl font-medium tracking-tight text-gray-500">All Products</h1>
+
+                        <div className="flex items-center">
+                            <Menu as="div" className="relative inline-block text-left">
+                                <div>
+                                    <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                                        Sort
+                                        <ChevronDownIcon
+                                            className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            aria-hidden="true"
+                                        />
+                                    </Menu.Button>
+                                </div>
+
+                                <Transition
+                                    as={Fragment}
+                                    enter="transition ease-out duration-100"
+                                    enterFrom="transform opacity-0 scale-95"
+                                    enterTo="transform opacity-100 scale-100"
+                                    leave="transition ease-in duration-75"
+                                    leaveFrom="transform opacity-100 scale-100"
+                                    leaveTo="transform opacity-0 scale-95"
+                                >
+                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <div className="py-1">
+                                            {sortOptions.map((option) => (
+                                                <Menu.Item key={option.name}>
+                                                    {({ active }) => (
+                                                        <a
+                                                            href={option.href}
+                                                            className={classNames(
+                                                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
+                                                                active ? 'bg-gray-100' : '',
+                                                                'block px-4 py-2 text-sm'
+                                                            )}
+                                                        >
+                                                            {option.name}
+                                                        </a>
+                                                    )}
+                                                </Menu.Item>
+                                            ))}
+                                        </div>
+                                    </Menu.Items>
+                                </Transition>
+                            </Menu>
+
+                            <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+                                <span className="sr-only">View grid</span>
+                                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
+                            </button>
+                            <button
+                                type="button"
+                                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                                onClick={() => setMobileFiltersOpen(true)}
+                            >
+                                <span className="sr-only">Filters</span>
+                                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <section aria-labelledby="products-heading" className="pb-24 pt-6">
+                        <h2 id="products-heading" className="sr-only">
+                            Products
+                        </h2>
+
+                        {/* <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4"> */}
+                        <div className='grid grid-cols-12 gap-4'>
+                            {/* Filters */}
+                            <div className='col-span-2'>
+                                <form className="hidden lg:block">
+                                    {/* <h3 className="sr-only">Categories</h3> */}
+                                    <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
+                                        {subCategories.map((category) => (
+                                            <li key={category.name}>
+                                                <a href={category.href}>{category.name}</a>
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    {filters.map((section) => (
+                                        <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
+                                            {({ open }) => (
+                                                <>
+                                                    <h3 className="-my-3 flow-root">
+                                                        <Disclosure.Button className="flex w-full items-center justify-between  py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                            <span className="font-medium text-gray-900">{section.name}</span>
+                                                            <span className="ml-6 flex items-center">
+                                                                {open ? (
+                                                                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                ) : (
+                                                                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                )}
+                                                            </span>
+                                                        </Disclosure.Button>
+                                                    </h3>
+                                                    <Disclosure.Panel className="pt-6">
+                                                        <div className="space-y-4">
+                                                            {section.options.map((option, optionIdx) => (
+                                                                <div key={option.value} className="flex items-center">
+                                                                    <input
+                                                                        id={`filter-${section.id}-${optionIdx}`}
+                                                                        name={`${section.id}[]`}
+                                                                        defaultValue={option.value}
+                                                                        type="checkbox"
+                                                                        defaultChecked={option.checked}
+                                                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                                                    />
+                                                                    <label
+                                                                        htmlFor={`filter-${section.id}-${optionIdx}`}
+                                                                        className="ml-3 text-sm text-gray-600"
+                                                                    >
+                                                                        {option.label}
+                                                                    </label>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </Disclosure.Panel>
+                                                </>
+                                            )}
+                                        </Disclosure>
+                                    ))}
+                                </form>
+                            </div>
+
+                            {/* Product grid */}
+                            <div className="lg:col-span-10 col-span-12">
+
+                                <div className="es_container mx-auto md:px-20 xl:px-0 px-5">
+                                    <div>
+                                        <div className="flex justify-between items-center mb-6">
+                                            <h1 className="text-xl font-semibold text-[#008140]">Products</h1>
+                                            <div onClick={handleViewAll} className="cursor-pointer font-medium flex items-center gap-1"><span>View All</span> {showAll ? <FaAngleDown /> : <FaAngleRight />}</div>
+                                        </div>
+                                    </div>
+                                    <div className={`grid gap-4 ${gridCols}`}>
+                                        {displayedProducts.map((product) => (
+                                            <div key={product.id} className="group">
+                                                <span>
+                                                    <div title='View Details' className=" border border-transparent group-hover:border-black transition-all duration-500 rounded-md group-hover:scale-105 shadow">
+                                                        <div className="w-full relative">
+                                                            <img
+                                                                src={images}
+                                                                alt={product?.title}
+                                                                className="w-full  rounded-lg "
+                                                            />
+                                                            <div className='bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2'>
+                                                                OFF 100%
+                                                            </div>
+                                                        </div>
+                                                        <div className=" px-2 py-5">
+                                                            <div className="product_rating flex">
+                                                                {[...Array(Math.floor(product.rating))].map(
+                                                                    (_, index) => (
+                                                                        <FaStar key={index} className="text-yellowColor" />
+                                                                    ),
+                                                                )}
+                                                                {product.rating % 1 >= 0.5 && (
+                                                                    <FaStarHalfAlt className="text-yellowColor" />
+                                                                )}
+                                                            </div>
+
+                                                            <div className="product_title mt-2">
+                                                                <p
+                                                                    title={product.title}
+                                                                    className={`text-[14px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${windowWidth < 640 ? 'max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis' : ''
+                                                                        }`}
+                                                                >
+                                                                    {windowWidth >= 1024
+                                                                        ? product.title.length > 30
+                                                                            ? `${product.title.slice(0, 30)}...`
+                                                                            : product.title
+                                                                        : product.title.length > 23
+                                                                            ? `${product.title.slice(0, 23)}...`
+                                                                            : product.title}
+                                                                </p>
+                                                            </div>
+
+                                                            <div
+                                                                className={`product_price_inner flex items-center gap-2 py-2`}
+                                                            >
+                                                                <strong className="offer_price text-ftPrimaryColor text-[16px] font-bold ">
+                                                                    ৳ {product.new_price}
+                                                                </strong>
+                                                                <span className="old_price line-through text-[14px] text-[#0f172a99] font-medium">
+                                                                    ৳ {product.old_price}
+                                                                </span>
+                                                            </div>
+
+                                                            <div className="flex w-full items-center justify-between gap-4 text-[#008140] pe-8">
+                                                                <button
+                                                                    type='button'
+                                                                    title='Buy Now'
+                                                                    className="bg-ftPrimaryColor py-2  rounded text-center font-semibold text-[16px]"
+                                                                    icon={IoCartOutline}
+                                                                >Buy Now</button>
+                                                                <FaShoppingCart onClick={handleAddToCart} title='Add To cart' className='text-xl' />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="hidden">
+                                        <Header cartQuantity={cartQuantity} />
+                                    </div>
+                                    {displayedProducts.length >= 20 && displayedProducts.length < productSale.length && (
+                                        <div className="text-center ">
+                                            <button
+                                                onClick={handleShowMore}
+                                                className="mt-4 bg-[#008140] hover:bg-[#183f2c] text-white font-bold py-2 px-4 rounded shadow focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                            >
+                                                Show More
+                                            </button>
+
+                                        </div>
+                                    )}
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </section>
+                </main>
             </div>
-          </li>
-          <li>
-            <span className="w-[1px] h-4 bg-bgray-400 inline-block"></span>
-          </li>
-
-          {/* ------ sorby section ------ start */}
-          <li className="relative">
-            <button
-              className="flex items-center gap-1"
-              onClick={() => {
-                setSortDropdownOpen(!sortDropdownOpen);
-                setFilterDropdownOpen(false);
-              }}
-            >
-              <span
-                className={
-                  sortDropdownOpen
-                    ? "text-bgray-900j font-medium"
-                    : "text-bgray-700 font-medium"
-                }
-              >
-                Sort by: {selectedSort}
-              </span>
-              <RiArrowDropDownLine
-                className={`text-xl ${
-                  sortDropdownOpen ? "rotate-180" : ""
-                } transition-all duration-300`}
-              />
-            </button>
-            <ul
-              className={`absolute top-10 -right-3 sm:-right-20 w-[160px] border ${
-                sortDropdownOpen ? "block" : "hidden"
-              }`}
-            >
-              <li className="bg-bgray-300 hover:bg-bgray-400 py-1 px-2">
-                <button onClick={() => handleSortClick("new")}>Newest</button>
-              </li>
-              <li className="bg-bgray-200 hover:bg-bgray-400 py-1 px-2">
-                <button onClick={() => handleSortClick("asc")}>
-                  Price Low to high
-                </button>
-              </li>
-              <li className="bg-bgray-300 hover:bg-bgray-400 py-1 px-2">
-                <button onClick={() => handleSortClick("desc")}>
-                  Price High to Low
-                </button>
-              </li>
-            </ul>
-          </li>
-          {/* ------ sorby section ------ end */}
-        </ul>
-
-        {/* ------ filter drawer ------ start */}
-
-        <div
-          className={`h-screen w-full fixed inset-y-0 left-0 top-[82px] z-10 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${
-            isFilterOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          <div className="flex items-center justify-end px-5 py-2">
-            <button className="" onClick={toggleFilter}>
-              <GoArrowRight className="p-1 text-4xl border bg-bgray-100 text-bgray-900 shadow rounded-full rotate-180" />
-            </button>
-          </div>
-          <div className="flex h-screen flex-col justify-between border-e">
-            <div className="px-4">
-              <ul className="space-y-1">
-                {/* ------ category section ------ start */}
-                <li>
-                  <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium"> Categories </span>
-
-                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </summary>
-
-                    <ul className="mt-2 space-y-1 px-4">
-                      {categoryTypes?.map((category) => (
-                        <li key={category._id}>
-                          <button
-                            onClick={() => {
-                              toggleFilter();
-                              handleCategoryClick(category?.slug);
-                            }}
-                            className={`${
-                              selectedCategory === category?.slug
-                                ? "bg-bgray-100 border"
-                                : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                          >
-                            {category?.category}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
-
-                {/* ------ category section ------ end */}
-                {/* ------ sub category section ------ start */}
-                <li>
-                  <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium">
-                        {" "}
-                        Sub Categories{" "}
-                      </span>
-
-                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </summary>
-
-                    <ul className="mt-2 space-y-1 px-4">
-                      {subCategoryTypes?.map((subCategory) => (
-                        <li key={subCategory?._id}>
-                          <button
-                            onClick={() => {
-                              toggleFilter();
-                              handleSubCategoryClick(subCategory?.slug);
-                            }}
-                            className={`${
-                              selectedSubCategory === subCategory?.slug
-                                ? "bg-bgray-100 border"
-                                : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                          >
-                            {subCategory?.sub_category}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
-
-                {/* ------ sub category section ------ end */}
-                {/* ------ collection section ------ start */}
-                <li>
-                  <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium"> Collections</span>
-
-                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </summary>
-
-                    <ul className="mt-2 space-y-1 px-4">
-                      {collections?.data?.map((collection) => (
-                        <li key={collection?._id}>
-                          <button
-                            onClick={() => {
-                              toggleFilter();
-                              handleCollectionClick(collection?.slug);
-                            }}
-                            className={`${
-                              selectedCollection === collection?.slug
-                                ? "bg-bgray-100 border"
-                                : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                          >
-                            {collection?.collection_name}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
-
-                {/* ------ collection section ------ end */}
-                {/* ------ styles section ------ start */}
-                <li>
-                  <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium"> Styles</span>
-
-                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </summary>
-
-                    <ul className="mt-2 space-y-1 px-4">
-                      {styles?.data?.map((style) => (
-                        <li key={style?._id}>
-                          <button
-                            onClick={() => {
-                              toggleFilter();
-                              handleStyleClick(style?.slug);
-                            }}
-                            className={`${
-                              selectedStyle === style?.slug
-                                ? "bg-bgray-100 border"
-                                : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                          >
-                            {style?.style}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
-
-                {/* ------ styles section ------ end */}
-                {/* ------ colors section ------ start */}
-                <li>
-                  <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium">Colors</span>
-
-                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </summary>
-
-                    <ul className="mt-2 space-y-1 px-4">
-                      {colors?.data?.map((color) => (
-                        <li key={color?._id}>
-                          <button
-                            onClick={() => {
-                              toggleFilter();
-                              handleColorsClick(color?.slug);
-                            }}
-                            className={`${
-                              selectedColor === color?.slug
-                                ? "bg-bgray-100 border"
-                                : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                          >
-                            {color?.color}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
-
-                {/* ------ colors section ------ end */}
-                {/* ------ features section ------ start */}
-                <li>
-                  <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium">Features</span>
-
-                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </summary>
-
-                    <ul className="mt-2 space-y-1 px-4">
-                      {features?.data?.map((feature) => (
-                        <li key={feature?._id}>
-                          <button
-                            onClick={() => {
-                              toggleFilter();
-                              handleFeatureClick(feature?.slug);
-                            }}
-                            className={`${
-                              selectedFeature === feature?.slug
-                                ? "bg-bgray-100 border"
-                                : ""
-                            } hover:bg-bgray-200 py-1 px-2 w-full text-left rounded-sm`}
-                          >
-                            {feature?.feature}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
-
-                {/* ------ features section ------ end */}
-              </ul>
-            </div>
-          </div>
         </div>
-        {/* ------ filter drawer ------ end */}
-      </div>
-
-      {/* ------ all products ------ start */}
-      {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
-          <ProductCardSkeleton />
-          <ProductCardSkeleton />
-          <ProductCardSkeleton />
-          <ProductCardSkeleton />
-        </div>
-      ) : (
-        <div>
-          {products?.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-              {products?.map((product) => (
-                <div
-                  key={product?._id}
-                  className="border rounded overflow-hidden bg-[#F0F0F0]"
-                >
-                  <ProductCard product={product} loading={isLoading} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <ProductNotFound />
-          )}
-        </div>
-      )}
-      {/* ------ all products ------ end */}
-    </div>
-  );
-};
-
-export default AllProducts;
+    )
+}
