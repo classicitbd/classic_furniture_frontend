@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
-import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
+// import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
+import sslcommerceLogo from "../../assets/images/SSL-logo.png";
 import { SiMinutemailer } from "react-icons/si";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { useQuery } from "@tanstack/react-query";
@@ -43,7 +44,7 @@ const Footer = () => {
   }
 
   return (
-    <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary ">
+    <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary">
       <div className="container pt-10">
         {/* footer top */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 es_container mx-auto md:px-20 xl:px-0 px-5">
@@ -213,12 +214,13 @@ const Footer = () => {
                 </h3>
               </li>
             </ul>
-            <img src={sslcommerceLogo} alt="" />
+
           </div>
         </div>
+        <div className="es_container mx-auto md:px-20 xl:px-0 px-5 "><img className="h-[100px] md:h-[250px]" src={sslcommerceLogo} alt="" /></div>
 
         {/* footer bottom */}
-        <div className="border-t mt-5 border-bgray-400 flex flex-col md:flex-row justify-center items-center pt-5 md:pb-16 lg:pb-5 gap-3">
+        <div className="border-t mt-5 border-bgray-400 flex flex-col md:flex-row justify-center items-center pt-5 md:pb-16 lg:pb-5 gap-3 es_container mx-auto md:px-20 xl:px-0 px-5">
           <p className="text-[15px] text-center md:text-left leading-7 font-[200]">
             copyright © 2024 {footerData?.data[0]?.title} developed by{" "}
             <Link

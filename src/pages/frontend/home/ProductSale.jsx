@@ -2,9 +2,17 @@ import { FaAngleDown, FaAngleRight, FaShoppingCart, FaStar, FaStarHalfAlt } from
 import { IoCartOutline } from 'react-icons/io5'
 import images from '../../../assets/images/furniture-logo.png'
 import { useEffect, useState } from 'react';
+import Header from '../../../shared/header/Header';
 
 export default function ProductSale() {
     const [showAll, setShowAll] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const initialDisplayCount = 5;
+    const [displayedProducts, setdisplayedProducts] = useState([]);
+    const [showMoreCount, setShowMoreCount] = useState(5);
+    const [cartQuantity, setCartQuantity] = useState(0);
+
+
     const productSale = [
         {
             id: 1,
@@ -116,9 +124,7 @@ export default function ProductSale() {
         },
     ]
 
-    const initialDisplayCount = 5;
-    const [displayedProducts, setdisplayedProducts] = useState([]);
-    const [showMoreCount, setShowMoreCount] = useState(5);
+
 
     useEffect(() => {
         setdisplayedProducts(productSale?.slice(0, initialDisplayCount));
@@ -136,7 +142,6 @@ export default function ProductSale() {
         setShowMoreCount(newCount);
     };
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         const handleResize = () => {
@@ -158,6 +163,11 @@ export default function ProductSale() {
 
 
 
+    const handleAddToCart = () => {
+        setCartQuantity(prevQuantity => prevQuantity + 1);
+    };
+
+    console.log("cartQuantity", cartQuantity);
 
 
 
@@ -198,10 +208,18 @@ export default function ProductSale() {
                                         </div>
 
                                         <div className="product_title mt-2">
-                                            <p title={product.title} className="text-[14px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all group-hover:underline">
-                                                {product.title.length > 30
-                                                    ? `${product.title.slice(0, 30)}...`
-                                                    : product.title}
+                                            <p
+                                                title={product.title}
+                                                className={`text-[14px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${windowWidth < 640 ? 'max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis' : ''
+                                                    }`}
+                                            >
+                                                {windowWidth >= 1024
+                                                    ? product.title.length > 30
+                                                        ? `${product.title.slice(0, 30)}...`
+                                                        : product.title
+                                                    : product.title.length > 23
+                                                        ? `${product.title.slice(0, 23)}...`
+                                                        : product.title}
                                             </p>
                                         </div>
 
@@ -223,13 +241,16 @@ export default function ProductSale() {
                                                 className="bg-ftPrimaryColor py-2  rounded text-center font-semibold text-[16px]"
                                                 icon={IoCartOutline}
                                             >Buy Now</button>
-                                            <FaShoppingCart title='Add To cart' className='text-xl' />
+                                            <FaShoppingCart onClick={handleAddToCart} title='Add To cart' className='text-xl' />
                                         </div>
                                     </div>
                                 </div>
                             </span>
                         </div>
                     ))}
+                </div>
+                <div className="hidden">
+                    <Header cartQuantity={cartQuantity} />
                 </div>
                 {displayedProducts.length >= 10 && displayedProducts.length < productSale.length && (
                     <div className="text-center ">
