@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
 // import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
-import sslcommerceLogo from "../../assets/images/SSL-logo.png";
+import sslcommerceLogo from "../../assets/images/SSLCommerz.png";
 import { SiMinutemailer } from "react-icons/si";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { useQuery } from "@tanstack/react-query";
@@ -217,7 +217,7 @@ const Footer = () => {
 
           </div>
         </div>
-        <div className="es_container mx-auto md:px-20 xl:px-0 px-5 "><img className="h-[100px] md:h-[250px]" src={sslcommerceLogo} alt="" /></div>
+        <div className="es_container mx-auto md:px-20 xl:px-0 px-5 w-full"><img className=" h-[80px] md:h-[220px]" src={sslcommerceLogo} alt="" /></div>
 
         {/* footer bottom */}
         <div className="border-t mt-5 border-bgray-400 flex flex-col md:flex-row justify-center items-center pt-5 md:pb-16 lg:pb-5 gap-3 es_container mx-auto md:px-20 xl:px-0 px-5">
