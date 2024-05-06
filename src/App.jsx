@@ -4,13 +4,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "./utils/baseURL";
-import ChatIcon from "./components/common/chatIcon/ChatIcon";
-import CallIcon from "./components/common/callIcon/CallIcon";
+// import ChatIcon from "./components/common/chatIcon/ChatIcon";
+// import CallIcon from "./components/common/callIcon/CallIcon";
 // import TabIcon from "./components/common/tabIcon/TabIcon";
-import CallModal from "./components/common/modal/CallModal";
+// import CallModal from "./components/common/modal/CallModal";
 
 function App() {
-  const [openCallModal, setOpenCallModal] = useState(false);
+  // const [openCallModal, setOpenCallModal] = useState(false);
   const [favicon, setFavicon] = useState("");
   const [phone, setPhone] = useState("");
   useEffect(() => {

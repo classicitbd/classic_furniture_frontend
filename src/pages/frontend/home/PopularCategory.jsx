@@ -1,61 +1,16 @@
 import { useEffect, useState } from "react";
-import chairImage from "../../../assets/images/furniture-logo.png";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const PopularCategory = () => {
     const [showAll, setShowAll] = useState(false);
     const categories = [
-        { id: 1, name: "Chair" },
-        { id: 2, name: "Table" },
-        { id: 3, name: "Sofa" },
-        { id: 4, name: "Desk" },
-        { id: 5, name: "Bookshelf" },
-        { id: 6, name: "Lamp" },
-        { id: 7, name: "Mirror" },
-        { id: 8, name: "Side Table" },
-        { id: 9, name: "Drawer" },
-        { id: 10, name: "Cabinet" },
-        { id: 1, name: "Chair" },
-        { id: 2, name: "Table" },
-        { id: 3, name: "Sofa" },
-        { id: 4, name: "Desk" },
-        { id: 5, name: "Bookshelf" },
-        { id: 6, name: "Lamp" },
-        { id: 7, name: "Mirror" },
-        { id: 8, name: "Side Table" },
-        { id: 9, name: "Drawer" },
-        { id: 10, name: "Cabinet" },
-        { id: 1, name: "Chair" },
-        { id: 2, name: "Table" },
-        { id: 3, name: "Sofa" },
-        { id: 4, name: "Desk" },
-        { id: 5, name: "Bookshelf" },
-        { id: 6, name: "Lamp" },
-        { id: 7, name: "Mirror" },
-        { id: 8, name: "Side Table" },
-        { id: 9, name: "Drawer" },
-        { id: 10, name: "Cabinet" },
-        { id: 1, name: "Chair" },
-        { id: 2, name: "Table" },
-        { id: 3, name: "Sofa" },
-        { id: 4, name: "Desk" },
-        { id: 5, name: "Bookshelf" },
-        { id: 6, name: "Lamp" },
-        { id: 7, name: "Mirror" },
-        { id: 8, name: "Side Table" },
-        { id: 9, name: "Drawer" },
-        { id: 10, name: "Cabinet" },
-        { id: 1, name: "Chair" },
-        { id: 2, name: "Table" },
-        { id: 3, name: "Sofa" },
-        { id: 4, name: "Desk" },
-        { id: 5, name: "Bookshelf" },
-        { id: 6, name: "Lamp" },
-        { id: 7, name: "Mirror" },
-        { id: 8, name: "Side Table" },
-        { id: 9, name: "Drawer" },
-        { id: 10, name: "Cabinet" }
+        { id: 1, name: "Living", image: "https://i.ibb.co/Dp5dSG9/living.jpg" },
+        { id: 2, name: "Bedroom", image: "https://i.ibb.co/hDJMYkx/bedroom.jpg" },
+        { id: 3, name: "Dining", image: "https://i.ibb.co/GPrR0Xj/dining.jpg" },
+        { id: 4, name: "Office", image: "https://i.ibb.co/GpxJwJf/office.jpg" },
+        { id: 5, name: "Hospital", image: "https://i.ibb.co/L8PDJSh/hospital.jpg" },
+        { id: 6, name: "Doors", image: "https://i.ibb.co/vHngdhG/doors.jpg" },
     ];
 
     const initialDisplayCount = 6;
@@ -108,11 +63,11 @@ const PopularCategory = () => {
             </div>
             <div className={`grid gap-4 ${gridCols}`}>
                 {displayedCategories.map((category) => (
-                    <div key={category.id} className="bg-white shadow p-5 rounded-md">
+                    <div key={category.id} className="bg-white shadow p-5 rounded-md hover:shadow-xl transition">
                         <Link to={"/category"}>
                             <div className="text-center">
-                                <img className="w-28 mx-auto" src={chairImage} alt={category.name} />
-                                <p className="mt-2 text-[14px] font-medium">{category.name}</p>
+                                <img className="w-full h-36 mx-auto" src={category?.image} alt={category.name} />
+                                <p className="mt-2 text-[14px] font-medium">{category?.name}</p>
                             </div>
                         </Link>
                     </div>
