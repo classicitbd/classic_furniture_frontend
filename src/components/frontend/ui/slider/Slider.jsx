@@ -118,12 +118,13 @@ const Slider = () => {
                     {slider?.title}
                   </h3>
                   <div
-                    className="text-gray-800 text-lg md:ms-20 xl:ms-0 px-5"
+                    className="text-gray-800 text-lg md:ms-20 xl:ms-0 px-5 mb-5"
                     dangerouslySetInnerHTML={{ __html: slider?.description }}
                   ></div>
-                  <Link
+                 <div>
+                 <Link
                     to={`${slider?.url ? slider?.url : "/all"}`}
-                    className="relative inline-flex items-center justify-start px-5  py-3 overflow-hidden font-normal rounded group md:ms-20 xl:ms-5"
+                    className="relative inline-flex items-center justify-start px-5 lg:mt-5 py-3 overflow-hidden font-normal rounded group md:ms-20 xl:ms-5 "
                   >
                     <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-5 top-0 bg-white opacity-[3%]"></span>
                     <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-[#008140] opacity-100 group-hover:-translate-x-8"></span>
@@ -132,6 +133,7 @@ const Slider = () => {
                     </span>
                     <span className="absolute inset-0 border-2 border-[#ffc] rounded"></span>
                   </Link>
+                 </div>
                 </div>
               </div>
             </SwiperSlide>
