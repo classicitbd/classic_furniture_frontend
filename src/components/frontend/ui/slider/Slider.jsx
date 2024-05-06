@@ -112,8 +112,8 @@ const Slider = () => {
                 alt={slider.id}
               />
 
-              <div className="absolute top-0 left-0 z-30 h-full w-full flex items-center  bg-primaryColor bg-opacity-40">
-                <div className="space-y-1 lg:space-y-2 es_container">
+              <div className="absolute top-0 left-0 z-30 h-full w-full flex items-center  bg-primaryColor bg-opacity-20 ">
+                <div className="space-y-1 lg:space-y-2 es_container ">
                   <h3 className="text-red-900 font-bold text-xl md:text-2xl lg:text-5xl md:ms-20 xl:ms-0 px-5">
                     {slider?.title}
                   </h3>
@@ -121,7 +121,7 @@ const Slider = () => {
                     className="text-gray-800 text-lg md:ms-20 xl:ms-0 px-5 mb-5"
                     dangerouslySetInnerHTML={{ __html: slider?.description }}
                   ></div>
-                 <div>
+                 <div className="mx-5 md:mx-0">
                  <Link
                     to={`${slider?.url ? slider?.url : "/all"}`}
                     className="relative inline-flex items-center justify-start px-5 lg:mt-5 py-3 overflow-hidden font-normal rounded group md:ms-20 xl:ms-5 "
