@@ -6,7 +6,7 @@ import { BiSolidCategory } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { TbCategoryPlus } from "react-icons/tb";
 import { MdControlPointDuplicate } from "react-icons/md";
-import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp, IoSettingsOutline } from "react-icons/io5"
+import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp, IoSettingsOutline, IoLogoYoutube } from "react-icons/io5"
 import { FcBarChart, FcPieChart } from "react-icons/fc";
 import { BsKanban } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
@@ -166,6 +166,17 @@ const SideNavBar = () => {
                         </div>
                     }
                 </div>
+
+                <Link className={
+                    pathname === "/admin/video_tab"
+                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
+                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
+                } to="/admin/video_tab">
+                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
+                        <IoLogoYoutube size={25} className="text-red-500" />
+                        Videos
+                    </div>
+                </Link>
 
                 <Link className={
                     pathname === "/admin/banner"
