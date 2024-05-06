@@ -38,6 +38,7 @@ import RefundPolicyPage from "../pages/frontend/refundPolicy/RefundPolicy";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
 import AllProducts from "../pages/frontend/allProducts/AllProducts";
+import Youtube from "../pages/dashboard/youtube/Youtube";
 
 const router = createBrowserRouter([
   {
@@ -189,6 +190,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/customer",
         element: <Customer />,
+      },
+      {
+        path: "/admin/video_tab",
+        element: <Youtube />,
       },
       {
         path: "/admin/setting",
