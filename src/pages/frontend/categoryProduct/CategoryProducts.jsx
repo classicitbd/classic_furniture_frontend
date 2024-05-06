@@ -4,7 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { FaAngleDown, FaAngleRight, FaShoppingCart, FaStar, FaStarHalfAlt } from 'react-icons/fa'
 import { IoCartOutline } from 'react-icons/io5'
-import images from '../../../assets/images/furniture-logo.png'
+// import images from '../../../assets/images/furniture-logo.png'
 import Header from '../../../shared/header/Header';
 
 const sortOptions = [
@@ -82,7 +82,7 @@ export default function CategoryProducts() {
             title: 'Horitoki Special all',
             new_price: 49.99,
             old_price: 59.99,
-            image: images,
+            image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
             rating: 4.5,
         },
         {
@@ -91,7 +91,7 @@ export default function CategoryProducts() {
             title: 'Traditional Red and Gold',
             new_price: 39.99,
             old_price: 49.99,
-            image: images,
+            image: "https://i.ibb.co/L8PDJSh/hospital.jpg",
             rating: 4.2,
         },
         {
@@ -100,7 +100,7 @@ export default function CategoryProducts() {
             title: 'Traditional Red and Gold',
             new_price: 79.99,
             old_price: 99.99,
-            image: images,
+            image: "https://i.ibb.co/Dp5dSG9/living.jpg",
             rating: 4.7,
         },
         {
@@ -109,7 +109,7 @@ export default function CategoryProducts() {
             title: "Stylish Black ",
             new_price: 99.99,
             old_price: 69.99,
-            image: images,
+            image: "https://i.ibb.co/GpxJwJf/office.jpg",
             rating: 4.4,
         },
         {
@@ -118,7 +118,7 @@ export default function CategoryProducts() {
             title: 'Vintage Denim ',
             new_price: 29.99,
             old_price: 39.99,
-            image: images,
+            image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
             rating: 4.0,
         },
         {
@@ -127,7 +127,7 @@ export default function CategoryProducts() {
             title: 'Casual Striped',
             new_price: 19.99,
             old_price: 24.99,
-            image: images.sharee1,
+            image: "https://i.ibb.co/GPrR0Xj/dining.jpg",
             rating: 4.3,
         },
         {
@@ -136,7 +136,7 @@ export default function CategoryProducts() {
             title: 'Bohemian Style',
             new_price: 34.99,
             old_price: 44.99,
-            image: images,
+            image: "https://i.ibb.co/GpxJwJf/office.jpg",
             rating: 4.6,
         },
         {
@@ -145,7 +145,7 @@ export default function CategoryProducts() {
             title: 'Classic Aviator ',
             new_price: 14.99,
             old_price: 19.99,
-            image: images,
+            image: "https://i.ibb.co/Dp5dSG9/living.jpg",
             rating: 4.8,
         },
         {
@@ -154,7 +154,7 @@ export default function CategoryProducts() {
             title: 'Chic Floral',
             new_price: 9.99,
             old_price: 6.99,
-            image: images,
+            image: "https://i.ibb.co/L8PDJSh/hospital.jpg",
             rating: 4.1,
         },
         {
@@ -163,7 +163,7 @@ export default function CategoryProducts() {
             title: 'Retro Style Leather',
             new_price: 54.99,
             old_price: 64.99,
-            image: images,
+            image: "https://i.ibb.co/vHngdhG/doors.jpg",
             rating: 4.9,
         },
         {
@@ -172,7 +172,7 @@ export default function CategoryProducts() {
             title: 'Chic Floral',
             new_price: 9.99,
             old_price: 6.99,
-            image: images,
+            image: "https://i.ibb.co/GPrR0Xj/dining.jpg",
             rating: 4.1,
         },
         {
@@ -181,7 +181,7 @@ export default function CategoryProducts() {
             title: 'Retro Style Leather',
             new_price: 54.99,
             old_price: 64.99,
-            image: images,
+            image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
             rating: 4.9,
         },
     ]
@@ -480,9 +480,9 @@ export default function CategoryProducts() {
                                                     <div title='View Details' className=" border border-transparent group-hover:border-black transition-all duration-500 rounded-md group-hover:scale-105 shadow">
                                                         <div className="w-full relative">
                                                             <img
-                                                                src={images}
+                                                                src={product?.image}
                                                                 alt={product?.title}
-                                                                className="w-full  rounded-lg "
+                                                                className="w-full  rounded-lg h-[120px] md:h-[180px]"
                                                             />
                                                             <div className='bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2'>
                                                                 OFF 100%

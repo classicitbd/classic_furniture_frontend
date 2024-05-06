@@ -1,6 +1,5 @@
 import { FaAngleDown, FaAngleRight, FaShoppingCart, FaStar, FaStarHalfAlt } from 'react-icons/fa'
 import { IoCartOutline } from 'react-icons/io5'
-import images from '../../../assets/images/furniture-logo.png'
 import { useEffect, useState } from 'react';
 import Header from '../../../shared/header/Header';
 

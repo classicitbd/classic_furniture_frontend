@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import chairImage from "../../../assets/images/furniture-logo.png";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
