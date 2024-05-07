@@ -1,27 +1,54 @@
 import { Outlet } from "react-router-dom";
 import SideNavBar from "../shared/sideNavBar/SideNavBar";
 import DashboardNavbars from "../shared/Navbar/DashboardNavbars";
+import { useState } from "react";
 
 const DashboardLayout = () => {
+
+    const [isSidebarOpen, setSidebarOpen] = useState(true);
+    const [isMinibarOpen, setMinibarOpen] = useState(false);
+
     return (
-        <div className="min-h-screen w-full h-full bg-white">
-            <div className="fixed top-0 left-0 w-full z-50 bg-black text-white">
-                <DashboardNavbars />
+
+        <div className="flex h-screen">
+            <div
+                className={`hidden lg:block max-h-screen transition-all overflow-hidden overflow-y-auto scrollbar-thin duration-300 ease-in-out bg-white ${isSidebarOpen ? "w-64" : "w-0"
+                    }`}
+            >
+                <SideNavBar />
             </div>
-            <div className="grid lg:grid-cols-12 grid-cols-4">
-                <div className="lg:col-span-2 mt-[60px]">
-                    <div className="max-h-screen scrollbar-hide fixed overflow-y-auto left-0 pb-20">
-                        <SideNavBar></SideNavBar>
-                    </div>
+            {/* ------ mobile menu ------ start */}
+            <div
+                className={`h-screen w-10/12 sm:w-4/12 fixed inset-y-0 left-0 z-50 bg-bgray-50 overflow-y-auto transition-transform duration-500 transform ${isMinibarOpen ? "translate-x-0" : "-translate-x-full"
+                    }`}
+            >
+                <div className="flex h-screen flex-col justify-between border-e">
+                    <SideNavBar />
                 </div>
-                <div className="overflow-y-auto lg:col-span-10 col-span-4 min-h-screen w-full bg-gray-100 mt-[70px] rounded-tl-3xl rounded-tr-3xl">
-                    <div className="lg:mx-[30px] mx-4 mt-4"
-                    >
-                        <Outlet></Outlet>
-                    </div>
+            </div>
+            {/* ------ mobile menu ------ end */}
+
+            {/* Main content */}
+            <div className="flex-1 flex flex-col overflow-hidden">
+                {/* Top navigation */}
+                <header className="shadow border-b border-gray-300 bg-[#FFFFFF]">
+                    {/* Top navigation content goes here */}
+                    <DashboardNavbars
+                        setSidebarOpen={setSidebarOpen}
+                        isSidebarOpen={isSidebarOpen}
+                        isMinibarOpen={isMinibarOpen}
+                        setMinibarOpen={setMinibarOpen}
+                    />
+                </header>
+
+                {/* Main content area */}
+                <div className="flex-1 overflow-x-hidden overflow-y-auto p-4 max-h-[120vh] bg-gray-200">
+                    {/* Page content goes here */}
+                    <Outlet />
                 </div>
             </div>
         </div>
+
     );
 };
 
