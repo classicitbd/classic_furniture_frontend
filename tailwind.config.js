@@ -15,6 +15,12 @@ export default {
         textColor: "#FFFFFF",
         hoverColor: "#1E2A34",
         redColor: "#f03737",
+        successColor: "#3BB77E",
+        secondary2: {
+          DEFAULT: "#F27F21",
+          light: "#ebe4f7",
+          "dark-light": "rgb(128 93 202 / 15%)",
+        },
 
         darkblack: {
           300: "#747681",
@@ -67,7 +73,7 @@ export default {
         sec: ["Nunito", "sans-serif"],
         extra: ["Pacifico", "cursive"],
       },
-      
+
       transitionDuration: {
         1200: "1200ms",
         1500: "1500ms",
@@ -91,7 +97,6 @@ export default {
         "3xl": "28px",
         "5xl": "48px",
       },
-
     },
   },
   plugins: [require("tailwind-scrollbar-hide"), require("tailwind-scrollbar")],

@@ -1,232 +1,325 @@
 
 import { useState } from "react";
-// import { AiFillHome } from "react-icons/ai";
-import { FaChevronDown, FaListUl, FaUsers } from "react-icons/fa";
-import { BiSolidCategory } from "react-icons/bi";
+import { BiLogOut, BiSolidCategoryAlt } from "react-icons/bi";
+import { IoIosSettings, IoLogoYoutube, IoMdHome } from "react-icons/io";
+import { TfiLayoutSliderAlt } from "react-icons/tfi";
+import {
+    TbCategoryPlus,
+} from "react-icons/tb";
+import {
+    MdOutlineAddShoppingCart,
+    MdPeople,
+} from "react-icons/md";
+import { IoCart, IoColorPaletteOutline } from "react-icons/io5";
+import { FaCartFlatbed } from "react-icons/fa6";
+import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "react-router-dom";
-import { TbCategoryPlus } from "react-icons/tb";
-import { MdControlPointDuplicate } from "react-icons/md";
-import { IoColorPaletteOutline, IoCartOutline, IoAddCircleSharp, IoSettingsOutline, IoLogoYoutube } from "react-icons/io5"
-import { FcBarChart, FcPieChart } from "react-icons/fc";
-import { BsKanban } from "react-icons/bs";
-import { FiLogOut } from "react-icons/fi";
+import { BASE_URL } from "../../utils/baseURL";
+import BigSpinner from "../loader/BigSpinner";
 import { eraseCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
 
-
 const SideNavBar = () => {
     const usePathname = useLocation();
-    const pathname = usePathname?.pathname;
+    const pathName = usePathname?.pathname;
+    const {
+        data: siteSetting = [],
+        isLoading
+    } = useQuery({
+        queryKey: [
+            '/api/v1/siteSetting',
+        ],
+        queryFn: async () => {
+            const res = await fetch(
+                `${BASE_URL}/siteSetting`
+            );
+            const data = await res.json();
+            return data;
+        },
+    }); // get all site setting
+    const [isTasksOpen, setIsTasksOpen] = useState(
+        pathName === "/admin/category" ||
+        pathName === "/admin/sub-category" ||
+        pathName === "/admin/color"
+    );
 
-    const [isUserOpen, setIsUserOpen] = useState(false);
-    const [isProductOpen, setIsProductOpen] = useState(false);
+    const [isProductOpen, setIsProductOpen] = useState(
+        pathName === "/admin/product" ||
+        pathName === "/admin/product/create"
+    );
 
     const handleLogOut = () => {
         eraseCookie(authKey);
         window.location.reload();
     }
 
-    const navBar = (
-        <>
-            <div className="flex flex-col mt-6">
-
-                <Link className={
-                    pathname === "/admin"
-                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
-                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/admin">
-                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
-                        <FcPieChart size={30} />
-                        Dashboard
-                    </div>
-                </Link>
-
-                <Link className={
-                    pathname === "/admin/order"
-                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
-                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/admin/order">
-                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
-                        <FcBarChart size={30} />
-                        Order
-                    </div>
-                </Link>
-
-                <div className="text-white nab_item xl:mt-1 lg:mt-3">
-                    <div className=" flex items-center justify-between font-semibold xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2">
-                        <button onClick={() => setIsUserOpen(!isUserOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-4 lg:text-[18px]">
-                            <BiSolidCategory size={25} className="text-blue-500" />Category <FaChevronDown className={`${isUserOpen ? "rotate-180 transition-all duration-300" : "transition-all duration-300"}`} size={20} /> </button>
-                    </div>
-                    {
-                        isUserOpen && <div className="p-1 bg-white ml-4">
-
-
-                            <div
-                                className={
-                                    pathname === "/admin/category"
-                                        ? "nab_item text-[#3EA2FA]"
-                                        : "text-[#717171] nab_item"
-                                }
-                            >
-                                <div className="flex items-center justify-between font-semibold">
-                                    <Link
-                                        to="/admin/category"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
-                                    >
-                                        <TbCategoryPlus />
-                                        Category
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div
-                                className={
-                                    pathname === "/admin/sub_category"
-                                        ? "nab_item text-[#3EA2FA]"
-                                        : "text-[#717171] nab_item"
-                                }
-                            >
-                                <div className="flex items-center justify-between font-semibold mt-2">
-                                    <Link
-                                        to="/admin/sub_category"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
-                                    >
-                                        <MdControlPointDuplicate />
-                                        Sub Category
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div
-                                className={
-                                    pathname === "/admin/color"
-                                        ? "nab_item text-[#3EA2FA]"
-                                        : "text-[#717171] nab_item"
-                                }
-                            >
-                                <div className="flex items-center justify-between font-semibold mt-2">
-                                    <Link
-                                        to="/admin/color"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
-                                    >
-                                        <IoColorPaletteOutline />
-                                        Color
-                                    </Link>
-                                </div>
-                            </div>
-
-                        </div>
-                    }
-                </div>
-
-                <div className="text-white nab_item xl:mt-1 lg:mt-3">
-                    <div className=" flex items-center justify-between xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 font-semibold">
-                        <button onClick={() => setIsProductOpen(!isProductOpen)} className="hover:text-[#3EA2FA] text-[#717171] flex items-center gap-4 lg:text-[18px]">
-                            <IoCartOutline size={25} className="text-green-500" />Products <FaChevronDown className={`${isProductOpen ? "rotate-180 transition-all duration-300" : "transition-all duration-300"}`} size={20} /> </button>
-                    </div>
-                    {
-                        isProductOpen && <div className="p-1 bg-white mt-2 ml-4">
-
-                            <div
-                                className={
-                                    pathname === "/admin/product"
-                                        ? "nab_item text-[#3EA2FA]"
-                                        : "text-[#717171] nab_item"
-                                }
-                            >
-                                <div className="flex items-center justify-between font-semibold">
-                                    <Link
-                                        to="/admin/product"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
-                                    >
-                                        <FaListUl />
-                                        List
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div
-                                className={
-                                    pathname === "/admin/product/create"
-                                        ? "nab_item text-[#3EA2FA]"
-                                        : "text-[#717171] nab_item"
-                                }
-                            >
-                                <div className="flex items-center justify-between font-semibold mt-2">
-                                    <Link
-                                        to="/admin/product/create"
-                                        className="hover:text-[#3EA2FA] flex items-center gap-2 lg:text-[18px]"
-                                    >
-                                        <IoAddCircleSharp />
-                                        Create
-                                    </Link>
-                                </div>
-                            </div>
-
-                        </div>
-                    }
-                </div>
-
-                <Link className={
-                    pathname === "/admin/video_tab"
-                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
-                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/admin/video_tab">
-                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
-                        <IoLogoYoutube size={25} className="text-red-500" />
-                        Videos
-                    </div>
-                </Link>
-
-                <Link className={
-                    pathname === "/admin/banner"
-                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
-                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/admin/banner">
-                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
-                        <BsKanban size={25} className="text-sky-500" />
-                        Banner
-                    </div>
-                </Link>
-
-                <Link className={
-                    pathname === "/admin/customer"
-                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
-                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/admin/customer">
-                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
-                        <FaUsers size={25} className="text-yellow-500" />
-                        Customer
-                    </div>
-                </Link>
-
-                <Link className={
-                    pathname === "/admin/setting"
-                        ? "nab_item text-[#3EA2FA] xl:bg-gray-300 border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3"
-                        : "text-[#717171] nab_item xl:hover:bg-gray-300 xl:bg-white border-0 rounded-lg xl:p-2 lg:p-0 xl:mt-1 lg:mt-3 hover:text-[#3EA2FA]"
-                } to="/admin/setting">
-                    <div className="flex items-center gap-3 font-semibold lg:text-[18px]">
-                        <IoSettingsOutline className="text-red-500" size={25} />
-                        Setting
-                    </div>
-                </Link>
-
-                <button onClick={() => handleLogOut()} type="button" className="flex items-center gap-3 font-semibold lg:text-[18px] text-red-500 xl:p-2 lg:p-0 xl:mt-1 lg:mt-3">
-                    <FiLogOut size={25} />
-                    Log Out
-                </button>
-
-            </div>
-        </>
-    );
+    if (isLoading) {
+        return <BigSpinner />
+    }
 
     return (
-        <div className="hidden lg:block pl-3">
+        <div className="flex flex-col flex-shrink-0 antialiased text-white bg-primaryColor min-h-screen">
+            <div className="overflow-y-auto overflow-x-hidden flex-grow">
+                <div className="flex flex-wrap items-center justify-center mt-1 border-b pb-3">
+                    <Link to="/">
+                        <img src={siteSetting?.data?.[0]?.logo} alt="logo" />
+                    </Link>
+                </div>
+                <ul className="flex flex-col pb-4 space-y-1 list-none">
+                    <li>
+                        <Link
+                            to="/admin"
+                            className={
+                                pathName == "/admin"
+                                    ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                    : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                            }
+                        >
+                            <span className="ml-3">
+                                <IoMdHome size={20} className="text-white" />
+                            </span>
+                            <span className=" tracking-wide truncate ml-2">Dashboard</span>
+                        </Link>
+                    </li>
 
-            <div>{navBar}</div>
+                    <li>
+                        <Link
+                            to="/admin/order"
+                            className={
+                                pathName == "/admin/order"
+                                    ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                    : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                            }
+                        >
+                            <span className="ml-3">
+                                <FaCartFlatbed size={20} className="text-white" />
+                            </span>
+                            <span className=" tracking-wide truncate ml-2">Order</span>
+                        </Link>
+                    </li>
 
+
+                    <li>
+                        <details
+                            open={isTasksOpen}
+                            className="group [&_summary::-webkit-details-marker]:hidden"
+                        >
+                            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-gray-100 hover:text-gray-700">
+                                <span className="text-sm font-medium"> Tasks </span>
+
+                                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </span>
+                            </summary>
+                            <ul className="mt-2 space-y-1 list-none">
+                                <li>
+                                    <Link
+                                        to="/admin/category"
+                                        className={
+                                            pathName == "/admin/category"
+                                                ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                                : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                                        }
+                                    >
+                                        <span className="inline-flex justify-center items-center ml-6">
+                                            <BiSolidCategoryAlt />
+                                        </span>
+                                        <span className="ml-2 text-sm tracking-wide truncate">
+                                            Category
+                                        </span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/admin/sub_category"
+                                        className={
+                                            pathName == "/admin/sub_category"
+                                                ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                                : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                                        }
+                                    >
+                                        <span className="inline-flex justify-center items-center ml-6">
+                                            <TbCategoryPlus />
+                                        </span>
+                                        <span className="ml-2 text-sm tracking-wide truncate">
+                                            Sub Category
+                                        </span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/admin/color"
+                                        className={
+                                            pathName == "/admin/color"
+                                                ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                                : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                                        }
+                                    >
+                                        <span className="inline-flex justify-center items-center ml-6">
+                                            <IoColorPaletteOutline />
+                                        </span>
+                                        <span className="ml-2 text-sm tracking-wide truncate">
+                                            Color
+                                        </span>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li>
+                        <details
+                            open={isProductOpen}
+                            className="group [&_summary::-webkit-details-marker]:hidden"
+                        >
+                            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-gray-100 hover:text-gray-700">
+                                <span className="text-sm font-medium"> Products </span>
+
+                                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </span>
+                            </summary>
+                            <ul className="mt-2 space-y-1 list-none">
+                                <li>
+                                    <Link
+                                        to="/admin/product"
+                                        className={
+                                            pathName == "/admin/product"
+                                                ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                                : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                                        }
+                                    >
+                                        <span className="inline-flex justify-center items-center ml-6">
+                                            <IoCart />
+                                        </span>
+                                        <span className="ml-2 text-sm tracking-wide truncate">
+                                            Product List
+                                        </span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/admin/product/create"
+                                        className={
+                                            pathName == "/admin/product/create"
+                                                ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                                : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                                        }
+                                    >
+                                        <span className="inline-flex justify-center items-center ml-6">
+                                            <MdOutlineAddShoppingCart />
+                                        </span>
+                                        <span className="ml-2 text-sm tracking-wide truncate">
+                                            Add Product
+                                        </span>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/admin/video_tab"
+                            className={
+                                pathName == "/admin/video_tab"
+                                    ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                    : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                            }
+                        >
+                            <span className="ml-3">
+                                <IoLogoYoutube size={20} className="text-white" />
+                            </span>
+                            <span className=" tracking-wide truncate ml-2">Video</span>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/admin/customer"
+                            className={
+                                pathName == "/admin/customer"
+                                    ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                    : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                            }
+                        >
+                            <span className="ml-3">
+                                <MdPeople size={20} className="text-white" />
+                            </span>
+                            <span className=" tracking-wide truncate ml-2">Users</span>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/admin/banner"
+                            className={
+                                pathName == "/admin/banner"
+                                    ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                    : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                            }
+                        >
+                            <span className="ml-3">
+                                <TfiLayoutSliderAlt size={20} className="text-white" />
+                            </span>
+                            <span className=" tracking-wide truncate ml-2">Banner</span>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/admin/setting"
+                            className={
+                                pathName == "/admin/setting"
+                                    ? "relative flex flex-row items-center h-11 focus:outline-none text-white hover:text-white border-r-4 border-secondary2 pr-6 bg-successColor"
+                                    : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6"
+                            }
+                        >
+                            <span className="ml-3">
+                                <IoIosSettings size={20} className="text-white" />
+                            </span>
+                            <span className=" tracking-wide truncate ml-2">Setting</span>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <button
+                            onClick={() => handleLogOut()}
+                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-successColor text-white hover:text-white border-r-4 border-transparent hover:border-secondary2 pr-6 w-full"
+                        >
+                            <span className="ml-3">
+                                <BiLogOut size={20} className="text-red-500" />
+                            </span>
+                            <span className=" tracking-wide truncate ml-1 text-red-500">Log Out</span>
+                        </button>
+                    </li>
+
+                </ul>
+            </div>
+            {/* </div> */}
         </div>
     );
-};
-
+}
 export default SideNavBar;
+
