@@ -1,16 +1,32 @@
 import { FaBars, FaUserCircle } from "react-icons/fa";
 import { useContext, useRef, useState } from "react";
-import logo from "../../assets/dashboard/logo.png";
 import SideNavbarMenuItem from "../sideNavBar/SideNavbarMenuItem";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import BigSpinner from "../loader/BigSpinner";
+import { BASE_URL } from "../../utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
 
 
 const DashboardNavbars = () => {
   const { user } = useContext(AuthContext);
 
+  const { data: siteSetting = [], isLoading } = useQuery({
+    queryKey: [`/api/v1/siteSetting`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`)
+      const data = await res.json();
+      return data;
+    }
+  }) // get Video Tab type
+
+
   const [sidebarShow, setSidebarShow] = useState(false);
   const sidebarRef = useRef(null);
+
+  if (isLoading) {
+    return <BigSpinner />;
+  }
 
   return (
     <div className="bg-black p-4">
@@ -42,7 +58,7 @@ const DashboardNavbars = () => {
           {/* Logo  hidden in mobile device*/}
           <div className="hidden md:flex items-center">
             <Link to="/">
-              <img src={logo} alt="Logo" />
+              <img src={siteSetting?.data[0]?.logo} alt="Logo" />
             </Link>
           </div>
 

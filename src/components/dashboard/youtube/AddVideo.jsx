@@ -108,14 +108,14 @@ const AddVideo = ({ refetch }) => {
                                 loading ?
                                     <button
                                         type="button"
-                                        className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
+                                        className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
                                     >
                                         <MiniSpinner />
                                     </button>
                                     :
                                     <button
                                         type="Submit"
-                                        className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
+                                        className="px-6 py-2 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
                                     >
                                         Create
                                     </button>
