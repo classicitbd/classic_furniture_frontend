@@ -1,0 +1,779 @@
+{
+    "furniture": {
+        "living": [
+          {
+            "id": 1,
+            "product_id": "S001",
+            "name": "Modern Sectional Sofa",
+            "description": "A spacious sectional with a minimalist design.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 1080.00,
+            "old_price": 1200.00,
+            "material": "Leather",
+            "rating": 4.5,
+            "discount_percentage": 10
+          },
+          {
+            "id": 2,
+            "product_id": "S002",
+            "name": "Convertible Sofa Bed",
+            "description": "Ideal for small spaces, easily transforms into a bed.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 637.50,
+            "old_price": 750.00,
+            "material": "Fabric",
+            "rating": 4.2,
+            "discount_percentage": 15
+          },
+          {
+            "id": 3,
+            "product_id": "S003",
+            "name": "Recliner Sofa",
+            "description": "Ultimate comfort with built-in recliners and a plush finish.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 950.00,
+            "old_price": 1000.00,
+            "material": "Suede",
+            "rating": 4.7,
+            "discount_percentage": 5
+          },
+          {
+            "id": 4,
+            "product_id": "S001",
+            "name": "Modern Sectional Sofa",
+            "description": "A spacious sectional with a minimalist design.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 1080.00,
+            "old_price": 1200.00,
+            "material": "Leather",
+            "rating": 4.5,
+            "discount_percentage": 10
+          },
+          {
+            "id": 1,
+            "product_id": "S001",
+            "name": "Modern Sectional Sofa",
+            "description": "A spacious sectional with a minimalist design.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 1080.00,
+            "old_price": 1200.00,
+            "material": "Leather",
+            "rating": 4.5,
+            "discount_percentage": 10
+          },
+          {
+            "id": 2,
+            "product_id": "S002",
+            "name": "Convertible Sofa Bed",
+            "description": "Ideal for small spaces, easily transforms into a bed.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 637.50,
+            "old_price": 750.00,
+            "material": "Fabric",
+            "rating": 4.2,
+            "discount_percentage": 15
+          },
+          {
+            "id": 3,
+            "product_id": "S003",
+            "name": "Recliner Sofa",
+            "description": "Ultimate comfort with built-in recliners and a plush finish.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 950.00,
+            "old_price": 1000.00,
+            "material": "Suede",
+            "rating": 4.7,
+            "discount_percentage": 5
+          },
+          {
+            "id": 4,
+            "product_id": "S001",
+            "name": "Modern Sectional Sofa",
+            "description": "A spacious sectional with a minimalist design.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 1080.00,
+            "old_price": 1200.00,
+            "material": "Leather",
+            "rating": 4.5,
+            "discount_percentage": 10
+          },
+          {
+            "id": 5,
+            "product_id": "S002",
+            "name": "Convertible Sofa Bed",
+            "description": "Ideal for small spaces, easily transforms into a bed.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 637.50,
+            "old_price": 750.00,
+            "material": "Fabric",
+            "rating": 4.2,
+            "discount_percentage": 15
+          },
+          {
+            "id": 6,
+            "product_id": "S003",
+            "name": "Recliner Sofa",
+            "description": "Ultimate comfort with built-in recliners and a plush finish.",
+            "image": "https://i.ibb.co/Dp5dSG9/living.jpg",
+            "new_price": 950.00,
+            "old_price": 1000.00,
+            "material": "Suede",
+            "rating": 4.7,
+            "discount_percentage": 5
+          }
+        ],
+      
+      
+      "bedroom": [
+        {
+          "id": 11,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 12,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        },
+        {
+          "id": 13,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 14,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        },
+        {
+          "id": 15,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 16,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        },
+        {
+          "id": 11,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 12,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        },
+        {
+          "id": 13,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 14,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        },
+        {
+          "id": 15,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 16,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        },
+        {
+          "id": 11,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 12,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        },
+        {
+          "id": 13,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 14,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        },
+        {
+          "id": 15,
+          "product_id": "B001",
+          "name": "King Size Bed",
+          "description": "Spacious and inviting, with a high-quality wooden frame.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 1080.00,
+          "old_price": 1200.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 16,
+          "product_id": "B002",
+          "name": "Queen Size Bed",
+          "description": "Perfect blend of size and comfort, ideal for smaller rooms.",
+          "image": "https://i.ibb.co/hDJMYkx/bedroom.jpg",
+          "new_price": 850.00,
+          "old_price": 1000.00,
+          "material": "Metal",
+          "rating": 4.4
+        }
+      ],
+      "dining": [
+        {
+          "id": 21,
+          "product_id": "DT001",
+          "name": "Contemporary Dining Table",
+          "description": "Modern table with a minimalist design, seats up to 8.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Wood",
+          "rating": 4.7
+        },
+        {
+          "id": 22,
+          "product_id": "DT002",
+          "name": "Round Dining Table",
+          "description": "Compact and perfect for smaller dining spaces.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 427.50,
+          "old_price": 450.00,
+          "material": "Glass",
+          "rating": 4.2
+        },
+        {
+          "id": 21,
+          "product_id": "DT001",
+          "name": "Contemporary Dining Table",
+          "description": "Modern table with a minimalist design, seats up to 8.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Wood",
+          "rating": 4.7
+        },
+        {
+          "id": 22,
+          "product_id": "DT002",
+          "name": "Round Dining Table",
+          "description": "Compact and perfect for smaller dining spaces.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 427.50,
+          "old_price": 450.00,
+          "material": "Glass",
+          "rating": 4.2
+        },
+        {
+          "id": 21,
+          "product_id": "DT001",
+          "name": "Contemporary Dining Table",
+          "description": "Modern table with a minimalist design, seats up to 8.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Wood",
+          "rating": 4.7
+        },
+        {
+          "id": 22,
+          "product_id": "DT002",
+          "name": "Round Dining Table",
+          "description": "Compact and perfect for smaller dining spaces.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 427.50,
+          "old_price": 450.00,
+          "material": "Glass",
+          "rating": 4.2
+        },
+        {
+          "id": 21,
+          "product_id": "DT001",
+          "name": "Contemporary Dining Table",
+          "description": "Modern table with a minimalist design, seats up to 8.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Wood",
+          "rating": 4.7
+        },
+        {
+          "id": 22,
+          "product_id": "DT002",
+          "name": "Round Dining Table",
+          "description": "Compact and perfect for smaller dining spaces.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 427.50,
+          "old_price": 450.00,
+          "material": "Glass",
+          "rating": 4.2
+        },
+        {
+          "id": 21,
+          "product_id": "DT001",
+          "name": "Contemporary Dining Table",
+          "description": "Modern table with a minimalist design, seats up to 8.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Wood",
+          "rating": 4.7
+        },
+        {
+          "id": 22,
+          "product_id": "DT002",
+          "name": "Round Dining Table",
+          "description": "Compact and perfect for smaller dining spaces.",
+          "image": "https://i.ibb.co/GPrR0Xj/dining.jpg",
+          "new_price": 427.50,
+          "old_price": 450.00,
+          "material": "Glass",
+          "rating": 4.2
+        }
+      ],
+      "office": [
+        {
+          "id": 31,
+          "product_id": "ST001",
+          "name": "Office Desk",
+          "description": "Spacious desk for working or studying at home.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 320.00,
+          "old_price": 350.00,
+          "material": "Wood",
+          "rating": 4.4
+        },
+        {
+          "id": 32,
+          "product_id": "ST002",
+          "name": "Bookshelf",
+          "description": "Elegant bookshelf with ample storage for books and decor.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 210.00,
+          "old_price": 250.00,
+          "material": "Particle Board",
+          "rating": 4.0
+        },
+        {
+          "id": 31,
+          "product_id": "ST001",
+          "name": "Office Desk",
+          "description": "Spacious desk for working or studying at home.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 320.00,
+          "old_price": 350.00,
+          "material": "Wood",
+          "rating": 4.4
+        },
+        {
+          "id": 32,
+          "product_id": "ST002",
+          "name": "Bookshelf",
+          "description": "Elegant bookshelf with ample storage for books and decor.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 210.00,
+          "old_price": 250.00,
+          "material": "Particle Board",
+          "rating": 4.0
+        },
+        {
+          "id": 31,
+          "product_id": "ST001",
+          "name": "Office Desk",
+          "description": "Spacious desk for working or studying at home.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 320.00,
+          "old_price": 350.00,
+          "material": "Wood",
+          "rating": 4.4
+        },
+        {
+          "id": 32,
+          "product_id": "ST002",
+          "name": "Bookshelf",
+          "description": "Elegant bookshelf with ample storage for books and decor.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 210.00,
+          "old_price": 250.00,
+          "material": "Particle Board",
+          "rating": 4.0
+        },
+        {
+          "id": 31,
+          "product_id": "ST001",
+          "name": "Office Desk",
+          "description": "Spacious desk for working or studying at home.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 320.00,
+          "old_price": 350.00,
+          "material": "Wood",
+          "rating": 4.4
+        },
+        {
+          "id": 32,
+          "product_id": "ST002",
+          "name": "Bookshelf",
+          "description": "Elegant bookshelf with ample storage for books and decor.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 210.00,
+          "old_price": 250.00,
+          "material": "Particle Board",
+          "rating": 4.0
+        },
+        {
+          "id": 31,
+          "product_id": "ST001",
+          "name": "Office Desk",
+          "description": "Spacious desk for working or studying at home.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 320.00,
+          "old_price": 350.00,
+          "material": "Wood",
+          "rating": 4.4
+        },
+        {
+          "id": 32,
+          "product_id": "ST002",
+          "name": "Bookshelf",
+          "description": "Elegant bookshelf with ample storage for books and decor.",
+          "image": "https://i.ibb.co/GpxJwJf/office.jpg",
+          "new_price": 210.00,
+          "old_price": 250.00,
+          "material": "Particle Board",
+          "rating": 4.0
+        }
+      ],
+      "hospital": [
+        {
+          "id": 41,
+          "product_id": "H001",
+          "name": "Hospital Bed",
+          "description": "Adjustable hospital bed for patient care.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 1200.00,
+          "old_price": 1400.00,
+          "material": "Metal",
+          "rating": 4.8
+        },
+        {
+          "id": 42,
+          "product_id": "H002",
+          "name": "Medical Recliner",
+          "description": "Comfortable recliner for patients in recovery.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 850.00,
+          "old_price": 900.00,
+          "material": "Vinyl",
+          "rating": 4.5
+        },
+        {
+          "id": 41,
+          "product_id": "H001",
+          "name": "Hospital Bed",
+          "description": "Adjustable hospital bed for patient care.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 1200.00,
+          "old_price": 1400.00,
+          "material": "Metal",
+          "rating": 4.8
+        },
+        {
+          "id": 42,
+          "product_id": "H002",
+          "name": "Medical Recliner",
+          "description": "Comfortable recliner for patients in recovery.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 850.00,
+          "old_price": 900.00,
+          "material": "Vinyl",
+          "rating": 4.5
+        },
+        {
+          "id": 41,
+          "product_id": "H001",
+          "name": "Hospital Bed",
+          "description": "Adjustable hospital bed for patient care.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 1200.00,
+          "old_price": 1400.00,
+          "material": "Metal",
+          "rating": 4.8
+        },
+        {
+          "id": 42,
+          "product_id": "H002",
+          "name": "Medical Recliner",
+          "description": "Comfortable recliner for patients in recovery.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 850.00,
+          "old_price": 900.00,
+          "material": "Vinyl",
+          "rating": 4.5
+        },
+        {
+          "id": 42,
+          "product_id": "H002",
+          "name": "Medical Recliner",
+          "description": "Comfortable recliner for patients in recovery.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 850.00,
+          "old_price": 900.00,
+          "material": "Vinyl",
+          "rating": 4.5
+        },
+        {
+          "id": 41,
+          "product_id": "H001",
+          "name": "Hospital Bed",
+          "description": "Adjustable hospital bed for patient care.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 1200.00,
+          "old_price": 1400.00,
+          "material": "Metal",
+          "rating": 4.8
+        },
+        {
+          "id": 42,
+          "product_id": "H002",
+          "name": "Medical Recliner",
+          "description": "Comfortable recliner for patients in recovery.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 850.00,
+          "old_price": 900.00,
+          "material": "Vinyl",
+          "rating": 4.5
+        },
+        {
+          "id": 41,
+          "product_id": "H001",
+          "name": "Hospital Bed",
+          "description": "Adjustable hospital bed for patient care.",
+          "image": "https://i.ibb.co/L8PDJSh/hospital.jpg",
+          "new_price": 1200.00,
+          "old_price": 1400.00,
+          "material": "Metal",
+          "rating": 4.8
+        }
+       
+      ],
+      "doors": [
+        {
+          "id": 51,
+          "product_id": "D001",
+          "name": "Wooden Entry Door",
+          "description": "Sturdy wooden entry door for home security.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 550.00,
+          "old_price": 600.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 52,
+          "product_id": "D002",
+          "name": "Glass Sliding Door",
+          "description": "Modern glass sliding door for interior spaces.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Glass",
+          "rating": 4.3
+        },
+        {
+          "id": 51,
+          "product_id": "D001",
+          "name": "Wooden Entry Door",
+          "description": "Sturdy wooden entry door for home security.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 550.00,
+          "old_price": 600.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 52,
+          "product_id": "D002",
+          "name": "Glass Sliding Door",
+          "description": "Modern glass sliding door for interior spaces.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Glass",
+          "rating": 4.3
+        },
+        {
+          "id": 51,
+          "product_id": "D001",
+          "name": "Wooden Entry Door",
+          "description": "Sturdy wooden entry door for home security.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 550.00,
+          "old_price": 600.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 52,
+          "product_id": "D002",
+          "name": "Glass Sliding Door",
+          "description": "Modern glass sliding door for interior spaces.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Glass",
+          "rating": 4.3
+        },
+        {
+          "id": 51,
+          "product_id": "D001",
+          "name": "Wooden Entry Door",
+          "description": "Sturdy wooden entry door for home security.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 550.00,
+          "old_price": 600.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 52,
+          "product_id": "D002",
+          "name": "Glass Sliding Door",
+          "description": "Modern glass sliding door for interior spaces.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Glass",
+          "rating": 4.3
+        },
+        {
+          "id": 51,
+          "product_id": "D001",
+          "name": "Wooden Entry Door",
+          "description": "Sturdy wooden entry door for home security.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 550.00,
+          "old_price": 600.00,
+          "material": "Wood",
+          "rating": 4.6
+        },
+        {
+          "id": 52,
+          "product_id": "D002",
+          "name": "Glass Sliding Door",
+          "description": "Modern glass sliding door for interior spaces.",
+          "image": "https://i.ibb.co/vHngdhG/doors.jpg",
+          "new_price": 720.00,
+          "old_price": 800.00,
+          "material": "Glass",
+          "rating": 4.3
+        }
+    
+      ]
+    }
+  }
+  

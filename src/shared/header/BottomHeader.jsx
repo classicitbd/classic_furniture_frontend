@@ -90,14 +90,7 @@ export default function BottomHeader() {
                                 Office
                             </NavLink>
                         </nav>
-                        <nav className="email flex items-center">
-                            <NavLink
-                                to={"/campaign"}
-                                className=" text-[15px]"
-                            >
-                                Study
-                            </NavLink>
-                        </nav>
+                       
                         <nav className="email flex items-center">
                             <NavLink
                                 to={"/campaign"}

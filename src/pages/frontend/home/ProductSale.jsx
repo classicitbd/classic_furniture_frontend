@@ -1,6 +1,5 @@
 import { FaAngleDown, FaAngleRight, FaShoppingCart, FaStar, FaStarHalfAlt } from 'react-icons/fa'
 import { IoCartOutline } from 'react-icons/io5'
-import images from '../../../assets/images/furniture-logo.png'
 import { useEffect, useState } from 'react';
 import Header from '../../../shared/header/Header';
 
@@ -11,8 +10,6 @@ export default function ProductSale() {
     const [displayedProducts, setdisplayedProducts] = useState([]);
     const [showMoreCount, setShowMoreCount] = useState(10);
     const [cartQuantity, setCartQuantity] = useState(0);
-
-
     const productSale = [
         {
             id: 1,
@@ -20,7 +17,7 @@ export default function ProductSale() {
             title: 'Horitoki Special all',
             new_price: 49.99,
             old_price: 59.99,
-            image: images,
+            image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
             rating: 4.5,
         },
         {
@@ -29,7 +26,7 @@ export default function ProductSale() {
             title: 'Traditional Red and Gold',
             new_price: 39.99,
             old_price: 49.99,
-            image: images,
+            image: "https://i.ibb.co/L8PDJSh/hospital.jpg",
             rating: 4.2,
         },
         {
@@ -38,7 +35,7 @@ export default function ProductSale() {
             title: 'Traditional Red and Gold',
             new_price: 79.99,
             old_price: 99.99,
-            image: images,
+            image: "https://i.ibb.co/Dp5dSG9/living.jpg",
             rating: 4.7,
         },
         {
@@ -47,7 +44,7 @@ export default function ProductSale() {
             title: "Stylish Black ",
             new_price: 99.99,
             old_price: 69.99,
-            image: images,
+            image: "https://i.ibb.co/GpxJwJf/office.jpg",
             rating: 4.4,
         },
         {
@@ -56,7 +53,7 @@ export default function ProductSale() {
             title: 'Vintage Denim ',
             new_price: 29.99,
             old_price: 39.99,
-            image: images,
+            image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
             rating: 4.0,
         },
         {
@@ -65,7 +62,7 @@ export default function ProductSale() {
             title: 'Casual Striped',
             new_price: 19.99,
             old_price: 24.99,
-            image: images.sharee1,
+            image: "https://i.ibb.co/GPrR0Xj/dining.jpg",
             rating: 4.3,
         },
         {
@@ -74,7 +71,7 @@ export default function ProductSale() {
             title: 'Bohemian Style',
             new_price: 34.99,
             old_price: 44.99,
-            image: images,
+            image: "https://i.ibb.co/GpxJwJf/office.jpg",
             rating: 4.6,
         },
         {
@@ -83,7 +80,7 @@ export default function ProductSale() {
             title: 'Classic Aviator ',
             new_price: 14.99,
             old_price: 19.99,
-            image: images,
+            image: "https://i.ibb.co/Dp5dSG9/living.jpg",
             rating: 4.8,
         },
         {
@@ -92,7 +89,7 @@ export default function ProductSale() {
             title: 'Chic Floral',
             new_price: 9.99,
             old_price: 6.99,
-            image: images,
+            image: "https://i.ibb.co/L8PDJSh/hospital.jpg",
             rating: 4.1,
         },
         {
@@ -101,7 +98,7 @@ export default function ProductSale() {
             title: 'Retro Style Leather',
             new_price: 54.99,
             old_price: 64.99,
-            image: images,
+            image: "https://i.ibb.co/vHngdhG/doors.jpg",
             rating: 4.9,
         },
         {
@@ -110,7 +107,7 @@ export default function ProductSale() {
             title: 'Chic Floral',
             new_price: 9.99,
             old_price: 6.99,
-            image: images,
+            image: "https://i.ibb.co/GPrR0Xj/dining.jpg",
             rating: 4.1,
         },
         {
@@ -119,7 +116,7 @@ export default function ProductSale() {
             title: 'Retro Style Leather',
             new_price: 54.99,
             old_price: 64.99,
-            image: images,
+            image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
             rating: 4.9,
         },
     ]
@@ -173,10 +170,10 @@ export default function ProductSale() {
 
     return (
         <>
-            <div className="es_container mx-auto md:px-20 xl:px-0 px-5 py-10">
+            <div className="es_container mx-auto md:px-20 xl:px-0 px-5 pt-10">
                 <div>
                     <div className="flex justify-between items-center">
-                        <h1 className="text-xl my-6 font-semibold text-[#008140]">Flash Sale</h1>
+                        <h1 className="text-xl my-6 font-semibold text-[#008140]">New Arival</h1>
                         <div onClick={handleViewAll} className="cursor-pointer font-medium flex items-center gap-1"><span>View All</span> {showAll ? <FaAngleDown /> : <FaAngleRight />}</div>
                     </div>
                 </div>
@@ -184,12 +181,12 @@ export default function ProductSale() {
                     {displayedProducts.map((product) => (
                         <div key={product.id} className="group">
                             <span>
-                                <div title='View Details' className=" border border-transparent group-hover:border-black transition-all duration-500 rounded-md group-hover:scale-105 shadow">
+                                <div title='View Details' className="border border-transparent group-hover:border-black transition-all duration-500 rounded-md group-hover:scale-100 shadow">
                                     <div className="w-full relative">
                                         <img
-                                            src={images}
+                                            src={product?.image}
                                             alt={product?.title}
-                                            className="w-full  rounded-lg "
+                                            className="w-full h-[120px] md:h-[180px] rounded-lg "
                                         />
                                         <div className='bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2'>
                                             OFF 100%
