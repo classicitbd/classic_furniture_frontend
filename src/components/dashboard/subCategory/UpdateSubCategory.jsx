@@ -15,7 +15,6 @@ const UpdateSubCategory = ({
   setSubCategoryUpdateModal,
   subCategoryUpdateModalValue,
 }) => {
-  console.log(subCategoryUpdateModalValue)
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -135,17 +134,17 @@ const UpdateSubCategory = ({
 
           <div className="mt-4">
             <select
-              {...register("category_status", {
-                required: "Category Status is required",
+              {...register("sub_category_status", {
+                required: "Sub Category Status is required",
               })}
-              id="category_status"
+              id="sub_category_status"
               className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
             >
               <option value="active">Active</option>
               <option value="in-active">In-Active</option>
             </select>
-            {errors.category_status && (
-              <p className="text-red-600">{errors.category_status?.message}</p>
+            {errors.sub_category_status && (
+              <p className="text-red-600">{errors.sub_category_status?.message}</p>
             )}
           </div>
 

@@ -815,7 +815,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                         type="Submit"
                         className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
                       >
-                        Create
+                        Update
                       </button>
                     </div>
                 }

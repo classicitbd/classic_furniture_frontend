@@ -163,6 +163,9 @@ const ProductListTable = () => {
                   Category
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Sub Category
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Status
                 </th>
                 <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
@@ -200,6 +203,9 @@ const ProductListTable = () => {
                   </td>
                   <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                     {product?.category_id?.category_name}
+                  </td>
+                  <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
+                    {product?.sub_category_id ? product?.sub_category_id?.sub_category_name : "-"}
                   </td>
                   {product?.product_status == "active" ? (
                     <td className="whitespace-nowrap px-4 py-2">
