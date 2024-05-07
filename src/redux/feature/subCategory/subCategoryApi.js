@@ -6,6 +6,19 @@ const token = getCookie(authKey);
 
 export const sub_categoryApi = api.injectEndpoints({
   endpoints: (build) => ({
+    // get Sub_Category
+
+    getSub_Category: build.query({
+      query: () => ({
+        url: `/sub_category`,
+        method: "GET",
+        headers: {
+        authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["sub_category"],
+    }),
+
     //add Sub_Category
     addSub_Category: build.mutation({
       query: (data) => ({
@@ -48,5 +61,5 @@ export const sub_categoryApi = api.injectEndpoints({
   }),
 });
 
-export const { useAddSub_CategoryMutation, useDeleteSub_CategoryMutation, useUpdateSub_CategoryMutation } =
+export const { useGetSub_CategoryQuery , useAddSub_CategoryMutation, useDeleteSub_CategoryMutation, useUpdateSub_CategoryMutation } =
   sub_categoryApi;
