@@ -233,80 +233,78 @@ export default function BottomHeader() {
                 )}
               </div>
             </nav> */}
+
+            {/* {menuData?.data?.map(
+              (menu) =>
+                menu?.category?.show_title === "active" && (
+                  // show title sub category start
+                  <nav className="email  flex items-center " key={menu?._id}>
+                    <div
+                      onMouseEnter={() => {
+                        setIsTitleCategoryOpen(true);
+                        setIsTitleSubCategory("");
+                        setIsTitleMenu("");
+                      }}
+                      className=" mx-3 px-1 rounded-full hidden lg:block"
+                    >
+                      <NavLink
+                        to={`/category/${menu?.category?.category_slug}`}
+                        className=" text-[15px]"
+                      >
+                        {menu?.category?.category_name}
+                      </NavLink>
+
+                      {isTitleCategoryOpen && (
+                        <div
+                          onMouseLeave={() => {
+                            setIsTitleCategoryOpen(false);
+                            setIsTitleSubCategory("");
+                            setIsTitleMenu("");
+                          }}
+                          className="absolute top-[160px] start-[28%] z-10 col-span-2 hidden lg:block rounded bg-white  border shadow-md py-3"
+                        >
+                          <div className=" rounded-md flex">
+                            <nav className="w-[250px] border-r overflow-hidden">
+                              <ul className="space-y-[1px] list-none max-h-[300px] overflow-y-auto scrollbar-thin">
+                                {menu?.subCategoryData?.map((subCategory) => (
+                                  <Link
+                                    onClick={() => {
+                                      setIsTitleCategoryOpen(false);
+                                      setIsTitleSubCategory("");
+                                      setIsTitleMenu("");
+                                    }}
+                                    to={`/category/${menu?.category?.category_slug}/${subCategory?.sub_category_slug}`}
+                                    key={subCategory?.sub_category_name}
+                                  >
+                                    <li>
+                                      <details className="group">
+                                        <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-1 text-gray-500 hover:bg-gray-100 hover:text-[#14CD6D]">
+                                          <span
+                                            className={`text-sm font-medium group-hover:text-[#14CD6D]" ${
+                                              isTitleSubCategory ===
+                                                subCategory?.sub_category_slug &&
+                                              "text-[#14CD6D]"
+                                            }`}
+                                          >
+                                            {subCategory?.sub_category_name}
+                                          </span>
+                                        </summary>
+                                      </details>
+                                    </li>
+                                  </Link>
+                                ))}
+                              </ul>
+                            </nav>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </nav>
+                )
+            )} */}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// {
-//   menuData?.data?.map(
-//     (menu) =>
-//       menu?.category?.show_title === "active" && (
-//         // show title sub category start
-//         <nav className="email  flex items-center " key={menu?._id}>
-//           <div
-//             onMouseEnter={() => {
-//               setIsTitleCategoryOpen(true);
-//               setIsTitleSubCategory("");
-//               setIsTitleMenu("");
-//             }}
-//             className=" mx-3 px-1 rounded-full hidden lg:block"
-//           >
-//             <NavLink
-//               to={`/category/${menu?.category?.category_slug}`}
-//               className=" text-[15px]"
-//             >
-//               {menu?.category?.category_name}
-//             </NavLink>
-
-//             {isTitleCategoryOpen && (
-//               <div
-//                 onMouseLeave={() => {
-//                   setIsTitleCategoryOpen(false);
-//                   setIsTitleSubCategory("");
-//                   setIsTitleMenu("");
-//                 }}
-//                 className="absolute top-[160px] start-[28%] z-10 col-span-2 hidden lg:block rounded bg-white  border shadow-md py-3"
-//               >
-//                 <div className=" rounded-md flex">
-//                   <nav className="w-[250px] border-r overflow-hidden">
-//                     <ul className="space-y-[1px] list-none max-h-[300px] overflow-y-auto scrollbar-thin">
-//                       {menu?.subCategoryData?.map((subCategory) => (
-//                         <Link
-//                           onClick={() => {
-//                             setIsTitleCategoryOpen(false);
-//                             setIsTitleSubCategory("");
-//                             setIsTitleMenu("");
-//                           }}
-//                           to={`/category/${menu?.category?.category_slug}/${subCategory?.sub_category_slug}`}
-//                           key={subCategory?.sub_category_name}
-//                         >
-//                           <li>
-//                             <details className="group">
-//                               <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-1 text-gray-500 hover:bg-gray-100 hover:text-[#14CD6D]">
-//                                 <span
-//                                   className={`text-sm font-medium group-hover:text-[#14CD6D]" ${
-//                                     isTitleSubCategory ===
-//                                       subCategory?.sub_category_slug &&
-//                                     "text-[#14CD6D]"
-//                                   }`}
-//                                 >
-//                                   {subCategory?.sub_category_name}
-//                                 </span>
-//                               </summary>
-//                             </details>
-//                           </li>
-//                         </Link>
-//                       ))}
-//                     </ul>
-//                   </nav>
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-//         </nav>
-//       )
-//   );
-// }
