@@ -6,6 +6,18 @@ const token = getCookie(authKey);
 
 export const menuApi = api.injectEndpoints({
   endpoints: (build) => ({
+    // get menu
+
+    getMenu: build.query({
+      query: () => ({
+        url: `/category/banner_match_category`,
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["menu"],
+    }),
     //add menu
     addMenu: build.mutation({
       query: (data) => ({
@@ -48,5 +60,5 @@ export const menuApi = api.injectEndpoints({
   }),
 });
 
-export const { useAddMenuMutation, useDeleteMenuMutation, useUpdateMenuMutation } =
+export const { useGetMenuQuery, useAddMenuMutation, useDeleteMenuMutation, useUpdateMenuMutation } =
   menuApi;
