@@ -146,15 +146,17 @@ import MiniSpinner from "../loader/MiniSpinner";
 import { useGetMenuQuery } from "../../redux/feature/menu/menuApi";
 
 export default function BottomHeader() {
-  // const [showSubCategoryModal, setShowSubCategoryModal] = useState(false);
   const { data: menuData, isLoading } = useGetMenuQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
-  console.log(menuData);
+  // console.log(menuData);
   const [isMenu, setIsMenu] = useState("");
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isCategory, setIsCategory] = useState("");
   const [subCategories, setSubCategories] = useState([]);
+  const [isTitleSubCategory, setTitleIsSubCategory] = useState("");
+  const [isTitleCategoryOpen, setIsTitleCategoryOpen] = useState(false);
+  const [isTitleMenu, setIsTitleMenu] = useState("");
   if (isLoading) {
     return (
       <div className=" flex flex-col items-center justify-center">
@@ -188,7 +190,7 @@ export default function BottomHeader() {
                 className=" mx-3 px-1 rounded-full hidden lg:block "
               >
                 <NavLink to={"/category"} className="text-[15px]">
-                  Category
+                  Categories
                 </NavLink>
               </div>
             </nav>
@@ -200,7 +202,7 @@ export default function BottomHeader() {
                   setIsCategory("");
                   setIsMenu("");
                 }}
-                className="absolute top-[160px] start-[28%] z-10 col-span-2 hidden lg:block rounded bg-white border shadow-md py-3"
+                className="absolute top-[160px] start-[28%] z-10 col-span-2 hidden lg:block rounded bg-white  border shadow-md py-3"
               >
                 <div className="rounded-md flex">
                   <nav className="w-[250px] border-r overflow-hidden">
@@ -225,9 +227,9 @@ export default function BottomHeader() {
                             <details className="group">
                               <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                                 <span
-                                  className={`text-sm font-medium group-hover:text-secondary ${
+                                  className={`text-sm font-medium group-hover:text-[#14CD6D]" ${
                                     isMenu === menu?.category?.category_slug &&
-                                    "text-secondary"
+                                    "text-[#14CD6D]"
                                   }`}
                                 >
                                   {menu?.category?.category_name}
@@ -243,10 +245,10 @@ export default function BottomHeader() {
                                   >
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
-                                      className={`h-5 w-5 group-hover:text-secondary ${
+                                      className={`h-5 w-5 group-hover:text-[#14CD6D]" ${
                                         isMenu ===
                                           menu?.category?.category_slug &&
-                                        "text-secondary"
+                                        "text-[#14CD6D]"
                                       }`}
                                       viewBox="0 0 20 20"
                                       fill="currentColor"
@@ -279,21 +281,14 @@ export default function BottomHeader() {
                             to={`/category/${isMenu}/${subCategory?.sub_category_slug}`}
                             key={subCategory?.sub_category_name}
                           >
-                            <li
-                            // onMouseOver={() => {
-                            //   setSubSubCategories(subCategory?.child_categories);
-                            //   setIsCategory(
-                            //     subCategory?.sub_category?.sub_category_slug
-                            //   );
-                            // }}
-                            >
+                            <li>
                               <details className="group">
-                                <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-1 text-gray-500 hover:bg-gray-100 hover:text-[#14CD6D]">
                                   <span
-                                    className={`text-sm font-medium group-hover:text-secondary ${
+                                    className={`text-sm font-medium group-hover:text-[#14CD6D]" ${
                                       isCategory ===
                                         subCategory?.sub_category_slug &&
-                                      "text-secondary"
+                                      "text-[#14CD6D]"
                                     }`}
                                   >
                                     {subCategory?.sub_category_name}
@@ -309,20 +304,33 @@ export default function BottomHeader() {
                 </div>
               </div>
             )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
-{
-  /*             <nav className="email flex items-center">
-              <NavLink to={"/campaign"} className=" text-[15px]">
-                Campaigns
-              </NavLink>
-            </nav>
-            <nav className="email flex items-center">
+            {/* category show by title  */}
+
+            {menuData?.data?.map(
+              (menu) =>
+                menu?.category?.show_title === "active" && (
+                  // show title sub category start
+                  <nav
+                    className="email flex items-center"
+                    key={menu?._id}
+                    onMouseEnter={() => {
+                      setIsTitleCategoryOpen(true);
+                      setTitleIsSubCategory("");
+                      setIsTitleMenu("");
+                    }}
+                  >
+                    <NavLink
+                      to={`/category/${menu?.category?.category_slug}`}
+                      className=" text-[15px]"
+                    >
+                      {menu?.category?.category_name}
+                    </NavLink>
+                  </nav>
+                )
+            )}
+
+            {/* <nav className="email flex items-center">
               <NavLink to={"/campaign"} className=" text-[15px]">
                 Living
               </NavLink>
@@ -352,5 +360,10 @@ export default function BottomHeader() {
               <NavLink to={"/campaign"} className=" text-[15px]">
                 Doors
               </NavLink>
-                </nav> */
+            </nav> */}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
