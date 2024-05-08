@@ -1,144 +1,3 @@
-// import { useState } from "react";
-// import "./header.css";
-// import { Link, NavLink } from "react-router-dom";
-// import { useGetCategoryQuery } from "../../redux/feature/category/categoryApi";
-// import MiniSpinner from "../loader/MiniSpinner";
-// import { useGetSub_CategoryQuery } from "../../redux/feature/subCategory/subCategoryApi";
-
-// export default function BottomHeader() {
-//   const [showCategoryModal, setShowCategoryModal] = useState(false);
-//   const [showSubCategoryModal, setShowSubCategoryModal] = useState(false);
-//   const { data: categories, isLoading } = useGetCategoryQuery(undefined, {
-//     refetchOnMountOrArgChange: true,
-//   });
-
-//   const { data: subCategories } = useGetSub_CategoryQuery(undefined, {
-//     refetchOnMountOrArgChange: true,
-//   });
-//   const handleMouseEnter = () => {
-//     setShowCategoryModal(true);
-//   };
-
-//   const handleMouseLeave = () => {
-//     setShowCategoryModal(false);
-//   };
-
-//   if (isLoading) {
-//     return (
-//       <div className=" flex flex-col items-center justify-center">
-//         <MiniSpinner />
-//       </div>
-//     );
-//   }
-//   return (
-//     <div className="text-[#008140] font-medium">
-//       <div className="es_container">
-//         <div className="flex items-center justify-between py-2">
-//           <div className="left flex items-center md:gap-x-8 xl:gap-x-12  xl:ms-0 px-5">
-//             <nav className="number md:ms-20 xl:ms-0 flex items-center ">
-//               <Link to={"/"} className="text-[15px] ">
-//                 Home
-//               </Link>
-//             </nav>
-//             <nav className="email flex items-center">
-//               <NavLink to={"/all"} className="text-[15px]">
-//                 All Products
-//               </NavLink>
-//             </nav>
-//             <nav className=" ">
-//               <div
-//                 onMouseEnter={handleMouseEnter}
-//                 onMouseLeave={handleMouseLeave}
-//               >
-//                 <NavLink to={"/category"} className="text-[15px]">
-//                   Category
-//                 </NavLink>
-
-//                 {showCategoryModal && (
-//                   <div
-//                     onMouseEnter={handleMouseEnter}
-//                     onMouseLeave={handleMouseLeave}
-//                     className="bg-[#ffffff] shadow  modal-content lg:ml-64 ml-0  grid grid-cols-1 gap-4 p-4 rounded"
-//                   >
-//                     {categories?.data?.map((category) => (
-//                       <Link
-//                         key={category?._id}
-//                         to={`/category/${category?.category_slug}`}
-//                         className="text-blue-500 hover:underline"
-//                         onMouseEnter={() => setShowSubCategoryModal(true)}
-//                         onMouseLeave={() => setShowSubCategoryModal(false)}
-//                       >
-//                         {category?.category_name}
-//                       </Link>
-//                     ))}
-//                   </div>
-//                 )}
-//                 {showSubCategoryModal && (
-//                   <div
-//                     onMouseEnter={() => setShowSubCategoryModal(true)}
-//                     onMouseLeave={() => setShowSubCategoryModal(false)}
-//                     className="bg-[#ffffff] shadow  modal-content  ml-0  grid grid-cols-1 gap-4 p-4 rounded"
-//                   >
-//                     {subCategories?.data?.map((subCategory) => (
-//                       <nav
-//                         className="email flex items-center"
-//                         key={subCategory?._id}
-//                       >
-//                         <Link
-//                           to={`all/category/${subCategory?.category_id?.category_slug}/${subCategory?.sub_category_slug}`}
-//                           className=" text-[15px]"
-//                         >
-//                           {subCategory?.sub_category_name}
-//                         </Link>
-//                       </nav>
-//                     ))}
-//                   </div>
-//                 )}
-//               </div>
-//             </nav>
-//             <nav className="email flex items-center">
-//               <NavLink to={"/campaign"} className=" text-[15px]">
-//                 Campaigns
-//               </NavLink>
-//             </nav>
-//             <nav className="email flex items-center">
-//               <NavLink to={"/campaign"} className=" text-[15px]">
-//                 Living
-//               </NavLink>
-//             </nav>
-//             <nav className="email flex items-center">
-//               <NavLink to={"/campaign"} className=" text-[15px]">
-//                 Bedroom
-//               </NavLink>
-//             </nav>
-//             <nav className="email flex items-center">
-//               <NavLink to={"/campaign"} className=" text-[15px]">
-//                 Dining
-//               </NavLink>
-//             </nav>
-//             <nav className="email flex items-center">
-//               <NavLink to={"/campaign"} className=" text-[15px]">
-//                 Office
-//               </NavLink>
-//             </nav>
-
-//             <nav className="email flex items-center">
-//               <NavLink to={"/campaign"} className=" text-[15px]">
-//                 Industry & Hospital
-//               </NavLink>
-//             </nav>
-//             <nav className="email flex items-center md:me-10 xl:me-0">
-//               <NavLink to={"/campaign"} className=" text-[15px]">
-//                 Doors
-//               </NavLink>
-//             </nav>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 import { useState } from "react";
 import "./header.css";
 import { Link, NavLink } from "react-router-dom";
@@ -154,9 +13,18 @@ export default function BottomHeader() {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isCategory, setIsCategory] = useState("");
   const [subCategories, setSubCategories] = useState([]);
-  const [isTitleSubCategory, setTitleIsSubCategory] = useState("");
-  const [isTitleCategoryOpen, setIsTitleCategoryOpen] = useState(false);
-  const [isTitleMenu, setIsTitleMenu] = useState("");
+  // const [isTitleSubCategory, setIsTitleSubCategory] = useState("");
+  // const [isTitleCategoryOpen, setIsTitleCategoryOpen] = useState(false);
+  // const [isTitleMenu, setIsTitleMenu] = useState("");
+
+  // const [showSubCategoryModal, setShowSubCategoryModal] = useState(false);
+  // const handleMouseEnter = () => {
+  //   setShowSubCategoryModal(true);
+  // };
+
+  // const handleMouseLeave = () => {
+  //   setShowSubCategoryModal(false);
+  // };
   if (isLoading) {
     return (
       <div className=" flex flex-col items-center justify-center">
@@ -187,7 +55,7 @@ export default function BottomHeader() {
                   setIsCategory("");
                   setIsMenu("");
                 }}
-                className=" mx-3 px-1 rounded-full hidden lg:block "
+                className=" rounded-full hidden lg:block "
               >
                 <NavLink to={"/category"} className="text-[15px]">
                   Categories
@@ -202,10 +70,10 @@ export default function BottomHeader() {
                   setIsCategory("");
                   setIsMenu("");
                 }}
-                className="absolute top-[160px] start-[28%] z-10 col-span-2 hidden lg:block rounded bg-white  border shadow-md py-3"
+                className="absolute top-[160px] start-[26%] z-10 col-span-2 hidden lg:block rounded bg-white  border shadow-md py-3"
               >
                 <div className="rounded-md flex">
-                  <nav className="w-[250px] border-r overflow-hidden">
+                  <nav className="w-[220px] border-r overflow-hidden">
                     <ul className="space-y-[1px] list-none max-h-[300px] overflow-y-auto scrollbar-thin">
                       {menuData?.data?.map((menu) => (
                         <Link
@@ -269,7 +137,7 @@ export default function BottomHeader() {
                     </ul>
                   </nav>
                   {subCategories?.length > 0 && (
-                    <nav className="w-[250px] border-r overflow-hidden">
+                    <nav className="w-[220px] border-r overflow-hidden">
                       <ul className="space-y-[1px] list-none max-h-[300px] overflow-y-auto scrollbar-thin">
                         {subCategories?.map((subCategory) => (
                           <Link
@@ -307,59 +175,64 @@ export default function BottomHeader() {
 
             {/* category show by title  */}
 
-            {menuData?.data?.map(
-              (menu) =>
-                menu?.category?.show_title === "active" && (
-                  // show title sub category start
-                  <nav
-                    className="email flex items-center"
-                    key={menu?._id}
-                    onMouseEnter={() => {
-                      setIsTitleCategoryOpen(true);
-                      setTitleIsSubCategory("");
-                      setIsTitleMenu("");
-                    }}
-                  >
+            {menuData?.data
+              ?.filter((menu) => menu?.category?.show_title === "active")
+              ?.slice(0, 5)
+              .map((menu) => (
+                // show title sub category start
+                <nav className="email flex items-center" key={menu?._id}>
+                  <div>
                     <NavLink
                       to={`/category/${menu?.category?.category_slug}`}
-                      className=" text-[15px]"
+                      className="text-[15px]"
                     >
                       {menu?.category?.category_name}
                     </NavLink>
-                  </nav>
-                )
-            )}
+                  </div>
+                </nav>
+              ))}
 
             {/* <nav className="email flex items-center">
-              <NavLink to={"/campaign"} className=" text-[15px]">
-                Living
-              </NavLink>
-            </nav>
-            <nav className="email flex items-center">
-              <NavLink to={"/campaign"} className=" text-[15px]">
-                Bedroom
-              </NavLink>
-            </nav>
-            <nav className="email flex items-center">
-              <NavLink to={"/campaign"} className=" text-[15px]">
-                Dining
-              </NavLink>
-            </nav>
-            <nav className="email flex items-center">
-              <NavLink to={"/campaign"} className=" text-[15px]">
-                Office
-              </NavLink>
-            </nav>
-
-            <nav className="email flex items-center">
-              <NavLink to={"/campaign"} className=" text-[15px]">
-                Industry & Hospital
-              </NavLink>
-            </nav>
-            <nav className="email flex items-center md:me-10 xl:me-0">
-              <NavLink to={"/campaign"} className=" text-[15px]">
-                Doors
-              </NavLink>
+              <div
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                {menuData?.data?.map(
+                  (menu) =>
+                    menu?.category?.show_title === "active" && (
+                      <NavLink
+                        key={menu?._id}
+                        to={`/category/${menu?.category?.category_slug}`}
+                        className="  px-4 py-1"
+                      >
+                        {menu?.category?.category_name}
+                      </NavLink>
+                    )
+                )}
+                {showSubCategoryModal && (
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="bg-[#ffffff]  modal-content w-full  grid grid-cols-1 gap-4 p-4 rounded shadow-lg"
+                  >
+                    {subCategories?.map((subCategory) => (
+                      <Link
+                        onClick={() => {
+                          setIsCategoryOpen(false);
+                          setIsCategory("");
+                          setIsMenu("");
+                        }}
+                        to={`/category/${subCategory?.sub_category_slug}`}
+                        key={subCategory?.sub_category_name}
+                      >
+                        <p className="text-[15px]  text-gray-500 hover:bg-gray-100 hover:text-[#14CD6D] ">
+                          {subCategory?.sub_category_name}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             </nav> */}
           </div>
         </div>
@@ -367,3 +240,74 @@ export default function BottomHeader() {
     </div>
   );
 }
+
+// {
+//   menuData?.data?.map(
+//     (menu) =>
+//       menu?.category?.show_title === "active" && (
+//         // show title sub category start
+//         <nav className="email  flex items-center " key={menu?._id}>
+//           <div
+//             onMouseEnter={() => {
+//               setIsTitleCategoryOpen(true);
+//               setIsTitleSubCategory("");
+//               setIsTitleMenu("");
+//             }}
+//             className=" mx-3 px-1 rounded-full hidden lg:block"
+//           >
+//             <NavLink
+//               to={`/category/${menu?.category?.category_slug}`}
+//               className=" text-[15px]"
+//             >
+//               {menu?.category?.category_name}
+//             </NavLink>
+
+//             {isTitleCategoryOpen && (
+//               <div
+//                 onMouseLeave={() => {
+//                   setIsTitleCategoryOpen(false);
+//                   setIsTitleSubCategory("");
+//                   setIsTitleMenu("");
+//                 }}
+//                 className="absolute top-[160px] start-[28%] z-10 col-span-2 hidden lg:block rounded bg-white  border shadow-md py-3"
+//               >
+//                 <div className=" rounded-md flex">
+//                   <nav className="w-[250px] border-r overflow-hidden">
+//                     <ul className="space-y-[1px] list-none max-h-[300px] overflow-y-auto scrollbar-thin">
+//                       {menu?.subCategoryData?.map((subCategory) => (
+//                         <Link
+//                           onClick={() => {
+//                             setIsTitleCategoryOpen(false);
+//                             setIsTitleSubCategory("");
+//                             setIsTitleMenu("");
+//                           }}
+//                           to={`/category/${menu?.category?.category_slug}/${subCategory?.sub_category_slug}`}
+//                           key={subCategory?.sub_category_name}
+//                         >
+//                           <li>
+//                             <details className="group">
+//                               <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-1 text-gray-500 hover:bg-gray-100 hover:text-[#14CD6D]">
+//                                 <span
+//                                   className={`text-sm font-medium group-hover:text-[#14CD6D]" ${
+//                                     isTitleSubCategory ===
+//                                       subCategory?.sub_category_slug &&
+//                                     "text-[#14CD6D]"
+//                                   }`}
+//                                 >
+//                                   {subCategory?.sub_category_name}
+//                                 </span>
+//                               </summary>
+//                             </details>
+//                           </li>
+//                         </Link>
+//                       ))}
+//                     </ul>
+//                   </nav>
+//                 </div>
+//               </div>
+//             )}
+//           </div>
+//         </nav>
+//       )
+//   );
+// }
