@@ -177,7 +177,6 @@ export default function BottomHeader() {
 
             {menuData?.data
               ?.filter((menu) => menu?.category?.show_title === "active")
-              ?.slice(0, 5)
               .map((menu) => (
                 // show title sub category start
                 <nav className="email flex items-center" key={menu?._id}>
