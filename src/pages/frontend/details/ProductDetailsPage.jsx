@@ -4,6 +4,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 
 import { useState } from "react";
+import ProductHighlightSection from "./ProductDetailsPage/ProductHighlightSection";
 
 const ProductDetailsPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -68,12 +69,12 @@ const ProductDetailsPage = () => {
   return (
     <section>
       <div className="max-w-[1300px] mx-auto my-8  bg-white p-5  ">
-        <div className="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-7 lg:grid-cols-7 ">
-          <div className=" lg:col-span-2 md:col-span-2 sm:col-span-1  col-span-1 ">
+        <div className="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-12 gap-4 ">
+          <div className="  md:col-span-4 sm:col-span-1  col-span-1 ">
             <div className="">
               <div className="border border-gray-200 p-2">
                 <img
-                  className=" w-full lg:h-[382px]  md:h-[272px] sm:h-[353px]"
+                  className=" w-full lg:h-[382px] md:h-[300px]  sm:h-[200px] "
                   src={
                     selectedImage
                       ? selectedImage
@@ -87,7 +88,7 @@ const ProductDetailsPage = () => {
                 <img
                   src={product?.data?.product_thumbnail}
                   alt={`image-${product?.data?.product_name}`}
-                  className={`h-16 w-16 border  p-1 mr-2 my-2 cursor-pointer ${
+                  className={`md:h-20 md:w-20 h-16 w-16 border  p-1 mr-2 my-2 cursor-pointer ${
                     selectedImage === product?.data?.product_thumbnail
                       ? "border-primaryLightColor"
                       : "border-gray-200"
@@ -102,7 +103,7 @@ const ProductDetailsPage = () => {
                       <img
                         src={image?.image}
                         alt={`image-${image?._id}`}
-                        className={`h-16 w-16 border  p-1 mr-2 my-2 cursor-pointer ${
+                        className={`md:h-20 md:w-20 h-16 w-16 border  p-1 mr-2 my-2 cursor-pointer ${
                           selectedImage === image?.image
                             ? "border-primaryLightColor"
                             : "border-gray-200"
@@ -116,11 +117,11 @@ const ProductDetailsPage = () => {
           </div>
 
           {/* Name price and buy add to cart section  */}
-          {/* <div className="lg:col-span-3 md:col-span-3 sm:col-span-2 col-span-1 px-4 ">
+          <div className=" md:col-span-8 sm:col-span-2 col-span-1 px-4 ">
             <ProductHighlightSection product={product} />
           </div>
 
-          <div className="lg:col-span-2 md:col-span-2 sm:col-span-3  col-span-1 px-4 ">
+          {/* <div className="lg:col-span-2 md:col-span-2 sm:col-span-3  col-span-1 px-4 ">
             <RightSideShoppingSection product={product} />
           </div>
         </div>
