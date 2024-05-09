@@ -6,6 +6,8 @@ export default {
     extend: {
       colors: {
         primaryColor: "#0A0D28",
+        primaryDeepColor: "#008140",
+        primaryLightColor: "#00C961",
         secondary: "#F0F0F0",
         logoColor: "#FDEE9B",
         yellowColor: "#FEB60D",

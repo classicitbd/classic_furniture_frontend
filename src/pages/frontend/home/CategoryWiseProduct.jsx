@@ -53,7 +53,7 @@ const CategoryWiseProduct = () => {
             category?.productsData?.length > 0 && (
               <div key={category?.category?._id}>
                 <div className="flex justify-between items-center mt-5">
-                  <h1 className="text-xl py-6 font-semibold text-[#008140]">
+                  <h1 className="text-2xl py-6 font-semibold text-primaryLightColor">
                     {category?.category?.category_name}
                   </h1>
                 </div>
@@ -69,7 +69,7 @@ const CategoryWiseProduct = () => {
                           <img
                             src={product?.product_thumbnail}
                             alt="Product Image"
-                            className="w-full rounded-t-lg"
+                            className="w-full rounded-t-md h-[200px] object-cover"
                           />
                           {product?.product_discount_price && (
                             <div className="bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2">

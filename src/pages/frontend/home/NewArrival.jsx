@@ -46,8 +46,8 @@ export default function NewArrival() {
       <div className="es_container mx-auto md:px-20 xl:px-0 px-5 pt-10">
         <div>
           <div className="flex justify-between items-center">
-            <h1 className="text-xl my-6 font-semibold text-[#008140]">
-              New Arival
+            <h1 className="text-2xl py-6 font-semibold text-primaryLightColor">
+              New Arrival
             </h1>
           </div>
         </div>
@@ -62,7 +62,7 @@ export default function NewArrival() {
                   <img
                     src={product?.product_thumbnail}
                     alt="Product Image"
-                    className="w-full rounded-t-lg"
+                    className="w-full rounded-t-md h-[200px] object-cover"
                   />
                   {product?.product_discount_price && (
                     <div className="bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2">
