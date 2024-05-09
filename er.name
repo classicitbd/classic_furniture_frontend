@@ -1,0 +1,253 @@
+[33mcommit 0a1850d43f7d8494fb640b3aaf419f2e366b4c65[m[33m ([m[1;36mHEAD -> [m[1;32msaifulla[m[33m, [m[1;31morigin/saifulla[m[33m)[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Thu May 9 12:22:08 2024 +0600
+
+     home page some styling done
+
+[33mcommit c9c9773ca7b1194326de64331be8e14b087f2cb7[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Thu May 9 12:04:28 2024 +0600
+
+    banner dynamic and home page some styling done
+
+[33mcommit 584a8bd10e494c2ddb6b9a5aec98362f13c642be[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Thu May 9 11:17:47 2024 +0600
+
+    New arrival product and slider get api create
+
+[33mcommit c9b6fe5ad6d9c7ff896f2308f64004ab4bab89d6[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Thu May 9 10:46:49 2024 +0600
+
+    Category wise product poling intraval added and product api create
+
+[33mcommit bac532b47c4c224773e64001ead4209cc13978e9[m
+Merge: dc422b7 662780c
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Thu May 9 09:57:26 2024 +0600
+
+    Merge branch 'main' of https://github.com/classicitbd/classic_furniture_frontend into saifulla
+
+[33mcommit dc422b74b79290f9e8069bd67eb40c2c4268917f[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Thu May 9 09:57:14 2024 +0600
+
+    Category wise product show dynamicaly
+
+[33mcommit 662780c3599209f58a7402e549996aecf9e7f5ed[m[33m ([m[1;31morigin/main[m[33m)[m
+Merge: ef1206b 8e53a8a
+Author: nazmul bhuyian <108360882+nazmulbhuyian@users.noreply.github.com>
+Date:   Wed May 8 18:46:15 2024 +0600
+
+    Merge pull request #23 from classicitbd/saifulla
+    
+    Saifulla
+
+[33mcommit 8e53a8adfd6d92629441ee6b447823f6690bbbb2[m
+Merge: 1bfa877 ef1206b
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Wed May 8 18:45:46 2024 +0600
+
+    Merge branch 'main' of https://github.com/classicitbd/classic_furniture_frontend into saifulla
+
+[33mcommit 1bfa877eedd8f7ae0b4c6128d1b3173bc05847e1[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Wed May 8 18:45:38 2024 +0600
+
+    Category wise product show
+
+[33mcommit ef1206b5d01ccca2f2bf02821a64224801344d7c[m
+Merge: 5f727d7 a40f899
+Author: nazmul bhuyian <108360882+nazmulbhuyian@users.noreply.github.com>
+Date:   Wed May 8 14:46:57 2024 +0600
+
+    Merge pull request #22 from classicitbd/saifulla
+    
+    Saifulla
+
+[33mcommit a40f89995371f32e09e6a52089515cb161c18edb[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Wed May 8 14:46:05 2024 +0600
+
+    Pupular category data show
+
+[33mcommit 787d8ea9ac0d34357c9eb8afd0ebd191d7f54493[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Wed May 8 13:22:31 2024 +0600
+
+    Show title category data slice remove
+
+[33mcommit 9fe8a2b80ca57be1adc8a88b0abb7bab6e0d19cb[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Wed May 8 13:21:39 2024 +0600
+
+    Show title category
+
+[33mcommit 2bbd0e8c0552984ee0cebd8fc28145d17872e654[m
+Merge: ffddcd8 5f727d7
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Wed May 8 11:20:10 2024 +0600
+
+    Merge branch 'main' of https://github.com/classicitbd/classic_furniture_frontend into saifulla
+
+[33mcommit ffddcd8a75c21700b378455567b379c7c556f145[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Wed May 8 11:19:08 2024 +0600
+
+    bottom header category section dynamic done
+
+[33mcommit ba51606e313dc04a75341d2de21ad357fb98fcb4[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Tue May 7 19:05:12 2024 +0600
+
+    bottom bar category dynamic
+
+[33mcommit 5f727d77e00282633d54507383ddad98af5e934f[m
+Merge: 59905c7 e5bc34c
+Author: nazmul bhuyian <108360882+nazmulbhuyian@users.noreply.github.com>
+Date:   Tue May 7 16:44:54 2024 +0600
+
+    Merge pull request #21 from classicitbd/nazmul
+    
+    Nazmul
+
+[33mcommit e5bc34c66752056a43927536cdd9ec9502239a64[m
+Merge: 14288c6 59905c7
+Author: Hasiful Islam <nazmulbhuyian000@gmail.com>
+Date:   Tue May 7 16:44:09 2024 +0600
+
+    Merge branch 'main' of https://github.com/classicitbd/classic_furniture_frontend into nazmul
+
+[33mcommit 14288c6fcf5eedbb820dea7b82481ccf4ca5e9ff[m
+Author: Hasiful Islam <nazmulbhuyian000@gmail.com>
+Date:   Tue May 7 16:44:02 2024 +0600
+
+    layout add
+
+[33mcommit 3fe952cc730756f86763a19d126b52a9e251b96d[m
+Merge: 9f6ba06 59905c7
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Tue May 7 13:50:35 2024 +0600
+
+    Merge branch 'main' of https://github.com/SaifullaJubair/classic_furniture_frontend into saifulla
+
+[33mcommit 9f6ba0636b3dd23316410e23a8aca3ca1c8cf6a2[m
+Author: iliasrony21 <iliasronyweb21@gmail.com>
+Date:   Tue May 7 13:48:49 2024 +0600
+
+    category get api & show data in bottom header
+
+[33mcommit 59905c790038b4adb94268b8a46f3d85ed6f175b[m
+Merge: 46695a7 6210a6e
+Author: nazmul bhuyian <108360882+nazmulbhuyian@users.noreply.github.com>
+Date:   Tue May 7 12:34:33 2024 +0600
+
+    Merge pull request #20 from classicitbd/nazmul
+    
+    Nazmul
+
+[33mcommit 6210a6e15217b2fe8934f76d7f2abe77a3150aff[m
+Author: Hasiful Islam <nazmulbhuyian000@gmail.com>
+Date:   Tue May 7 12:33:46 2024 +0600
+
+    update product
+
+[33mcommit 79e6599222efc3c7eb98f87848dc44d24658354a[m
+Merge: 74d3424 46695a7
+Author: Hasiful Islam <nazmulbhuyian000@gmail.com>
+Date:   Tue May 7 10:36:42 2024 +0600
+
+    Merge branch 'main' of https://github.com/classicitbd/classic_furniture_frontend into nazmul
+
+[33mcommit 74d34248e5b816db6140aff6dc195c3cf6e727d4[m
+Author: Hasiful Islam <nazmulbhuyian000@gmail.com>
+Date:   Tue May 7 10:36:35 2024 +0600
+
+    code pull
+
+[33mcommit 46695a7f6898e3da5f0c6d6f4a645cf84b4f5eaf[m[33m ([m[1;31mupstream/main[m[33m, [m[1;31mupstream/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: e985aec 1be8502
+Author: Md Amirul Islam <78630101+A-amirul@users.noreply.github.com>
+Date:   Mon May 6 18:59:45 2024 +0600
+
+    Merge pull request #19 from classicitbd/Amir
+    
+    Amir
+
+[33mcommit 1be850283c09ff3f9c9b1358107591a7dd7c7427[m[33m ([m[1;31mupstream/Amir[m[33m)[m
+Author: A-amirul <amirulislamamir412@gmail.com>
+Date:   Mon May 6 18:59:05 2024 +0600
+
+    slider modifer update
+
+[33mcommit 409dd15a49555531b30e1df0fa0279027746338f[m
+Author: A-amirul <amirulislamamir412@gmail.com>
+Date:   Mon May 6 18:34:46 2024 +0600
+
+    category product and all product modify
+
+[33mcommit fa337d6b560420a6b74f3e3b45e5cae59e364887[m
+Author: A-amirul <amirulislamamir412@gmail.com>
+Date:   Mon May 6 18:19:03 2024 +0600
+
+    banner upgrade
+
+[33mcommit da6bfce666fc421f5ab5a3aa85118b0d2bdfa0d5[m
+Author: A-amirul <amirulislamamir412@gmail.com>
+Date:   Mon May 6 18:08:56 2024 +0600
+
+    Slider title and description modify
+
+[33mcommit 1636936216f01de4835270cfddceaee2ec1c0603[m
+Merge: 89a5294 e985aec
+Author: A-amirul <amirulislamamir412@gmail.com>
+Date:   Mon May 6 14:35:27 2024 +0600
+
+    Merge branch 'main' of https://github.com/classicitbd/classic_furniture_frontend into Amir
+
+[33mcommit 89a5294ddabb401f23fb1cd21198e354166f79bd[m
+Author: A-amirul <amirulislamamir412@gmail.com>
+Date:   Mon May 6 14:35:17 2024 +0600
+
+    categorywise product added
+
+[33mcommit e985aecd14371a0b9cea8fd9eb51b9b1ef1ee8f8[m
+Merge: 570cb8c 5a3c256
+Author: nazmul bhuyian <108360882+nazmulbhuyian@users.noreply.github.com>
+Date:   Mon May 6 14:32:04 2024 +0600
+
+    Merge pull request #18 from classicitbd/nazmul
+    
+    done
+
+[33mcommit 5a3c256a9833497a1da02623c31e5196cebf03af[m[33m ([m[1;31mupstream/nazmul[m[33m)[m
+Author: Hasiful Islam <nazmulbhuyian000@gmail.com>
+Date:   Mon May 6 14:31:20 2024 +0600
+
+    done
+
+[33mcommit 570cb8cbe3b31e8fbaec35d4597e8561a24191c6[m
+Merge: d89c498 2c53ec7
+Author: Md Amirul Islam <78630101+A-amirul@users.noreply.github.com>
+Date:   Sun May 5 19:10:41 2024 +0600
+
+    Merge pull request #17 from classicitbd/Amir
+    
+    Bottom header update
+
+[33mcommit 2c53ec7de54c4d70b066af10eb31efb9d3ac9d33[m
+Author: A-amirul <amirulislamamir412@gmail.com>
+Date:   Sun May 5 19:11:08 2024 +0600
+
+    Bottom header update
+
+[33mcommit f52820f0deab219cfddfeefb6cd20748a216d7f3[m
+Author: A-amirul <amirulislamamir412@gmail.com>
+Date:   Sun May 5 18:14:45 2024 +0600
+
+    banner added
+
+[33mcommit d89c498f3056c17ec1fe900e0f11c39410453c21[m
+Merge: d92a2fb f52820f
+Author: Md Amirul Islam <78630101+A-ami
