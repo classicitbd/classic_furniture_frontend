@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { BASE_URL } from "../../../../utils/baseURL";
+import { BASE_URL } from "../../../utils/baseURL";
 const CategoryWiseProduct = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 

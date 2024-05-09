@@ -9,7 +9,7 @@ import { IoCartOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import Header from "../../../shared/header/Header";
 
-export default function ProductSale() {
+export default function NewArrival() {
   const [showAll, setShowAll] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const initialDisplayCount = 10;
