@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Header from "../../../shared/header/Header";
 
 export default function NewArrival() {
+  const {data: products
   const [showAll, setShowAll] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const initialDisplayCount = 10;

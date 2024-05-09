@@ -1,21 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { BASE_URL } from "../../../utils/baseURL";
+import { useGetCategoryWiseProductQuery } from "../../../redux/feature/categoryWiseProduct/categoryWiseProductApi";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 const CategoryWiseProduct = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  // get Sub Category type
-  // const [categoryData, setCategoryData] = useState([]);
-  const { data: products = [] } = useQuery({
-    queryKey: ["/api/v1/product/category_match_product"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product/category_match_product`);
-      const data = await res.json();
-      return data;
-    },
-  });
-  // console.log(products);
+  const { data: products, isLoading } = useGetCategoryWiseProductQuery(
+    undefined,
+    {
+      refetchOnMountOrArgChange: true,
+      pollingInterval: 3000,
+    }
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,6 +36,12 @@ const CategoryWiseProduct = () => {
 
   //   console.log("cartQuantity", cartQuantity);
 
+  if (isLoading)
+    return (
+      <div>
+        <MiniSpinner />
+      </div>
+    );
   return (
     <div className="es_container mx-auto md:px-20 xl:px-0 px-5 py-10">
       {/* 1st map for title */}
@@ -66,7 +67,7 @@ const CategoryWiseProduct = () => {
                       >
                         <div className="w-full relative">
                           <img
-                            src={product?.product_images?.[0]?.image}
+                            src={product?.product_thumbnail}
                             alt="Product Image"
                             className="w-full rounded-t-lg"
                           />
