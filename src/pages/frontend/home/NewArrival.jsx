@@ -1,4 +1,3 @@
-import { FaShoppingCart } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useGetProductQuery } from "../../../redux/feature/product/productApi";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
@@ -112,10 +111,10 @@ export default function NewArrival() {
                             )}
                           </div> */}
                   {/* Product Title */}
-                  <div className="product_title mt-2">
+                  <div className="product_title py-4">
                     <p
                       title={product?.product_name}
-                      className={`text-[14px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
+                      className={` text-[17px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
                         window.innerWidth < 640
                           ? "max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis"
                           : ""
@@ -132,7 +131,7 @@ export default function NewArrival() {
                   </div>
 
                   {/* Buy Now Button */}
-                  <div className="flex w-full items-center  gap-2 text-[#008140] cursor-pointer">
+                  {/* <div className="flex w-full items-center  gap-2 text-[#008140] cursor-pointer">
                     <FaShoppingCart
                       // onClick={() => handleAddToCart(product)}
                       title="Add To cart"
@@ -146,7 +145,7 @@ export default function NewArrival() {
                     >
                       Buy Now
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

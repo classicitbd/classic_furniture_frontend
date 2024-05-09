@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { FaShoppingCart } from "react-icons/fa";
 import { useGetCategoryWiseProductQuery } from "../../../redux/feature/categoryWiseProduct/categoryWiseProductApi";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 const CategoryWiseProduct = () => {
@@ -120,10 +119,10 @@ const CategoryWiseProduct = () => {
                             )}
                           </div> */}
                           {/* Product Title */}
-                          <div className="product_title mt-2">
+                          <div className="product_title py-4">
                             <p
                               title={product?.product_name}
-                              className={`text-[14px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
+                              className={`text-[17px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
                                 window.innerWidth < 640
                                   ? "max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis"
                                   : ""
@@ -139,10 +138,9 @@ const CategoryWiseProduct = () => {
                             </p>
                           </div>
 
-                          {/* Buy Now Button */}
+                          {/* Buy Now Button
                           <div className="flex w-full items-center  gap-2 text-[#008140] cursor-pointer">
                             <FaShoppingCart
-                              // onClick={() => handleAddToCart(product)}
                               title="Add To cart"
                               className="text-lg "
                             />
@@ -150,11 +148,10 @@ const CategoryWiseProduct = () => {
                               type="button"
                               title="Buy Now"
                               className="bg-ftPrimaryColor py-2 rounded   text-center font-semibold text-[16px]"
-                              // onClick={() => handleAddToCart(product)}
                             >
                               Buy Now
                             </button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
