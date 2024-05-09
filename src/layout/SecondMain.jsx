@@ -5,8 +5,7 @@ import Header from "../shared/header/Header";
 const SecondMain = () => {
   return (
     <>
-      
-      <header className="sticky top-0 bg-primaryColor z-30">
+      <header className="sticky top-0 bg-white Color">
         <Header />
       </header>
       <Outlet />
