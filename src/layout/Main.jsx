@@ -10,12 +10,13 @@ const Main = () => {
       <div className="hidden lg:block">
         <TopHeader />
       </div>
-      <div className="pt-4"
-      >
-        <Header />
-      </div>
-      <div className="hidden lg:block">
-        <BottomHeader />
+      <div className="sticky top-0 z-50 bg-white">
+        <div className="pt-4">
+          <Header />
+        </div>
+        <div className="hidden lg:block">
+          <BottomHeader />
+        </div>
       </div>
 
       <Outlet />
