@@ -83,7 +83,7 @@ export default function BottomHeader() {
                             setIsMenu("");
                           }}
                           key={menu?.category?._id}
-                          to={`/category/${menu?.category?.category_slug}`}
+                          to={`/all?category=${menu?.category?.category_slug}`}
                         >
                           <li
                             onMouseOver={() => {
@@ -146,7 +146,7 @@ export default function BottomHeader() {
                               setIsCategory("");
                               setIsMenu("");
                             }}
-                            to={`/category/${isMenu}/${subCategory?.sub_category_slug}`}
+                            to={`/all?category=${isMenu}?sub_category=${subCategory?.sub_category_slug}`}
                             key={subCategory?.sub_category_name}
                           >
                             <li>

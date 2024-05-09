@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useGetCategoryWiseProductQuery } from "../../../redux/feature/categoryWiseProduct/categoryWiseProductApi";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
+import { Link } from "react-router-dom";
 const CategoryWiseProduct = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { data: products, isLoading } = useGetCategoryWiseProductQuery(
@@ -60,52 +61,53 @@ const CategoryWiseProduct = () => {
                 <div className={`grid gap-4 ${gridCols}`}>
                   {category?.productsData?.map((product) => (
                     <div key={product?._id} className="group">
-                      <div
-                        title="View Details"
-                        className="border border-transparent group-hover:border-[#008140] transition-all duration-500 rounded-md group-hover:scale-100 shadow"
-                      >
-                        <div className="w-full relative">
-                          <img
-                            src={product?.product_thumbnail}
-                            alt="Product Image"
-                            className="w-full rounded-t-md h-[200px] object-cover"
-                          />
-                          {product?.product_discount_price && (
-                            <div className="bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2">
-                              OFF{" "}
-                              {product?.product_price -
-                                product?.product_discount_price}
-                              TK
-                            </div>
-                          )}
-                        </div>
-                        {/* Product Details */}
-                        <div className="px-3 pt-3 pb-2">
-                          {/* Product Prices */}
-                          <div className="product_price_inner flex items-center gap-2 py-2">
-                            <strong className="offer_price text-[#FF0000] text-[16px] font-bold">
-                              ৳{" "}
-                              {product?.product_discount_price
-                                ? product?.product_discount_price
-                                : product?.product_price}
-                            </strong>
+                      <Link to={`/${product?.product_slug}`}>
+                        <div
+                          title="View Details"
+                          className="border border-transparent group-hover:border-[#008140] transition-all duration-500 rounded-md group-hover:scale-100 shadow"
+                        >
+                          <div className="w-full relative">
+                            <img
+                              src={product?.product_thumbnail}
+                              alt="Product Image"
+                              className="w-full rounded-t-md h-[200px] object-cover"
+                            />
                             {product?.product_discount_price && (
-                              <span className="old_price line-through text-[12px] text-[#0f172a99] font-medium">
-                                ৳ {product?.product_price}
-                              </span>
+                              <div className="bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2">
+                                OFF{" "}
+                                {product?.product_price -
+                                  product?.product_discount_price}
+                                TK
+                              </div>
                             )}
                           </div>
-                          {product?.product_quantity ? (
-                            <div className=" text-sm text-gray-500">
-                              <p> In-Stock</p>
+                          {/* Product Details */}
+                          <div className="px-3 pt-3 pb-2">
+                            {/* Product Prices */}
+                            <div className="product_price_inner flex items-center gap-2 py-2">
+                              <strong className="offer_price text-[#FF0000] text-[16px] font-bold">
+                                ৳{" "}
+                                {product?.product_discount_price
+                                  ? product?.product_discount_price
+                                  : product?.product_price}
+                              </strong>
+                              {product?.product_discount_price && (
+                                <span className="old_price line-through text-[12px] text-[#0f172a99] font-medium">
+                                  ৳ {product?.product_price}
+                                </span>
+                              )}
                             </div>
-                          ) : (
-                            <div className=" text-xs text-gray-500">
-                              <p> Out Of Stock</p>
-                            </div>
-                          )}
-                          {/* Rating Stars */}
-                          {/* <div className="product_rating flex">
+                            {product?.product_quantity ? (
+                              <div className=" text-sm text-gray-500">
+                                <p> In-Stock</p>
+                              </div>
+                            ) : (
+                              <div className=" text-xs text-gray-500">
+                                <p> Out Of Stock</p>
+                              </div>
+                            )}
+                            {/* Rating Stars */}
+                            {/* <div className="product_rating flex">
                             {[...Array(Math.floor(product.rating))].map(
                               (_, index) => (
                                 <FaStar
@@ -118,27 +120,27 @@ const CategoryWiseProduct = () => {
                               <FaStarHalfAlt className="text-yellowColor" />
                             )}
                           </div> */}
-                          {/* Product Title */}
-                          <div className="product_title py-4">
-                            <p
-                              title={product?.product_name}
-                              className={`text-[17px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
-                                window.innerWidth < 640
-                                  ? "max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis"
-                                  : ""
-                              }`}
-                            >
-                              {window.innerWidth >= 1024
-                                ? product.product_name.length > 30
-                                  ? `${product.product_name.slice(0, 30)}...`
-                                  : product.product_name
-                                : product.product_name.length > 23
-                                ? `${product.product_name.slice(0, 23)}...`
-                                : product.product_name}
-                            </p>
-                          </div>
+                            {/* Product Title */}
+                            <div className="product_title py-4">
+                              <p
+                                title={product?.product_name}
+                                className={`text-[17px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
+                                  window.innerWidth < 640
+                                    ? "max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis"
+                                    : ""
+                                }`}
+                              >
+                                {window.innerWidth >= 1024
+                                  ? product.product_name.length > 30
+                                    ? `${product.product_name.slice(0, 30)}...`
+                                    : product.product_name
+                                  : product.product_name.length > 23
+                                  ? `${product.product_name.slice(0, 23)}...`
+                                  : product.product_name}
+                              </p>
+                            </div>
 
-                          {/* Buy Now Button
+                            {/* Buy Now Button
                           <div className="flex w-full items-center  gap-2 text-[#008140] cursor-pointer">
                             <FaShoppingCart
                               title="Add To cart"
@@ -152,8 +154,9 @@ const CategoryWiseProduct = () => {
                               Buy Now
                             </button>
                           </div> */}
+                          </div>
                         </div>
-                      </div>
+                      </Link>
                     </div>
                   ))}
                 </div>
