@@ -8,7 +8,10 @@
 // import RelatedProducts from "../../../components/Frontend/ProductDetailsPage/RelatedProducts";
 // import { useEffect, useState } from "react";
 
-import { useGetSingleProductQuery } from "../../../redux/feature/singleProduct/singleProductApi";
+import { useParams } from "react-router-dom";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
+import { BASE_URL } from "../../../utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
 
 // const ProductDetailsPage = () => {
 //   const { id } = useParams();
@@ -107,10 +110,22 @@ import { useGetSingleProductQuery } from "../../../redux/feature/singleProduct/s
 // export default ProductDetailsPage;
 
 const ProductDetailsPage = () => {
-  // const { data} = useGetSingleProductQuery()
+  const { slug } = useParams();
+  const { data: product = [], isLoading } = useQuery({
+    queryKey: [`/api/v1/product/${slug}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/product/${slug}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return <MiniSpinner />;
+  }
   return (
     <div>
-      <h1 className="text-3xl"> Product Details</h1>
+      <h1 className="text-3xl">Name: {product?.data?.product_name}</h1>
     </div>
   );
 };
