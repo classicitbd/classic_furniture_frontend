@@ -40,7 +40,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-primaryColor text-textColor hidden sm:block">
+    <div className="bg-primaryDeepColor text-textColor hidden sm:block">
       {/* ------ navbar with dropdown ------ start */}
       <div
         onMouseLeave={() => {

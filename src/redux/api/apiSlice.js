@@ -19,7 +19,6 @@ export const api = createApi({
     "siteSetting",
     "banner",
     "video",
-    "singleProduct",
   ], //['menu', 'category', 'sub_category', 'color', 'collection', 'style', 'slider', 'product', 'user', 'order', 'siteSetting', 'banner', 'video'],
   endpoints: () => ({}),
 });

@@ -70,7 +70,7 @@ export default function BottomHeader() {
                   setIsCategory("");
                   setIsMenu("");
                 }}
-                className="absolute top-[160px] start-[26%] z-10 col-span-2 hidden lg:block rounded bg-white  border shadow-md py-3"
+                className="absolute top-[120px] start-[26%] z-10 col-span-2 hidden lg:block rounded bg-white  border shadow-md py-3"
               >
                 <div className="rounded-md flex">
                   <nav className="w-[220px] border-r overflow-hidden">
