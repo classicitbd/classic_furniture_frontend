@@ -11,7 +11,6 @@ import ForgetPassword from "../pages/forgetPassword/ForgetPassword";
 import NewPassword from "../pages/newPassword/NewPassword";
 import Home from "../pages/frontend/home/Home";
 import Slider from "../pages/dashboard/slider/Slider";
-import DetailsPage from "../pages/frontend/details/DetailsPage";
 import ProductList from "../pages/dashboard/product/productList/ProductList";
 import ProductCreate from "../pages/dashboard/product/productCreate/ProductCreate";
 import Customer from "../pages/dashboard/customer/Customer";
@@ -39,6 +38,7 @@ import PrivateRoute from "./privateRoute/PrivateRoute";
 import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
 import AllProducts from "../pages/frontend/allProducts/AllProducts";
 import Youtube from "../pages/dashboard/youtube/Youtube";
+import ProductDetailsPage from "../pages/frontend/details/ProductDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/category",
-        element:<CategoryProducts />,
+        element: <CategoryProducts />,
       },
       {
         path: "/all",
@@ -67,10 +67,9 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/:slug",
-        element: <DetailsPage />,
+        element: <ProductDetailsPage />,
       },
-      
-     
+
       {
         path: "/checkout",
         element: <CheckoutPage />,
@@ -147,8 +146,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element:
-      <PrivateRoute><PrivateDashboardRoute><DashboardLayout /></PrivateDashboardRoute></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <PrivateDashboardRoute>
+          <DashboardLayout />
+        </PrivateDashboardRoute>
+      </PrivateRoute>
+    ),
     errorElement: <NotFound />,
     children: [
       {
