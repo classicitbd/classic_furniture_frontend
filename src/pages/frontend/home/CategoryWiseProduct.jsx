@@ -8,7 +8,6 @@ const CategoryWiseProduct = () => {
     undefined,
     {
       refetchOnMountOrArgChange: true,
-      pollingInterval: 3000,
     }
   );
 

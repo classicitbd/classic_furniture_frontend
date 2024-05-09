@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function NewArrival() {
   const { data: products, isLoading } = useGetProductQuery(undefined, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 3000,
+    pollingInterval: 60000,
   });
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   // const [cartQuantity, setCartQuantity] = useState(0);

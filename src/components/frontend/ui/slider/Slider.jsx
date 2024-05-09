@@ -26,7 +26,6 @@ import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 const Slider = () => {
   const { data: sliders, isLoading } = useGetBannerQuery(undefined, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 3000,
   });
   if (isLoading)
     return (
