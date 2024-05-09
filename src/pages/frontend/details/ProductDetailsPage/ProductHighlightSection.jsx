@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ProductHighlightSection = ({ product }) => {
   const [selectColor, setSelectColor] = useState("");
@@ -9,6 +10,7 @@ const ProductHighlightSection = ({ product }) => {
   const {
     _id,
     product_name,
+    category_id,
     product_description,
     product_images,
     product_slug,
@@ -31,53 +33,67 @@ const ProductHighlightSection = ({ product }) => {
 
   return (
     <div>
-      <h2 className=" font-semibold text-gray-700 text-2xl  ">
+      <h2 className=" font-semibold text-gray-700 text-2xl my-3  ">
         {product_name}
       </h2>
-      {/* Heading section */}
-      {/* <section className=" flex items-center gap-1 mt-4 mb-6 text-sm ">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <FaStar className="text-yellow-400" key={index}></FaStar>
-        ))}
-        <span className="text-gray-500 mr-2">{rating}</span>
-        <span className="text-gray-500 mr-2"> 39 Reviews </span>
-        <span className="text-gray-500 mr-2">354 Sold</span>
-      </section> */}
       <hr />
-      {/* Limited Offer */}
-      {/* <div className="flex justify-between items-center bg-ftPrimaryColor my-3 rounded px-3 py-1.5">
-        <h2 className="text-white font-bold"> Limited Offers</h2>
-        <p className="text-slate-100 text-xs "> Ends: Sep, 11: 59 PM</p>
-      </div> */}
 
-      {/* Price section */}
-
-      {/* <div className="flex items-center flex-wrap gap-3 my-6">
-        <p className="text-lg">
-          BDT<span className="text-3xl font-bold ">{}</span>
-        </p>
-        <p>
-          <span className="text-xs text-gray-500 line-through mr-2">
-            BDT 1494.00
-          </span>
-          <span className="bg-ftPrimaryColor text-white px-1.5 py-1 rounded-xl font-semibold text-xs">
-            {" "}
-            67% off
-          </span>
-        </p>
-      </div> */}
-
-      <div className=" flex flex-col  gap-3 ">
-        <strong className="offer_price text-[#FF0000] text-xl font-bold">
-          <span className="text-lg text-gray-700"> Price:</span> ৳{" "}
-          {product_discount_price ? product_discount_price : product_price}
-        </strong>
+      <div className=" my-3 ">
         {product_discount_price && (
-          <span className="old_price line-through text-lg text-[#0f172a99] font-medium">
+          <div className="flex items-center  ">
             {" "}
-            M.R.P: ৳ {product_price}
-          </span>
+            <span className="text-md  text-gray-600 mr-4"> M.R.P </span>
+            <span className="mr-1">৳ </span>{" "}
+            <span className="line-through text-lg text-[#0f172a99] font-medium">
+              {" "}
+              {product_price}
+            </span>
+            <div className="bg-red-600 text-white inline text-xs px-1.5 rounded ml-4">
+              OFF {product_price - product_discount_price}
+              TK
+            </div>
+          </div>
         )}
+        <strong className="offer_price text-[#FF0000] text-2xl  font-semibold">
+          <span className="text-md text-gray-600 mr-3 font-medium"> Price</span>{" "}
+          ৳ {product_discount_price ? product_discount_price : product_price}
+        </strong>
+        <h1 className="text-md text-gray-700 my-2">
+          <span className="mr-3"> Color:</span> {product_color_id?.color_name}
+        </h1>
+        {product_quantity > 0 ? (
+          <h1 className="text-md  text-gray-700 my-3">
+            <span className="mr-2"> Status:</span>{" "}
+            <span className="text-green-600">In Stock</span>
+          </h1>
+        ) : (
+          <h1 className="text-md text-gray-700 my-2">
+            <span className="mr-2"> Status:</span>{" "}
+            <span className="text-red-600">Out of Stock</span>
+          </h1>
+        )}
+
+        {/* Size section */}
+        {/* category details */}
+        <div className="flex gap-8 my-4 items-start">
+          <img
+            src={category_id?.category_logo}
+            alt={category_id?.category_name}
+            className="w-20 h-[68px] border"
+          />
+          <div>
+            <p className="text-[12px] text-gray-500 ">Category</p>
+            <p className="font-semibold text-lg text-primary">
+              {category_id?.category_name}
+            </p>
+            <Link to={`/all?category=${category_id?.category_slug}`}>
+              <p className="text-[10px] pt-1 text-gray-700 transition duration-100 hover:text-primaryLightColor hover:underline ">
+                View Other Products
+              </p>
+            </Link>
+          </div>
+        </div>
+        {}
       </div>
 
       <hr />
