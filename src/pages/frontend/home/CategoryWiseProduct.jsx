@@ -1,21 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import { FaShoppingCart } from "react-icons/fa";
-import { BASE_URL } from "../../../../utils/baseURL";
+import { useGetCategoryWiseProductQuery } from "../../../redux/feature/categoryWiseProduct/categoryWiseProductApi";
+import MiniSpinner from "../../../shared/loader/MiniSpinner";
 const CategoryWiseProduct = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  // get Sub Category type
-  // const [categoryData, setCategoryData] = useState([]);
-  const { data: products = [] } = useQuery({
-    queryKey: ["/api/v1/product/category_match_product"],
-    queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product/category_match_product`);
-      const data = await res.json();
-      return data;
-    },
-  });
-  // console.log(products);
+  const { data: products, isLoading } = useGetCategoryWiseProductQuery(
+    undefined,
+    {
+      refetchOnMountOrArgChange: true,
+      pollingInterval: 3000,
+    }
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,6 +35,12 @@ const CategoryWiseProduct = () => {
 
   //   console.log("cartQuantity", cartQuantity);
 
+  if (isLoading)
+    return (
+      <div>
+        <MiniSpinner />
+      </div>
+    );
   return (
     <div className="es_container mx-auto md:px-20 xl:px-0 px-5 py-10">
       {/* 1st map for title */}
@@ -52,7 +52,7 @@ const CategoryWiseProduct = () => {
             category?.productsData?.length > 0 && (
               <div key={category?.category?._id}>
                 <div className="flex justify-between items-center mt-5">
-                  <h1 className="text-xl py-6 font-semibold text-[#008140]">
+                  <h1 className="text-2xl py-6 font-semibold text-primaryLightColor">
                     {category?.category?.category_name}
                   </h1>
                 </div>
@@ -66,9 +66,9 @@ const CategoryWiseProduct = () => {
                       >
                         <div className="w-full relative">
                           <img
-                            src={product?.product_images?.[0]?.image}
+                            src={product?.product_thumbnail}
                             alt="Product Image"
-                            className="w-full rounded-t-lg"
+                            className="w-full rounded-t-md h-[200px] object-cover"
                           />
                           {product?.product_discount_price && (
                             <div className="bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2">
@@ -119,10 +119,10 @@ const CategoryWiseProduct = () => {
                             )}
                           </div> */}
                           {/* Product Title */}
-                          <div className="product_title mt-2">
+                          <div className="product_title py-4">
                             <p
                               title={product?.product_name}
-                              className={`text-[14px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
+                              className={`text-[17px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
                                 window.innerWidth < 640
                                   ? "max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis"
                                   : ""
@@ -138,10 +138,9 @@ const CategoryWiseProduct = () => {
                             </p>
                           </div>
 
-                          {/* Buy Now Button */}
+                          {/* Buy Now Button
                           <div className="flex w-full items-center  gap-2 text-[#008140] cursor-pointer">
                             <FaShoppingCart
-                              // onClick={() => handleAddToCart(product)}
                               title="Add To cart"
                               className="text-lg "
                             />
@@ -149,11 +148,10 @@ const CategoryWiseProduct = () => {
                               type="button"
                               title="Buy Now"
                               className="bg-ftPrimaryColor py-2 rounded   text-center font-semibold text-[16px]"
-                              // onClick={() => handleAddToCart(product)}
                             >
                               Buy Now
                             </button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

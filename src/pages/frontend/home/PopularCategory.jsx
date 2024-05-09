@@ -38,7 +38,7 @@ const PopularCategory = () => {
     <div className="es_container mx-auto md:px-20 xl:px-0 px-5">
       <div>
         <div className="flex justify-between items-center py-6 ">
-          <h1 className="text-xl  font-semibold text-[#008140]">
+          <h1 className="text-2xl py-6 font-semibold text-primaryLightColor">
             Popular Categories
           </h1>
         </div>

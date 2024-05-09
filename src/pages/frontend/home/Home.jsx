@@ -1,14 +1,14 @@
 import Slider from "../../../components/frontend/ui/slider/Slider";
-import CategoryWiseProduct from "./CategoryWiseProduct/CategoryWiseProduct";
+import CategoryWiseProduct from "./CategoryWiseProduct";
+import NewArrival from "./NewArrival";
 import PopularCategory from "./PopularCategory";
-import ProductSale from "./ProductSale";
 
 const Home = () => {
   return (
     <main className="">
       <Slider />
       <PopularCategory className="mt-6" />
-      <ProductSale />
+      <NewArrival />
       <CategoryWiseProduct />
       {/* <Category /> */}
       {/* <section className="py-5 lg:py-10">
