@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import ProductHighlightSection from "./ProductDetailsPage/ProductHighlightSection";
 import RightSideShoppingSection from "./ProductDetailsPage/RightSideShoppingSection";
+import ProductAccordion from "./ProductDetailsPage/ProductAccordion";
 
 const ProductDetailsPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -140,15 +141,19 @@ const ProductDetailsPage = () => {
           </div>
         </div>
 
-        {/* <div className="grid lg:grid-cols-7 md:grid-5 grid-cols-1 gap-2 my-10 ">
-             <div className="lg:col-span-5 md:col-span-3 col-span-1">
-            <ProductAccordion product={product} />
+        <div className="grid lg:grid-cols-7 md:grid-5 grid-cols-1 gap-2 my-10 ">
+          <div className="lg:col-span-5 md:col-span-3 col-span-1">
+            <ProductAccordion
+              product={product}
+              selectedSizeData={selectedSizeData}
+              setSelectedSizeData={setSelectedSizeData}
+            />
           </div>
 
-          <div className="lg:col-span-2 md:col-span-2 col-span-1">
+          {/* <div className="lg:col-span-2 md:col-span-2 col-span-1">
             <SuggestProduct />
-          </div>
-        </div> */}
+          </div> */}
+        </div>
       </div>
 
       {/* Related Product */}
