@@ -18,8 +18,8 @@ const RightSideShoppingSection = ({
     }
   };
 
-  console.log(selectedSizeData);
-  console.log(selectSize);
+  // console.log(selectedSizeData);
+  // console.log(selectSize);
   return (
     <div>
       {/* Short Description / Stock / Quantity / cart */}
@@ -57,7 +57,7 @@ const RightSideShoppingSection = ({
               {product?.data?.product_size_variation.map((item) => (
                 <div key={item?._id}>
                   <button
-                    className={` border rounded-lg cursor-pointer p-2.5 mr-2 hover:bg-primaryLightColor hover:text-white font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl ${
+                    className={` border rounded-lg cursor-pointer py-2 px-3.5 mr-2 hover:bg-primaryLightColor hover:text-white font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl ${
                       selectSize === item?.size
                         ? "bg-primaryLightColor text-white"
                         : ""
@@ -86,7 +86,7 @@ const RightSideShoppingSection = ({
                 <div>
                   {" "}
                   <div>
-                    <p className="font-semibold text-sm text-gray-800 my-2">
+                    <p className="font-semibold text-sm text-gray-800 mt-6 mb-4">
                       Product Stock:{" "}
                       <span className="ml-1 bg-primaryDeepColor text-white text-xs px-2.5 py-1 rounded-xl">
                         {" "}
@@ -144,7 +144,7 @@ const RightSideShoppingSection = ({
                 <div>
                   {" "}
                   <div>
-                    <p className="font-semibold text-sm text-gray-800 my-2">
+                    <p className="font-semibold text-sm text-gray-800 mt-6 mb-4">
                       Product Stock:{" "}
                       <span className="ml-1 bg-primaryDeepColor text-white text-xs px-2.5 py-1 rounded-xl">
                         {" "}
@@ -209,7 +209,7 @@ const RightSideShoppingSection = ({
               <div>
                 {" "}
                 <div>
-                  <p className="font-semibold text-sm text-gray-800 my-2">
+                  <p className="font-semibold text-sm text-gray-800 mt-6 mb-4">
                     Product Stock:{" "}
                     <span className="ml-1 bg-primaryDeepColor text-white text-xs px-2.5 py-1 rounded-xl">
                       {" "}
