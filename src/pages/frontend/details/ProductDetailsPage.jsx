@@ -67,12 +67,14 @@ const ProductDetailsPage = () => {
   }
 
   return (
-    <section>
-      <div className="max-w-[1300px] mx-auto my-8  bg-white p-5  ">
-        <div className="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-12 gap-4 ">
-          <div className="  md:col-span-4 sm:col-span-1  col-span-1 ">
+    <section className="bg-[#F2F4F8] py-6 ">
+      <div className=" my-8 es_container bg-white p-4  ">
+        {/* <div className="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-12 gap-4 ">
+          <div className="  md:col-span-4 sm:col-span-1  col-span-1 "> */}
+        <div className="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-7 lg:grid-cols-7 gap-3 ">
+          <div className=" lg:col-span-2 md:col-span-2 sm:col-span-1  col-span-1 ">
             <div className="">
-              <div className="border border-gray-200 p-2">
+              <div className="border-2 border-gray-300">
                 <img
                   className=" w-full lg:h-[382px] md:h-[300px]  sm:h-[200px] "
                   src={
@@ -117,7 +119,8 @@ const ProductDetailsPage = () => {
           </div>
 
           {/* Name price and buy add to cart section  */}
-          <div className=" md:col-span-8 sm:col-span-2 col-span-1 px-4 ">
+          <div className="lg:col-span-3 md:col-span-3 sm:col-span-2 col-span-1 px-4 ">
+            {/* <div className=" md:col-span-8 sm:col-span-2 col-span-1 px-4 "> */}
             <ProductHighlightSection product={product} />
           </div>
 
