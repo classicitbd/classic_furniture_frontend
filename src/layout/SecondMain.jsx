@@ -1,13 +1,19 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../shared/footer/Footer";
 import Header from "../shared/header/Header";
+import BottomHeader from "../shared/header/BottomHeader";
 
 const SecondMain = () => {
   return (
     <>
-      <header className="sticky top-0 bg-white Color">
-        <Header />
-      </header>
+      <div className="sticky top-0 z-50 bg-white">
+        <div className="pt-4">
+          <Header />
+        </div>
+        <div className="hidden lg:block">
+          <BottomHeader />
+        </div>
+      </div>
       <Outlet />
       <footer>
         <Footer />
