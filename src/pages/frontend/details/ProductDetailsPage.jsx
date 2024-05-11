@@ -5,10 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useState } from "react";
 import ProductHighlightSection from "./ProductDetailsPage/ProductHighlightSection";
+import RightSideShoppingSection from "./ProductDetailsPage/RightSideShoppingSection";
 
 const ProductDetailsPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const [selectSize, setSelectSize] = useState("");
+  const [selectedSizeData, setSelectedSizeData] = useState(null);
   const { slug } = useParams();
   const { data: product = [], isLoading } = useQuery({
     queryKey: [`/api/v1/product/${slug}`],
@@ -69,14 +71,12 @@ const ProductDetailsPage = () => {
   return (
     <section className="bg-[#F2F4F8] py-6 ">
       <div className=" my-8 es_container bg-white p-4  ">
-        {/* <div className="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-12 gap-4 ">
-          <div className="  md:col-span-4 sm:col-span-1  col-span-1 "> */}
-        <div className="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-7 lg:grid-cols-7 gap-3 ">
-          <div className=" lg:col-span-2 md:col-span-2 sm:col-span-1  col-span-1 ">
+        <div className="grid  grid-cols-1 sm:grid-cols-5 lg:grid-cols-7 gap-3 ">
+          <div className=" lg:col-span-2  sm:col-span-2  col-span-1 ">
             <div className="">
               <div className="border-2 border-gray-300">
                 <img
-                  className=" w-full lg:h-[382px] md:h-[300px]  sm:h-[200px] "
+                  className=" w-full lg:h-[310px] sm:h-[310px]  h-full "
                   src={
                     selectedImage
                       ? selectedImage
@@ -86,11 +86,11 @@ const ProductDetailsPage = () => {
                 />
               </div>
 
-              <div className="flex flex-wrap my-2 ">
+              <div className=" flex  overflow-x-auto  scrollbar-thin my-2 ">
                 <img
                   src={product?.data?.product_thumbnail}
                   alt={`image-${product?.data?.product_name}`}
-                  className={`md:h-20 md:w-20 h-16 w-16 border  p-1 mr-2 my-2 cursor-pointer ${
+                  className={`md:h-20 md:w-20 h-16 w-16 border  p-1 mr-2 my-2 hover:border-primaryLightColor duration-200  cursor-pointer ${
                     selectedImage === product?.data?.product_thumbnail
                       ? "border-primaryLightColor"
                       : "border-gray-200"
@@ -101,43 +101,54 @@ const ProductDetailsPage = () => {
                 />
                 {product?.data?.product_images &&
                   product?.data?.product_images.map((image) => (
-                    <div key={image?._id}>
-                      <img
-                        src={image?.image}
-                        alt={`image-${image?._id}`}
-                        className={`md:h-20 md:w-20 h-16 w-16 border  p-1 mr-2 my-2 cursor-pointer ${
-                          selectedImage === image?.image
-                            ? "border-primaryLightColor"
-                            : "border-gray-200"
-                        }`}
-                        onClick={() => setSelectedImage(image?.image)}
-                      />
-                    </div>
+                    <img
+                      src={image?.image}
+                      alt={`image-${image?._id}`}
+                      key={image?._id}
+                      className={`md:h-20 md:w-20 h-16 w-16 border hover:border-primaryLightColor duration-200   p-1 mr-2 my-2 cursor-pointer ${
+                        selectedImage === image?.image
+                          ? "border-primaryLightColor"
+                          : "border-gray-200"
+                      }`}
+                      onClick={() => setSelectedImage(image?.image)}
+                    />
                   ))}
               </div>
             </div>
           </div>
 
           {/* Name price and buy add to cart section  */}
-          <div className="lg:col-span-3 md:col-span-3 sm:col-span-2 col-span-1 px-4 ">
+          <div className="lg:col-span-3  sm:col-span-3 col-span-1 px-4 border-r-0 lg:border-r ">
             {/* <div className=" md:col-span-8 sm:col-span-2 col-span-1 px-4 "> */}
-            <ProductHighlightSection product={product} />
+            <ProductHighlightSection
+              product={product}
+              selectSize={selectSize}
+              setSelectSize={setSelectSize}
+              setSelectedSizeData={setSelectedSizeData}
+              selectedSizeData={selectedSizeData}
+            />
           </div>
 
-          {/* <div className="lg:col-span-2 md:col-span-2 sm:col-span-3  col-span-1 px-4 ">
-            <RightSideShoppingSection product={product} />
+          <div className="lg:col-span-2  sm:col-span-5  col-span-1 px-4 border-t lg:border-t-0">
+            <RightSideShoppingSection
+              product={product}
+              selectSize={selectSize}
+              setSelectSize={setSelectSize}
+              selectedSizeData={selectedSizeData}
+              setSelectedSizeData={setSelectedSizeData}
+            />
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-7 md:grid-5 grid-cols-1 gap-2 my-10">
-          <div className="lg:col-span-5 md:col-span-3 col-span-1">
+        {/* <div className="grid lg:grid-cols-7 md:grid-5 grid-cols-1 gap-2 my-10 ">
+             <div className="lg:col-span-5 md:col-span-3 col-span-1">
             <ProductAccordion product={product} />
           </div>
 
           <div className="lg:col-span-2 md:col-span-2 col-span-1">
             <SuggestProduct />
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </div>
 
       {/* Related Product */}
