@@ -7,6 +7,7 @@ import ProductHighlightSection from "./ProductHighlightSection";
 import RightSideShoppingSection from "./RightSideShoppingSection";
 import ProductAccordion from "./ProductAccordion";
 import { BASE_URL } from "../../../../utils/baseURL";
+import RelatedProducts from "./RelatedProducts";
 
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -159,13 +160,13 @@ const ProductDetails = () => {
       </div>
 
       {/* Related Product */}
-      {/* 
+
       <div className="max-w-[1300px] mx-auto mt-16 mb-4  bg-white p-4 rounded-lg  ">
         <p className="text-ftPrimaryColor font-bold">RELETED PRODUCT:</p>
       </div>
       <div className="max-w-[1300px] mx-auto my-16   ">
-        <RelatedProducts />
-      </div> */}
+        <RelatedProducts product_name={product?.data?.product_related_slug} />
+      </div>
     </section>
   );
 };
