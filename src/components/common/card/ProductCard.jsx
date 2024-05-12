@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
             src={product?.product_thumbnail}
             style={{
               width: "100%",
-              height: "350px",
+              height: "250px",
               transition: "transform 0.5s",
               transform: isHovered ? "translateX(-100%)" : "translateX(0)",
             }}
@@ -37,7 +37,7 @@ const ProductCard = ({ product }) => {
             src={product?.product_images[0]?.image}
             style={{
               width: "100%",
-              height: "350px",
+              height: "250px",
               position: "absolute",
               top: 0,
               left: "100%",

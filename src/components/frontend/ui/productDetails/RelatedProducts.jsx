@@ -40,7 +40,7 @@ const RelatedProducts = ({ product_name }) => {
   return (
     <>
       {products?.data?.length > 0 && (
-        <div className="py-10 bg-[#fff]  mb-10 md:mx-0 mx-5 mt-10">
+        <div className=" bg-[#fff]  mb-10 md:mx-0 mx-5 ">
           <div className="px-[5px] lg:px-[50px] pt-[5px]">
             <h1 className="text-3xl text-center font-normal tracking-normal leading-6 mb-5 sm:mb-10">
               Variations{" "}
@@ -52,13 +52,13 @@ const RelatedProducts = ({ product_name }) => {
                 spaceBetween={10}
                 breakpoints={{
                   640: {
-                    slidesPerView: 2,
+                    slidesPerView: 1,
                   },
                   768: {
-                    slidesPerView: 3,
+                    slidesPerView: 1,
                   },
                   1024: {
-                    slidesPerView: 4,
+                    slidesPerView: 1,
                   },
                 }}
                 speed={600}
