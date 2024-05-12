@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { HiMinus, HiOutlinePlus } from "react-icons/hi";
+import { MdInfoOutline } from "react-icons/md";
 const RightSideShoppingSection = ({
   product,
   selectSize,
@@ -199,7 +200,12 @@ const RightSideShoppingSection = ({
                   </button>
                 </div>
               ) : (
-                <div>Out of stock</div>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="text-gray-500">
+                    <MdInfoOutline size={24} />
+                  </div>
+                  <div className="text-red-500 text-xl mb-2">Out of Stock</div>
+                </div>
               )}
             </div>
           </div>
@@ -264,7 +270,12 @@ const RightSideShoppingSection = ({
                 </button>
               </div>
             ) : (
-              <div>Out of stock</div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="text-red-500 text-xl mb-2">Out of Stock</div>
+                <div className="text-gray-500">
+                  <MdInfoOutline size={24} />
+                </div>
+              </div>
             )}
           </div>
         )}
