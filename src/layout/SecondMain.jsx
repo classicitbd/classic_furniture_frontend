@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../shared/footer/Footer";
 import Header from "../shared/header/Header";
-import BottomHeader from "../shared/header/BottomHeader";
+import BottomHeader from "../shared/header/BottomHeader2";
 
 const SecondMain = () => {
   return (
