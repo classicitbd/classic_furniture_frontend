@@ -6,6 +6,14 @@ const token = getCookie(authKey);
 
 export const videoApi = api.injectEndpoints({
   endpoints: (build) => ({
+    // get Video
+    getVideo: build.query({
+      query: () => ({
+        url: `/video_tab`,
+        method: "GET",
+      }),
+      providesTags: ["video"],
+    }),
     //add Video
     addVideo: build.mutation({
       query: (data) => ({
@@ -33,4 +41,5 @@ export const videoApi = api.injectEndpoints({
   }),
 });
 
-export const { useAddVideoMutation, useDeleteVideoMutation } = videoApi;
+export const { useGetVideoQuery, useAddVideoMutation, useDeleteVideoMutation } =
+  videoApi;
