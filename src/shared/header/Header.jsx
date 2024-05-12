@@ -1,8 +1,7 @@
-import { IoMdGift } from "react-icons/io";
 import { CiUser } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
-import { FaBars, FaShoppingCart } from "react-icons/fa";
+import { FaBars, FaShoppingCart, FaYoutube } from "react-icons/fa";
 import { useState } from "react";
 import "./header.css";
 import logo from "../../assets/images/furniture-logo.png";
@@ -83,19 +82,22 @@ export default function Header() {
             </form>
           </div>
           <div className="header-right flex gap-4 text-black ">
-            <div className="offer lg:flex items-center gap-3">
+            <Link
+              to="/product-video"
+              className="offer lg:flex items-center gap-3"
+            >
               <span className="icon">
-                <IoMdGift className="text-ftPrimaryColor text-[26px] text-[#008140]" />
+                <FaYoutube className="text-red-600 text-[34px] " />
               </span>
-              <Link className="lg:flex flex-col text-black hidden xl:block ">
+              <div className="lg:flex flex-col text-black hidden xl:block ">
                 <p className="text-[14px] leading-[14px] font-medium hidden lg:block">
-                  Offer
+                  Video
                 </p>
-                <span className="text-ftMuteColor text-[13px] font-light ">
-                  Latest Offer
-                </span>
-              </Link>
-            </div>
+                <p className="text-ftMuteColor text-[13px] font-light ">
+                  Product Video
+                </p>
+              </div>
+            </Link>
             <Link className="cart flex items-center gap-2 text-black">
               <span className="icon">
                 <FaShoppingCart className="text-[#47504c] text-[26px]" />
