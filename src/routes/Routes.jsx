@@ -38,8 +38,8 @@ import PrivateRoute from "./privateRoute/PrivateRoute";
 import PrivateDashboardRoute from "./privateDashboardRoute/PrivateDashboardRoute";
 import AllProducts from "../pages/frontend/allProducts/AllProducts";
 import Youtube from "../pages/dashboard/youtube/Youtube";
-import ProductDetailsPage from "../pages/frontend/details/ProductDetailsPage";
 import ProductYoutubeVideoPage from "../pages/frontend/productYoutubeVideo/ProductYoutubeVideoPage";
+import ProductDetailsPage from "../pages/frontend/details/ProductDetailsPage";
 
 const router = createBrowserRouter([
   {

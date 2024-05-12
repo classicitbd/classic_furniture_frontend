@@ -1,5 +1,4 @@
-import React from 'react'
-import { FaStar } from 'react-icons/fa'
+import { FaStar } from "react-icons/fa";
 
 const CustomerReviewSection = ({ reviews }) => {
   return (
@@ -19,7 +18,7 @@ const CustomerReviewSection = ({ reviews }) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default CustomerReviewSection
+export default CustomerReviewSection;

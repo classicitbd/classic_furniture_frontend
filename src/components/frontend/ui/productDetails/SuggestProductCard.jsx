@@ -1,5 +1,4 @@
-import React from 'react'
-import { FaStar } from 'react-icons/fa'
+import { FaStar } from "react-icons/fa";
 
 const SuggestProductCard = ({ product }) => {
   return (
@@ -18,7 +17,7 @@ const SuggestProductCard = ({ product }) => {
         </div>
         <p className=" text-gray-700 pt-1 text-sm">{product.title}</p>
         <p className="text-ftPrimaryColor font-extrabold py-1.5">
-          500{' '}
+          500{" "}
           <span className="text-gray-500 text-sm font-normal ml-2 line-through">
             700
           </span>
@@ -29,7 +28,7 @@ const SuggestProductCard = ({ product }) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SuggestProductCard
+export default SuggestProductCard;

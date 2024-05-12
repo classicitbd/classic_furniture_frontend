@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import UploadReviewImage from './UploadReviewImage'
-import { FaStar } from 'react-icons/fa'
+import { useState } from "react";
+import UploadReviewImage from "./UploadReviewImage";
+import { FaStar } from "react-icons/fa";
 
 const WriteProductReview = () => {
-  const [reviewFormOpen, setReviewFormOpen] = useState(false)
-  const [selectedRating, setSelectedRating] = useState(0)
+  const [reviewFormOpen, setReviewFormOpen] = useState(false);
+  const [selectedRating, setSelectedRating] = useState(0);
 
-  const handleRatingClick = rating => {
-    setSelectedRating(rating)
-  }
+  const handleRatingClick = (rating) => {
+    setSelectedRating(rating);
+  };
   return (
     <div className="mt-6">
       <div className="text-right ">
@@ -22,13 +22,13 @@ const WriteProductReview = () => {
       <div
         className={`grid overflow-hidden transition-all duration-500 ease-in-out ${
           reviewFormOpen
-            ? 'grid-rows-[1fr] opacity-100'
-            : 'grid-rows-[0fr] opacity-0'
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0"
         }`}
       >
         <div className="pt-6 overflow-hidden">
           <p className="border-y pl-1 py-2 text-sm font-semibold text-gray-900">
-            {' '}
+            {" "}
             Write a Review
           </p>
           <UploadReviewImage />
@@ -45,7 +45,7 @@ const WriteProductReview = () => {
                 <span
                   key={i}
                   className={`mr-1 cursor-pointer ${
-                    i < selectedRating ? ' text-yellow-500' : 'text-gray-300'
+                    i < selectedRating ? " text-yellow-500" : "text-gray-300"
                   }`}
                   onClick={() => handleRatingClick(i + 1)}
                 >
@@ -73,7 +73,7 @@ const WriteProductReview = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default WriteProductReview
+export default WriteProductReview;

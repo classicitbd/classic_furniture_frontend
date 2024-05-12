@@ -16,36 +16,36 @@ import ProductCard from "../../../common/card/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
-
-const RelatedProducts = ({ relatedId, color }) => {
-  const { data: product = [], isLoading } = useQuery({
-    queryKey: [`${relatedId}`],
+const RelatedProducts = ({ product_name }) => {
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: [`${product_name}`],
     queryFn: async () => {
       const res = await fetch(
-        `${BASE_URL}/product/relatedProduct/same/${relatedId}`
+        `${BASE_URL}/product/get_related_product/${product_name}`
       );
       const data = await res.json();
       return data;
     },
   }); // get All Product
 
-  const relatedProducts = product?.data?.filter(
-    (product) => product?.colorId?.color !== color
-  );
-
+  // const relatedProducts = product?.data?.filter(
+  //   (product) => product?.colorId?.color !== color
+  // );
+  console.log(products);
+  console.log(product_name);
   if (isLoading) {
     return <ProductCardSkeleton />;
   }
 
   return (
     <>
-      {relatedProducts.length > 0 && (
-        <div className="py-10 bg-[#fff] rounded-lg border mb-10 sm:mx-5 mt-10">
+      {products?.data?.length > 0 && (
+        <div className="py-10 bg-[#fff]  mb-10 md:mx-0 mx-5 mt-10">
           <div className="px-[5px] lg:px-[50px] pt-[5px]">
             <h1 className="text-3xl text-center font-normal tracking-normal leading-6 mb-5 sm:mb-10">
               Variations{" "}
             </h1>
-            <div>
+            <div className="mx-auto w-full">
               <Swiper
                 modules={[Navigation, Scrollbar, A11y, Keyboard, Parallax]}
                 slidesPerView={1}
@@ -77,7 +77,7 @@ const RelatedProducts = ({ relatedId, color }) => {
                 onSlideChange={() => {}}
               >
                 <div>
-                  {relatedProducts?.map((product) => (
+                  {products?.data?.map((product) => (
                     <SwiperSlide
                       key={product?._id}
                       className="border bg-[#F0F0F0] hover:border-bgray-400 group rounded-md overflow-hidden shadow"

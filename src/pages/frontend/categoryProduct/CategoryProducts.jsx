@@ -484,7 +484,7 @@ export default function CategoryProducts() {
                                                                 alt={product?.title}
                                                                 className="w-full  rounded-lg h-[120px] md:h-[180px]"
                                                             />
-                                                            <div className='bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2'>
+                                                            <div className='bg-red-600 text-white inline px-1  rounded-tr-lg rounded-bl-lg text-[12px] absolute top-0 right-0 m-2'>
                                                                 OFF 100%
                                                             </div>
                                                         </div>
