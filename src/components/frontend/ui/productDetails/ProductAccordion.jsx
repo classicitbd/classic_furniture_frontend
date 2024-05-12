@@ -5,6 +5,7 @@ import { MdOutlineTextFields } from "react-icons/md";
 
 const ProductAccordion = ({ product, selectedSizeData }) => {
   const [descriptionOpen, setDescriptionOpen] = useState(true);
+  console.log(selectedSizeData);
   return (
     <div className="mx-3">
       {/* Description part */}

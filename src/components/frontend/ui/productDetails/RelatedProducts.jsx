@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import Loader from '../../../common/Loader/Loader'
-import { FaStar } from 'react-icons/fa'
+import { useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
+import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 
 const RelatedProducts = () => {
-  const [relatedProducts, setRelatedProducts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch('https://dummyjson.com/products')
-      .then(res => res.json())
-      .then(data => {
-        setRelatedProducts(data?.products.slice(0, 5))
-        setLoading(false)
-      })
-  })
+    fetch("https://dummyjson.com/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setRelatedProducts(data?.products.slice(0, 5));
+        setLoading(false);
+      });
+  });
   if (loading) {
-    return <Loader />
+    return <MiniSpinner />;
   }
   return (
     <div className="grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 grid-cols-2 sm:gap-8 gap-2 mx-4 sm:mx-0">
-      {relatedProducts?.map(product => (
+      {relatedProducts?.map((product) => (
         <div
           key={product.id}
           className=" bg-white rounded border-white border-2 hover:border-ftPrimaryColor transition duration-500 ease-in-out transform hover:scale-105 "
@@ -37,7 +37,7 @@ const RelatedProducts = () => {
             </div>
             <p className=" text-gray-700 pt-1 text-sm">{product.title}</p>
             <p className="text-ftPrimaryColor font-extrabold py-1.5">
-              500{' '}
+              500{" "}
               <span className="text-gray-500 text-sm font-normal ml-2 line-through">
                 700
               </span>
@@ -49,7 +49,7 @@ const RelatedProducts = () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default RelatedProducts
+export default RelatedProducts;
