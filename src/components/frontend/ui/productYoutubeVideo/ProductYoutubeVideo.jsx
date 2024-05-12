@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useGetVideoQuery } from "../../../../redux/feature/video/videoApi";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 
@@ -27,14 +28,61 @@ export default function ProductYoutubeVideo() {
                 width: "100%",
               }}
             >
-              <iframe
-                width="100%"
-                height="200"
-                src={`https://www.youtube.com/embed/${video?.video_link}`}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              <div>
+                <iframe
+                  width="100%"
+                  height="200"
+                  src={`https://www.youtube.com/embed/${video?.video_link}`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="mt-4">
+                <h3 className="text-lg font-semibold">
+                  {video?.product_id?.product_name
+                    ? video?.product_id?.product_name.length > 22
+                      ? video?.product_id?.product_name.slice(0, 22) + "..."
+                      : video?.product_id?.product_name
+                    : " "}
+                </h3>
+                <p className="text-sm my-1.5">
+                  {video?.product_id?.product_color_id?.color_name}
+                </p>
+
+                <p className="my-3">
+                  <span
+                    className={`pr-1 ${
+                      video?.product_id?.product_discount_price
+                        ? "line-through"
+                        : ""
+                    }`}
+                  >
+                    {video?.product_id?.product_price}
+                  </span>
+                  <span>৳</span>
+                  {video?.product_id?.product_discount_price && (
+                    <>
+                      <span className="text-error-300 ml-2">
+                        {video?.product_id?.product_discount_price}
+                        <span className="ml-1">৳</span>
+                      </span>
+                      <span className="bg-red-600 text-xs  ml-2 rounded-tr-lg rounded-bl-lg text-white px-2 ">
+                        Save{" "}
+                        {video?.product_id?.product_price -
+                          video?.product_id?.product_discount_price}{" "}
+                        ৳
+                      </span>
+                    </>
+                  )}
+                </p>
+
+                <Link to={`/${video?.product_id?.product_slug}`}>
+                  <button className="bg-primaryDeepColor text-white px-4 py-2 rounded-md w-full font-semibold mt-3 mb-2 hover:bg-primaryLightColor duration-200 transition">
+                    Details
+                  </button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>
