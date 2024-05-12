@@ -3,13 +3,13 @@ import { useGetCategoryWiseProductQuery } from "../../../redux/feature/categoryW
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { Link } from "react-router-dom";
 const CategoryWiseProduct = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { data: products, isLoading } = useGetCategoryWiseProductQuery(
     undefined,
     {
       refetchOnMountOrArgChange: true,
     }
   );
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
