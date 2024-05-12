@@ -3,7 +3,7 @@ import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductHighlightSection from "./ProductDetailsPage/ProductHighlightSection";
 import RightSideShoppingSection from "./ProductDetailsPage/RightSideShoppingSection";
 import ProductAccordion from "./ProductDetailsPage/ProductAccordion";
@@ -21,7 +21,9 @@ const ProductDetailsPage = () => {
       return data;
     },
   });
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   if (isLoading) {
     return <MiniSpinner />;
   }
