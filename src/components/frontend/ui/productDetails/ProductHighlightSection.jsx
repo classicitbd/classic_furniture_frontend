@@ -40,7 +40,7 @@ const ProductHighlightSection = ({ product, selectedSizeData }) => {
                     ? selectedSizeData?.price
                     : product_price}
                 </span>
-                <div className="bg-red-600 text-white inline text-xs px-1.5 rounded ml-4">
+                <div className="bg-red-600 text-white inline text-xs px-1.5  rounded-tr-lg rounded-bl-lg ml-4">
                   OFF{" "}
                   {selectedSizeData?.price
                     ? selectedSizeData?.price - selectedSizeData?.discount_price
@@ -60,7 +60,7 @@ const ProductHighlightSection = ({ product, selectedSizeData }) => {
                       ? selectedSizeData?.price
                       : product_price}
                   </span>
-                  <div className="bg-red-600 text-white inline text-xs px-1.5 rounded ml-4">
+                  <div className="bg-red-600 text-white inline text-xs px-1.5  rounded-tr-lg rounded-bl-lg ml-4">
                     OFF{" "}
                     {product_discount_price && selectedSizeData?.price
                       ? selectedSizeData?.price - product_discount_price
@@ -122,7 +122,7 @@ const ProductHighlightSection = ({ product, selectedSizeData }) => {
                   {" "}
                   {product_price}
                 </span>
-                <div className="bg-red-600 text-white inline text-xs px-1.5 rounded ml-4">
+                <div className="bg-red-600 text-white inline text-xs px-1.5  rounded-tr-lg rounded-bl-lg ml-4">
                   OFF {product_price - product_discount_price}
                   TK
                 </div>

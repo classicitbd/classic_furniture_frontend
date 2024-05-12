@@ -66,7 +66,7 @@ export default function NewArrival() {
                       className="w-full rounded-t-md h-[200px] object-cover"
                     />
                     {product?.product_discount_price && (
-                      <div className="bg-red-600 text-white inline px-1 rounded text-[12px] absolute top-0 right-0 m-2">
+                      <div className="bg-red-600 text-white inline px-1  rounded-tr-lg rounded-bl-lg text-[12px] absolute top-0 right-0 m-2">
                         OFF{" "}
                         {product?.product_price -
                           product?.product_discount_price}

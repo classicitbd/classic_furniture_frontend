@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div>
-      <Link to={`/${product?.slug}`}>
+      <Link to={`/${product?.product_slug}`}>
         <div
           className="flex group"
           onMouseEnter={handleMouseEnter}
@@ -23,18 +23,18 @@ const ProductCard = ({ product }) => {
         >
           <img
             loading="lazy"
-            src={product?.thumbnail_image}
+            src={product?.product_thumbnail}
             style={{
               width: "100%",
               height: "350px",
               transition: "transform 0.5s",
               transform: isHovered ? "translateX(-100%)" : "translateX(0)",
             }}
-            alt={product?.title}
+            alt={product?.product_name}
           />
           <img
             loading="lazy"
-            src={product?.hover_image}
+            src={product?.product_images[0]?.image}
             style={{
               width: "100%",
               height: "350px",
@@ -44,25 +44,36 @@ const ProductCard = ({ product }) => {
               transition: "transform 0.7s",
               transform: isHovered ? "translateX(-100%)" : "translateX(0)",
             }}
-            alt={product?.title}
+            alt={product?.product_name}
           />
         </div>
-        <article className="py-[10px]">
-          <h2 className="text-center h-10">{product?.title}</h2>
-          <p className="text-center py-3 text-bgray-700">
-            {product?.colorId?.color}
+        <article className="p-4">
+          <h2 className="font-semibold text-lg text-gray-700 ">
+            {product?.product_name}
+          </h2>
+          <p className=" py-3 text-bgray-700">
+            {product?.product_color_id?.color_name}
           </p>
-          <p className="px-4">
-            <span>৳</span>
+          <p className="">
             <span
-              className={`pl-2 ${
-                product?.discount_price ? "line-through" : ""
+              className={`pr-1 ${
+                product?.product_discount_price ? "line-through" : ""
               }`}
             >
-              {product?.price}
+              {product?.product_price}
             </span>
-            {product?.discount_price && (
-              <span className="text-error-300">{product?.discount_price}</span>
+            <span>৳</span>
+            {product?.product_discount_price && (
+              <>
+                <span className="text-error-300 ml-2">
+                  {product?.product_discount_price}
+                  <span className="ml-1">৳</span>
+                </span>
+                <span className="bg-red-600 text-xs  ml-2 rounded-tr-lg rounded-bl-lg text-white px-2 ">
+                  Save{" "}
+                  {product?.product_price - product?.product_discount_price} ৳
+                </span>
+              </>
             )}
           </p>
         </article>
