@@ -14,7 +14,10 @@ const SecondMain = () => {
           <BottomHeader />
         </div>
       </div>
-      <Outlet />
+      <div className="min-h-screen">
+        {" "}
+        <Outlet />
+      </div>
       <footer>
         <Footer />
       </footer>
