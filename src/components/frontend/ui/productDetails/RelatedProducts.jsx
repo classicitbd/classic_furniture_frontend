@@ -28,7 +28,6 @@ const RelatedProducts = ({ product }) => {
     },
   }); // get All Product
 
-  console.log(products.length);
   // const relatedProducts = product?.data?.filter(
   //   (product) => product?.colorId?.color !== color
   // );
@@ -88,22 +87,24 @@ const RelatedProducts = ({ product }) => {
                   ))}
                 </div>
               </Swiper>
-              <div className="flex items-center justify-center pt-10">
-                <div className="hidden lg:block"></div>
-                <h2 className="text-xl md:text-2xl font-normal md:font-medium"></h2>
-                <div className="flex gap-[4px]">
-                  <button className="prev-rtp w-10 h-10 z-10 bg-white hover:bg-opacity-50 rounded-full border flex items-center justify-center transition-all duration-300">
-                    <span>
-                      <FcPrevious className="text-xl md:text-2xl p-1 font-light" />
-                    </span>
-                  </button>
-                  <button className="next-rtp w-10 h-10 z-10 hover:bg-opacity-50 rounded-full bg-white border shadow-sm flex items-center justify-center transition-all duration-300">
-                    <span>
-                      <FcNext className="text-xl md:text-2xl p-1 font-light" />
-                    </span>
-                  </button>
+              {products?.length > 1 && (
+                <div className="flex items-center justify-center pt-4">
+                  <div className="hidden lg:block"></div>
+                  <h2 className="text-xl md:text-2xl font-normal md:font-medium"></h2>
+                  <div className="flex gap-[4px]">
+                    <button className="prev-rtp w-10 h-10 z-10 bg-white hover:bg-opacity-50 rounded-full border flex items-center justify-center transition-all duration-300">
+                      <span>
+                        <FcPrevious className="text-xl md:text-2xl p-1 font-light" />
+                      </span>
+                    </button>
+                    <button className="next-rtp w-10 h-10 z-10 hover:bg-opacity-50 rounded-full bg-white border shadow-sm flex items-center justify-center transition-all duration-300">
+                      <span>
+                        <FcNext className="text-xl md:text-2xl p-1 font-light" />
+                      </span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
