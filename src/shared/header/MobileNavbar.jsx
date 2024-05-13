@@ -5,6 +5,8 @@ import { RiHome6Line } from "react-icons/ri";
 import { BsCart2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AiOutlineYoutube } from "react-icons/ai";
+import { eraseCookie } from "../../utils/cookie-storage";
+import { authKey } from "../../constants/storageKey";
 
 export default function MobileNavbar() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -28,7 +30,8 @@ export default function MobileNavbar() {
   };
 
   const handleLogout = () => {
-    // Implement logout logic here
+    eraseCookie(authKey);
+    window.location.reload();
   };
 
   return (
