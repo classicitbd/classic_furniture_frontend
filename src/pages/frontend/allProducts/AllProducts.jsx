@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -8,16 +8,7 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-// import {
-//   FaAngleDown,
-//   FaAngleRight,
-//   FaShoppingCart,
-//   FaStar,
-//   FaStarHalfAlt,
-// } from "react-icons/fa";
-// import { IoCartOutline } from "react-icons/io5";
-// import images from '../../../assets/images/furniture-logo.png'
-// import Header from "../../../shared/header/Header";
+
 import { useGetProductQuery } from "../../../redux/feature/product/productApi";
 // import { data } from "autoprefixer";
 import { Link } from "react-router-dom";
@@ -85,163 +76,10 @@ export default function AllProducts() {
     refetchOnMountOrArgChange: true,
     pollingInterval: 60000,
   });
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  // products
-  // const [showAll, setShowAll] = useState(false);
-  // const initialDisplayCount = 10;
-  // const [displayedProducts, setdisplayedProducts] = useState([]);
-  // const [showMoreCount, setShowMoreCount] = useState(10);
-  // const [cartQuantity, setCartQuantity] = useState(0);
-
-  // const productSale = [
-  //   {
-  //     id: 1,
-  //     product_id: "P001",
-  //     title: "Horitoki Special all",
-  //     new_price: 49.99,
-  //     old_price: 59.99,
-  //     image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
-  //     rating: 4.5,
-  //   },
-  //   {
-  //     id: 2,
-  //     product_id: "P002",
-  //     title: "Traditional Red and Gold",
-  //     new_price: 39.99,
-  //     old_price: 49.99,
-  //     image: "https://i.ibb.co/L8PDJSh/hospital.jpg",
-  //     rating: 4.2,
-  //   },
-  //   {
-  //     id: 3,
-  //     product_id: "P003",
-  //     title: "Traditional Red and Gold",
-  //     new_price: 79.99,
-  //     old_price: 99.99,
-  //     image: "https://i.ibb.co/Dp5dSG9/living.jpg",
-  //     rating: 4.7,
-  //   },
-  //   {
-  //     id: 4,
-  //     product_id: "P004",
-  //     title: "Stylish Black ",
-  //     new_price: 99.99,
-  //     old_price: 69.99,
-  //     image: "https://i.ibb.co/GpxJwJf/office.jpg",
-  //     rating: 4.4,
-  //   },
-  //   {
-  //     id: 5,
-  //     product_id: "P005",
-  //     title: "Vintage Denim ",
-  //     new_price: 29.99,
-  //     old_price: 39.99,
-  //     image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
-  //     rating: 4.0,
-  //   },
-  //   {
-  //     id: 6,
-  //     product_id: "P006",
-  //     title: "Casual Striped",
-  //     new_price: 19.99,
-  //     old_price: 24.99,
-  //     image: "https://i.ibb.co/GPrR0Xj/dining.jpg",
-  //     rating: 4.3,
-  //   },
-  //   {
-  //     id: 7,
-  //     product_id: "P007",
-  //     title: "Bohemian Style",
-  //     new_price: 34.99,
-  //     old_price: 44.99,
-  //     image: "https://i.ibb.co/GpxJwJf/office.jpg",
-  //     rating: 4.6,
-  //   },
-  //   {
-  //     id: 8,
-  //     product_id: "P008",
-  //     title: "Classic Aviator ",
-  //     new_price: 14.99,
-  //     old_price: 19.99,
-  //     image: "https://i.ibb.co/Dp5dSG9/living.jpg",
-  //     rating: 4.8,
-  //   },
-  //   {
-  //     id: 9,
-  //     product_id: "P009",
-  //     title: "Chic Floral",
-  //     new_price: 9.99,
-  //     old_price: 6.99,
-  //     image: "https://i.ibb.co/L8PDJSh/hospital.jpg",
-  //     rating: 4.1,
-  //   },
-  //   {
-  //     id: 10,
-  //     product_id: "P010",
-  //     title: "Retro Style Leather",
-  //     new_price: 54.99,
-  //     old_price: 64.99,
-  //     image: "https://i.ibb.co/vHngdhG/doors.jpg",
-  //     rating: 4.9,
-  //   },
-  //   {
-  //     id: 15,
-  //     product_id: "P009",
-  //     title: "Chic Floral",
-  //     new_price: 9.99,
-  //     old_price: 6.99,
-  //     image: "https://i.ibb.co/GPrR0Xj/dining.jpg",
-  //     rating: 4.1,
-  //   },
-  //   {
-  //     id: 16,
-  //     product_id: "P010",
-  //     title: "Retro Style Leather",
-  //     new_price: 54.99,
-  //     old_price: 64.99,
-  //     image: "https://i.ibb.co/hDJMYkx/bedroom.jpg",
-  //     rating: 4.9,
-  //   },
-  // ];
-
-  // useEffect(() => {
-  //   setdisplayedProducts(productSale?.slice(0, initialDisplayCount));
-  // }, []);
-
-  // const handleViewAll = () => {
-  //   setShowAll(!showAll);
-  //   setdisplayedProducts(productSale.slice(0, 20));
-  //   setShowMoreCount(20);
-  // };
-
-  // const handleShowMore = () => {
-  //   const newCount = showMoreCount + 10;
-  //   setdisplayedProducts(productSale.slice(0, newCount));
-  //   setShowMoreCount(newCount);
-  // };
 
   //   const handleAddToCart = () => {
   //     setCartQuantity((prevQuantity) => prevQuantity + 1);
   //   };
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  let gridCols = "grid-cols-2";
-  if (windowWidth >= 640) gridCols = "sm:grid-cols-2";
-  if (windowWidth >= 768) gridCols = "md:grid-cols-3";
-  if (windowWidth >= 1024) gridCols = "lg:grid-cols-4";
-  if (windowWidth >= 1280) gridCols = "2xl:grid-cols-5";
-
-  // products end
 
   if (isLoading) return <Loader />;
 
@@ -541,7 +379,7 @@ export default function AllProducts() {
                       </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 sm:gap-4 gap-2">
                     {products?.data?.map((product) => (
                       <div key={product?._id} className="group">
                         <Link to={`/${product?.product_slug}`}>
