@@ -1,113 +1,130 @@
 import { CiUser } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { FaShoppingCart, FaYoutube } from "react-icons/fa";
+import { FaRegUser, FaYoutube } from "react-icons/fa";
 import "./header.css";
 import logo from "../../assets/images/furniture-logo.png";
 import MobileNavbar from "./MobileNavbar";
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthProvider";
-
+import { eraseCookie } from "../../utils/cookie-storage";
+import { authKey } from "../../constants/storageKey";
 export default function Header() {
-
   const { user } = useContext(AuthContext);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
 
-  // const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const handleLogout = () => {
+    eraseCookie(authKey);
+    window.location.reload();
+  };
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
 
-  // const handleMobileMenu = () => {
-  //   setIsMobileMenuOpen(!isMobileMenuOpen);
-  // };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
   return (
     <div className=" text-white shadow-sm">
       <div className="es_container">
-        <div className=" items-center justify-between gap-2 py-2 hidden lg:flex">
-          <Link className="cart flex items-center gap-2  md:ms-20  xl:ms-0">
-            <span className="icon hidden lg:block">
-              <img className="w-16" src={logo} alt="" />
-            </span>
-            <div className="flex flex-col text-[#008140] ">
-              <span className="text-ftMuteColor text-[20px] font-bold hidden lg:block">
-                Classic Furniture
+        <div className="mr-6">
+          <div className=" items-center justify-between gap-2 py-2 hidden lg:flex">
+            <Link className="cart flex items-center gap-2  md:ms-20  xl:ms-0">
+              <span className="icon hidden lg:block">
+                <img className="w-16" src={logo} alt="" />
               </span>
-            </div>
-          </Link>
-          <div className="search flex-1">
-            <form className="flex flex-1 justify-between lg:max-w-5xl items-center">
-              <div className="relative flex items-center w-full">
-                <input
-                  id="search"
-                  type="search"
-                  placeholder="Search Here"
-                  className="w-full px-3 py-2 focus:outline-none border border-gray-300 rounded-l-md text-gray-800"
-                  name="search"
-                  defaultValue=""
-                />
-                <button
-                  type="submit"
-                  className="absolute inset-y-0 right-0 px-4 py-2 bg-gray-200 text-gray-800 rounded-r-md hover:bg-gray-300"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth={0}
-                    viewBox="0 0 512 512"
-                    className="w-6 h-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeMiterlimit={10}
-                      strokeWidth={32}
-                      d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z"
-                    />
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeMiterlimit={10}
-                      strokeWidth={32}
-                      d="M338.29 338.29 448 448"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className="header-right flex gap-4 text-black ">
-            <Link
-              to="/product-video"
-              className="offer lg:flex items-center gap-3"
-            >
-              <span className="icon">
-                <FaYoutube className="text-red-600 text-[34px] " />
-              </span>
-              <div className="lg:flex flex-col text-black hidden xl:block ">
-                <p className="text-[14px] leading-[14px] font-medium hidden lg:block">
-                  Video
-                </p>
-                <p className="text-ftMuteColor text-[13px] font-light ">
-                  Product Video
-                </p>
-              </div>
-            </Link>
-            <Link className="cart flex items-center gap-2 text-black">
-              <span className="icon">
-                <FaShoppingCart className="text-[#47504c] text-[26px]" />
-              </span>
-              <div className="flex flex-col text-black ">
-                <p className="text-[14px] leading-[14px] font-medium hidden xl:block">
-                  Cart
-                </p>
-                <span className="text-ftMuteColor text-[13px] font-light hidden lg:block">
-                  Products
+              <div className="flex flex-col text-[#008140] ">
+                <span className="text-ftMuteColor text-[20px] font-bold hidden lg:block">
+                  Classic Furniture
                 </span>
               </div>
             </Link>
-            {
-              user?.user_phone ?
+            <div className="search flex-1">
+              <form className="flex flex-1 justify-between lg:max-w-5xl items-center">
+                <div className="relative flex items-center w-full">
+                  <input
+                    id="search"
+                    type="search"
+                    placeholder="Search Here"
+                    className="w-full px-3 py-2 focus:outline-none border border-gray-300 rounded-l-md text-gray-800"
+                    name="search"
+                    defaultValue=""
+                  />
+                  <button
+                    type="submit"
+                    className="absolute inset-y-0 right-0 px-4 py-2 bg-gray-200 text-gray-800 rounded-r-md hover:bg-gray-300"
+                  >
+                    <svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      strokeWidth={0}
+                      viewBox="0 0 512 512"
+                      className="w-6 h-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeMiterlimit={10}
+                        strokeWidth={32}
+                        d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z"
+                      />
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeMiterlimit={10}
+                        strokeWidth={32}
+                        d="M338.29 338.29 448 448"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div className="header-right flex gap-4 text-black ">
+              <Link
+                to="/product-video"
+                className="offer lg:flex items-center gap-3"
+              >
+                <span className="icon">
+                  <FaYoutube className="text-red-600 text-[34px] " />
+                </span>
+                <div className="lg:flex flex-col text-black hidden xl:block ">
+                  <p className="text-[14px] leading-[14px] font-medium hidden lg:block">
+                    Video
+                  </p>
+                  <p className="text-ftMuteColor text-[13px] font-light ">
+                    Product Video
+                  </p>
+                </div>
+              </Link>
+              {/* <Link className="cart flex items-center gap-2 text-black">
+                <span className="icon">
+                  <FaShoppingCart className="text-[#47504c] text-[26px]" />
+                </span>
+                <div className="flex flex-col text-black ">
+                  <p className="text-[14px] leading-[14px] font-medium hidden xl:block">
+                    Cart
+                  </p>
+                  <span className="text-ftMuteColor text-[13px] font-light hidden lg:block">
+                    Products
+                  </span>
+                </div>
+              </Link> */}
+
+              {user?.user_phone ? (
                 <Link
-                  to='/user-profile'
+                  to="/user-profile"
                   className="account flex items-center gap-2 text-black"
                 >
                   <span className="icon">
@@ -121,7 +138,7 @@ export default function Header() {
                     </div>
                   </button>
                 </Link>
-                :
+              ) : (
                 <Link
                   to={"/sign-in"}
                   className="account flex items-center gap-2 text-black"
@@ -129,7 +146,7 @@ export default function Header() {
                   <span className="icon">
                     <CiUser className="text-ftPrimaryColor text-[26px]" />
                   </span>
-                  <Link to='/sign-in'>
+                  <Link to="/sign-in">
                     <div className="flex flex-col text-black  md:me-20  xl:me-0">
                       <p className="text-[14px] leading-[14px] font-medium hidden lg:block">
                         Account
@@ -140,7 +157,51 @@ export default function Header() {
                     </div>
                   </Link>
                 </Link>
-            }
+              )}
+
+              <div className="relative" ref={dropdownRef}>
+                <FaRegUser className=" text-[26px]" onClick={toggleDropdown} />
+
+                {showDropdown && (
+                  <div className="absolute top-10 -right-3 bg-white shadow-lg rounded-lg py-2">
+                    {user?.user_phone ? (
+                      <>
+                        <Link
+                          to="/user-profile"
+                          className="block px-6 py-2 text-gray-800"
+                        >
+                          Profile
+                        </Link>
+                        {/* Add other dropdown items here */}
+                        <hr className="my-2" />
+
+                        <button
+                          onClick={handleLogout}
+                          className="block w-full text-left px-6 py-2 text-red-600"
+                        >
+                          Logout
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to="/sign-in"
+                          className="block px-6 py-2 text-gray-800"
+                        >
+                          Login
+                        </Link>
+                        <Link
+                          to="/sign-up"
+                          className="block px-6 py-2 text-gray-800"
+                        >
+                          Register
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
         {/* Mobile Menu */}
