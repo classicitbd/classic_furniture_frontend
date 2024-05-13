@@ -1,4 +1,3 @@
-import { CiUser } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaRegUser, FaYoutube } from "react-icons/fa";
 import "./header.css";
@@ -121,43 +120,6 @@ export default function Header() {
                   </span>
                 </div>
               </Link> */}
-
-              {user?.user_phone ? (
-                <Link
-                  to="/user-profile"
-                  className="account flex items-center gap-2 text-black"
-                >
-                  <span className="icon">
-                    <CiUser className="text-ftPrimaryColor text-[26px]" />
-                  </span>
-                  <button>
-                    <div className="flex flex-col text-black  md:me-20  xl:me-0">
-                      <p className="text-[14px] leading-[14px] font-medium hidden lg:block">
-                        Account
-                      </p>
-                    </div>
-                  </button>
-                </Link>
-              ) : (
-                <Link
-                  to={"/sign-in"}
-                  className="account flex items-center gap-2 text-black"
-                >
-                  <span className="icon">
-                    <CiUser className="text-ftPrimaryColor text-[26px]" />
-                  </span>
-                  <Link to="/sign-in">
-                    <div className="flex flex-col text-black  md:me-20  xl:me-0">
-                      <p className="text-[14px] leading-[14px] font-medium hidden lg:block">
-                        Account
-                      </p>
-                      <span className="text-ftMuteColor text-[13px] font-light text-black hidden lg:block">
-                        Register or Login
-                      </span>
-                    </div>
-                  </Link>
-                </Link>
-              )}
 
               <div className="relative" ref={dropdownRef}>
                 <FaRegUser className=" text-[26px]" onClick={toggleDropdown} />
