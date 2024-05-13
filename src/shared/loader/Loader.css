@@ -1,0 +1,59 @@
+.c-01,
+.c-02,
+.c-03 {
+  opacity: 1;
+  animation-duration: 3400ms;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: backwards;
+  animation-play-state: running;
+  animation-name: pullme;
+  animation-delay: calc(500ms + var(--delay, 0s));
+}
+.c-01 {
+  --opacity: 0.15;
+  width: 360px;
+  height: 360px;
+  --delay: 0.8s;
+}
+
+.c-02 {
+  --opacity: 0.2;
+  width: 280px;
+  height: 280px;
+  --delay: 0.4s;
+}
+.c-03 {
+  --opacity: 0.3;
+  width: 210px;
+  height: 210px;
+  --delay: 0.1s;
+}
+.c-04 {
+  --opacity: 0.1;
+  width: 190px;
+  height: 190px;
+  --delay: 0s;
+}
+.c-test {
+  border: 1px solid rgb(142, 247, 255);
+  opacity: 0;
+  background: linear-gradient(90deg, rgb(11, 42, 48) 0%, rgb(57, 176, 184) 100%);
+}
+
+@keyframes pullme {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  40%,
+  50% {
+    opacity: var(--opacity);
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+  }
+}

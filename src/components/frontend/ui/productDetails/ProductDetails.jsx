@@ -1,13 +1,13 @@
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
-import { useEffect, useState } from "react";
-import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import { useState } from "react";
 import ProductHighlightSection from "./ProductHighlightSection";
 import RightSideShoppingSection from "./RightSideShoppingSection";
 import ProductAccordion from "./ProductAccordion";
 import { BASE_URL } from "../../../../utils/baseURL";
 import RelatedProducts from "./RelatedProducts";
+import Loader from "../../../../shared/loader/Loader";
 
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -22,12 +22,11 @@ const ProductDetails = () => {
       return data;
     },
   });
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
   if (isLoading) {
-    return <MiniSpinner />;
+    return <Loader />;
   }
+
   if (!product) {
     return (
       <section className="flex items-center h-full sm:p-16 bg-gray-50 text-gray-800">
