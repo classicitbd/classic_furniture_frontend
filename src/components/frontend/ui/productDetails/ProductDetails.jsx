@@ -13,14 +13,13 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectSize, setSelectSize] = useState("");
   const [selectedSizeData, setSelectedSizeData] = useState(null);
-  const [description, setDiscription] = useState("");
+  const [description, setDescription] = useState("");
   const { slug } = useParams();
   const { data: product = [], isLoading } = useQuery({
     queryKey: [`/api/v1/product/${slug}`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/product/${slug}`);
       const data = await res.json();
-      setDiscription(data?.data?.product_description);
       return data;
     },
   });
@@ -76,8 +75,8 @@ const ProductDetails = () => {
   return (
     <section className="bg-[#F2F4F8] py-6 ">
       <div className=" my-8 es_container bg-white p-4  ">
-        <div className="grid  grid-cols-1 sm:grid-cols-5 lg:grid-cols-7 gap-3 ">
-          <div className=" lg:col-span-2  sm:col-span-2  col-span-1 ">
+        <div className="grid  grid-cols-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-7 gap-3 ">
+          <div className=" lg:col-span-2  sm:col-span-2  md:col-span-2  col-span-1 ">
             <div className="">
               <div className="border-2 border-gray-300">
                 <img
@@ -123,7 +122,7 @@ const ProductDetails = () => {
           </div>
 
           {/* Name price and buy add to cart section  */}
-          <div className="lg:col-span-3  sm:col-span-3 col-span-1 px-4 border-r-0 lg:border-r ">
+          <div className="lg:col-span-3  sm:col-span-3 md:col-span-3 col-span-1 px-4  ">
             {/* <div className=" md:col-span-8 sm:col-span-2 col-span-1 px-4 "> */}
             <ProductHighlightSection
               product={product}
@@ -134,14 +133,14 @@ const ProductDetails = () => {
             />
           </div>
 
-          <div className="lg:col-span-2  sm:col-span-5  col-span-1 px-4 border-t lg:border-t-0">
+          <div className="lg:col-span-2  sm:col-span-5 md:col-span-2 col-span-1 px-4 ">
             <RightSideShoppingSection
               product={product}
               selectSize={selectSize}
               setSelectSize={setSelectSize}
               selectedSizeData={selectedSizeData}
               setSelectedSizeData={setSelectedSizeData}
-              setDiscription={setDiscription}
+              setDescription={setDescription}
             />
           </div>
         </div>

@@ -8,7 +8,7 @@ const RightSideShoppingSection = ({
   setSelectSize,
   selectedSizeData,
   setSelectedSizeData,
-  setDiscription,
+  setDescription,
 }) => {
   const [quantity, setQuantity] = useState(1);
   const handleIncrement = () => {
@@ -26,30 +26,6 @@ const RightSideShoppingSection = ({
     <div>
       {/* Short Description / Stock / Quantity / cart */}
       <div className=" pt-2  ">
-        {/* Short description */}
-        {/* <div className="bg-[#F2F2F2] rounded p-2.5">
-          <p className=" font-semibold text-gray-800 tracking-tight">
-            Short Description:
-          </p>
-          <li className="text-xs font-semibold text-gray-700 list-decimal pt-2 py-1">
-            <span className="text-gray-600 font-normal ">
-              {" "}
-              NVIDIA GeForce RTX 4060 Laptop GPU 8 GB GDDR6
-            </span>
-          </li>
-          <li className="text-xs font-semibold text-gray-700 list-decimal py-1">
-            <span className="text-gray-600 font-normal ">
-              {" "}
-              Intel Core i7 13th Gen 13620H (2.40GHz)
-            </span>
-          </li>
-          <li className="text-xs font-semibold text-gray-700 list-decimal py-1">
-            <span className="text-gray-600 font-normal ">
-              {" "}
-              16GB Memory 1 TB NVMe SSD
-            </span>
-          </li>
-        </div> */}
         {product?.data?.product_size_variation.length > 0 ? (
           <div>
             <p className="font-semibold text-[16px] text-gray-800 pb-2">
@@ -67,7 +43,7 @@ const RightSideShoppingSection = ({
                     onClick={() => {
                       setSelectSize(item.size);
                       setSelectedSizeData(item);
-                      setDiscription(item?.description);
+                      setDescription(item?.description);
                     }}
                   >
                     {item?.size}
@@ -79,6 +55,7 @@ const RightSideShoppingSection = ({
                 onClick={() => {
                   setSelectSize("");
                   setSelectedSizeData(null);
+                  setDescription(null);
                 }}
               >
                 Remove
