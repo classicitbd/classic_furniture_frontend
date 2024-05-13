@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { BiCategoryAlt } from "react-icons/bi";
 import { RiHome6Line } from "react-icons/ri";
@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 import { AiOutlineYoutube } from "react-icons/ai";
 import { eraseCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
+import { AuthContext } from "../../context/AuthProvider";
 
 export default function MobileNavbar() {
+  const { user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -61,28 +63,35 @@ export default function MobileNavbar() {
           onClick={toggleDropdown}
         />
         {showDropdown && (
-          <div className="absolute bottom-10 -right-1 bg-white shadow-lg rounded-lg py-2">
-            <Link to="/sign-in" className="block px-6 py-2 text-gray-800">
-              Login
-            </Link>
-            <Link to="/sign-up" className="block px-6 py-2 text-gray-800">
-              Register
-            </Link>
-            {/* Add other dropdown items here */}
-            <hr className="my-2" />
-            {/* <Link to="/admin" className="block px-6 py-2 text-gray-800">
-              Dashboard
-            </Link> */}
-            <Link to="/user-profile" className="block px-6 py-2 text-gray-800">
-              Profile
-            </Link>
-            <hr className="my-2" />
-            <button
-              onClick={handleLogout}
-              className="block w-full text-left px-6 py-2 text-red-600"
-            >
-              Logout
-            </button>
+          <div className="absolute top-10 -right-3 bg-white shadow-lg rounded-lg py-2">
+            {user?.user_phone ? (
+              <>
+                <Link
+                  to="/user-profile"
+                  className="block px-6 py-2 text-gray-800"
+                >
+                  Profile
+                </Link>
+                {/* Add other dropdown items here */}
+                <hr className="my-2" />
+
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-6 py-2 text-red-600"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/sign-in" className="block px-6 py-2 text-gray-800">
+                  Login
+                </Link>
+                <Link to="/sign-up" className="block px-6 py-2 text-gray-800">
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>
