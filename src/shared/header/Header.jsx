@@ -5,17 +5,18 @@ import { FaBars, FaShoppingCart, FaYoutube } from "react-icons/fa";
 import { useState } from "react";
 import "./header.css";
 import logo from "../../assets/images/furniture-logo.png";
+import MobileNavbar from "./MobileNavbar";
 
 export default function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  // const handleMobileMenu = () => {
+  //   setIsMobileMenuOpen(!isMobileMenuOpen);
+  // };
   return (
     <div className=" text-white shadow-sm">
       <div className="es_container">
-        <div className="flex items-center justify-between gap-2 py-2">
+        <div className=" items-center justify-between gap-2 py-2 hidden lg:flex">
           <Link className="cart flex items-center gap-2  md:ms-20  xl:ms-0">
             <span className="icon hidden lg:block">
               <img className="w-16" src={logo} alt="" />
@@ -26,7 +27,7 @@ export default function Header() {
               </span>
             </div>
           </Link>
-          <div className="search flex-1">
+          {/* <div className="search flex-1">
             <form className="flex flex-1 justify-between lg:max-w-5xl items-center">
               <div className="block lg:hidden text-black me-5  max-w-[200px]">
                 <MobileMenu
@@ -80,7 +81,7 @@ export default function Header() {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
           <div className="header-right flex gap-4 text-black ">
             <Link
               to="/product-video"
@@ -131,6 +132,9 @@ export default function Header() {
             </Link>
           </div>
         </div>
+        {/* Mobile Menu */}
+
+        <MobileNavbar />
       </div>
     </div>
   );
