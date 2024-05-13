@@ -16,34 +16,34 @@ import ProductCard from "../../../common/card/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
-const RelatedProducts = ({ product_name }) => {
+const RelatedProducts = ({ product }) => {
   const { data: products = [], isLoading } = useQuery({
-    queryKey: [`${product_name}`],
+    queryKey: [`${product?.data?.product_related_slug}`],
     queryFn: async () => {
       const res = await fetch(
-        `${BASE_URL}/product/get_related_product/${product_name}`
+        `${BASE_URL}/product/get_related_product/${product?.data?.product_related_slug}`
       );
       const data = await res.json();
-      return data;
+      return data?.data?.filter((item) => item._id !== product?.data?._id);
     },
   }); // get All Product
 
   // const relatedProducts = product?.data?.filter(
   //   (product) => product?.colorId?.color !== color
   // );
-  console.log(products);
-  console.log(product_name);
+  // console.log(products);
+  // console.log(product_name);
   if (isLoading) {
     return <ProductCardSkeleton />;
   }
 
   return (
     <>
-      {products?.data?.length > 0 && (
+      {products?.length > 0 && (
         <div className=" bg-[#fff]  mb-10 md:mx-0 mx-5 ">
           <div className="px-[5px] lg:px-[50px] pt-[5px]">
-            <h1 className="text-3xl text-center font-normal tracking-normal leading-6 mb-5 sm:mb-10">
-              Variations{" "}
+            <h1 className="text-2xl text-center font-semibold text-gray-700 tracking-normal leading-6 mb-5">
+              Related Product
             </h1>
             <div className="mx-auto w-full">
               <Swiper
@@ -77,32 +77,34 @@ const RelatedProducts = ({ product_name }) => {
                 onSlideChange={() => {}}
               >
                 <div>
-                  {products?.data?.map((product) => (
+                  {products?.map((product) => (
                     <SwiperSlide
                       key={product?._id}
-                      className="border bg-[#F0F0F0] hover:border-bgray-400 group rounded-md overflow-hidden shadow"
+                      className="border bg-primaryLightColor/10 hover:border-bgray-400 group rounded-md overflow-hidden shadow"
                     >
                       <ProductCard product={product} loading={isLoading} />
                     </SwiperSlide>
                   ))}
                 </div>
               </Swiper>
-              <div className="flex items-center justify-center pt-10">
-                <div className="hidden lg:block"></div>
-                <h2 className="text-xl md:text-2xl font-normal md:font-medium"></h2>
-                <div className="flex gap-[4px]">
-                  <button className="prev-rtp w-10 h-10 z-10 bg-white hover:bg-opacity-50 rounded-full border flex items-center justify-center transition-all duration-300">
-                    <span>
-                      <FcPrevious className="text-xl md:text-2xl p-1 font-light" />
-                    </span>
-                  </button>
-                  <button className="next-rtp w-10 h-10 z-10 hover:bg-opacity-50 rounded-full bg-white border shadow-sm flex items-center justify-center transition-all duration-300">
-                    <span>
-                      <FcNext className="text-xl md:text-2xl p-1 font-light" />
-                    </span>
-                  </button>
+              {products?.length > 1 && (
+                <div className="flex items-center justify-center pt-4">
+                  <div className="hidden lg:block"></div>
+                  <h2 className="text-xl md:text-2xl font-normal md:font-medium"></h2>
+                  <div className="flex gap-[4px]">
+                    <button className="prev-rtp w-10 h-10 z-10 bg-white hover:bg-opacity-50 rounded-full border flex items-center justify-center transition-all duration-300">
+                      <span>
+                        <FcPrevious className="text-xl md:text-2xl p-1 font-light" />
+                      </span>
+                    </button>
+                    <button className="next-rtp w-10 h-10 z-10 hover:bg-opacity-50 rounded-full bg-white border shadow-sm flex items-center justify-center transition-all duration-300">
+                      <span>
+                        <FcNext className="text-xl md:text-2xl p-1 font-light" />
+                      </span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

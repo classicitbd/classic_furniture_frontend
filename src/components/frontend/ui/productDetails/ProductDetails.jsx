@@ -154,9 +154,7 @@ const ProductDetails = () => {
 
           <div className="lg:col-span-2 md:col-span-2 col-span-1">
             {/* <SuggestProduct /> */}
-            <RelatedProducts
-              product_name={product?.data?.product_related_slug}
-            />
+            <RelatedProducts product={product} />
           </div>
         </div>
       </div>
