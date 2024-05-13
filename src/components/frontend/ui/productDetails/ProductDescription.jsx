@@ -1,16 +1,14 @@
-import { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-
 import { MdOutlineTextFields } from "react-icons/md";
 
 const ProductDescription = ({ product, description }) => {
-  const [descriptionOpen, setDescriptionOpen] = useState(true);
+  // const [descriptionOpen, setDescriptionOpen] = useState(true);
   // console.log(selectedSizeData);
+  console.log(description);
   return (
     <div className="mx-4 lg:mx-0 mt-10">
       {/* Description part */}
       {/* Accordion1 */}
-      <div className="border rounded-lg my-4 h-[380px] overflow-y-auto scrollbar-thin ">
+      <div className="border rounded-lg my-4 max-h-[380px] overflow-y-auto scrollbar-thin ">
         <div
           className="bg-primaryLightColor/10 px-3 flex items-center justify-between py-2 cursor-pointer "
           // onClick={() => setDescriptionOpen(!descriptionOpen)}
