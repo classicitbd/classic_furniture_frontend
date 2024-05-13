@@ -8,6 +8,7 @@ import ProductDescription from "./ProductDescription";
 import { BASE_URL } from "../../../../utils/baseURL";
 import RelatedProducts from "./RelatedProducts";
 import Loader from "../../../../shared/loader/Loader";
+import SuggestProduct from "./SuggestProduct";
 
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -23,11 +24,9 @@ const ProductDetails = () => {
       return data;
     },
   });
-
   if (isLoading) {
     return <Loader />;
   }
-
   if (!product) {
     return (
       <section className="flex items-center h-full sm:p-16 bg-gray-50 text-gray-800">
@@ -157,14 +156,16 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Related Product */}
-      {/* 
-      <div className="max-w-[1300px] mx-auto mt-16 mb-4  bg-white p-4 rounded-lg  ">
-        <p className="text-ftPrimaryColor font-bold">RELETED PRODUCT:</p>
+      {/* Suggest  Product */}
+
+      <div className="es_container">
+        <div className=" my-12  bg-white    ">
+          <p className="text-gray-700 p-4 font-semibold text-lg">
+            You May Also Like:
+          </p>
+          <SuggestProduct />
+        </div>
       </div>
-      <div className="max-w-[1300px] mx-auto my-16   ">
-        <RelatedProducts product_name={product?.data?.product_related_slug} />
-      </div> */}
     </section>
   );
 };
