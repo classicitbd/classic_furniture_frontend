@@ -40,9 +40,9 @@ const RelatedProducts = ({ product }) => {
   return (
     <>
       {products?.length > 0 && (
-        <div className=" bg-[#fff]  mb-10 md:mx-0 mx-5 ">
-          <div className="px-[5px] lg:px-[50px] pt-[5px]">
-            <h1 className="text-2xl text-center font-semibold text-gray-700 tracking-normal leading-6 mb-5">
+        <div className=" bg-[#fff]  mx-6 ">
+          <div className="">
+            <h1 className="sm:text-2xl text-lg text-center font-semibold text-gray-700 tracking-normal leading-6 mb-5">
               Related Product
             </h1>
             <div className="mx-auto w-full">
@@ -52,10 +52,10 @@ const RelatedProducts = ({ product }) => {
                 spaceBetween={10}
                 breakpoints={{
                   640: {
-                    slidesPerView: 1,
+                    slidesPerView: 2,
                   },
                   768: {
-                    slidesPerView: 1,
+                    slidesPerView: 3,
                   },
                   1024: {
                     slidesPerView: 1,
@@ -73,8 +73,6 @@ const RelatedProducts = ({ product }) => {
                 }}
                 keyboard={{ enabled: true }}
                 pagination={{ clickable: true }}
-                onSwiper={() => {}}
-                onSlideChange={() => {}}
               >
                 <div>
                   {products?.map((product) => (

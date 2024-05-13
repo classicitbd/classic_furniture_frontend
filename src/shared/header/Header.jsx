@@ -27,19 +27,8 @@ export default function Header() {
               </span>
             </div>
           </Link>
-          {/* <div className="search flex-1">
+          <div className="search flex-1">
             <form className="flex flex-1 justify-between lg:max-w-5xl items-center">
-              <div className="block lg:hidden text-black me-5  max-w-[200px]">
-                <MobileMenu
-                  isMobileMenuOpen={isMobileMenuOpen}
-                  setIsMobileMenuOpen={setIsMobileMenuOpen}
-                />{" "}
-                <FaBars
-                  className="text-2xl text-[#817777]"
-                  onClick={handleMobileMenu}
-                />
-              </div>
-
               <div className="relative flex items-center w-full">
                 <input
                   id="search"
@@ -81,7 +70,7 @@ export default function Header() {
                 </button>
               </div>
             </form>
-          </div> */}
+          </div>
           <div className="header-right flex gap-4 text-black ">
             <Link
               to="/product-video"

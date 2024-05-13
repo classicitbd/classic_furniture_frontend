@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import ProductHighlightSection from "./ProductHighlightSection";
 import RightSideShoppingSection from "./RightSideShoppingSection";
-import ProductAccordion from "./ProductAccordion";
+import ProductDescription from "./ProductDescription";
 import { BASE_URL } from "../../../../utils/baseURL";
 import RelatedProducts from "./RelatedProducts";
 import Loader from "../../../../shared/loader/Loader";
@@ -13,12 +13,14 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectSize, setSelectSize] = useState("");
   const [selectedSizeData, setSelectedSizeData] = useState(null);
+  const [description, setDiscription] = useState("");
   const { slug } = useParams();
   const { data: product = [], isLoading } = useQuery({
     queryKey: [`/api/v1/product/${slug}`],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/product/${slug}`);
       const data = await res.json();
+      setDiscription(data?.data?.product_description);
       return data;
     },
   });
@@ -139,21 +141,18 @@ const ProductDetails = () => {
               setSelectSize={setSelectSize}
               selectedSizeData={selectedSizeData}
               setSelectedSizeData={setSelectedSizeData}
+              setDiscription={setDiscription}
             />
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-7 md:grid-5 grid-cols-1 gap-2 my-10 ">
-          <div className="lg:col-span-5 md:col-span-3 col-span-1">
-            <ProductAccordion
-              product={product}
-              selectedSizeData={selectedSizeData}
-              setSelectedSizeData={setSelectedSizeData}
-            />
+        <div className="flex flex-col lg:flex-row gap-4 my-4   ">
+          <div className="w-full  lg:w-[72%]">
+            <ProductDescription product={product} description={description} />
           </div>
 
-          <div className="lg:col-span-2 md:col-span-2 col-span-1">
-            {/* <SuggestProduct /> */}
+          {/* <SuggestProduct /> */}
+          <div className="w-full lg:w-[28%] ">
             <RelatedProducts product={product} />
           </div>
         </div>

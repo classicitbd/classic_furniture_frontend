@@ -8,6 +8,7 @@ const RightSideShoppingSection = ({
   setSelectSize,
   selectedSizeData,
   setSelectedSizeData,
+  setDiscription,
 }) => {
   const [quantity, setQuantity] = useState(1);
   const handleIncrement = () => {
@@ -66,6 +67,7 @@ const RightSideShoppingSection = ({
                     onClick={() => {
                       setSelectSize(item.size);
                       setSelectedSizeData(item);
+                      setDiscription(item?.description);
                     }}
                   >
                     {item?.size}
