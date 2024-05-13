@@ -11,10 +11,10 @@ export default function MobileNavbar() {
       <Link to="/" className="text-black">
         <RiHome6Line size={24} />
       </Link>
-      <Link to="/products" className="text-black">
+      <Link to="/all" className="text-black">
         <BiCategoryAlt size={24} />
       </Link>
-      <Link to="/cart">
+      <Link to="/checkout">
         <div className="bg-primaryLightColor  w-12 h-12 bottom-3 flex items-center  justify-center rounded-full relative text-white shadow-lg shadow-slate-600">
           <BsCart2 size={24} />{" "}
           <sup className="text-white w-5 h-5 flex items-center justify-center absolute -top-1 -right-1 bg-red-600 rounded-full">
@@ -22,10 +22,10 @@ export default function MobileNavbar() {
           </sup>
         </div>
       </Link>
-      <Link to="/youtube" className="text-black">
+      <Link to="/product-video" className="text-black">
         <AiOutlineYoutube size={24} />
       </Link>
-      <Link to="/profile" className="text-black">
+      <Link to="/user-profile" className="text-black">
         <FaRegUserCircle size={24} />
       </Link>
     </div>
