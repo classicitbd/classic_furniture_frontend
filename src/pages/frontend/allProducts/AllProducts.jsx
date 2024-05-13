@@ -448,7 +448,7 @@ export default function AllProducts() {
             </h2>
 
             {/* <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4"> */}
-            <div className="grid grid-cols-12 gap-4">
+            <div className="grid grid-cols-12 gap-4 lg:px-4 px-0">
               {/* Filters */}
               <div className="col-span-2">
                 <form className="hidden lg:block">
@@ -526,7 +526,7 @@ export default function AllProducts() {
 
               {/* Product grid */}
               <div className="lg:col-span-10 col-span-12">
-                <div className="es_container mx-auto md:px-20 xl:px-0 px-5">
+                <div className="es_container mx-auto md:px-10 xl:px-0 px-2">
                   <div>
                     <div className="flex justify-between items-center mb-6">
                       <h1 className="text-xl font-semibold text-[#008140]">
@@ -541,7 +541,7 @@ export default function AllProducts() {
                       </div>
                     </div>
                   </div>
-                  <div className={`grid gap-4 ${gridCols}`}>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 gap-2">
                     {products?.data?.map((product) => (
                       <div key={product?._id} className="group">
                         <Link to={`/${product?.product_slug}`}>
