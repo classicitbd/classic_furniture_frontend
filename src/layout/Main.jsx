@@ -18,8 +18,11 @@ const Main = () => {
           <BottomHeader />
         </div>
       </div>
+      <div className="min-h-screen">
+        {" "}
+        <Outlet />
+      </div>
 
-      <Outlet />
       <footer>
         <Footer />
       </footer>
