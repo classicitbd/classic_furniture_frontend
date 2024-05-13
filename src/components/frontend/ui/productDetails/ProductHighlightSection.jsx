@@ -1,6 +1,22 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const ProductHighlightSection = ({ product, selectedSizeData }) => {
+
+  const [outOfStockStock, setOutOfStock] = useState(false);
+  const stackManage = product?.data?.size_variation;
+
+  useEffect(() => {
+    if (stackManage && stackManage.length > 0) {
+      const allZero = stackManage.map(item => item?.quantity === 0).every(Boolean);
+      setOutOfStock(allZero);
+    } else {
+      if (product?.data?.product_quantity === 0) {
+        setOutOfStock(true)
+      }
+    }
+  }, [stackManage, product]);
+
   const {
     product_name,
     category_id,
@@ -80,10 +96,10 @@ const ProductHighlightSection = ({ product, selectedSizeData }) => {
                 {selectedSizeData?.discount_price
                   ? selectedSizeData?.discount_price
                   : product_discount_price
-                  ? product_discount_price
-                  : selectedSizeData?.price
-                  ? selectedSizeData?.price
-                  : product_price}
+                    ? product_discount_price
+                    : selectedSizeData?.price
+                      ? selectedSizeData?.price
+                      : product_price}
               </strong>
             </div>
             <div className="flex items-center gap-4 mb-2">
@@ -98,17 +114,10 @@ const ProductHighlightSection = ({ product, selectedSizeData }) => {
               </h1>
             </div>
 
-            {selectedSizeData?.quantity > 0 ? (
-              <h1 className="text-md  text-gray-700 my-4">
-                <span className="mr-2"> Status:</span>{" "}
-                <span className="text-green-600">In Stock</span>
-              </h1>
-            ) : (
-              <h1 className="text-md text-gray-700 my-3">
-                <span className="mr-2"> Status:</span>{" "}
-                <span className="text-red-600">Out of Stock</span>
-              </h1>
-            )}
+            <h1 className="text-md  text-gray-700 my-4">
+              <span className="mr-2"> Status:</span>{" "}
+              <span className="text-green-600">{outOfStockStock == false ? "In stock" : "Out of stock"}</span>
+            </h1>
           </>
         ) : (
           <>

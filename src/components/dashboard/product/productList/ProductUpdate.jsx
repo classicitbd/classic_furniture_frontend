@@ -258,6 +258,14 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       }
     }
 
+    if (data?.product_size_variation?.length === 0) {
+      if (data?.product_quantity == 0) {
+        toast.error("Error: Please fill in the product quantity.");
+        setLoading(false)
+        return; // Stop the function
+      }
+    }
+
     if (!imageName) {
       toast.error("Error: Please fill the main image.");
       setLoading(false)
@@ -308,7 +316,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       category_id: categoryIdForSubCategory,
       _id: updateModalValue?._id,
       sub_category_id: subcategory,
-      product_quantity: data?.product_quantity,
+      product_quantity: data?.product_quantity ? data?.product_quantity : 0,
       product_partial_payment: data?.product_partial_payment,
       product_partial_payment_amount: data?.product_partial_payment_amount
     };
@@ -457,7 +465,6 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                       defaultValue={updateModalValue?.product_quantity}
                       {...register("product_quantity")}
                       id="product_quantity"
-                      min={1}
                       type="number"
                       className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
                     />

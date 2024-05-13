@@ -35,6 +35,7 @@ export default function MobileNavbar() {
     eraseCookie(authKey);
     window.location.reload();
   };
+  
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg flex justify-around py-3 lg:hidden mb-2 rounded-lg mx-4 h-12">
