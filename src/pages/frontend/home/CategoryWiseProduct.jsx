@@ -27,7 +27,7 @@ const CategoryWiseProduct = () => {
   if (windowWidth >= 640) gridCols = "sm:grid-cols-2";
   if (windowWidth >= 768) gridCols = "md:grid-cols-3";
   if (windowWidth >= 1024) gridCols = "lg:grid-cols-4";
-  if (windowWidth >= 1280) gridCols = "2xl:grid-cols-5";
+  if (windowWidth >= 1440) gridCols = "2xl:grid-cols-5";
 
   //   const handleAddToCart = () => {
   //     setCartQuantity((prevQuantity) => prevQuantity + 1);
@@ -96,7 +96,7 @@ const CategoryWiseProduct = () => {
                                 </span>
                               )}
                             </div>
-                            {product?.product_quantity ? (
+                            {/* {product?.product_quantity ? (
                               <div className=" text-sm text-gray-500">
                                 <p> In-Stock</p>
                               </div>
@@ -104,7 +104,13 @@ const CategoryWiseProduct = () => {
                               <div className=" text-xs text-gray-500">
                                 <p> Out Of Stock</p>
                               </div>
-                            )}
+                            )} */}
+
+                            {/* Product Color */}
+
+                            <p className="text-[14px] font-semibold text-gray-600 py-1.5">
+                              {product?.product_color_id?.color_name}
+                            </p>
                             {/* Rating Stars */}
                             {/* <div className="product_rating flex">
                             {[...Array(Math.floor(product.rating))].map(
