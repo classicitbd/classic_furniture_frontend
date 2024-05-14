@@ -231,6 +231,10 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   //image upload end
 
+  const handlePartialPaymentChange = () => {
+    setPartialPayment(!partialPayment)
+  };
+
   // data post in backend
   const handleDataPost = async (data) => {
     setLoading(true)
@@ -317,8 +321,8 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       _id: updateModalValue?._id,
       sub_category_id: subcategory,
       product_quantity: data?.product_quantity ? data?.product_quantity : 0,
-      product_partial_payment: data?.product_partial_payment,
-      product_partial_payment_amount: data?.product_partial_payment_amount
+      product_partial_payment: partialPayment,
+      product_partial_payment_amount: data?.product_partial_payment == true ? data?.product_partial_payment_amount : 0
     };
     if (subcategory == "" || subcategory == undefined || subcategory == null) {
       delete sendData.sub_category_id
@@ -781,8 +785,8 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                       id="product_partial_payment"
                       type="checkbox"
                       className="w-5 h-5"
-                      checked={updateModalValue?.product_partial_payment}
-                      onChange={() => setPartialPayment(!partialPayment)} // Call handlePCBuilderChange when the checkbox is clicked
+                      checked={partialPayment}
+                      onChange={() => handlePartialPaymentChange()} // Call handlePCBuilderChange when the checkbox is clicked
                     />
                     <label htmlFor="product_partial_payment" className="font-medium text-xl">
                       Partial payment ?
