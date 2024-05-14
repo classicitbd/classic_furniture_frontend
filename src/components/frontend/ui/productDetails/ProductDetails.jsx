@@ -160,7 +160,7 @@ const ProductDetails = () => {
 
       <div className="es_container">
         <div className=" my-12  bg-white    ">
-          <p className="text-gray-700 p-4 font-semibold text-lg">
+          <p className="text-gray-700 p-6 font-semibold text-xl">
             You May Also Like:
           </p>
           <SuggestProduct />

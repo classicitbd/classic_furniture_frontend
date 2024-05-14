@@ -36,7 +36,7 @@ const SuggestProduct = () => {
     );
   return (
     <div>
-      <div className={`grid gap-4 ${gridCols} mx-4 `}>
+      <div className={`grid gap-4 ${gridCols} px-6 pb-10 `}>
         {products?.data?.map((product) => (
           <div key={product?._id} className="group">
             <Link to={`/${product?.product_slug}`}>

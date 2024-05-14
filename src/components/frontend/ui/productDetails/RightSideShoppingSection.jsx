@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { HiMinus, HiOutlinePlus } from "react-icons/hi";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 const RightSideShoppingSection = ({
   product,
@@ -9,17 +10,18 @@ const RightSideShoppingSection = ({
   setSelectedSizeData,
   setDescription,
 }) => {
-
   const [outOfStockStock, setOutOfStock] = useState(false);
   const stackManage = product?.data?.size_variation;
 
   useEffect(() => {
     if (stackManage && stackManage.length > 0) {
-      const allZero = stackManage.map(item => item?.quantity === 0).every(Boolean);
+      const allZero = stackManage
+        .map((item) => item?.quantity === 0)
+        .every(Boolean);
       setOutOfStock(allZero);
     } else {
       if (product?.data?.product_quantity === 0) {
-        setOutOfStock(true)
+        setOutOfStock(true);
       }
     }
   }, [stackManage, product]);
@@ -284,27 +286,30 @@ const RightSideShoppingSection = ({
 
   return (
     <div>
-      {
-        outOfStockStock == false &&
+      {outOfStockStock == false ? (
         <>
           <p className="font-semibold text-[16px] text-gray-800 pb-2">
             Select Size: {selectSize}
           </p>
           <div className="flex flex-wrap gap-2">
             {product?.data?.product_size_variation.map((item) => (
-              <button key={item?._id}
+              <button
+                key={item?._id}
                 className={
-                  item && item?.quantity > 0 ? `border rounded-lg cursor-pointer py-2 px-3.5 mr-2 hover:bg-primaryLightColor hover:text-white font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl ${selectSize === item?.size ? "bg-primaryLightColor text-white" : ""}`
-                    :
-                    "disabled border rounded-lg py-2 px-3.5 mr-2 font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl"
+                  item && item?.quantity > 0
+                    ? `border rounded-lg cursor-pointer py-2 px-3.5 mr-2 hover:bg-primaryLightColor hover:text-white font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl ${
+                        selectSize === item?.size
+                          ? "bg-primaryLightColor text-white"
+                          : ""
+                      }`
+                    : "disabled border rounded-lg py-2 px-3.5 mr-2 font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl"
                 }
                 onClick={() => {
-                  item?.quantity &&
-                    setSelectSize(item.size);
+                  item?.quantity && setSelectSize(item.size);
                   setSelectedSizeData(item);
                   setDescription(item?.description);
-                  setInQuantity(item?.quantity)
-                  setQuantity(1)
+                  setInQuantity(item?.quantity);
+                  setQuantity(1);
                 }}
                 disabled={item?.quantity === 0}
               >
@@ -318,7 +323,7 @@ const RightSideShoppingSection = ({
                 setSelectedSizeData(null);
                 setDescription(null);
                 setInQuantity(product?.data?.product_quantity);
-                setQuantity(1)
+                setQuantity(1);
               }}
             >
               Remove
@@ -381,7 +386,31 @@ const RightSideShoppingSection = ({
             </button>
           </div>
         </>
-      }
+      ) : (
+        <div className="border">
+          <section className="flex items-center h-full lg:px-8 px-0  w-full dark:bg-gray-50 ">
+            <div className="container flex flex-col items-center justify-center px-2  mx-auto my-8 space-y-8 text-center md:w-full  max-w-md">
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-32  h-32  dark:text-gray-400"
+              >
+                <path d="M14.1 8.5L12 6.4 9.9 8.5 8.5 7.1 10.6 5 8.5 2.9l1.4-1.4L12 3.6l2.1-2.1 1.4 1.4L13.4 5l2.1 2.1-1.4 1.4M7 18c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m10 0c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m-9.8-3.2c0 .1.1.2.2.2H19v2H7c-1.1 0-2-.9-2-2 0-.4.1-.7.2-1l1.3-2.4L3 4H1V2h3.3l4.3 9h7l3.9-7 1.7 1-3.9 7c-.3.6-1 1-1.7 1H8.1l-.9 1.6v.2z" />
+              </svg>
+              <p className="md:text-lg lg:text-xl text-xl w-full">
+                Looks like our product are currently Out Of Stock
+              </p>
+              <Link
+                rel="noopener noreferrer"
+                to="/"
+                className="w-11/12  py-3 font-semibold rounded bg-emerald-600 hover:bg-primaryLightColor duration-200 text-gray-50"
+              >
+                Shop More
+              </Link>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 };
