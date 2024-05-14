@@ -403,7 +403,7 @@ const RightSideShoppingSection = ({
               <Link
                 rel="noopener noreferrer"
                 to="/"
-                className="w-11/12  py-3 font-semibold rounded bg-emerald-600 hover:bg-primaryLightColor duration-200 text-gray-50"
+                className="w-11/12  py-3 font-semibold rounded bg-emerald-600 hover:bg-primaryLightColor duration-200 font-semibold text-gray-50"
               >
                 Shop More
               </Link>
