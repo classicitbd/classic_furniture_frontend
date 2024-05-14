@@ -12,7 +12,7 @@ import { BsCart2 } from "react-icons/bs";
 export default function Header() {
   const { user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
-  const cart = useSelector((state) => state?.furnitureCart?.products);
+  const quantity = useSelector((state) => state?.furnitureCart?.quantity);
   const subtotal = useSelector((state) => state?.furnitureCart?.subtotal);
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -114,7 +114,7 @@ export default function Header() {
               <Link className="cart flex items-center gap-2 relative text-black" to="/checkout">
                 <span className="icon">
                   <sup className="text-white w-5 h-5 flex items-center justify-center absolute -top-1 -left-2 bg-red-600 rounded-full">
-                    {cart?.length}
+                    {quantity}
                   </sup>
                   <FaShoppingCart className="text-[#47504c] text-[26px]" />
                 </span>
@@ -175,14 +175,14 @@ export default function Header() {
         </div>
         {/* Mobile Menu */}
 
-        {cart?.length > 0 && subtotal && (
+        {quantity > 0 && subtotal && (
           <Link to="/checkout">
             <div className="bg-primaryLightColor w-24 h-20 rounded-l-lg text-white absolute top-[50vh] right-0  cursor-pointer  z-[999] hidden lg:block">
               <div className="flex gap-2 text-white font-semibold items-center justify-center pt-2">
                 <BsCart2 className="" />{" "}
                 <p className="text-[12px]">
                   {" "}
-                  {cart?.length} Item{cart?.length > 1 ? "s" : ""}
+                  {quantity} Item{quantity > 1 ? "s" : ""}
                 </p>
               </div>
               <p className="bg-white rounded-lg w-5/6 mx-auto py-1.5 text-[11px] items-center justify-center flex text-primaryLightColor font-semibold mt-2">
@@ -191,7 +191,7 @@ export default function Header() {
             </div>
           </Link>
         )}
-        <MobileNavbar cart={cart} />
+        <MobileNavbar quantity={quantity} />
       </div>
     </div>
   );
