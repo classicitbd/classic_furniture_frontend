@@ -177,12 +177,12 @@ export default function Header() {
 
         {cart?.length > 0 && subtotal && (
           <Link to="/check-out">
-            <div className="bg-primaryLightColor w-24 h-20 rounded-l-lg text-white absolute top-[50vh] right-0  cursor-pointer  z-[999] ">
+            <div className="bg-primaryLightColor w-24 h-20 rounded-l-lg text-white absolute top-[50vh] right-0  cursor-pointer  z-[999] hidden lg:block">
               <div className="flex gap-2 text-white font-semibold items-center justify-center pt-2">
                 <BsCart2 className="" />{" "}
                 <p className="text-[12px]">
                   {" "}
-                  {cart.length} Item{cart.length > 1 ? "s" : ""}
+                  {cart?.length} Item{cart?.length > 1 ? "s" : ""}
                 </p>
               </div>
               <p className="bg-white rounded-lg w-5/6 mx-auto py-1.5 text-[11px] items-center justify-center flex text-primaryLightColor font-semibold mt-2">
@@ -191,7 +191,7 @@ export default function Header() {
             </div>
           </Link>
         )}
-        <MobileNavbar />
+        <MobileNavbar cart={cart} />
       </div>
     </div>
   );

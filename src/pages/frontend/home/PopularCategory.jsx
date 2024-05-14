@@ -22,7 +22,7 @@ const PopularCategory = () => {
     };
   }, []);
 
-  let gridCols = "grid-cols-2";
+  let gridCols = "grid-cols-1";
   if (windowWidth >= 640) gridCols = "sm:grid-cols-2";
   if (windowWidth >= 768) gridCols = "md:grid-cols-3";
   if (windowWidth >= 1024) gridCols = "lg:grid-cols-4";

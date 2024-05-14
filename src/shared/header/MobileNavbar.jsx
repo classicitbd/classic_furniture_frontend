@@ -9,7 +9,7 @@ import { eraseCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
 import { AuthContext } from "../../context/AuthProvider";
 
-export default function MobileNavbar() {
+export default function MobileNavbar({ cart }) {
   const { user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -35,7 +35,6 @@ export default function MobileNavbar() {
     eraseCookie(authKey);
     window.location.reload();
   };
-  
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg flex justify-around py-3 lg:hidden mb-2 rounded-lg mx-4 h-12">
@@ -49,7 +48,7 @@ export default function MobileNavbar() {
         <div className="bg-primaryLightColor w-12 h-12 bottom-3 flex items-center justify-center rounded-full relative text-white shadow-lg shadow-slate-600">
           <BsCart2 size={24} />
           <sup className="text-white w-5 h-5 flex items-center justify-center absolute -top-1 -right-1 bg-red-600 rounded-full">
-            2
+            {cart?.length}
           </sup>
         </div>
       </Link>
