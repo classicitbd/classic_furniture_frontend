@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const ProductHighlightSection = ({ product, selectedSizeData }) => {
 
   const [outOfStockStock, setOutOfStock] = useState(false);
-  const stackManage = product?.data?.size_variation;
+  const stackManage = product?.data?.product_size_variation;
 
   useEffect(() => {
     if (stackManage && stackManage.length > 0) {
