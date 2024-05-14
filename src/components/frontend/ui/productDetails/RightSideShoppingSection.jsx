@@ -91,6 +91,8 @@ const RightSideShoppingSection = ({
           color_id: product?.data?.product_color_id?._id,
           product_thumbnail: product?.data?.product_thumbnail,
           productId: product?.data?._id,
+          product_partial_payment_amount: product?.data?.product_partial_payment_amount,
+          product_partial_payment: product?.data?.product_partial_payment,
         })
       );
       toast.success("Added to cart", {
@@ -111,6 +113,8 @@ const RightSideShoppingSection = ({
         color_id: product?.data?.product_color_id?._id,
         product_thumbnail: product?.data?.product_thumbnail,
         productId: product?.data?._id,
+        product_partial_payment_amount: product?.data?.product_partial_payment_amount,
+        product_partial_payment: product?.data?.product_partial_payment,
       })
     );
     toast.success("Added to cart", {
@@ -159,6 +163,8 @@ const RightSideShoppingSection = ({
           color_id: product?.data?.product_color_id?._id,
           product_thumbnail: product?.data?.product_thumbnail,
           productId: product?.data?._id,
+          product_partial_payment_amount: product?.data?.product_partial_payment_amount,
+          product_partial_payment: product?.data?.product_partial_payment,
         })
       );
       toast.success("Added to cart", {
@@ -178,6 +184,8 @@ const RightSideShoppingSection = ({
         color_id: product?.data?.product_color_id?._id,
         product_thumbnail: product?.data?.product_thumbnail,
         productId: product?.data?._id,
+        product_partial_payment: product?.data?.product_partial_payment,
+        product_partial_payment_amount: product?.data?.product_partial_payment_amount,
       })
     );
     toast.success("Added to cart", {
