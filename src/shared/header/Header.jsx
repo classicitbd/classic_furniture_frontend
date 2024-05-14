@@ -111,7 +111,7 @@ export default function Header() {
                   </p>
                 </div>
               </Link>
-              <Link className="cart flex items-center gap-2 relative text-black">
+              <Link className="cart flex items-center gap-2 relative text-black" to="/checkout">
                 <span className="icon">
                   <sup className="text-white w-5 h-5 flex items-center justify-center absolute -top-1 -left-2 bg-red-600 rounded-full">
                     {cart?.length}
@@ -176,7 +176,7 @@ export default function Header() {
         {/* Mobile Menu */}
 
         {cart?.length > 0 && subtotal && (
-          <Link to="/check-out">
+          <Link to="/checkout">
             <div className="bg-primaryLightColor w-24 h-20 rounded-l-lg text-white absolute top-[50vh] right-0  cursor-pointer  z-[999] hidden lg:block">
               <div className="flex gap-2 text-white font-semibold items-center justify-center pt-2">
                 <BsCart2 className="" />{" "}
