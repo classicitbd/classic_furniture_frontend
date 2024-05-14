@@ -4,6 +4,7 @@ import {
   A11y,
   Keyboard,
   Parallax,
+  Autoplay,
 } from "swiper/modules";
 import { FcNext, FcPrevious } from "react-icons/fc";
 
@@ -47,7 +48,14 @@ const RelatedProducts = ({ product }) => {
             </h1>
             <div className="mx-auto w-full">
               <Swiper
-                modules={[Navigation, Scrollbar, A11y, Keyboard, Parallax]}
+                modules={[
+                  Navigation,
+                  Scrollbar,
+                  Autoplay,
+                  A11y,
+                  Keyboard,
+                  Parallax,
+                ]}
                 slidesPerView={1}
                 spaceBetween={10}
                 breakpoints={{
