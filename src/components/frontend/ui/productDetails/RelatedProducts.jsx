@@ -77,10 +77,9 @@ const RelatedProducts = ({ product }) => {
                 }}
                 loop={true}
                 autoplay={{
-                  delay: 3000,
+                  delay: 3500,
                 }}
                 keyboard={{ enabled: true }}
-                pagination={{ clickable: true }}
               >
                 <div>
                   {products?.map((product) => (
