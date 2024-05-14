@@ -48,13 +48,17 @@ const ProductCard = ({ product }) => {
           />
         </div>
         <article className="p-4">
-          <h2 className="font-semibold text-lg text-gray-700 ">
-            {product?.product_name}
+          <h2 className="font-semibold text-lg text-gray-700 pt-2">
+            {product?.product_name.length > 18 ? (
+              <>{product?.product_name.slice(0, 18)}...</>
+            ) : (
+              product?.product_name
+            )}
           </h2>
           <p className=" py-3 text-bgray-700">
             {product?.product_color_id?.color_name}
           </p>
-          <p className="">
+          <p className="pb-2">
             <span
               className={`pr-1 ${
                 product?.product_discount_price ? "line-through" : ""

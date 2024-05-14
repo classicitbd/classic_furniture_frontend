@@ -1,145 +1,114 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useGetProductQuery } from "../../../../redux/feature/product/productApi";
-import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+  Keyboard,
+  Parallax,
+} from "swiper/modules";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/bundle";
+import ProductCard from "../../../common/card/ProductCard";
+
+import ProductCardSkeleton from "../../../../shared/loader/ProductCardSkeleton";
+import { useGetProductQuery } from "../../../../redux/feature/product/productApi";
 const SuggestProduct = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  // const [cartQuantity, setCartQuantity] = useState(0);
   const { data: products, isLoading } = useGetProductQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 60000,
   });
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
 
-    window.addEventListener("resize", handleResize);
+  if (isLoading) {
+    return <ProductCardSkeleton />;
+  }
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  let gridCols = "grid-cols-1";
-  if (windowWidth >= 640) gridCols = "sm:grid-cols-2";
-  if (windowWidth >= 768) gridCols = "md:grid-cols-3";
-  if (windowWidth >= 1024) gridCols = "lg:grid-cols-4";
-  if (windowWidth >= 1440) gridCols = "2xl:grid-cols-5";
-
-  if (isLoading)
-    return (
-      <div>
-        <MiniSpinner />
-      </div>
-    );
   return (
-    <div>
-      <div className={`grid gap-4 ${gridCols} px-6 pb-10 `}>
-        {products?.data?.map((product) => (
-          <div key={product?._id} className="group">
-            <Link to={`/${product?.product_slug}`}>
-              <div
-                title="View Details"
-                className="border border-transparent group-hover:border-[#008140] transition-all duration-500 rounded-md group-hover:scale-100 shadow"
+    <>
+      {products?.data?.length > 0 && (
+        <div className=" bg-[#fff]  mx-6 pb-10 ">
+          <div className="">
+            <h1 className="sm:text-2xl text-lg text-center font-semibold text-gray-700 tracking-normal leading-6 py-10">
+              You May Also Like
+            </h1>
+            <div className="mx-auto w-full">
+              <Swiper
+                modules={[
+                  Navigation,
+                  Pagination,
+                  Scrollbar,
+                  A11y,
+                  Autoplay,
+                  Keyboard,
+                  Parallax,
+                ]}
+                slidesPerView={1}
+                spaceBetween={10}
+                breakpoints={{
+                  640: {
+                    slidesPerView: 2,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                  },
+                  1440: {
+                    slidesPerView: 5,
+                  },
+                }}
+                speed={600}
+                parallax={true}
+                navigation={{
+                  nextEl: ".next-rtp",
+                  prevEl: ".prev-rtp",
+                }}
+                loop={true}
+                autoplay={{
+                  delay: 3000,
+                }}
+                keyboard={{ enabled: true }}
+                // pagination={{ clickable: true }}
               >
-                <div className="w-full relative">
-                  <img
-                    src={product?.product_thumbnail}
-                    alt="Product Image"
-                    className="w-full rounded-t-md h-[200px] object-cover"
-                  />
-                  {product?.product_discount_price && (
-                    <div className="bg-red-600 text-white inline px-1  rounded-tr-lg rounded-bl-lg text-[12px] absolute top-0 right-0 m-2">
-                      OFF{" "}
-                      {product?.product_price - product?.product_discount_price}
-                      TK
-                    </div>
-                  )}
+                <div>
+                  {products?.data?.map((product) => (
+                    <SwiperSlide
+                      key={product?._id}
+                      className="border bg-primaryLightColor/10 hover:border-bgray-400 group rounded-md overflow-hidden shadow"
+                    >
+                      <ProductCard product={product} loading={isLoading} />
+                    </SwiperSlide>
+                  ))}
                 </div>
-                {/* Product Details */}
-                <div className="px-3 pt-3 pb-2">
-                  {/* Product Prices */}
-                  <div className="product_price_inner flex items-center gap-2 py-2">
-                    <strong className="offer_price text-[#FF0000] text-[16px] font-bold">
-                      ৳{" "}
-                      {product?.product_discount_price
-                        ? product?.product_discount_price
-                        : product?.product_price}
-                    </strong>
-                    {product?.product_discount_price && (
-                      <span className="old_price line-through text-[12px] text-[#0f172a99] font-medium">
-                        ৳ {product?.product_price}
+              </Swiper>
+              {/* {products?.data?.length > 1 && (
+                <div className="flex items-center justify-center pt-4">
+                  <div className="hidden lg:block"></div>
+                  <h2 className="text-xl md:text-2xl font-normal md:font-medium"></h2>
+                  <div className="flex gap-[4px]">
+                    <button className="prev-rtp w-10 h-10 z-10 bg-white hover:bg-opacity-50 rounded-full border flex items-center justify-center transition-all duration-300">
+                      <span>
+                        <FcPrevious className="text-xl md:text-2xl p-1 font-light" />
                       </span>
-                    )}
-                  </div>
-                  {product?.product_quantity ? (
-                    <div className=" text-sm text-gray-500">
-                      <p> In-Stock</p>
-                    </div>
-                  ) : (
-                    <div className=" text-xs text-gray-500">
-                      <p> Out Of Stock</p>
-                    </div>
-                  )}
-                  {/* Rating Stars */}
-                  {/* <div className="product_rating flex">
-                            {[...Array(Math.floor(product.rating))].map(
-                              (_, index) => (
-                                <FaStar
-                                  key={index}
-                                  className="text-yellowColor"
-                                />
-                              )
-                            )}
-                            {product.rating % 1 >= 0.5 && (
-                              <FaStarHalfAlt className="text-yellowColor" />
-                            )}
-                          </div> */}
-                  {/* Product Title */}
-                  <div className="product_title py-4">
-                    <p
-                      title={product?.product_name}
-                      className={` text-[17px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
-                        window.innerWidth < 640
-                          ? "max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis"
-                          : ""
-                      }`}
-                    >
-                      {window.innerWidth >= 1024
-                        ? product.product_name.length > 30
-                          ? `${product.product_name.slice(0, 30)}...`
-                          : product.product_name
-                        : product.product_name.length > 23
-                        ? `${product.product_name.slice(0, 23)}...`
-                        : product.product_name}
-                    </p>
-                  </div>
-
-                  {/* Buy Now Button */}
-                  {/* <div className="flex w-full items-center  gap-2 text-[#008140] cursor-pointer">
-                    <FaShoppingCart
-                      // onClick={() => handleAddToCart(product)}
-                      title="Add To cart"
-                      className="text-lg "
-                    />
-                    <button
-                      type="button"
-                      title="Buy Now"
-                      className="bg-ftPrimaryColor py-2 rounded   text-center font-semibold text-[16px]"
-                      // onClick={() => handleAddToCart(product)}
-                    >
-                      Buy Now
                     </button>
-                  </div> */}
+                    <button className="next-rtp w-10 h-10 z-10 hover:bg-opacity-50 rounded-full bg-white border shadow-sm flex items-center justify-center transition-all duration-300">
+                      <span>
+                        <FcNext className="text-xl md:text-2xl p-1 font-light" />
+                      </span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              )} */}
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 
