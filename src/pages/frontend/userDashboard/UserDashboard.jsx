@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserForm from "./UserForm";
 import OrderTab from "../../../components/frontend/ui/order/OrderTab";
 import { getCookie } from "../../../utils/cookie-storage";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthProvider";
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
   const [active, setActive] = useState("order");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getData = getCookie("user");
-    if (getData) {
-      const userData = JSON.parse(getData);
-      setUser(userData);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const getData = getCookie("user");
+  //   if (getData) {
+  //     const userData = JSON.parse(getData);
+  //     setUser(userData);
+  //   }
+  // }, []);
 
   if (!user) {
     return navigate("/all");
@@ -59,10 +60,9 @@ const UserDashboard = () => {
       {/* <section className="my-5 px-2">
         {active === "profile" && (
           <div className="w-full md:w-[768px] mx-auto bg-textColor px-5 py-10 rounded-md">
-            <UserForm user={user} setUser={setUser} />
+            <UserForm user={user} />
           </div>
         )}
-
 
         {active === "order" && (
           <div className="w-full md:w-[1024px] mx-auto">

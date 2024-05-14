@@ -8,7 +8,7 @@ import { divisions } from "../../../data/divisions";
 import { setCookie } from "../../../utils/cookie-storage";
 import { useSelector } from "react-redux";
 
-const UserForm = ({ user, setUser }) => {
+const UserForm = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [districtsData, setDistrictsData] = useState([]);
@@ -42,7 +42,7 @@ const UserForm = ({ user, setUser }) => {
           "user",
           JSON.stringify({ ...res?.data?.data, deliveryPoint })
         );
-        setUser({ ...res?.data?.data, deliveryPoint });
+        // setUser({ ...res?.data?.data, deliveryPoint });
 
         toast.success("Your Information is done!", {
           autoClose: 2,

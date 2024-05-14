@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaRegUser, FaYoutube } from "react-icons/fa";
+import { FaRegUser, FaShoppingCart, FaYoutube } from "react-icons/fa";
 import "./header.css";
 import logo from "../../assets/images/furniture-logo.png";
 import MobileNavbar from "./MobileNavbar";
@@ -7,9 +7,13 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import { eraseCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
+import { useSelector } from "react-redux";
+import { BsCart2 } from "react-icons/bs";
 export default function Header() {
   const { user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
+  const cart = useSelector((state) => state?.furnitureCart?.products);
+  const subtotal = useSelector((state) => state?.furnitureCart?.subtotal);
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
@@ -107,8 +111,11 @@ export default function Header() {
                   </p>
                 </div>
               </Link>
-              {/* <Link className="cart flex items-center gap-2 text-black">
+              <Link className="cart flex items-center gap-2 relative text-black">
                 <span className="icon">
+                  <sup className="text-white w-5 h-5 flex items-center justify-center absolute -top-1 -left-2 bg-red-600 rounded-full">
+                    {cart?.length}
+                  </sup>
                   <FaShoppingCart className="text-[#47504c] text-[26px]" />
                 </span>
                 <div className="flex flex-col text-black ">
@@ -119,7 +126,7 @@ export default function Header() {
                     Products
                   </span>
                 </div>
-              </Link> */}
+              </Link>
 
               <div className="relative" ref={dropdownRef}>
                 <FaRegUser className=" text-[26px]" onClick={toggleDropdown} />
@@ -168,6 +175,22 @@ export default function Header() {
         </div>
         {/* Mobile Menu */}
 
+        {cart?.length > 0 && subtotal && (
+          <Link to="/check-out">
+            <div className="bg-primaryLightColor w-24 h-20 rounded-l-lg text-white absolute top-[50vh] right-0  cursor-pointer  z-[999] ">
+              <div className="flex gap-2 text-white font-semibold items-center justify-center pt-2">
+                <BsCart2 className="" />{" "}
+                <p className="text-[12px]">
+                  {" "}
+                  {cart.length} Item{cart.length > 1 ? "s" : ""}
+                </p>
+              </div>
+              <p className="bg-white rounded-lg w-5/6 mx-auto py-1.5 text-[11px] items-center justify-center flex text-primaryLightColor font-semibold mt-2">
+                ৳ {subtotal}
+              </p>
+            </div>
+          </Link>
+        )}
         <MobileNavbar />
       </div>
     </div>
