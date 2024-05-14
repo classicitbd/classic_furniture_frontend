@@ -7,7 +7,7 @@ const SecondMain = () => {
   return (
     <>
       <div className="sticky top-0 z-50 bg-white">
-        <div className="pt-4">
+        <div className="lg:pt-4 pt-0">
           <Header />
         </div>
         <div className="hidden lg:block">
