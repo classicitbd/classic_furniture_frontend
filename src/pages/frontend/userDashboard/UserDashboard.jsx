@@ -7,7 +7,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
   const [active, setActive] = useState("order");
   const navigate = useNavigate();
 
