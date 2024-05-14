@@ -35,7 +35,7 @@ const Slider = () => {
     );
   return (
     <>
-      <div className="relative mt-2 es_container">
+      <div className="relative es_container">
         <Swiper
           // install Swiper modules
           modules={[
