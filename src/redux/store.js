@@ -6,7 +6,7 @@ import localstorageMiddleware from "./localstorageMiddleware";
 
 const loadState = () => {
   try {
-    const serializedCart = localStorage.getItem("cart");
+    const serializedCart = localStorage.getItem("furnitureCart");
     if (serializedCart === null) {
       return undefined;
     }
@@ -20,7 +20,7 @@ const preloadedState = loadState();
 const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
-    cart: cartReducer,
+    furnitureCart: cartReducer,
   },
   preloadedState,
   middleware: (getDefaultMiddleware) =>

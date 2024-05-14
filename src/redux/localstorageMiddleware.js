@@ -19,7 +19,7 @@ const localstorageMiddleware = (store) => (next) => (action) => {
     action.type === setShippingCharge.type ||
     action.type === setShippingType.type
   ) {
-    localStorage.setItem("cart", JSON.stringify(store.getState()));
+    localStorage.setItem("furnitureCart", JSON.stringify(store.getState()));
   }
 
   return result;
