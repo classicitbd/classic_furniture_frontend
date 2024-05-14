@@ -29,3 +29,7 @@ body {
   margin: 0px auto;
 
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

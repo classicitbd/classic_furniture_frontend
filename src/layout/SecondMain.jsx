@@ -14,7 +14,7 @@ const SecondMain = () => {
           <BottomHeader />
         </div>
       </div>
-      <div className="min-h-screen bg-[#F2F4F8]">
+      <div className="min-h-screen bg-[#F2F4F8] scrollbar-hide">
         {" "}
         <Outlet />
       </div>
