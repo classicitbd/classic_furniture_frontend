@@ -1,13 +1,28 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import UserForm from "./UserForm";
 import OrderTab from "../../../components/frontend/ui/order/OrderTab";
-import { getCookie } from "../../../utils/cookie-storage";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
+import Loader from "../../../shared/loader/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../utils/baseURL";
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
-  // console.log(user);
+
+  const {
+    data: userData = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: [`/api/v1/getMe/${user?.user_phone}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/getMe/${user?.user_phone}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+
   const [active, setActive] = useState("order");
   const navigate = useNavigate();
 
@@ -19,10 +34,16 @@ const UserDashboard = () => {
   //   }
   // }, []);
 
-  if (!user) {
-    return navigate("/all");
+  if (!userData) {
+    return navigate("/sign-in");
   }
-
+  if (isLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
   return (
     <div className="bg-white border-t mt-4">
       <section className="shadow">
@@ -34,7 +55,7 @@ const UserDashboard = () => {
             onClick={() => setActive("profile")}
             className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 border-b hover:border-b-success-400 ${
               active === "profile" &&
-              "border-b-success-400 text-primaryDeepColor"
+              "border-b-success-400 text-primaryDeepColor bg-gray-50"
             }`}
           >
             My Profile
@@ -58,19 +79,19 @@ const UserDashboard = () => {
           </button> */}
         </nav>
       </section>
-      {/* <section className="my-5 px-2">
+      <section className="my-5 px-2">
         {active === "profile" && (
           <div className="w-full md:w-[768px] mx-auto bg-textColor px-5 py-10 rounded-md">
-            <UserForm user={user} />
+            <UserForm user={userData?.data} refetch={refetch} />
           </div>
         )}
 
         {active === "order" && (
           <div className="w-full md:w-[1024px] mx-auto">
-            <OrderTab user={user} setActive={setActive} />
+            <OrderTab user={userData?.data} setActive={setActive} />
           </div>
         )}
-      </section> */}
+      </section>
     </div>
   );
 };

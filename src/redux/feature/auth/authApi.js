@@ -1,11 +1,18 @@
 import { api } from "../../api/apiSlice";
 import { tagTypes } from "../../tag-types";
-
 const AUTH_URL = "/userReg";
 const AUTH_LOGIN = "/userlogin";
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
+    // user get
+    getMe: build.query({
+      query: () => ({
+        url: `/getMe`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
     //user signup
     signUp: build.mutation({
       query: (data) => ({
@@ -69,7 +76,7 @@ export const authApi = api.injectEndpoints({
       invalidatesTags: [tagTypes.user],
     }),
 
-    //set password
+    // update user
     updateUser: build.mutation({
       query: (data) => ({
         url: `/getMe`,
@@ -121,6 +128,7 @@ export const authApi = api.injectEndpoints({
 });
 
 export const {
+  useGetMeQuery,
   useSignUpMutation,
   useOtpVerifyMutation,
   useSignInMutation,

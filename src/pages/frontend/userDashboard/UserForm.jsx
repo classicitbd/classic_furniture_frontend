@@ -1,47 +1,52 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useOrderRegUserMutation } from "../../../redux/feature/auth/authApi";
+import { useUpdateUserMutation } from "../../../redux/feature/auth/authApi";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import { districts } from "../../../data/districts";
 import { divisions } from "../../../data/divisions";
-import { setCookie } from "../../../utils/cookie-storage";
-import { useSelector } from "react-redux";
+// import { setCookie } from "../../../utils/cookie-storage";
+// import { useSelector } from "react-redux";
 
-const UserForm = ({ user }) => {
+const UserForm = ({ user, refetch }) => {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [districtsData, setDistrictsData] = useState([]);
   const [districtId, setDistrictId] = useState("");
-  const [division, setDivision] = useState(user?.division);
-  const [district, setDistrict] = useState(user?.district);
-  const [orderRegUser, { isLoading }] = useOrderRegUserMutation();
-  const deliveryPoint = useSelector((state) => state.cart.shippingType);
+  const [user_division, setDivision] = useState(user?.user_division);
+  const [user_district, setDistrict] = useState(user?.user_district);
+  // console.log(user);
+  // const [orderRegUser, { isLoading }] = useOrderRegUserMutation();
+
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
+  // const deliveryPoint = useSelector((state) => state.cart.shippingType);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      if (!division || !district) {
+      if (!user_division || !user_district) {
         return toast.error("Please provide your District & Division");
       }
-      data.name = data.name ? data?.name : user?.name;
-      data.phone = data.phone ? data?.phone : user?.phone;
-      data.address = data.address ? data?.address : user?.address;
-      data.district = district;
-      data.division = division;
-      const res = await orderRegUser(data);
+      data.user_name = data.user_name ? data?.user_name : user?.user_name;
+      data.user_phone = data.user_phone ? data?.user_phone : user?.user_phone;
+      data.user_address = data.user_address
+        ? data?.user_address
+        : user?.user_address;
+      data.user_district = user_district;
+      data.user_division = user_division;
+      const res = await updateUser(data);
+      console.log(res);
 
       if (res?.data?.success) {
-        setCookie(
-          "user",
-          JSON.stringify({ ...res?.data?.data, deliveryPoint })
-        );
+        // setCookie(
+        //   "user",
+        //   JSON.stringify({ ...res?.data?.data, deliveryPoint })
+        // );
         // setUser({ ...res?.data?.data, deliveryPoint });
 
         toast.success("Your Information is done!", {
@@ -49,6 +54,7 @@ const UserForm = ({ user }) => {
         });
         setEdit(!edit);
         reset();
+        refetch();
       }
     } catch (error) {
       console.error(error);
@@ -70,62 +76,62 @@ const UserForm = ({ user }) => {
     <form className="space-y-5 mb-10" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col md:flex-row gap-5">
         <div className="w-full">
-          <label htmlFor="name" className="label">
+          <label htmlFor="user_name" className="label">
             <span className="label-text">Full Name</span>
             <span className="text-error-300">*</span>
           </label>
           <input
-            id="name"
+            id="user_name"
             type="text"
             placeholder="Enter your name"
-            defaultValue={user?.name}
+            defaultValue={user?.user_name}
             disabled={!edit}
             className="border rounded px-3 py-2 w-full"
-            {...register("name")}
+            {...register("user_name")}
           />
           {errors.name && (
-            <p className="text-red-600"> {errors.name.message}</p>
+            <p className="text-red-600"> {errors.user_name.message}</p>
           )}
         </div>
         <div className="w-full">
-          <label htmlFor="phone" className="label">
+          <label htmlFor="user_phone" className="label">
             <span className="label-text">Phone Number</span>
             <span className="text-error-300">*</span>
           </label>
           <input
-            id="phone"
+            id="user_phone"
             type="text"
             minLength={11}
             maxLength={11}
-            defaultValue={user?.phone}
+            defaultValue={user?.user_phone}
             disabled
             placeholder="Enter your phone number"
             className="border rounded px-3 py-2 w-full"
-            {...register("phone")}
+            {...register("user_phone")}
           />
-          {errors.phone && (
-            <p className="text-red-600"> {errors?.phone?.message}</p>
+          {errors.user_phone && (
+            <p className="text-red-600"> {errors?.user_phone?.message}</p>
           )}
         </div>
       </div>
       <div className="form-control w-full">
-        <label htmlFor="address" className="label">
+        <label htmlFor="user_address" className="label">
           <span className="label-text">Address</span>
           <span className="text-error-300">*</span>
         </label>
         <textarea
-          name="address"
-          id="address"
+          name="user_address"
+          id="user_address"
           cols="30"
           rows="2"
-          defaultValue={user?.address}
+          defaultValue={user?.user_address}
           disabled={!edit}
           placeholder="your delivery address"
           className="border rounded px-3 py-2 w-full"
-          {...register("address")}
+          {...register("user_address")}
         ></textarea>
-        {errors.address && (
-          <p className="text-red-600"> {errors.address.message}</p>
+        {errors.user_address && (
+          <p className="text-red-600"> {errors.user_address.message}</p>
         )}
       </div>
       <div className="flex flex-col md:flex-row gap-5">
@@ -133,7 +139,7 @@ const UserForm = ({ user }) => {
           <label htmlFor="division" className="label">
             <span className="label-text">Division</span>
             <span className="text-error-300">*</span>
-            <span className="text-error-300">{user?.division}</span>
+            <span className="text-error-300">{user?.user_division}</span>
           </label>
           <Select
             id="division"
@@ -153,7 +159,7 @@ const UserForm = ({ user }) => {
           <label htmlFor="district" className="label">
             <span className="label-text">District</span>
             <span className="text-error-300">*</span>
-            <span className="text-error-300">{user?.district}</span>
+            <span className="text-error-300">{user?.user_district}</span>
           </label>
           <Select
             id="district"
