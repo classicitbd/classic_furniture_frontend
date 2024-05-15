@@ -16,11 +16,12 @@ const ChangePassword = ({ user, setActive }) => {
   } = useForm();
 
   useEffect(() => {}, [user]);
+  // console.log(user);
 
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      data.email = user?.email;
+      data.user_phone = user?.user_phone;
       const res = await changePassword(data);
 
       if (res?.data?.success) {

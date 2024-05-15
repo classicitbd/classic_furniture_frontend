@@ -6,6 +6,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 import Loader from "../../../shared/loader/Loader";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../utils/baseURL";
+import ChangePassword from "./ChangePassword";
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -34,7 +35,7 @@ const UserDashboard = () => {
   //   }
   // }, []);
 
-  if (!userData) {
+  if (!user) {
     return navigate("/sign-in");
   }
   if (isLoading) {
@@ -45,44 +46,51 @@ const UserDashboard = () => {
     );
   }
   return (
-    <div className="bg-white border-t mt-4">
-      <section className="shadow">
+    <div className=" border-t mt-4">
+      <section className="shadow bg-white">
         <nav
           className="w-full md:w-[768px] mx-auto flex justify-center gap-6 pb-3 pt-1.5 border-b"
           aria-label="Tabs"
         >
           <button
             onClick={() => setActive("profile")}
-            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 border-b hover:border-b-success-400 ${
+            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-800 border-b hover:border-b-success-400 ${
               active === "profile" &&
-              "border-b-success-400 text-primaryDeepColor bg-gray-50"
+              "border-b-success-400 text-primaryDeepColor bg-gray-100"
             }`}
           >
             My Profile
           </button>
+          <button
+            onClick={() => setActive("change-password")}
+            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 border-b hover:border-b-success-400 ${
+              active === "change-password" &&
+              "border-b-success-400 text-primaryDeepColor bg-gray-100"
+            }`}
+          >
+            Change Password
+          </button>
 
           <button
             onClick={() => setActive("order")}
-            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 border-b hover:border-b-success-400 ${
-              active === "order" && "border-b-success-400 text-primaryDeepColor"
+            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-800 border-b hover:border-b-success-400 ${
+              active === "order" &&
+              "border-b-success-400 text-primaryDeepColor bg-gray-100"
             }`}
           >
             My Order
           </button>
-          {/* <button
-            onClick={() => setActive("change-password")}
-            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 border-b hover:border-b-success-400 ${
-              active === "change-password" && "border-b-success-400"
-            }`}
-          >
-            Change Password
-          </button> */}
         </nav>
       </section>
       <section className="my-5 px-2">
         {active === "profile" && (
           <div className="w-full md:w-[768px] mx-auto bg-textColor px-5 py-10 rounded-md">
             <UserForm user={userData?.data} refetch={refetch} />
+          </div>
+        )}
+        {active === "change-password" && (
+          <div className="w-full md:w-[768px] mx-auto">
+            <ChangePassword user={userData?.data} setActive={setActive} />
           </div>
         )}
 
