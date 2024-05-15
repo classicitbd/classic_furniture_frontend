@@ -110,28 +110,39 @@ export default function Checkout() {
         <div className="lg:mx-10 md:mx-4 mx-2">
           <div className="flex flex-col md:flex-row gap-4 my-4  lg:gap-8  ">
             {/* Left side condition aria */}
+            <div className="w-full md:w-[68%]">
+              <div className="flex justify-between items-center p-4 ">
+                <p className="md:text-xl  font-semibold   flex gap-2 items-center">
+                  <BsCart size={26} /> Shopping Bag Item {totalQuantity}
+                </p>
+                <p className="md:text-xl  font-semibold   flex gap-2 items-center">
+                  Total: {subTotal}৳
+                </p>
+              </div>
+              {/* Left side step 1 */}
+              {activeStep === 1 && (
+                <CartItems
+                  cart={cart}
+                  totalQuantity={totalQuantity}
+                  subTotal={subTotal}
+                />
+              )}
+              {/* Left side step 2 */}
 
-            {/* Left side step 1 */}
-            {activeStep === 1 && (
-              <CartItems
-                cart={cart}
-                totalQuantity={totalQuantity}
-                subTotal={subTotal}
-              />
-            )}
-            {/* Left side step 2 */}
+              {activeStep === 2 && <Address />}
+              {/* Left side step 3 */}
+              {activeStep === 3 && <Payment />}
+            </div>
 
-            {activeStep === 2 && <Address />}
-            {/* Left side step 3 */}
-            {activeStep === 3 && <Payment />}
             {/* Right side  */}
-
-            <RightSideAmount
-              subTotal={subTotal}
-              totalQuantity={totalQuantity}
-              handleContinue={handleContinue}
-              handleBack={handleBack}
-            />
+            <div className="w-full md:w-[32%] pt-16  ">
+              <RightSideAmount
+                subTotal={subTotal}
+                totalQuantity={totalQuantity}
+                handleContinue={handleContinue}
+                handleBack={handleBack}
+              />
+            </div>
           </div>
         </div>
       </div>
