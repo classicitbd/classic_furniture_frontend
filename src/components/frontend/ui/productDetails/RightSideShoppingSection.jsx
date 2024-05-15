@@ -33,7 +33,6 @@ const RightSideShoppingSection = ({
 
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.furnitureCart.products);
-  console.log(carts);
 
   const [quantity, setQuantity] = useState(1);
   const [inQuantity, setInQuantity] = useState(product?.data?.product_quantity);
