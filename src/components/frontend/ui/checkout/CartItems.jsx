@@ -99,6 +99,7 @@ export default function CartItems({ cart }) {
                       />
                     </button>
                   </div>
+                  <p>Sub Total: {product?.quantity * product?.price}</p>
                 </div>
               </div>
             </div>
