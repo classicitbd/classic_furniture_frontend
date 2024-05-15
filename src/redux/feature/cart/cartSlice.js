@@ -25,8 +25,9 @@ const cartSlice = createSlice({
     removeFromCart: (state, action) => {
       const indexToRemove = state.products.findIndex(
         (product) =>
-          product.productId === action.payload.productId &&
-          product.size === action.payload.size
+          (product.size === action.payload?.size ||
+            product.size === undefined) &&
+          product.productId === action.payload.productId
       );
 
       if (indexToRemove !== -1) {
@@ -45,8 +46,9 @@ const cartSlice = createSlice({
     incrementQuantity: (state, action) => {
       const existingProduct = state.products.find(
         (product) =>
-          product.productId === action.payload.productId &&
-          product.size === action.payload.size
+          (product.size === action.payload?.size ||
+            product.size === undefined) &&
+          product.productId === action.payload.productId
       );
 
       if (existingProduct) {
@@ -66,8 +68,9 @@ const cartSlice = createSlice({
     decrementQuantity: (state, action) => {
       const existingProduct = state.products.find(
         (product) =>
-          product.productId === action.payload.productId &&
-          product.size === action.payload.size
+          (product.size === action.payload?.size ||
+            product.size === undefined) &&
+          product.productId === action.payload.productId
       );
 
       if (existingProduct && existingProduct.quantity > 1) {

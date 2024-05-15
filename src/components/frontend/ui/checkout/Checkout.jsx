@@ -5,11 +5,23 @@ import { CiCreditCard1, CiLocationOn } from "react-icons/ci";
 import CartItems from "./CartItems";
 import Payment from "./Payment";
 import Address from "./Address";
+import Loader from "../../../../shared/loader/Loader";
 
 export default function Checkout() {
+
+  const { data: product = [], isLoading } = useQuery({
+    queryKey: [`/api/v1/product/${slug}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/product/${slug}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+
+
   const cart = useSelector((state) => state.furnitureCart.products);
-  console.log(cart);
-  const [quantity, setQuantity] = useState(1);
+  const subTotal = useSelector((state) => state.furnitureCart.subtotal);
+  const totalQuantity = useSelector((state) => state.furnitureCart.quantity);
   const [activeStep, setActiveStep] = useState(1);
 
   const handleStepClick = (step) => {
@@ -26,6 +38,11 @@ export default function Checkout() {
       setActiveStep((prevStep) => prevStep - 1);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="es_container">
       <div className="py-10">
@@ -33,58 +50,50 @@ export default function Checkout() {
         <div className="flex justify-center flex-wrap">
           {/* Step - 1 */}
           <p
-            className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center cursor-pointer  ${
-              activeStep >= 1 ? "text-primaryDeepColor" : ""
-            }`}
+            className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center cursor-pointer  ${activeStep >= 1 ? "text-primaryDeepColor" : ""
+              }`}
             onClick={() => handleStepClick(1)}
           >
             <span
-              className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${
-                activeStep >= 1 ? "bg-primaryDeepColor" : "bg-gray-400 "
-              } `}
+              className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${activeStep >= 1 ? "bg-primaryDeepColor" : "bg-gray-400 "
+                } `}
             >
               1
             </span>{" "}
             Bag <BsCart className="sm:text-xl " />
             <div
-              className={`md:w-12 w-4 h-[1px] sm:mr-4 mr-1.5  rounded-full ${
-                activeStep >= 1 ? "bg-primaryDeepColor " : "bg-gray-500"
-              }`}
+              className={`md:w-12 w-4 h-[1px] sm:mr-4 mr-1.5  rounded-full ${activeStep >= 1 ? "bg-primaryDeepColor " : "bg-gray-500"
+                }`}
             ></div>
           </p>
 
           {/* Step - 2 */}
           <p
-            className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center cursor-pointer  ${
-              activeStep >= 2 ? "text-primaryDeepColor" : "text-gray-700"
-            }`}
+            className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center cursor-pointer  ${activeStep >= 2 ? "text-primaryDeepColor" : "text-gray-700"
+              }`}
             onClick={() => handleStepClick(2)}
           >
             <span
-              className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${
-                activeStep >= 2 ? "bg-primaryDeepColor" : "bg-gray-400  "
-              } `}
+              className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${activeStep >= 2 ? "bg-primaryDeepColor" : "bg-gray-400  "
+                } `}
             >
               2
             </span>{" "}
             Address <CiLocationOn className="sm:text-xl font-semibold " />
             <div
-              className={`md:w-12 sm:w-6 w-4 h-[1px] sm:mr-4 mr-1.5  rounded-full ${
-                activeStep >= 2 ? "bg-primaryDeepColor " : "bg-gray-500"
-              }`}
+              className={`md:w-12 sm:w-6 w-4 h-[1px] sm:mr-4 mr-1.5  rounded-full ${activeStep >= 2 ? "bg-primaryDeepColor " : "bg-gray-500"
+                }`}
             ></div>
           </p>
           {/* Step - 3 */}
           <p
-            className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center  cursor-pointer ${
-              activeStep >= 3 ? "text-primaryDeepColor" : "text-gray-700"
-            }`}
+            className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center  cursor-pointer ${activeStep >= 3 ? "text-primaryDeepColor" : "text-gray-700"
+              }`}
             onClick={() => handleStepClick(3)}
           >
             <span
-              className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${
-                activeStep >= 3 ? "bg-primaryDeepColor" : "bg-gray-400 "
-              } `}
+              className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${activeStep >= 3 ? "bg-primaryDeepColor" : "bg-gray-400 "
+                } `}
             >
               3
             </span>{" "}
@@ -92,11 +101,6 @@ export default function Checkout() {
           </p>
         </div>
         <div className="lg:mx-10 md:mx-4 mx-2">
-          <div className="flex justify-between items-center">
-            <p className="md:text-3xl  font-semibold pt-8 pb-2 flex gap-2 items-center">
-              <BsCart size={26} /> Shopping Bag Item {cart.length}
-            </p>
-          </div>
           <div className="flex flex-col md:flex-row gap-4 my-4  lg:gap-8  ">
             {/* Left side condition aria */}
 
@@ -104,8 +108,8 @@ export default function Checkout() {
             {activeStep === 1 && (
               <CartItems
                 cart={cart}
-                quantity={quantity}
-                setQuantity={setQuantity}
+                totalQuantity={totalQuantity}
+                subTotal={subTotal}
               />
             )}
             {/* Left side step 2 */}
@@ -120,24 +124,20 @@ export default function Checkout() {
                 <div className="md:px-6   py-3 ">
                   <div className="pb-1.5 flex justify-between items-center">
                     <p>Item total</p>
-                    <p>৳ 26100.0</p>
+                    <p>৳ {subTotal}</p>
                   </div>
                   <div className="flex justify-between py-2 items-center">
                     {" "}
                     <p>Delivery fee</p>
-                    <p>100</p>
+                    <p>৳ 100</p>
                   </div>
                   <hr />
                   <div className="flex justify-between py-2 items-center">
                     {" "}
                     <p>Grand total</p>
-                    <p>100</p>
+                    <p>৳ {subTotal}</p>
                   </div>
 
-                  <div className="py-1.5 text-gray-500  flex justify-between items-center">
-                    <p className="text-[12px]">Inclusive of all taxes</p>
-                    <p>৳ 26100.0</p>
-                  </div>
                   <hr />
                   <div className="py-3 text-gray-500  flex justify-between items-center">
                     <p className="text-[12px]">Average delivery time: ---</p>
