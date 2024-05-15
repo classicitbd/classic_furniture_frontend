@@ -123,7 +123,7 @@ export default function Checkout() {
               )}
               {/* Left side step 2 */}
 
-              {activeStep === 2 && <Address />}
+              {activeStep === 2 && <Address settingData={settingData} />}
               {/* Left side step 3 */}
               {activeStep === 3 && <Payment />}
             </div>

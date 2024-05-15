@@ -1,29 +1,24 @@
-// export default function Address() {
-//   return (
-//     <div className=" bg-white border shadow rounded-lg  p-4">
-//       <p className="text-3xl font-semibold pt-8 pb-2 flex gap-2 items-center">
-//         This is step 2 Your address fill here
-//       </p>
-//     </div>
-//   );
-// }
 
 import { useContext, useEffect, useState } from "react";
 import Select from "react-select";
-import Loader from "../../../../shared/loader/Loader";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { AuthContext } from "../../../../context/AuthProvider";
 import { districts } from "../../../../data/districts";
 import { divisions } from "../../../../data/divisions";
+import { useUpdateUserMutation } from "../../../../redux/feature/auth/authApi";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import Loader from "../../../../shared/loader/Loader";
 // import { setCookie } from "../../../utils/cookie-storage";
 // import { useSelector } from "react-redux";
 
-const Address = () => {
+const Address = ({ settingData }) => {
   const { user: userData } = useContext(AuthContext);
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null);
   const [selectedDeliveryLocation, setSelectedDeliveryLocation] =
-    useState(null);
+    useState("home");
 
   const handleOptionClick = (option) => {
     setSelectedDeliveryOption(option);
@@ -34,7 +29,7 @@ const Address = () => {
 
   const {
     data: user = [],
-    isLoading,
+    isLoading: getDataLoading,
     refetch,
   } = useQuery({
     queryKey: [`/api/v1/getMe/${userData?.user_phone}`],
@@ -45,59 +40,56 @@ const Address = () => {
     },
   });
   console.log(user);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [districtsData, setDistrictsData] = useState([]);
   const [districtId, setDistrictId] = useState("");
   const [user_division, setDivision] = useState(user?.user_division);
-  const [user_district, setDistrict] = useState(user?.user_district);
-  // console.log(user);
-  // const [orderRegUser, { isLoading }] = useOrderRegUserMutation();
+  const [user_district, setDistrict] = useState(user?.user_district)
 
-  // const [updateUser, { isLoading }] = useUpdateUserMutation();
-  // const deliveryPoint = useSelector((state) => state.cart.shippingType);
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   reset,
-  //   formState: { errors },
-  // } = useForm();
-  // const onSubmit = async (data) => {
-  //   try {
-  //     setLoading(true);
-  //     if (!user_division || !user_district) {
-  //       return toast.error("Please provide your District & Division");
-  //     }
-  //     data.user_name = data.user_name ? data?.user_name : user?.user_name;
-  //     data.user_phone = data.user_phone ? data?.user_phone : user?.user_phone;
-  //     data.user_address = data.user_address
-  //       ? data?.user_address
-  //       : user?.user_address;
-  //     data.user_district = user_district;
-  //     data.user_division = user_division;
-  //     const res = await updateUser(data);
-  //     console.log(res);
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const handleDataPost = async (data) => {
+    try {
+      setLoading(true);
+      if (!user_division || !user_district) {
+        return toast.error("Please provide your District & Division");
+      }
+      data.user_name = data.user_name ? data?.user_name : user?.user_name;
+      data.user_phone = data.user_phone ? data?.user_phone : user?.user_phone;
+      data.user_address = data.user_address
+        ? data?.user_address
+        : user?.user_address;
+      data.user_district = user_district;
+      data.user_division = user_division;
+      const res = await updateUser(data);
+      console.log(res);
 
-  //     if (res?.data?.success) {
-  //       // setCookie(
-  //       //   "user",
-  //       //   JSON.stringify({ ...res?.data?.data, deliveryPoint })
-  //       // );
-  //       // setUser({ ...res?.data?.data, deliveryPoint });
+      if (res?.data?.success) {
+        // setCookie(
+        //   "user",
+        //   JSON.stringify({ ...res?.data?.data, deliveryPoint })
+        // );
+        // setUser({ ...res?.data?.data, deliveryPoint });
 
-  //       toast.success("Your Information is done!", {
-  //         autoClose: 2,
-  //       });
-  //       setEdit(!edit);
-  //       reset();
-  //       refetch();
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+        toast.success("Your Information is done!", {
+          autoClose: 2,
+        });
+        setEdit(!edit);
+        reset();
+        refetch();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (districtId) {
@@ -108,12 +100,12 @@ const Address = () => {
     }
   }, [districtId]);
 
-  if (isLoading) {
+  if (getDataLoading) {
     return <Loader />;
   }
   return (
     <div className=" bg-white border shadow rounded-lg  p-4 lg:p-8">
-      <div className="space-y-5 ">
+      <form onSubmit={handleSubmit(handleDataPost)} className="space-y-5 ">
         <div className="flex flex-col md:flex-row gap-5">
           <div className="w-full">
             <label htmlFor="user_name" className="label">
@@ -127,11 +119,11 @@ const Address = () => {
               defaultValue={user?.user_name}
               disabled={!edit}
               className="border rounded px-3 py-2 w-full"
-              // {...register("user_name")}
+              {...register("user_name")}
             />
-            {/* {errors.name && (
-            <p className="text-red-600"> {errors.user_name.message}</p>
-          )} */}
+            {errors.name && (
+              <p className="text-red-600"> {errors.user_name.message}</p>
+            )}
           </div>
           <div className="w-full">
             <label htmlFor="user_phone" className="label">
@@ -147,11 +139,11 @@ const Address = () => {
               disabled
               placeholder="Enter your phone number"
               className="border rounded px-3 py-2 w-full"
-              // {...register("user_phone")}
+              {...register("user_phone")}
             />
-            {/* {errors.user_phone && (
-            <p className="text-red-600"> {errors?.user_phone?.message}</p>
-          )} */}
+            {errors.user_phone && (
+              <p className="text-red-600"> {errors?.user_phone?.message}</p>
+            )}
           </div>
         </div>
         <div className="form-control w-full">
@@ -168,11 +160,11 @@ const Address = () => {
             disabled={!edit}
             placeholder="your delivery address"
             className="border rounded px-3 py-2 w-full"
-            // {...register("user_address")}
+            {...register("user_address")}
           ></textarea>
-          {/* {errors.user_address && (
-          <p className="text-red-600"> {errors.user_address.message}</p>
-        )} */}
+          {errors.user_address && (
+            <p className="text-red-600"> {errors.user_address.message}</p>
+          )}
         </div>
         <div className="flex flex-col md:flex-row gap-5">
           <div className="form-control w-full">
@@ -227,11 +219,11 @@ const Address = () => {
               type="submit"
               className="flex justify-end gap-1 text-[#fff] mb-5 bg-success-200 hover:bg-success-300 px-5 py-2 rounded-sm"
             >
-              {/* {!loading || !isLoading ? (
-              <span>Save</span>
-            ) : (
-              <span>loading...</span>
-            )} */}
+              {!loading || !isLoading ? (
+                <span>Save</span>
+              ) : (
+                <MiniSpinner />
+              )}
             </button>
           </div>
         ) : (
@@ -249,17 +241,17 @@ const Address = () => {
         <p className="text-center">Select Delivery Location</p>
         <div className="w-1/2 mx-auto flex justify-between gap-4 items-center">
           <button
-            className={`btn btn-primary btn-sm py-2 bg-gray-100 hover:bg-primaryLightColor/20 duration-200  border rounded-lg px-4 w-full ${
-              selectedDeliveryLocation === "home" && "bg-primaryLightColor/20"
-            }`}
+            type="button"
+            className={`btn btn-primary btn-sm py-2 bg-gray-100 hover:bg-primaryLightColor/20 duration-200  border rounded-lg px-4 w-full ${selectedDeliveryLocation === "home" && "bg-primaryLightColor/20"
+              }`}
             onClick={() => handleLocationClick("home")}
           >
             Home
           </button>
           <button
-            className={`btn btn-primary btn-sm py-2 bg-gray-100 hover:bg-primaryLightColor/20 duration-200  border rounded-lg px-4 w-full ${
-              selectedDeliveryLocation === "shop" && "bg-primaryLightColor/20"
-            }`}
+            type="button"
+            className={`btn btn-primary btn-sm py-2 bg-gray-100 hover:bg-primaryLightColor/20 duration-200  border rounded-lg px-4 w-full ${selectedDeliveryLocation === "shop" && "bg-primaryLightColor/20"
+              }`}
             onClick={() => handleLocationClick("shop")}
           >
             Shop
@@ -272,55 +264,51 @@ const Address = () => {
               {/* Delivery Option 1: Inside Dhaka */}
               <div
                 className={`delivery-option rounded-lg hover:bg-primaryLightColor/25 cursor-pointer
-             mb-4 p-4  duration-200 border ${
-               selectedDeliveryOption === "insideDhaka"
-                 ? "bg-primaryLightColor/20"
-                 : ""
-             }`}
+             mb-4 p-4  duration-200 border ${selectedDeliveryOption === "insideDhaka"
+                    ? "bg-primaryLightColor/20"
+                    : ""
+                  }`}
                 onClick={() => handleOptionClick("insideDhaka")}
               >
                 <div className="flex items-center ">
                   <span
-                    className={`form-radio h-4 w-4 rounded-full ${
-                      selectedDeliveryOption === "insideDhaka"
-                        ? "  bg-primaryLightColor/75  ring-2 ring-white "
-                        : " ring-1 ring-gray-600 bg-gray-100 "
-                    } `}
+                    className={`form-radio h-4 w-4 rounded-full ${selectedDeliveryOption === "insideDhaka"
+                      ? "  bg-primaryLightColor/75  ring-2 ring-white "
+                      : " ring-1 ring-gray-600 bg-gray-100 "
+                      } `}
                     onChange={() => handleOptionClick("insideDhaka")}
                   />
                   <div className="flex flex-col mx-4">
                     <span className="">Inside Dhaka</span>
                     <span className="text-[12px] text-gray-700">
                       {" "}
-                      Delivery cost: ৳ 120.00
+                      Delivery cost: ৳ {settingData[0]?.delivery_amount_inside_dhaka}
                     </span>
                   </div>
                 </div>
               </div>
               {/* Delivery Option 2: Outside Dhaka */}
               <div
-                className={`delivery-option rounded-lg cursor-pointer hover:bg-primaryLightColor/25 duration-200 border mb-4 p-4 ${
-                  selectedDeliveryOption === "outsideDhaka"
-                    ? "bg-primaryLightColor/20"
-                    : ""
-                }`}
+                className={`delivery-option rounded-lg cursor-pointer hover:bg-primaryLightColor/25 duration-200 border mb-4 p-4 ${selectedDeliveryOption === "outsideDhaka"
+                  ? "bg-primaryLightColor/20"
+                  : ""
+                  }`}
                 onClick={() => handleOptionClick("outsideDhaka")}
               >
                 {" "}
                 <div className="flex items-center ">
                   <span
-                    className={`form-radio h-4 w-4 rounded-full ${
-                      selectedDeliveryOption === "outsideDhaka"
-                        ? "  bg-primaryLightColor/75  ring-2 ring-white "
-                        : " ring-1 ring-gray-600 bg-gray-100 "
-                    } `}
+                    className={`form-radio h-4 w-4 rounded-full ${selectedDeliveryOption === "outsideDhaka"
+                      ? "  bg-primaryLightColor/75  ring-2 ring-white "
+                      : " ring-1 ring-gray-600 bg-gray-100 "
+                      } `}
                     onChange={() => handleOptionClick("outsideDhaka")}
                   />
                   <div className="flex flex-col mx-4">
                     <span className="">Inside Dhaka</span>
                     <span className="text-[12px] text-gray-700">
                       {" "}
-                      Delivery cost: ৳ 120.00
+                      Delivery cost: ৳ {settingData[0]?.delivery_amount_outside_dhaka}
                     </span>
                   </div>
                 </div>
@@ -328,13 +316,7 @@ const Address = () => {
             </div>
           </>
         )}
-        {selectedDeliveryLocation == "shop" && (
-          <>
-            {/* Delivery Location Shop  here*/}
-            <p>Delivery Location shop here</p>
-          </>
-        )}
-      </div>
+      </form>
     </div>
   );
 };
