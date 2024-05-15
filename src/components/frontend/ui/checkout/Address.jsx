@@ -1,9 +1,8 @@
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
-import { AuthContext } from "../../../../context/AuthProvider";
 import { districts } from "../../../../data/districts";
 import { divisions } from "../../../../data/divisions";
 import { useUpdateUserMutation } from "../../../../redux/feature/auth/authApi";
@@ -11,20 +10,36 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 import Loader from "../../../../shared/loader/Loader";
+import { useDispatch } from "react-redux";
+import { setShippingCharge, setShippingType } from "../../../../redux/feature/cart/cartSlice";
 // import { setCookie } from "../../../utils/cookie-storage";
 // import { useSelector } from "react-redux";
 
-const Address = ({ settingData }) => {
-  const { user: userData } = useContext(AuthContext);
-  const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null);
-  const [selectedDeliveryLocation, setSelectedDeliveryLocation] =
-    useState("home");
+const Address = ({ settingData, selectedDeliveryLocation, setSelectedDeliveryLocation, deliveryType, userData }) => {
+  const dispatch = useDispatch();
 
-  const handleOptionClick = (option) => {
+  const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(deliveryType);
+
+  const handleOptionClick = (option, delivery_charge) => {
+    dispatch(setShippingCharge({
+      delivery_charge: delivery_charge
+    }))
+    dispatch(setShippingType({
+      deliveryType: option
+    }))
     setSelectedDeliveryOption(option);
   };
   const handleLocationClick = (option) => {
+    if (option === "shop") {
+      dispatch(setShippingCharge({
+        delivery_charge: 0
+      }))
+      dispatch(setShippingType({
+        deliveryType: ""
+      }))
+    }
     setSelectedDeliveryLocation(option);
+    setSelectedDeliveryOption(null);
   };
 
   const {
@@ -39,7 +54,6 @@ const Address = ({ settingData }) => {
       return data.data;
     },
   });
-  console.log(user);
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [districtsData, setDistrictsData] = useState([]);
@@ -268,7 +282,7 @@ const Address = ({ settingData }) => {
                     ? "bg-primaryLightColor/20"
                     : ""
                   }`}
-                onClick={() => handleOptionClick("insideDhaka")}
+                onClick={() => handleOptionClick("insideDhaka", settingData[0]?.delivery_amount_inside_dhaka)}
               >
                 <div className="flex items-center ">
                   <span
@@ -276,7 +290,7 @@ const Address = ({ settingData }) => {
                       ? "  bg-primaryLightColor/75  ring-2 ring-white "
                       : " ring-1 ring-gray-600 bg-gray-100 "
                       } `}
-                    onChange={() => handleOptionClick("insideDhaka")}
+                    onChange={() => handleOptionClick("insideDhaka", settingData[0]?.delivery_amount_inside_dhaka)}
                   />
                   <div className="flex flex-col mx-4">
                     <span className="">Inside Dhaka</span>
@@ -293,7 +307,7 @@ const Address = ({ settingData }) => {
                   ? "bg-primaryLightColor/20"
                   : ""
                   }`}
-                onClick={() => handleOptionClick("outsideDhaka")}
+                onClick={() => handleOptionClick("outsideDhaka", settingData[0]?.delivery_amount_outside_dhaka)}
               >
                 {" "}
                 <div className="flex items-center ">
@@ -302,10 +316,10 @@ const Address = ({ settingData }) => {
                       ? "  bg-primaryLightColor/75  ring-2 ring-white "
                       : " ring-1 ring-gray-600 bg-gray-100 "
                       } `}
-                    onChange={() => handleOptionClick("outsideDhaka")}
+                    onChange={() => handleOptionClick("outsideDhaka", settingData[0]?.delivery_amount_outside_dhaka)}
                   />
                   <div className="flex flex-col mx-4">
-                    <span className="">Inside Dhaka</span>
+                    <span className="">Out Side Dhaka</span>
                     <span className="text-[12px] text-gray-700">
                       {" "}
                       Delivery cost: ৳ {settingData[0]?.delivery_amount_outside_dhaka}
