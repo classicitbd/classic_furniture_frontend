@@ -20,6 +20,7 @@ const ForgetPassword = () => {
   const navigate = useNavigate();
 
   const handleForgetPassword = async (data) => {
+    console.log(data);
     try {
       setLoading(true);
       const res = await forgetPassword(data);
@@ -27,7 +28,7 @@ const ForgetPassword = () => {
         toast.success(res?.data?.message, {
           autoClose: 2000,
         });
-        setToLocalStorage("reset-phone", res?.data?.data?.phone);
+        setToLocalStorage("reset-phone", res?.data?.data?.user_phone);
         navigate("/reset-password");
         reset();
       } else if (res?.error?.status === 400) {
@@ -54,20 +55,22 @@ const ForgetPassword = () => {
           className="space-y-4"
         >
           <div className="form-control w-full max-w-xs">
-            <label htmlFor="phone" className="label">
+            <label htmlFor="user_phone" className="label">
               <span className="label-text">Phone Number</span>
             </label>
             <input
-              id="phone"
+              id="user_phone"
               type="text"
               maxLength={11}
               minLength={11}
               placeholder="Enter your phone number"
               className="border rounded px-3 p-2 w-full max-w-xs"
-              {...register("phone", { required: "Phone Number is required" })}
+              {...register("user_phone", {
+                required: "Phone Number is required",
+              })}
             />
             {errors.phone && (
-              <p className="text-red-600"> {errors.phone.message}</p>
+              <p className="text-red-600"> {errors.user_phone.message}</p>
             )}
           </div>
           <button
