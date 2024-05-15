@@ -52,15 +52,12 @@ export default function CartItems({ cart, subTotal, totalQuantity }) {
             <dir className="flex flex-col md:px-0 mr-3 ">
               <button
                 onClick={() => {
-                  window.confirm(
-                    "Are you sure you want to remove this item from cart?"
-                  ) &&
-                    dispatch(
-                      removeFromCart({
-                        productId: product?.productId,
-                        size: product?.size,
-                      })
-                    );
+                  dispatch(
+                    removeFromCart({
+                      productId: product?.productId,
+                      size: product?.size,
+                    })
+                  );
                 }}
                 className="flex gap-2 items-center justify-center bg-red-500 hover:bg-red-600 duration-200 text-white p-1 rounded my-4 text-[12px]"
               >
