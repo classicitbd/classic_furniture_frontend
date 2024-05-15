@@ -21,6 +21,7 @@ const NewPassword = () => {
     formState: { errors },
     reset,
   } = useForm();
+
   const navigate = useNavigate();
   const [setPassword, { isLoading }] = useSetPasswordMutation();
 
@@ -49,24 +50,25 @@ const NewPassword = () => {
   const handleSetPassword = async (data) => {
     try {
       setLoading(true);
-      const phone = getFromLocalStorage("reset-phone");
-      const otp = OTPinput.join(""); // Make sure OTPinput is an array
-      if (!otp) {
+      const user_phone = getFromLocalStorage("reset-phone");
+      const user_otp = OTPinput.join(""); // Make sure OTPinput is an array
+      if (!user_otp) {
         toast.warn("Must provide OTP!");
         return;
       }
 
-      const { password, confirm_password } = data;
-      if (password !== confirm_password) {
+      const { user_password, confirm_password } = data;
+      if (user_password !== confirm_password) {
         setError("Passwords do not match!");
         return;
       }
 
       delete data.confirm_password;
-      data.phone = phone;
-      data.otp = otp;
-
+      data.user_otp = user_otp;
+      data.user_phone = user_phone;
+      // console.log(data);
       const res = await setPassword(data);
+      console.log(res);
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         setToLocalStorage("reset-phone", "");
@@ -108,15 +110,15 @@ const NewPassword = () => {
             ))}
           </div>
           <div className="form-control w-full">
-            <label htmlFor="password" className="label">
+            <label htmlFor="user_password" className="label">
               <span className="label-text">New Password</span>
             </label>
             <input
-              id="password"
+              id="user_password"
               type={`${isChecked ? "text" : "password"}`}
               placeholder="* * * * *"
               className="border rounded px-3 p-2 w-full"
-              {...register("password", {
+              {...register("user_password", {
                 required: "Password is required",
                 minLength: {
                   value: 6,
@@ -124,8 +126,8 @@ const NewPassword = () => {
                 },
               })}
             />
-            {errors.password && (
-              <p className="text-red-600"> {errors.password.message}</p>
+            {errors.user_password && (
+              <p className="text-red-600"> {errors.user_password.message}</p>
             )}
           </div>
           <div className="form-control w-full">

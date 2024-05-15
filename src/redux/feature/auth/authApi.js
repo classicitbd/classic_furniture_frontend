@@ -86,7 +86,7 @@ export const authApi = api.injectEndpoints({
       invalidatesTags: [tagTypes.user],
     }),
 
-    //get refeshToken
+    //order reg
     orderRegUser: build.mutation({
       query: (data) => ({
         url: `${AUTH_URL}/orderRegUser`,
