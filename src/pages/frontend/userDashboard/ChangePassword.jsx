@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useChangePasswordMutation } from "../../../redux/feature/auth/authApi";
 import { toast } from "react-toastify";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
+import { Link } from "react-router-dom";
 
 const ChangePassword = ({ user, setActive }) => {
   const [loading, setLoading] = useState(false);
@@ -83,7 +84,13 @@ const ChangePassword = ({ user, setActive }) => {
             <p className="text-error-300">{errors?.new_password?.message}</p>
           )}
         </div>
-        <div className="flex justify-end mt-5 gap-3">
+        <div className="flex  justify-end mt-5 flex-wrap gap-3">
+          <Link
+            to={"/forget-password"}
+            className="text-primaryColor underline pt-2 cursor-pointer"
+          >
+            Forget Password
+          </Link>
           <button
             type="submit"
             className="flex justify-end gap-1 text-[#fff] mb-5 bg-success-200 hover:bg-success-300 px-5 py-2 rounded-sm"
