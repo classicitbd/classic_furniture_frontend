@@ -6,17 +6,19 @@ import CartItems from "./CartItems";
 import Payment from "./Payment";
 import Address from "./Address";
 import RightSideAmount from "./RightSideAmount";
-// import Loader from "../../../../shared/loader/Loader";
+import Loader from "../../../../shared/loader/Loader";
+import { BASE_URL } from "../../../../utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Checkout() {
-  // const { data: product = [], isLoading } = useQuery({
-  //   queryKey: [`/api/v1/product/${slug}`],
-  //   queryFn: async () => {
-  //     const res = await fetch(`${BASE_URL}/product/${slug}`);
-  //     const data = await res.json();
-  //     return data;
-  //   },
-  // });
+  const { data: settingData = [], isLoading } = useQuery({
+    queryKey: [`/api/v1/siteSetting`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`);
+      const data = await res.json();
+      return data?.data;
+    },
+  });
 
   const cart = useSelector((state) => state.furnitureCart.products);
   const subTotal = useSelector((state) => state.furnitureCart.subtotal);
@@ -38,9 +40,9 @@ export default function Checkout() {
     }
   };
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="es_container">
@@ -131,6 +133,7 @@ export default function Checkout() {
               totalQuantity={totalQuantity}
               handleContinue={handleContinue}
               handleBack={handleBack}
+              settingData={settingData}
             />
           </div>
         </div>

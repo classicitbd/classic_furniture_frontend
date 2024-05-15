@@ -2,7 +2,9 @@ export default function RightSideAmount({
   subTotal,
   handleBack,
   handleContinue,
+  settingData
 }) {
+  console.log(settingData)
   return (
     <div className="w-full md:w-[32%] pt-16  ">
       <div className=" rounded-lg border shadow bg-white p-4">
@@ -14,7 +16,7 @@ export default function RightSideAmount({
           <div className="flex justify-between py-2 items-center">
             {" "}
             <p>Delivery fee</p>
-            <p>৳ 100</p>
+            <p>৳ 0</p>
           </div>
           <hr />
           <div className="flex justify-between py-2 items-center">
@@ -25,8 +27,12 @@ export default function RightSideAmount({
 
           <hr />
           <div className="py-3 text-gray-500  flex justify-between items-center">
-            <p className="text-[12px]">Average delivery time: ---</p>
-            <p>3 days</p>
+            <p className="text-[12px]">Delivery Time Inside Dhaka: ---</p>
+            <p>{settingData[0]?.delivery_time_inside_dhaka} Days</p>
+          </div>
+          <div className="py-1 text-gray-500  flex justify-between items-center">
+            <p className="text-[12px]">Delivery Time Outside Dhaka: ---</p>
+            <p>{settingData[0]?.delivery_time_outside_dhaka} Days</p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">

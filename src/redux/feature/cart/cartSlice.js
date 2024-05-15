@@ -4,6 +4,8 @@ const initialState = {
   products: [],
   subtotal: 0,
   quantity: 0,
+  deliveryCharge: 0,
+  deliveryType: "",
 };
 
 const cartSlice = createSlice({
@@ -98,21 +100,11 @@ const cartSlice = createSlice({
     },
 
     setShippingCharge: (state, action) => {
-      state.shippingType = action.payload;
-      const deliveryCharge = calculateDeliveryCharge(
-        state.subtotal,
-        state.shippingType
-      );
-      state.shippingCharge = deliveryCharge;
+      state.deliveryCharge = action.payload?.deliveryCharge;
     },
 
     setShippingType: (state, action) => {
-      state.shippingType = action.payload;
-      const deliveryCharge = calculateDeliveryCharge(
-        state.shippingType,
-        state.quantity
-      );
-      state.shippingCharge = deliveryCharge;
+      state.deliveryType = action.payload?.deliveryType;
     },
   },
 });
@@ -121,21 +113,6 @@ const calculateSubtotal = (products) => {
   return products.reduce((total, product) => {
     return total + product.price * product.quantity;
   }, 0);
-};
-
-const calculateDeliveryCharge = (shippingType, quantity) => {
-  const insideDhakaCharge = 100;
-  const additionalChargePerQuantity = 50; // Adjust the value as needed
-  const outsideDhakaCharge = 160;
-
-  if (shippingType === "Dhaka") {
-    return (
-      insideDhakaCharge +
-      (quantity > 1 ? (quantity - 1) * additionalChargePerQuantity : 0)
-    );
-  } else {
-    return outsideDhakaCharge;
-  }
 };
 
 const calculateTotalQuantity = (products) => {
