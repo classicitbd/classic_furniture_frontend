@@ -24,7 +24,7 @@ const UserDashboard = () => {
     },
   });
 
-  const [active, setActive] = useState("order");
+  const [active, setActive] = useState("profile");
   const navigate = useNavigate();
 
   // useEffect(() => {
