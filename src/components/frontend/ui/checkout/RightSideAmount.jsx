@@ -4,7 +4,6 @@ export default function RightSideAmount({
   handleContinue,
   settingData
 }) {
-  console.log(settingData)
   return (
     <div className="w-full md:w-[32%] pt-16  ">
       <div className=" rounded-lg border shadow bg-white p-4">
