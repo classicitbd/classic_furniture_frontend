@@ -78,7 +78,9 @@ export default function AllProducts() {
     refetchOnMountOrArgChange: true,
     pollingInterval: 60000,
   });
-
+  const { data: categories } = useGetCategoryQuery(undefined);
+  const { data: colors } = useGetColorQuery(undefined);
+  console.log(categories, colors);
   //   const handleAddToCart = () => {
   //     setCartQuantity((prevQuantity) => prevQuantity + 1);
   //   };
