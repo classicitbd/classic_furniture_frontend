@@ -32,6 +32,7 @@ const Footer = () => {
       return data;
     },
   });
+  console.log(footerData);
   const handleEmailClick = () => {
     window.location.href = `mailto:masudranainfo99@gmail.com`;
   };
@@ -58,20 +59,22 @@ const Footer = () => {
             {/* <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
               <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
             </li> */}
-            {helpfulLinks?.map((item, index) => (
-              <li
-                key={index}
-                className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1"
+
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.location}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex flex-col text-[15px] hover:decoration-primaryColor"
               >
-                <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-                <Link
-                  to={item?.path}
-                  className="flex flex-col text-[15px] hover:decoration-primaryColor"
-                >
-                  {item?.label}
-                </Link>
-              </li>
-            ))}
+                Store Location
+              </Link>
+            </li>
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link to="/about-us">About Us</Link>
+            </li>
           </ul>
 
           {/* company */}
@@ -125,6 +128,64 @@ const Footer = () => {
             ))}
           </ul> */}
 
+          <div className=" ">
+            <h2
+              className="mb-3 lg:mb-6 text-secondary uppercase"
+              style={{ fontSize: "20px" }}
+            >
+              Contact Details
+            </h2>
+            <ul className="flex flex-col gap-y-1 list-none mt-5">
+              <li className="flex items-center gap-3 mb-2">
+                <span>
+                  <BiSolidMap className="text-xl text-secondary" />
+                </span>
+                <span className="text-[14px] leading-4 font-[300]">
+                  <strong>Address: </strong>
+                  <span>{footerData?.data[0]?.address}</span>
+                </span>
+              </li>
+              <li className="flex items-center gap-3 mb-2">
+                <span>
+                  <TfiHeadphoneAlt className="text-xl text-secondary" />
+                </span>
+                <h3 className="text-[14px] leading-4 font-[300]">
+                  <strong>Call Us: </strong>
+                  <span>{footerData?.data[0]?.emergency_contact}</span>
+                </h3>
+              </li>
+              <li className="flex items-center gap-3 mb-2">
+                <span>
+                  <SiMinutemailer className="text-xl text-secondary" />
+                </span>
+                <h3
+                  onClick={handleEmailClick}
+                  className="text-[14px] leading-4 font-[300]"
+                >
+                  <strong>Email: </strong>
+                  <span>{footerData?.data[0]?.email}</span>
+                </h3>
+              </li>
+              <li className="flex items-center gap-3">
+                <span>
+                  <TbClockPause className="text-xl text-secondary" />
+                </span>
+                <h3 className="text-[14px] leading-4 font-[300]">
+                  <strong>Hours: </strong>
+                  <span>{footerData?.data[0]?.start_close}</span>
+                </h3>
+              </li>
+              <li className="flex items-center gap-3 mt-1">
+                <span>
+                  <FaUmbraco className="text-xl text-secondary" />
+                </span>
+                <h3 className="text-[14px] leading-4 font-[300]">
+                  <strong>TIN: </strong>
+                  <span className="ml-1">{footerData?.data[0]?.tin}</span>
+                </h3>
+              </li>
+            </ul>
+          </div>
           {/* ------ social media link ------ start */}
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px]">
@@ -182,64 +243,7 @@ const Footer = () => {
           {/* ------ social media link ------ end */}
 
           {/* payment gateway */}
-          <div className=" pr-10">
-            <h2
-              className="mb-3 lg:mb-6 text-secondary uppercase"
-              style={{ fontSize: "20px" }}
-            >
-              Contact Details
-            </h2>
-            <ul className="flex flex-col gap-y-1 list-none mt-5">
-              <li className="flex items-center gap-3 mb-2">
-                <span>
-                  <BiSolidMap className="text-xl text-secondary" />
-                </span>
-                <span className="text-[14px] leading-4 font-[300]">
-                  <strong>Address:</strong>
-                  <span>{footerData?.data[0]?.address}</span>
-                </span>
-              </li>
-              <li className="flex items-center gap-3 mb-2">
-                <span>
-                  <TfiHeadphoneAlt className="text-xl text-secondary" />
-                </span>
-                <h3 className="text-[14px] leading-4 font-[300]">
-                  <strong>Call Us: </strong>
-                  <span>{footerData?.data[0]?.emergency_contact}</span>
-                </h3>
-              </li>
-              <li className="flex items-center gap-3 mb-2">
-                <span>
-                  <SiMinutemailer className="text-xl text-secondary" />
-                </span>
-                <h3
-                  onClick={handleEmailClick}
-                  className="text-[14px] leading-4 font-[300]"
-                >
-                  <strong>Email: </strong>
-                  <span>{footerData?.data[0]?.email}</span>
-                </h3>
-              </li>
-              <li className="flex items-center gap-3">
-                <span>
-                  <TbClockPause className="text-xl text-secondary" />
-                </span>
-                <h3 className="text-[14px] leading-4 font-[300]">
-                  <strong>Hours:</strong>
-                  <span>{footerData?.data[0]?.hours}</span>
-                </h3>
-              </li>
-              <li className="flex items-center gap-3 mt-1">
-                <span>
-                  <FaUmbraco className="text-xl text-secondary" />
-                </span>
-                <h3 className="text-[14px] leading-4 font-[300]">
-                  <strong>TIN:</strong>
-                  <span className="ml-1">{footerData?.data[0]?.tin}</span>
-                </h3>
-              </li>
-            </ul>
-          </div>
+
           <div className=" xl:col-span-2 lg:-col-span-1 md:col-span-4 sm:col-span-2 col-span-1 pt-6 ">
             <img
               className="sm:h-[220px] lg:h-[260px] xl:h-auto w-full"
