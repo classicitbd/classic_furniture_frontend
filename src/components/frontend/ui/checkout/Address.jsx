@@ -11,8 +11,9 @@ import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 import Loader from "../../../../shared/loader/Loader";
 import { useDispatch } from "react-redux";
 import {
-  setShippingCharge,
-  setShippingType,
+  // setShippingCharge,
+  // setShippingTime,
+  setShippingType
 } from "../../../../redux/feature/cart/cartSlice";
 // import { setCookie } from "../../../utils/cookie-storage";
 // import { useSelector } from "react-redux";
@@ -26,37 +27,53 @@ const Address = ({
 }) => {
   const dispatch = useDispatch();
 
-  const [selectedDeliveryOption, setSelectedDeliveryOption] =
-    useState(deliveryType);
+  // const [selectedDeliveryOption, setSelectedDeliveryOption] =
+  //   useState(deliveryType);
 
-  const handleOptionClick = (option, delivery_charge) => {
-    dispatch(
-      setShippingCharge({
-        delivery_charge: delivery_charge,
-      })
-    );
+  // const handleOptionClick = (option, delivery_charge, delivery_time) => {
+  // dispatch(
+  //   setShippingCharge({
+  //     delivery_charge: delivery_charge,
+  //   })
+  // );
+  // dispatch(
+  //   setShippingType({
+  //     deliveryType: option,
+  //   })
+  // );
+  // dispatch(
+  //   setShippingTime({
+  //     delivery_time: delivery_time,
+  //   })
+  // );
+  // setSelectedDeliveryOption(option);
+  // };
+
+  const handleLocationClick = (option) => {
+    // if (option === "shop") {
+    //   dispatch(
+    //     setShippingCharge({
+    //       delivery_charge: 0,
+    //     })
+    //   );
+    //   dispatch(
+    //     setShippingType({
+    //       deliveryType: "",
+    //     })
+    //   );
+    //   dispatch(
+    //     setShippingTime({
+    //       delivery_time: "",
+    //     })
+    //   );
+    // }
     dispatch(
       setShippingType({
         deliveryType: option,
       })
     );
-    setSelectedDeliveryOption(option);
-  };
-  const handleLocationClick = (option) => {
-    if (option === "shop") {
-      dispatch(
-        setShippingCharge({
-          delivery_charge: 0,
-        })
-      );
-      dispatch(
-        setShippingType({
-          deliveryType: "",
-        })
-      );
-    }
     setSelectedDeliveryLocation(option);
-    setSelectedDeliveryOption(null);
+    // setSelectedDeliveryOption(null);
   };
 
   const {
@@ -272,106 +289,107 @@ const Address = ({
         <div className="w-1/2 mx-auto flex justify-between gap-4 items-center">
           <button
             type="button"
-            className={`btn btn-primary btn-sm py-2 bg-gray-100 hover:bg-primaryLightColor/20 duration-200  border rounded-lg px-4 w-full ${
-              selectedDeliveryLocation === "home" && "bg-primaryLightColor/20"
-            }`}
+            className={`btn btn-primary btn-sm py-2 bg-gray-100 hover:bg-primaryLightColor/20 duration-200  border rounded-lg px-4 w-full ${selectedDeliveryLocation === "home" && "bg-primaryLightColor/20"
+              }`}
             onClick={() => handleLocationClick("home")}
           >
             Home
           </button>
           <button
             type="button"
-            className={`btn btn-primary btn-sm py-2 bg-gray-100 hover:bg-primaryLightColor/20 duration-200  border rounded-lg px-4 w-full ${
-              selectedDeliveryLocation === "shop" && "bg-primaryLightColor/20"
-            }`}
+            className={`btn btn-primary btn-sm py-2 bg-gray-100 hover:bg-primaryLightColor/20 duration-200  border rounded-lg px-4 w-full ${selectedDeliveryLocation === "shop" && "bg-primaryLightColor/20"
+              }`}
             onClick={() => handleLocationClick("shop")}
           >
             Shop
           </button>
         </div>
         {selectedDeliveryLocation === "home" && (
+          // <>
+          //   {/* Delivery Option 1: Inside Dhaka */}
+          //   <div className="flex flex-col mt-8">
+          //     {/* Delivery Option 1: Inside Dhaka */}
+          //     <div
+          //       className={`delivery-option rounded-lg hover:bg-primaryLightColor/25 cursor-pointer
+          //    mb-4 p-4  duration-200 border ${selectedDeliveryOption === "In_Side_Dhaka"
+          //           ? "bg-primaryLightColor/20"
+          //           : ""
+          //         }`}
+          //       onClick={() =>
+          //         handleOptionClick(
+          //           "In_Side_Dhaka",
+          //           settingData[0]?.delivery_amount_inside_dhaka,
+          //           settingData[0]?.delivery_time_inside_dhaka
+          //         )
+          //       }
+          //     >
+          //       <div className="flex items-center ">
+          //         <span
+          //           className={`form-radio h-4 w-4 rounded-full ${selectedDeliveryOption === "In_Side_Dhaka"
+          //               ? "  bg-primaryLightColor/75  ring-2 ring-white "
+          //               : " ring-1 ring-gray-600 bg-gray-100 "
+          //             } `}
+          //           onChange={() =>
+          //             handleOptionClick(
+          //               "In_Side_Dhaka",
+          //               settingData[0]?.delivery_amount_inside_dhaka,
+          //               settingData[0]?.delivery_time_inside_dhaka
+          //             )
+          //           }
+          //         />
+          //         <div className="flex flex-col mx-4">
+          //           <span className="">Inside Dhaka</span>
+          //           <span className="text-[12px] text-gray-700">
+          //             {" "}
+          //             Delivery cost: ৳{" "}
+          //             {settingData[0]?.delivery_amount_inside_dhaka}
+          //           </span>
+          //         </div>
+          //       </div>
+          //     </div>
+          //     {/* Delivery Option 2: Outside Dhaka */}
+          //     <div
+          //       className={`delivery-option rounded-lg cursor-pointer hover:bg-primaryLightColor/25 duration-200 border mb-4 p-4 ${selectedDeliveryOption === "Out_Side_Dhaka"
+          //           ? "bg-primaryLightColor/20"
+          //           : ""
+          //         }`}
+          //       onClick={() =>
+          //         handleOptionClick(
+          //           "Out_Side_Dhaka",
+          //           settingData[0]?.delivery_amount_outside_dhaka,
+          //           settingData[0]?.delivery_time_outside_dhaka
+          //         )
+          //       }
+          //     >
+          //       {" "}
+          //       <div className="flex items-center ">
+          //         <span
+          //           className={`form-radio h-4 w-4 rounded-full ${selectedDeliveryOption === "Out_Side_Dhaka"
+          //               ? "  bg-primaryLightColor/75  ring-2 ring-white "
+          //               : " ring-1 ring-gray-600 bg-gray-100 "
+          //             } `}
+          //           onChange={() =>
+          //             handleOptionClick(
+          //               "Out_Side_Dhaka",
+          //               settingData[0]?.delivery_amount_outside_dhaka,
+          //               settingData[0]?.delivery_time_outside_dhaka
+          //             )
+          //           }
+          //         />
+          //         <div className="flex flex-col mx-4">
+          //           <span className="">Out Side Dhaka</span>
+          //           <span className="text-[12px] text-gray-700">
+          //             {" "}
+          //             Delivery cost: ৳{" "}
+          //             {settingData[0]?.delivery_amount_outside_dhaka}
+          //           </span>
+          //         </div>
+          //       </div>
+          //     </div>
+          //   </div>
+          // </>
           <>
-            {/* Delivery Option 1: Inside Dhaka */}
-            <div className="flex flex-col mt-8">
-              {/* Delivery Option 1: Inside Dhaka */}
-              <div
-                className={`delivery-option rounded-lg hover:bg-primaryLightColor/25 cursor-pointer
-             mb-4 p-4  duration-200 border ${
-               selectedDeliveryOption === "insideDhaka"
-                 ? "bg-primaryLightColor/20"
-                 : ""
-             }`}
-                onClick={() =>
-                  handleOptionClick(
-                    "insideDhaka",
-                    settingData[0]?.delivery_amount_inside_dhaka
-                  )
-                }
-              >
-                <div className="flex items-center ">
-                  <span
-                    className={`form-radio h-4 w-4 rounded-full ${
-                      selectedDeliveryOption === "insideDhaka"
-                        ? "  bg-primaryLightColor/75  ring-2 ring-white "
-                        : " ring-1 ring-gray-600 bg-gray-100 "
-                    } `}
-                    onChange={() =>
-                      handleOptionClick(
-                        "insideDhaka",
-                        settingData[0]?.delivery_amount_inside_dhaka
-                      )
-                    }
-                  />
-                  <div className="flex flex-col mx-4">
-                    <span className="">Inside Dhaka</span>
-                    <span className="text-[12px] text-gray-700">
-                      {" "}
-                      Delivery cost: ৳{" "}
-                      {settingData[0]?.delivery_amount_inside_dhaka}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              {/* Delivery Option 2: Outside Dhaka */}
-              <div
-                className={`delivery-option rounded-lg cursor-pointer hover:bg-primaryLightColor/25 duration-200 border mb-4 p-4 ${
-                  selectedDeliveryOption === "outsideDhaka"
-                    ? "bg-primaryLightColor/20"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleOptionClick(
-                    "outsideDhaka",
-                    settingData[0]?.delivery_amount_outside_dhaka
-                  )
-                }
-              >
-                {" "}
-                <div className="flex items-center ">
-                  <span
-                    className={`form-radio h-4 w-4 rounded-full ${
-                      selectedDeliveryOption === "outsideDhaka"
-                        ? "  bg-primaryLightColor/75  ring-2 ring-white "
-                        : " ring-1 ring-gray-600 bg-gray-100 "
-                    } `}
-                    onChange={() =>
-                      handleOptionClick(
-                        "outsideDhaka",
-                        settingData[0]?.delivery_amount_outside_dhaka
-                      )
-                    }
-                  />
-                  <div className="flex flex-col mx-4">
-                    <span className="">Out Side Dhaka</span>
-                    <span className="text-[12px] text-gray-700">
-                      {" "}
-                      Delivery cost: ৳{" "}
-                      {settingData[0]?.delivery_amount_outside_dhaka}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div className="text-gray-400" dangerouslySetInnerHTML={{ __html: settingData[0]?.delivery_condition }}></div>
           </>
         )}
       </form>

@@ -7,7 +7,7 @@ const StoreDetails = ({ refetch, initialData }) => {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm(); //get data in form
 
   const [postSiteSettng] = useAddSiteSettingMutation();
@@ -21,12 +21,12 @@ const StoreDetails = ({ refetch, initialData }) => {
       delivery_time_outside_dhaka:
         data?.delivery_time_outside_dhaka ||
         initialData?.delivery_time_outside_dhaka,
-      delivery_amount_inside_dhaka:
-        data?.delivery_amount_inside_dhaka ||
-        initialData?.delivery_amount_inside_dhaka,
-      delivery_amount_outside_dhaka:
-        data?.delivery_amount_outside_dhaka ||
-        initialData?.delivery_amount_outside_dhaka,
+      // delivery_amount_inside_dhaka:
+      //   data?.delivery_amount_inside_dhaka ||
+      //   initialData?.delivery_amount_inside_dhaka,
+      // delivery_amount_outside_dhaka:
+      //   data?.delivery_amount_outside_dhaka ||
+      //   initialData?.delivery_amount_outside_dhaka,
       facebook: data?.facebook || initialData?.facebook,
       instagram: data?.instagram || initialData?.instagram,
       you_tube: data?.you_tube || initialData?.you_tube,
@@ -89,7 +89,7 @@ const StoreDetails = ({ refetch, initialData }) => {
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
-          <div>
+          {/* <div>
             <label
               className="font-semibold"
               htmlFor="delivery_amount_inside_dhaka"
@@ -110,8 +110,8 @@ const StoreDetails = ({ refetch, initialData }) => {
                 {errors.delivery_amount_inside_dhaka?.message}
               </p>
             )}
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <label
               className="font-semibold"
               htmlFor="delivery_amount_outside_dhaka"
@@ -132,7 +132,7 @@ const StoreDetails = ({ refetch, initialData }) => {
                 {errors.delivery_amount_outside_dhaka?.message}
               </p>
             )}
-          </div>
+          </div> */}
           <div>
             <label className="font-semibold" htmlFor="location">
               Store Loaction<span className="text-red-500"> if need</span>{" "}

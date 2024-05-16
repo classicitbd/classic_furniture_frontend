@@ -14,8 +14,6 @@ import { Link } from "react-router-dom";
 
 export default function Checkout() {
   const { user: userData } = useContext(AuthContext);
-  const [selectedDeliveryLocation, setSelectedDeliveryLocation] =
-    useState("home");
 
   const { data: settingData = [], isLoading } = useQuery({
     queryKey: [`/api/v1/siteSetting`],
@@ -34,6 +32,9 @@ export default function Checkout() {
   );
   const deliveryType = useSelector((state) => state.furnitureCart.deliveryType);
   const [activeStep, setActiveStep] = useState(1);
+
+  const [selectedDeliveryLocation, setSelectedDeliveryLocation] =
+  useState(deliveryType);
 
   const handleStepClick = (step) => {
     setActiveStep(step);
@@ -153,7 +154,7 @@ export default function Checkout() {
                     />
                   )}
                   {/* Left side step 3 */}
-                  {activeStep === 3 && <Payment />}
+                  {activeStep === 3 && <Payment userData={userData} />}
                 </div>
 
                 {/* Right side  */}
