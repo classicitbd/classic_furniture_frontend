@@ -11,7 +11,7 @@ import { TbClockPause } from "react-icons/tb";
 import { FaUmbraco } from "react-icons/fa";
 
 const quickLinks = [
-  { path: "/about-us", label: "Our Story" },
+  // { path: "/about-us", label: "Our Story" },
   { path: "/refund-policy", label: "Refund Policy" },
   { path: "/cancellation-policy", label: "Cancellation Policy" },
   { path: "/term-&-condition", label: "Terms & Condition" },
@@ -20,15 +20,14 @@ const quickLinks = [
 ];
 
 const helpfulLinks = [
-  { path: "/contact", label: "Contact Us" },
-  { path: "/shipping-info", label: "Shipping Info" },
-  { path: "/return-policy", label: "Return & Exchange" },
-  { path: "/materials-care", label: "Materials & Care" },
+  { path: "/store-locator", label: "Store Locator" },
+  { path: "/about-us", label: "About Us" },
 ];
 
 const Footer = () => {
   const { data: footerData = [], isLoading } = useQuery({
     queryKey: ["siteSetting"],
+
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/siteSetting`);
       const data = res.json();
@@ -44,7 +43,7 @@ const Footer = () => {
   }
 
   return (
-    <section className="bg-primaryColor text-textColor border-t-[2px] border-secondary ">
+    <section className="bg-primaryDeepColor text-textColor border-t-[2px] border-secondary ">
       <div className=" es_container mx-auto md:px-20 xl:px-0 px-5 pt-10">
         {/* footer top */}
         <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 xl:grid-cols-6">
@@ -58,16 +57,9 @@ const Footer = () => {
                 Need Help
               </h2>
             </li>
-            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+            {/* <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
               <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-              <Link
-                to={footerData?.data[0]?.location}
-                target="_blank"
-                className="flex flex-col text-[15px] hover:decoration-primaryColor"
-              >
-                Store Locator
-              </Link>
-            </li>
+            </li> */}
             {helpfulLinks?.map((item, index) => (
               <li
                 key={index}
@@ -110,7 +102,7 @@ const Footer = () => {
             ))}
           </ul>
           {/* Goal */}
-          <ul className="list-none ml-0 mb-0">
+          {/* <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px] font-[500]">
               <h2
                 className="mb-3 lg:mb-6 text-secondary uppercase"
@@ -133,7 +125,7 @@ const Footer = () => {
                 </Link>
               </li>
             ))}
-          </ul>
+          </ul> */}
 
           {/* ------ social media link ------ start */}
           <ul className="list-none ml-0 mb-0">
@@ -166,11 +158,21 @@ const Footer = () => {
                 Instagram
               </Link>
             </li>
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.watsapp}`}
+                target="_blank"
+                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
+              >
+                WhatsApp
+              </Link>
+            </li>
 
             <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
               <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
               <Link
-                to={`${footerData?.data[0]?.youTube}`}
+                to={`${footerData?.data[0]?.you_tube}`}
                 target="_blank"
                 className="flex flex-col  text-[15px] hover:decoration-primaryColor"
               >
@@ -182,7 +184,7 @@ const Footer = () => {
           {/* ------ social media link ------ end */}
 
           {/* payment gateway */}
-          <div className="lg:col-span-2 pr-10">
+          <div className=" pr-10">
             <h2
               className="mb-3 lg:mb-6 text-secondary uppercase"
               style={{ fontSize: "20px" }}
@@ -194,10 +196,10 @@ const Footer = () => {
                 <span>
                   <BiSolidMap className="text-xl text-secondary" />
                 </span>
-                <address className="text-[14px] leading-4 font-[300]">
+                <span className="text-[14px] leading-4 font-[300]">
                   <strong>Address:</strong>
                   <span>{footerData?.data[0]?.address}</span>
-                </address>
+                </span>
               </li>
               <li className="flex items-center gap-3 mb-2">
                 <span>
@@ -226,7 +228,7 @@ const Footer = () => {
                 </span>
                 <h3 className="text-[14px] leading-4 font-[300]">
                   <strong>Hours:</strong>
-                  <span>{footerData?.data[0]?.hours}</span>
+                  <span>{footerData?.data[0]?.start_close}</span>
                 </h3>
               </li>
               <li className="flex items-center gap-3 mt-1">
@@ -239,10 +241,22 @@ const Footer = () => {
                 </h3>
               </li>
             </ul>
-
+          </div>
+          <div className=" col-span-2 ">
+            <img
+              className=" h-[80px] md:h-[220px] w-full"
+              src="https://traack.com.bd/assets/SSLCommerz-Pay-With-logo-All-Size-05-IaTT5Yxn.png"
+              alt=""
+            />
           </div>
         </div>
-        <div className="es_container mx-auto md:px-20 xl:px-0 px-5 w-full"><img className=" h-[80px] md:h-[220px]" src={sslcommerceLogo} alt="" /></div>
+        {/* <div className="es_container mx-auto md:px-20 xl:px-0 px-5 w-full">
+          <img
+            className=" h-[80px] md:h-[220px]"
+            src={sslcommerceLogo}
+            alt=""
+          />
+        </div> */}
 
         {/* footer bottom */}
         <div className="border-t mt-5 border-bgray-400 flex flex-col md:flex-row justify-center items-center pt-5 md:pb-16 lg:pb-5 gap-3 es_container mx-auto md:px-20 xl:px-0 px-5">
