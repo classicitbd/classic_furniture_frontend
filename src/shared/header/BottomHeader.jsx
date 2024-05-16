@@ -54,7 +54,7 @@ export default function BottomHeader2() {
                 className=" rounded-full hidden lg:block "
               >
                 <div className="relative">
-                  <NavLink to={"/category"} className="text-[15px]">
+                  <NavLink to={"/all"} className="text-[15px]">
                     Categories
                   </NavLink>
                   {/* ------ category section top header ------ start */}

@@ -14,7 +14,6 @@ import Slider from "../pages/dashboard/slider/Slider";
 import ProductList from "../pages/dashboard/product/productList/ProductList";
 import ProductCreate from "../pages/dashboard/product/productCreate/ProductCreate";
 import Customer from "../pages/dashboard/customer/Customer";
-import CategoryProducts from "../pages/frontend/categoryProduct/CategoryProducts";
 import Order from "../pages/dashboard/order/Order";
 import CheckoutPage from "../pages/frontend/checkout/CheckoutPage";
 import NotFound from "../shared/notFound/NotFound";
@@ -51,10 +50,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      {
-        path: "/category",
-        element: <CategoryProducts />,
-      },
+      // {
+      //   path: "/category",
+      //   element: <CategoryProducts />,
+      // },
       {
         path: "/all",
         element: <AllProducts />,
