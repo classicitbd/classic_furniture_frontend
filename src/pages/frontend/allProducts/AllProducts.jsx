@@ -135,7 +135,7 @@ export default function AllProducts() {
                     {colors?.data?.map((color) => (
                       <li key={color?.color_name}>
                         <Link
-                          to={`/all?category=${color?.color_slug}`}
+                          to={`/all?color=${color?.color_slug}`}
                           className="hover:text-primaryLightColor duration-200"
                         >
                           {color?.color_name}
