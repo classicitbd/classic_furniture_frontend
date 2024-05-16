@@ -4,7 +4,7 @@ const initialState = {
   products: [],
   subtotal: 0,
   quantity: 0,
-  deliveryCharge: 0,
+  delivery_charge: 0,
   deliveryType: "",
 };
 
@@ -100,7 +100,7 @@ const cartSlice = createSlice({
     },
 
     setShippingCharge: (state, action) => {
-      state.deliveryCharge = action.payload?.deliveryCharge;
+      state.delivery_charge = action.payload?.delivery_charge;
     },
 
     setShippingType: (state, action) => {

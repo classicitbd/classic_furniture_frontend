@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { BsCart } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { CiCreditCard1, CiLocationOn } from "react-icons/ci";
@@ -9,8 +9,13 @@ import RightSideAmount from "./RightSideAmount";
 import Loader from "../../../../shared/loader/Loader";
 import { BASE_URL } from "../../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../../../context/AuthProvider";
 
 export default function Checkout() {
+  const { user: userData } = useContext(AuthContext);
+  const [selectedDeliveryLocation, setSelectedDeliveryLocation] =
+    useState("home");
+
   const { data: settingData = [], isLoading } = useQuery({
     queryKey: [`/api/v1/siteSetting`],
     queryFn: async () => {
@@ -23,6 +28,8 @@ export default function Checkout() {
   const cart = useSelector((state) => state.furnitureCart.products);
   const subTotal = useSelector((state) => state.furnitureCart.subtotal);
   const totalQuantity = useSelector((state) => state.furnitureCart.quantity);
+  const delivery_charge = useSelector((state) => state.furnitureCart.delivery_charge);
+  const deliveryType = useSelector((state) => state.furnitureCart.deliveryType);
   const [activeStep, setActiveStep] = useState(1);
 
   const handleStepClick = (step) => {
@@ -123,7 +130,7 @@ export default function Checkout() {
               )}
               {/* Left side step 2 */}
 
-              {activeStep === 2 && <Address settingData={settingData} />}
+              {activeStep === 2 && <Address setSelectedDeliveryLocation={setSelectedDeliveryLocation} selectedDeliveryLocation={selectedDeliveryLocation} settingData={settingData} deliveryType={deliveryType} userData={userData} />}
               {/* Left side step 3 */}
               {activeStep === 3 && <Payment />}
             </div>
@@ -134,8 +141,12 @@ export default function Checkout() {
               subTotal={subTotal}
               totalQuantity={totalQuantity}
               handleContinue={handleContinue}
+              activeStep={activeStep}
               handleBack={handleBack}
               settingData={settingData}
+              delivery_charge={delivery_charge}
+              deliveryType={deliveryType}
+              selectedDeliveryLocation={selectedDeliveryLocation}
             />
           </div>
         </div>

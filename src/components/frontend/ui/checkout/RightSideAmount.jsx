@@ -1,9 +1,23 @@
+import { toast } from "react-toastify";
+
 export default function RightSideAmount({
   subTotal,
   handleBack,
   handleContinue,
-  settingData
+  settingData,
+  delivery_charge,
+  activeStep,
+  deliveryType,
+  selectedDeliveryLocation
 }) {
+
+  const handleContinueCheck = () => {
+    if (activeStep == 2 && selectedDeliveryLocation == "home" && !deliveryType) {
+      toast.error("Please select delivery type")
+      return;
+    }
+    handleContinue()
+  }
   return (
     <div className="w-full md:w-[32%] pt-16  ">
       <div className=" rounded-lg border shadow bg-white p-4">
@@ -15,13 +29,13 @@ export default function RightSideAmount({
           <div className="flex justify-between py-2 items-center">
             {" "}
             <p>Delivery fee</p>
-            <p>৳ 0</p>
+            <p>৳ {delivery_charge ? delivery_charge : 0}</p>
           </div>
           <hr />
           <div className="flex justify-between py-2 items-center">
             {" "}
             <p>Grand total</p>
-            <p>৳ {subTotal}</p>
+            <p>৳ {subTotal + delivery_charge}</p>
           </div>
 
           <hr />
@@ -37,7 +51,7 @@ export default function RightSideAmount({
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               className="bg-primaryLightColor text-white px-4 py-2 w-full mt-4  rounded"
-              onClick={handleContinue}
+              onClick={() => handleContinueCheck()}
             >
               Continue
             </button>
