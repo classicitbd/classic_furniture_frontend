@@ -5,6 +5,7 @@ import { useAddSiteSettingMutation } from "../../../redux/feature/setting/settin
 import { toast } from "react-toastify";
 
 const AboutUs = ({ initialData, refetch }) => {
+  const [delivery_condition, setDelivery_condition] = useState(initialData?.delivery_condition);
   const [aboutUs, setAboutUs] = useState(initialData?.about_us);
   const [return_policy, setreturn_policy] = useState(
     initialData?.return_policy
@@ -249,6 +250,30 @@ const AboutUs = ({ initialData, refetch }) => {
     });
   };
 
+  // delivery_condition post
+  const handleDataPost10 = async () => {
+    toast.error("Please wait a moment");
+    const sendData = {
+      delivery_condition: delivery_condition,
+      _id: initialData?._id,
+    };
+    postSiteSettng(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Site update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message);
+      }
+    });
+  };
+
   return (
     <>
       {/* About us */}
@@ -264,6 +289,27 @@ const AboutUs = ({ initialData, refetch }) => {
           Submit
         </button>
       </div>
+
+      {/* delivery_condition */}
+      <h4 className="font-semibold text-[20px] mt-2">Delivery Condition</h4>
+      <hr className="mt-2 mb-4" />
+      <ReactQuill
+        theme="snow"
+        value={delivery_condition}
+        onChange={setDelivery_condition}
+      />
+      <div
+        className="mt-2 flex items-center justify-end"
+      >
+        <button
+          onClick={() => handleDataPost10()}
+          type="submit"
+          className="btn bg-green-500 hover:bg-green-400 text-white border border-gray-300 rounded-md px-5 py-2"
+        >
+          Submit
+        </button>
+      </div>
+
 
       {/* Return and exchange */}
       <h4 className="font-semibold text-[20px] mt-2">Return Policy</h4>

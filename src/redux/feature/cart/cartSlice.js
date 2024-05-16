@@ -6,6 +6,7 @@ const initialState = {
   quantity: 0,
   delivery_charge: 0,
   deliveryType: "",
+  delivery_time: "",
 };
 
 const cartSlice = createSlice({
@@ -56,6 +57,7 @@ const cartSlice = createSlice({
       if (existingProduct) {
         // Increment the quantity of the existing product
         existingProduct.quantity += 1;
+        existingProduct.product_partial_total_payment = action.payload.product_partial_total_payment;
         // state.quantity += 1;
       }
 
@@ -78,6 +80,7 @@ const cartSlice = createSlice({
       if (existingProduct && existingProduct.quantity > 1) {
         // Decrement the quantity of the existing product
         existingProduct.quantity -= 1;
+        existingProduct.product_partial_total_payment = action.payload.product_partial_total_payment;
         // state.quantity -= 1;
       } else if (existingProduct && existingProduct.quantity === 1) {
         // If quantity is 1, remove the product from the cart
@@ -103,9 +106,14 @@ const cartSlice = createSlice({
       state.delivery_charge = action.payload?.delivery_charge;
     },
 
+    setShippingTime: (state, action) => {
+      state.delivery_time = action.payload?.delivery_time;
+    },
+
     setShippingType: (state, action) => {
       state.deliveryType = action.payload?.deliveryType;
     },
+
   },
 });
 
@@ -128,6 +136,7 @@ export const {
   decrementQuantity,
   setShippingCharge,
   setShippingType,
+  setShippingTime
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

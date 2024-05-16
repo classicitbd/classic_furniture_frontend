@@ -8,21 +8,26 @@ export default function RightSideAmount({
   delivery_charge,
   activeStep,
   deliveryType,
-  selectedDeliveryLocation
+  // selectedDeliveryLocation
 }) {
 
   const handleContinueCheck = () => {
-    if (activeStep == 2 && selectedDeliveryLocation == "home" && !deliveryType) {
+    if (activeStep == 2 && !deliveryType) {
       toast.error("Please select delivery type")
       return;
     }
     handleContinue()
   }
+
+  const handlePaymentAll = () =>{
+
+  }
+
   return (
     <div className="w-full md:w-[32%] pt-16  ">
       <div className=" rounded-lg border shadow bg-white p-4">
         <div className="md:px-6   py-3 ">
-          <div className="pb-1.5 flex justify-between items-center">
+          {/* <div className="pb-1.5 flex justify-between items-center">
             <p>Item total</p>
             <p>৳ {subTotal}</p>
           </div>
@@ -31,7 +36,7 @@ export default function RightSideAmount({
             <p>Delivery fee</p>
             <p>৳ {delivery_charge ? delivery_charge : 0}</p>
           </div>
-          <hr />
+          <hr /> */}
           <div className="flex justify-between py-2 items-center">
             {" "}
             <p>Grand total</p>
@@ -49,12 +54,22 @@ export default function RightSideAmount({
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
+            {
+              activeStep == 3 ?
+              <button
+              className="bg-primaryLightColor text-white px-4 py-2 w-full mt-4  rounded"
+              onClick={() => handlePaymentAll()}
+            >
+              Payment All
+            </button>
+            :
             <button
               className="bg-primaryLightColor text-white px-4 py-2 w-full mt-4  rounded"
               onClick={() => handleContinueCheck()}
             >
               Continue
             </button>
+            }
             <button
               className="bg-gray-400 text-white px-4 py-2 w-full mt-4  rounded"
               onClick={handleBack}

@@ -36,7 +36,7 @@ export default function CartItems({ cart }) {
                 )}
             </div>
           </div>
-          <dir className="flex flex-col md:px-0 mr-3 ">
+          <dir className="flex flex-col md:px-0 mr-3 justify-end">
             <button
               onClick={() => {
                 dispatch(
@@ -53,8 +53,8 @@ export default function CartItems({ cart }) {
             {/* quantity */}
             <div>
               <div>
-                <p className="font-semibold text-sm text-gray-800">Quantity</p>
-                <div className="flex items-center my-2  gap-2.5 flex-wrap ">
+                <p className="font-semibold text-sm text-gray-800 flex justify-end">Quantity</p>
+                <div className="flex items-center justify-end my-2  gap-2.5 flex-wrap ">
                   <div className="flex  ">
                     <button
                       type="button"
@@ -65,6 +65,7 @@ export default function CartItems({ cart }) {
                             decrementQuantity({
                               productId: product?.productId,
                               size: product?.size,
+                              product_partial_total_payment: product?.product_partial_payment_amount * (product?.quantity - 1),
                             })
                           );
                         }
@@ -79,28 +80,35 @@ export default function CartItems({ cart }) {
                       {product?.quantity}
                     </span>
                     <button
+                      onClick={() => {
+                        if (product?.quantity === product?.totalQuantity) {
+                          toast.error("Not Enough Stock");
+                          return;
+                        }
+                        dispatch(
+                          incrementQuantity({
+                            productId: product?.productId,
+                            size: product?.size,
+                            product_partial_total_payment: product?.product_partial_payment_amount * (product?.quantity + 1),
+                          })
+                        );
+                      }}
                       type="button"
                       className="px-2 py-1.5  hover:bg-gray-200 bg-[#F2F2F2]  border border-gray-200"
                     >
                       <HiOutlinePlus
-                        onClick={() => {
-                          if (product?.quantity === product?.totalQuantity) {
-                            toast.error("Not Enough Stock");
-                            return;
-                          }
-                          dispatch(
-                            incrementQuantity({
-                              productId: product?.productId,
-                              size: product?.size,
-                            })
-                          );
-                        }}
                         className="text-gray-700"
                       />
                     </button>
                   </div>
                 </div>
-                  <p>Sub Total: {product?.quantity * product?.price}</p>
+                <p className="flex justify-end">Sub Total: {product?.quantity * product?.price}</p>
+                {product?.product_partial_payment &&
+                product?.product_partial_payment == true && (
+                  <p className="py-1 flex justify-end">
+                    Total Partial Pay: {product?.product_partial_total_payment}
+                  </p>
+                )}
               </div>
             </div>
           </dir>
