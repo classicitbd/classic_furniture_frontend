@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
-// import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
-import sslcommerceLogo from "../../assets/images/SSLCommerz.png";
 import { SiMinutemailer } from "react-icons/si";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { useQuery } from "@tanstack/react-query";
@@ -9,7 +7,7 @@ import { BASE_URL } from "../../utils/baseURL";
 import { BiSolidMap } from "react-icons/bi";
 import { TbClockPause } from "react-icons/tb";
 import { FaUmbraco } from "react-icons/fa";
-
+import sslcommerceLogo from "../../assets/images/SSLCommerz-Pay-With-logo-All-Size-05.png";
 const quickLinks = [
   // { path: "/about-us", label: "Our Story" },
   { path: "/refund-policy", label: "Refund Policy" },
@@ -44,9 +42,9 @@ const Footer = () => {
 
   return (
     <section className="bg-primaryDeepColor text-textColor border-t-[2px] border-secondary ">
-      <div className=" es_container mx-auto md:px-20 xl:px-0 px-5 pt-10">
+      <div className=" es_container mx-auto md:px-20 xl:px-0 px-5 pt-6 lg:pb-0 md:pb-6  sm:pb-20 pb-20">
         {/* footer top */}
-        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 xl:grid-cols-6">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 px-6 gap-2 md:grid-cols-4 xl:grid-cols-6 py-6">
           {/* helpful links */}
           <ul className="list-none ml-0 mb-0">
             <li className="leading-[30px] font-[500]">
@@ -228,7 +226,7 @@ const Footer = () => {
                 </span>
                 <h3 className="text-[14px] leading-4 font-[300]">
                   <strong>Hours:</strong>
-                  <span>{footerData?.data[0]?.start_close}</span>
+                  <span>{footerData?.data[0]?.hours}</span>
                 </h3>
               </li>
               <li className="flex items-center gap-3 mt-1">
@@ -242,10 +240,11 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className=" col-span-2 ">
+          <div className=" xl:col-span-2 lg:-col-span-1 md:col-span-4 sm:col-span-2 col-span-1 pt-6 ">
             <img
-              className=" h-[80px] md:h-[220px] w-full"
-              src="https://traack.com.bd/assets/SSLCommerz-Pay-With-logo-All-Size-05-IaTT5Yxn.png"
+              className="sm:h-[220px] lg:h-[260px] xl:h-auto w-full"
+              // src="https://traack.com.bd/assets/SSLCommerz-Pay-With-logo-All-Size-05-IaTT5Yxn.png"
+              src={sslcommerceLogo}
               alt=""
             />
           </div>
@@ -253,7 +252,6 @@ const Footer = () => {
         {/* <div className="es_container mx-auto md:px-20 xl:px-0 px-5 w-full">
           <img
             className=" h-[80px] md:h-[220px]"
-            src={sslcommerceLogo}
             alt=""
           />
         </div> */}
