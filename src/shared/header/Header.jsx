@@ -141,7 +141,7 @@ export default function Header() {
                       <>
                         <Link
                           to="/user-profile"
-                          className="block px-6 py-2 text-gray-800"
+                          className="block px-6 py-2 text-gray-800 hover:bg-primaryLightColor duration-300 hover:text-white"
                         >
                           Profile
                         </Link>
@@ -150,7 +150,7 @@ export default function Header() {
 
                         <button
                           onClick={handleLogout}
-                          className="block w-full text-left px-6 py-2 text-red-600"
+                          className="block w-full text-left px-6 py-2 text-red-600  hover:bg-primaryLightColor duration-300 hover:text-white"
                         >
                           Logout
                         </button>
@@ -159,13 +159,13 @@ export default function Header() {
                       <>
                         <Link
                           to="/sign-in"
-                          className="block px-6 py-2 text-gray-800"
+                          className="block px-6 py-2 text-gray-800  hover:bg-primaryLightColor duration-300 hover:text-white"
                         >
                           Login
                         </Link>
                         <Link
                           to="/sign-up"
-                          className="block px-6 py-2 text-gray-800"
+                          className="block px-6 py-2 text-gray-800  hover:bg-primaryLightColor duration-300 hover:text-white"
                         >
                           Register
                         </Link>
