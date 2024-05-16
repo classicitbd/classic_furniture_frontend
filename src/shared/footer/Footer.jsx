@@ -17,10 +17,10 @@ const quickLinks = [
   { path: "/return-policy", label: "Return policy" },
 ];
 
-const helpfulLinks = [
-  { path: "/store-locator", label: "Store Locator" },
-  { path: "/about-us", label: "About Us" },
-];
+// const helpfulLinks = [
+//   { path: "/store-locator", label: "Store Locator" },
+//   { path: "/about-us", label: "About Us" },
+// ];
 
 const Footer = () => {
   const { data: footerData = [], isLoading } = useQuery({
