@@ -6,48 +6,57 @@ const token = getCookie(authKey);
 
 export const colorApi = api.injectEndpoints({
   endpoints: (build) => ({
-
-    //add Color
+    //get Color
+    getColor: build.query({
+      query: () => ({
+        url: `/color`,
+        method: "GET",
+      }),
+      providesTags: ["color"],
+    }),
     addColor: build.mutation({
       query: (data) => ({
         url: `/color`,
         method: "POST",
         headers: {
-        authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token}`,
         },
         body: data,
       }),
-      invalidatesTags: ['color'],
+      invalidatesTags: ["color"],
     }),
 
     //update Color
     updateColor: build.mutation({
-        query: (data) => ({
-          url: `/color`,
-          method: "PATCH",
-          headers: {
-        authorization: `Bearer ${token}`,
+      query: (data) => ({
+        url: `/color`,
+        method: "PATCH",
+        headers: {
+          authorization: `Bearer ${token}`,
         },
-          body: data,
-        }),
-        invalidatesTags: ['color'],
+        body: data,
       }),
+      invalidatesTags: ["color"],
+    }),
 
     //delete Color
     deleteColor: build.mutation({
-        query: (data) => ({
-          url: `/color`,
-          method: "DELETE",
-          headers: {
-        authorization: `Bearer ${token}`,
+      query: (data) => ({
+        url: `/color`,
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
         },
-          body: data,
-        }),
-        invalidatesTags: ['color'],
+        body: data,
       }),
-
+      invalidatesTags: ["color"],
+    }),
   }),
 });
 
-export const { useAddColorMutation, useDeleteColorMutation, useUpdateColorMutation } =
-  colorApi;
+export const {
+  useGetColorQuery,
+  useAddColorMutation,
+  useDeleteColorMutation,
+  useUpdateColorMutation,
+} = colorApi;
