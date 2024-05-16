@@ -5,7 +5,16 @@ import { Link } from "react-router-dom";
 import Loader from "../../../shared/loader/Loader";
 import { useGetCategoryQuery } from "../../../redux/feature/category/categoryApi";
 import { useGetColorQuery } from "../../../redux/feature/color/colorApi";
-import { FaArrowCircleDown, FaFilter } from "react-icons/fa";
+import {
+  FaAngleDoubleRight,
+  FaAngleDown,
+  FaAngleRight,
+  FaAngleUp,
+  FaArrowAltCircleRight,
+  FaArrowCircleDown,
+  FaFilter,
+  FaPlus,
+} from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 export default function AllProducts() {
@@ -67,12 +76,19 @@ export default function AllProducts() {
                 >
                   <IoFilterOutline size={20} /> <span>Filter</span>
                 </span>
-                <p>Show:</p>
+                {/* <p>Show:</p>
                 <select className="border border-primaryLightColor rounded-md px-2 py-1">
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
+                </select> */}
+
+                <p>Sort By: Price </p>
+                <select className="border border-primaryLightColor rounded-md px-2 py-1">
+                  <option value="Default">Default</option>
+                  <option value="Low to High">Low to High</option>
+                  <option value="High to Low">High to Low</option>
                 </select>
               </div>
             </div>
@@ -80,18 +96,68 @@ export default function AllProducts() {
 
           <div className="grid grid-cols-12 gap-4">
             <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4  my-6 hidden lg:block">
-              <div className="">
-                <h3 className="sr-only">Categories</h3>
-                <ul
-                  role="list"
-                  className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
-                >
-                  {categories?.data?.map((category) => (
-                    <li key={category?.category_name}>
-                      <a href={category.href}>{category?.category_name}</a>
-                    </li>
-                  ))}
-                </ul>
+              <div className="mb-4">
+                <span className="flex justify-between items-center">
+                  <h3 className="text-[16px] font-semibold py-2 text-gray-700">
+                    Categories
+                  </h3>
+                  <span
+                    onClick={() => setCategoryShow(!categoryShow)}
+                    className=" text-gray-700"
+                  >
+                    {categoryShow ? <FaAngleDown /> : <FaAngleUp />}
+                  </span>
+                </span>
+                {categoryShow && (
+                  <ul
+                    role="list"
+                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[360px] overflow-y-auto scrollbar-thin "
+                  >
+                    {categories?.data?.map((category) => (
+                      <li key={category?.category_name}>
+                        <Link
+                          to={`/all?category=${category?.category_slug}`}
+                          className="hover:text-primaryLightColor duration-200"
+                        >
+                          {category?.category_name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <hr />
+
+              {/* Color */}
+              <div className="my-4">
+                <span className="flex justify-between items-center">
+                  <h3 className="text-[16px] font-semibold py-2 text-gray-700">
+                    Color
+                  </h3>
+                  <span
+                    onClick={() => setColorShow(!colorShow)}
+                    className=" text-gray-700"
+                  >
+                    {colorShow ? <FaAngleDown /> : <FaAngleUp />}
+                  </span>
+                </span>
+                {colorShow && (
+                  <ul
+                    role="list"
+                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[360px] overflow-y-auto scrollbar-thin "
+                  >
+                    {colors?.data?.map((color) => (
+                      <li key={color?.color_name}>
+                        <Link
+                          to={`/all?category=${color?.color_slug}`}
+                          className="hover:text-primaryLightColor duration-200"
+                        >
+                          {color?.color_name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
             <div className="lg:col-span-9 col-span-12">
