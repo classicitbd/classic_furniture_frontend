@@ -7,28 +7,18 @@ import { useGetCategoryQuery } from "../../../redux/feature/category/categoryApi
 import { useGetColorQuery } from "../../../redux/feature/color/colorApi";
 import { FaArrowCircleDown, FaFilter } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import Select from "react-select";
-const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function AllProducts() {
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [categoryShow, setCategoryShow] = useState(false);
+  const [colorShow, setColorShow] = useState(false);
+
   const { data: products, isLoading } = useGetProductQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 60000,
   });
   const { data: categories } = useGetCategoryQuery(undefined);
   const { data: colors } = useGetColorQuery(undefined);
-  // console.log(categories, colors);
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -52,8 +42,8 @@ export default function AllProducts() {
   let gridCols = "grid-cols-1";
   if (windowWidth >= 440) gridCols = "grid-cols-2";
   if (windowWidth >= 768) gridCols = "md:grid-cols-3";
-  if (windowWidth >= 1024) gridCols = "lg:grid-cols-4";
-  if (windowWidth >= 1440) gridCols = "2xl:grid-cols-5";
+  if (windowWidth >= 1024) gridCols = "lg:grid-cols-3";
+  if (windowWidth >= 1440) gridCols = "2xl:grid-cols-4";
   if (isLoading) return <Loader />;
 
   return (
@@ -62,8 +52,8 @@ export default function AllProducts() {
         {/* <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10 ">
         </div> */}
 
-        <section className="py-6 ">
-          <div className="p-4  mx-6  bg-white sm:px-6 rounded ">
+        <section className="py-6 mx-4 ">
+          <div className="p-4    bg-white sm:px-6 rounded ">
             <div className="flex justify-between items-center">
               <div className="flex items-center justify-center ">
                 <p className="sm:text-xl font-semibold text-primaryDeepColor">
@@ -89,8 +79,25 @@ export default function AllProducts() {
           </div>
 
           <div className="grid grid-cols-12 gap-4">
-            <div className="lg:col-span-10 col-span-12">
-              <div className={`grid ${gridCols} gap-4 px-6 pb-6    rounded`}>
+            <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4  my-6 hidden lg:block">
+              <div className="">
+                <h3 className="sr-only">Categories</h3>
+                <ul
+                  role="list"
+                  className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
+                >
+                  {categories?.data?.map((category) => (
+                    <li key={category?.category_name}>
+                      <a href={category.href}>{category?.category_name}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="lg:col-span-9 col-span-12">
+              <div
+                className={`grid ${gridCols} gap-4 lg:px-0 px-6 pb-6    rounded`}
+              >
                 {products?.data?.map((product) => (
                   <div key={product?._id} className="group mt-6 bg-white ">
                     <Link to={`/${product?.product_slug}`}>
