@@ -81,17 +81,18 @@ const RightSideShoppingSection = ({
           price: selectedSizeData?.discount_price
             ? selectedSizeData?.discount_price
             : selectedSizeData?.price
-            ? selectedSizeData?.price
-            : product?.data?.product_discount_price
-            ? product?.data?.product_discount_price
-            : product?.data?.product_price,
+              ? selectedSizeData?.price
+              : product?.data?.product_discount_price
+                ? product?.data?.product_discount_price
+                : product?.data?.product_price,
           product_name: product?.data?.product_name,
           color: product?.data?.product_color_id?.color_name,
           color_id: product?.data?.product_color_id?._id,
           product_thumbnail: product?.data?.product_thumbnail,
           productId: product?.data?._id,
-          product_partial_payment_amount: product?.data?.product_partial_payment_amount,
           product_partial_payment: product?.data?.product_partial_payment,
+          product_partial_payment_amount: product?.data?.product_partial_payment_amount,
+          product_partial_total_payment: product?.data?.product_partial_payment_amount * quantity,
         })
       );
       toast.success("Added to cart", {
@@ -112,8 +113,9 @@ const RightSideShoppingSection = ({
         color_id: product?.data?.product_color_id?._id,
         product_thumbnail: product?.data?.product_thumbnail,
         productId: product?.data?._id,
-        product_partial_payment_amount: product?.data?.product_partial_payment_amount,
         product_partial_payment: product?.data?.product_partial_payment,
+        product_partial_payment_amount: product?.data?.product_partial_payment_amount,
+        product_partial_total_payment: product?.data?.product_partial_payment_amount * quantity,
       })
     );
     toast.success("Added to cart", {
@@ -153,17 +155,18 @@ const RightSideShoppingSection = ({
           price: selectedSizeData?.discount_price
             ? selectedSizeData?.discount_price
             : selectedSizeData?.price
-            ? selectedSizeData?.price
-            : product?.data?.product_discount_price
-            ? product?.data?.product_discount_price
-            : product?.data?.product_price,
+              ? selectedSizeData?.price
+              : product?.data?.product_discount_price
+                ? product?.data?.product_discount_price
+                : product?.data?.product_price,
           product_name: product?.data?.product_name,
           color: product?.data?.product_color_id?.color_name,
           color_id: product?.data?.product_color_id?._id,
           product_thumbnail: product?.data?.product_thumbnail,
           productId: product?.data?._id,
-          product_partial_payment_amount: product?.data?.product_partial_payment_amount,
           product_partial_payment: product?.data?.product_partial_payment,
+          product_partial_payment_amount: product?.data?.product_partial_payment_amount,
+          product_partial_total_payment: product?.data?.product_partial_payment_amount * quantity,
         })
       );
       toast.success("Added to cart", {
@@ -185,6 +188,7 @@ const RightSideShoppingSection = ({
         productId: product?.data?._id,
         product_partial_payment: product?.data?.product_partial_payment,
         product_partial_payment_amount: product?.data?.product_partial_payment_amount,
+        product_partial_total_payment: product?.data?.product_partial_payment_amount * quantity,
       })
     );
     toast.success("Added to cart", {
@@ -205,11 +209,10 @@ const RightSideShoppingSection = ({
                 key={item?._id}
                 className={
                   item && item?.quantity > 0
-                    ? `border rounded-lg cursor-pointer py-2 px-3.5 mr-2 hover:bg-primaryLightColor hover:text-white font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl ${
-                        selectSize === item?.size
-                          ? "bg-primaryLightColor text-white"
-                          : ""
-                      }`
+                    ? `border rounded-lg cursor-pointer py-2 px-3.5 mr-2 hover:bg-primaryLightColor hover:text-white font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl ${selectSize === item?.size
+                      ? "bg-primaryLightColor text-white"
+                      : ""
+                    }`
                     : "disabled border rounded-lg py-2 px-3.5 mr-2 font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl"
                 }
                 onClick={() => {
