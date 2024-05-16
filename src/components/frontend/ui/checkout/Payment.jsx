@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 
 const Payment = ({ userData }) => {
   const cart = useSelector((state) => state.furnitureCart.products);
-  const subTotal = useSelector((state) => state.furnitureCart.subtotal);
-  const totalQuantity = useSelector((state) => state.furnitureCart.quantity);
+  // const subTotal = useSelector((state) => state.furnitureCart.subtotal);
+  // const totalQuantity = useSelector((state) => state.furnitureCart.quantity);
   const delivery_charge = useSelector(
     (state) => state.furnitureCart.delivery_charge
   );
   const deliveryType = useSelector((state) => state.furnitureCart.deliveryType);
-  const deliveryTime = useSelector((state) => state.furnitureCart.delivery_time);
+  // const deliveryTime = useSelector((state) => state.furnitureCart.delivery_time);
 
   const [partialPayProducts, setPartialPayProducts] = useState([]);
   const [codProducts, setCodProducts] = useState([]);
@@ -43,23 +43,35 @@ const Payment = ({ userData }) => {
     const sendData = {
       customer_id: userData?._id,
       customer_phone: userData?.user_phone,
-      total_amount: total_product_price + delivery_charge,
-      pay_amount: partial_pay_amount + delivery_charge,
+      total_amount: total_product_price,
+      pay_amount: partial_pay_amount,
       due_amount: total_product_price - partial_pay_amount,
       buying_type: "Partial Payment",
+      payment_method: "partial",
+      payment_type: "partial-paid",
+      division: userData?.user_division,
+      district: userData?.user_district,
+      delivery_method: deliveryType
     }
     console.log(sendData);
+  }
 
-    // const sendData = {
-    //   customer_id: userData?._id,
-    //   customer_phone: userData?.user_phone,
-    //   total_amount: total_product_price + delivery_charge,
-    //   pay_amount: partial_pay_amount + delivery_charge,
-    //   due_amount: total_product_price - partial_pay_amount,
-    //   buying_type: "Partial Payment",
-    //   delivery_charge: delivery_charge,
-    //   delivery_time: `${deliveryType} ${deliveryTime} Days`
-    // }
+  const handleCODPayment = () => {
+    const total_product_price = calculateSubtotal(codProducts);
+    const sendData = {
+      customer_id: userData?._id,
+      customer_phone: userData?.user_phone,
+      total_amount: total_product_price,
+      pay_amount: 0,
+      due_amount: total_product_price,
+      buying_type: "Partial Payment",
+      payment_method: "partial",
+      payment_type: "partial-paid",
+      division: userData?.user_division,
+      district: userData?.user_district,
+      delivery_method: deliveryType
+    }
+    console.log(sendData);
   }
 
   return (
@@ -184,7 +196,7 @@ const Payment = ({ userData }) => {
             <p className="text-error-300 font-semibold text-[12px]">
               *Note: If you want to buy only this products in COD payment{" "}
             </p>
-            <button className="btn text-white font-semibold  hover:bg-primaryLightColor/75 hover:scale-105 bg-primaryLightColor rounded px-2.5 py-1.5 duration-300">
+            <button onClick={() => handleCODPayment()} className="btn text-white font-semibold  hover:bg-primaryLightColor/75 hover:scale-105 bg-primaryLightColor rounded px-2.5 py-1.5 duration-300">
               Order Now
             </button>
           </div>
