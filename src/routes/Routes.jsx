@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import Main from "../layout/Main";
 import DashboardLayout from "../layout/DashboardLayout";
 import Category from "../pages/dashboard/category/Category";
 import SubCategory from "../pages/dashboard/subCategory/SubCategory";
@@ -43,40 +42,28 @@ import ProductDetailsPage from "../pages/frontend/details/ProductDetailsPage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main />,
+    element: <SecondMain />,
     errorElement: <NotFound />,
     children: [
       {
         path: "/",
         element: <Home />,
       },
-      // {
-      //   path: "/category",
-      //   element: <CategoryProducts />,
-      // },
-      {
-        path: "/all",
-        element: <AllProducts />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <SecondMain />,
-    errorElement: <NotFound />,
-    children: [
       {
         path: "/:slug",
         element: <ProductDetailsPage />,
       },
-
+      {
+        path: "/all",
+        element: <AllProducts />,
+      },
       {
         path: "/product-video",
         element: <ProductYoutubeVideoPage />,
       },
       {
         path: "/checkout",
-        element: <CheckoutPage />,
+        element: <PrivateRoute><CheckoutPage /></PrivateRoute>,
       },
       {
         path: "/payment-success/:tranId",

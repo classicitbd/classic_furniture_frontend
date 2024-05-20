@@ -1,11 +1,22 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../shared/footer/Footer";
 import Header from "../shared/header/Header";
 import BottomHeader from "../shared/header/BottomHeader";
+import TopHeader from "../shared/header/TopHeader";
 
 const SecondMain = () => {
+
+  const usePathname = useLocation();
+  const pathname = usePathname?.pathname;
+
   return (
     <>
+      {
+        pathname == '/' &&
+        <div className="hidden lg:block">
+          <TopHeader />
+        </div>
+      }
       <div className="sticky top-0 z-50 bg-white">
         <div className="lg:pt-4 pt-0">
           <Header />

@@ -23,7 +23,6 @@ const ProductHighlightSection = ({ product, selectedSizeData }) => {
     product_price,
     product_discount_price,
     product_quantity,
-
     product_color_id,
     // eslint-disable-next-line no-unsafe-optional-chaining
   } = product?.data;
@@ -166,6 +165,20 @@ const ProductHighlightSection = ({ product, selectedSizeData }) => {
             )}
           </>
         )}
+
+        {
+          product?.data?.product_partial_payment_amount &&
+          <div className="my-2">
+            <strong className="offer_price text-[#FF0000]  font-semibold">
+              <span className="text-md text-gray-600 mr-3 font-medium">
+                {" "}
+                Need Partial Pay
+              </span>{" "}
+              ৳{" "}
+              {product?.data?.product_partial_payment_amount}
+            </strong>
+          </div>
+        }
 
         <hr />
 

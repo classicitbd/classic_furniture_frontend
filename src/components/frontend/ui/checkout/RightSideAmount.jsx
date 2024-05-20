@@ -1,4 +1,8 @@
 import { toast } from "react-toastify";
+import { useOrderMutation } from "../../../../redux/feature/payment/paymentApi";
+import { useState } from "react";
+import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import { useSelector } from "react-redux";
 
 export default function RightSideAmount({
   subTotal,
@@ -8,18 +12,61 @@ export default function RightSideAmount({
   delivery_charge,
   activeStep,
   deliveryType,
-  // selectedDeliveryLocation
+  // selectedDeliveryLocation,
+  userData
 }) {
+  const cart = useSelector((state) => state.furnitureCart.products);
+  const [loading, setLoading] = useState(false);
 
   const handleContinueCheck = () => {
-    if (activeStep == 2 && !deliveryType) {
-      toast.error("Please select delivery type")
-      return;
+    if (activeStep == 2) {
+      if (!deliveryType) {
+        toast.error("Please select delivery type")
+        return;
+      }
+      if (!userData?.user_phone) {
+        toast.error("Please Fill Up User Information")
+        return;
+      }
     }
     handleContinue()
   }
 
-  const handlePaymentAll = () =>{
+  const [order] = useOrderMutation();
+
+  const calculateSubtotal = (products) => {
+    return products.reduce((total, product) => {
+      return total + product.price * product.quantity;
+    }, 0);
+  };
+
+  const handlePaymentAll = async () => {
+    setLoading(true)
+    const total_product_price = calculateSubtotal(cart);
+    const sendData = {
+      customer_id: userData?._id,
+      customer_phone: userData?.user_phone,
+      customer_name: userData?.user_name,
+      total_amount: total_product_price,
+      pay_amount: total_product_price,
+      due_amount: 0,
+      buying_type: "Online Payment",
+      payment_method: "online",
+      division: userData?.user_division,
+      district: userData?.user_district,
+      delivery_method: deliveryType,
+      order_products: cart,
+    }
+    const res = await order(sendData);
+
+    if (res?.data?.statusCode == 200 && res?.data?.success == true) {
+      if (res?.data?.data?.GatewayPageURL) {
+        window.location.replace(res?.data?.data?.GatewayPageURL);
+      }
+    } else {
+      setLoading(false);
+      toast.error(res?.error?.data?.message);
+    }
 
   }
 
@@ -56,19 +103,28 @@ export default function RightSideAmount({
           <div className="flex flex-col sm:flex-row gap-2">
             {
               activeStep == 3 ?
-              <button
-              className="bg-primaryLightColor text-white px-4 py-2 w-full mt-4  rounded"
-              onClick={() => handlePaymentAll()}
-            >
-              Payment All
-            </button>
-            :
-            <button
-              className="bg-primaryLightColor text-white px-4 py-2 w-full mt-4  rounded"
-              onClick={() => handleContinueCheck()}
-            >
-              Continue
-            </button>
+
+                loading ?
+                  <button
+                    className="bg-primaryLightColor text-white px-4 py-2 w-full mt-4  rounded"
+                  >
+                    <MiniSpinner />
+                  </button>
+                  :
+                  <button
+                    className="bg-primaryLightColor text-white px-4 py-2 w-full mt-4  rounded"
+                    onClick={() => handlePaymentAll()}
+                  >
+                    Payment All
+                  </button>
+
+                :
+                <button
+                  className="bg-primaryLightColor text-white px-4 py-2 w-full mt-4  rounded"
+                  onClick={() => handleContinueCheck()}
+                >
+                  Continue
+                </button>
             }
             <button
               className="bg-gray-400 text-white px-4 py-2 w-full mt-4  rounded"
