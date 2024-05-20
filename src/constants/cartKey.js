@@ -1,1 +1,1 @@
-export const cartKey = "cart";
+export const cartKey = "furnitureCart";

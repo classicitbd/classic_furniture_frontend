@@ -169,6 +169,7 @@ export default function Checkout() {
                   delivery_charge={delivery_charge}
                   deliveryType={deliveryType}
                   selectedDeliveryLocation={selectedDeliveryLocation}
+                  userData={userData}
                 />
               </div>
             </div>

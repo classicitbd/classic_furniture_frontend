@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useOrderMutation } from "../../../../redux/feature/payment/paymentApi";
+import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import { toast } from "react-toastify";
+import { cartKey } from "../../../../constants/cartKey";
+import { useNavigate } from "react-router-dom";
 
 const Payment = ({ userData }) => {
+  const navigate = useNavigate();
+  const [parLoading, setParLoading] = useState(false)
+  const [codLoading, setCodLoading] = useState(false)
   const cart = useSelector((state) => state.furnitureCart.products);
   // const subTotal = useSelector((state) => state.furnitureCart.subtotal);
   // const totalQuantity = useSelector((state) => state.furnitureCart.quantity);
@@ -37,41 +45,71 @@ const Payment = ({ userData }) => {
     }, 0);
   };
 
-  const handlePartialPayment = () => {
+  const [order] = useOrderMutation();
+
+  const handlePartialPayment = async () => {
+    setParLoading(true)
     const total_product_price = calculateSubtotal(partialPayProducts);
     const partial_pay_amount = calculatePartialSubtotal(partialPayProducts);
     const sendData = {
       customer_id: userData?._id,
       customer_phone: userData?.user_phone,
+      customer_name: userData?.user_name,
       total_amount: total_product_price,
       pay_amount: partial_pay_amount,
       due_amount: total_product_price - partial_pay_amount,
       buying_type: "Partial Payment",
       payment_method: "partial",
-      payment_type: "partial-paid",
       division: userData?.user_division,
       district: userData?.user_district,
-      delivery_method: deliveryType
+      delivery_method: deliveryType,
+      order_products: partialPayProducts,
     }
-    console.log(sendData);
+    setParLoading(false)
+    const res = await order(sendData);
+
+    if (res?.data?.statusCode == 200 && res?.data?.success == true) {
+      console.log(res);
+      if (res?.data?.data?.GatewayPageURL) {
+        window.location.replace(res?.data?.data?.GatewayPageURL);
+      }
+    } else {
+      setParLoading(false);
+      toast.error(res?.error?.data?.message);
+    }
   }
 
-  const handleCODPayment = () => {
+  const handleCODPayment = async () => {
+    setCodLoading(true)
     const total_product_price = calculateSubtotal(codProducts);
     const sendData = {
       customer_id: userData?._id,
       customer_phone: userData?.user_phone,
+      customer_name: userData?.user_name,
       total_amount: total_product_price,
       pay_amount: 0,
       due_amount: total_product_price,
-      buying_type: "Partial Payment",
-      payment_method: "partial",
-      payment_type: "partial-paid",
+      buying_type: "Cash On Delivery",
+      payment_method: "cod",
       division: userData?.user_division,
       district: userData?.user_district,
-      delivery_method: deliveryType
+      delivery_method: deliveryType,
+      order_products: codProducts,
     }
-    console.log(sendData);
+    setCodLoading(false)
+    const res = await order(sendData);
+
+    if (res?.data?.statusCode == 200 && res?.data?.success == true) {
+      console.log(res);
+      if (res?.data?.data?.GatewayPageURL) {
+        navigate(`/payment-success/cash-on-delivery`);
+        localStorage.removeItem(cartKey);
+        window.location.reload();
+      }
+    } else {
+      setCodLoading(false);
+      toast.error(res?.error?.data?.message);
+    }
   }
 
   return (
@@ -137,9 +175,16 @@ const Payment = ({ userData }) => {
             <p className="text-error-300 font-semibold text-[12px]">
               *Note: If you want to buy only this products in partial payment{" "}
             </p>
-            <button onClick={() => handlePartialPayment()} className="btn text-white font-semibold  hover:bg-primaryLightColor/75 hover:scale-105 bg-primaryLightColor rounded px-2.5 py-1.5 duration-300">
-              Payment
-            </button>
+            {
+              parLoading ?
+                <button className="btn text-white font-semibold  hover:bg-primaryLightColor/75 hover:scale-105 bg-primaryLightColor rounded px-2.5 py-1.5 duration-300">
+                  <MiniSpinner />
+                </button>
+                :
+                <button onClick={() => handlePartialPayment()} className="btn text-white font-semibold  hover:bg-primaryLightColor/75 hover:scale-105 bg-primaryLightColor rounded px-2.5 py-1.5 duration-300">
+                  Payment
+                </button>
+            }
           </div>
         </>
       )}
@@ -196,9 +241,16 @@ const Payment = ({ userData }) => {
             <p className="text-error-300 font-semibold text-[12px]">
               *Note: If you want to buy only this products in COD payment{" "}
             </p>
-            <button onClick={() => handleCODPayment()} className="btn text-white font-semibold  hover:bg-primaryLightColor/75 hover:scale-105 bg-primaryLightColor rounded px-2.5 py-1.5 duration-300">
-              Order Now
-            </button>
+            {
+              codLoading ?
+                <button className="btn text-white font-semibold  hover:bg-primaryLightColor/75 hover:scale-105 bg-primaryLightColor rounded px-2.5 py-1.5 duration-300">
+                  <MiniSpinner />
+                </button>
+                :
+                <button onClick={() => handleCODPayment()} className="btn text-white font-semibold  hover:bg-primaryLightColor/75 hover:scale-105 bg-primaryLightColor rounded px-2.5 py-1.5 duration-300">
+                  Order Now
+                </button>
+            }
           </div>
         </>
       )}

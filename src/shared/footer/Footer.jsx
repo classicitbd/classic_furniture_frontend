@@ -32,7 +32,7 @@ const Footer = () => {
       return data;
     },
   });
-  console.log(footerData);
+  
   const handleEmailClick = () => {
     window.location.href = `mailto:masudranainfo99@gmail.com`;
   };
