@@ -13,9 +13,9 @@ const Payment = ({ userData }) => {
   const cart = useSelector((state) => state.furnitureCart.products);
   // const subTotal = useSelector((state) => state.furnitureCart.subtotal);
   // const totalQuantity = useSelector((state) => state.furnitureCart.quantity);
-  const delivery_charge = useSelector(
-    (state) => state.furnitureCart.delivery_charge
-  );
+  // const delivery_charge = useSelector(
+  //   (state) => state.furnitureCart.delivery_charge
+  // );
   const deliveryType = useSelector((state) => state.furnitureCart.deliveryType);
   // const deliveryTime = useSelector((state) => state.furnitureCart.delivery_time);
 
@@ -65,12 +65,11 @@ const Payment = ({ userData }) => {
       delivery_method: deliveryType,
       order_products: partialPayProducts,
     }
-    setParLoading(false)
     const res = await order(sendData);
 
     if (res?.data?.statusCode == 200 && res?.data?.success == true) {
-      console.log(res);
       if (res?.data?.data?.GatewayPageURL) {
+        localStorage.removeItem(cartKey);
         window.location.replace(res?.data?.data?.GatewayPageURL);
       }
     } else {
@@ -96,16 +95,12 @@ const Payment = ({ userData }) => {
       delivery_method: deliveryType,
       order_products: codProducts,
     }
-    setCodLoading(false)
     const res = await order(sendData);
 
     if (res?.data?.statusCode == 200 && res?.data?.success == true) {
-      console.log(res);
-      if (res?.data?.data?.GatewayPageURL) {
         navigate(`/payment-success/cash-on-delivery`);
         localStorage.removeItem(cartKey);
         window.location.reload();
-      }
     } else {
       setCodLoading(false);
       toast.error(res?.error?.data?.message);

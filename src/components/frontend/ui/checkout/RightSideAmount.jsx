@@ -3,6 +3,7 @@ import { useOrderMutation } from "../../../../redux/feature/payment/paymentApi";
 import { useState } from "react";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 import { useSelector } from "react-redux";
+import { cartKey } from "../../../../constants/cartKey";
 
 export default function RightSideAmount({
   subTotal,
@@ -61,6 +62,7 @@ export default function RightSideAmount({
 
     if (res?.data?.statusCode == 200 && res?.data?.success == true) {
       if (res?.data?.data?.GatewayPageURL) {
+        localStorage.removeItem(cartKey);
         window.location.replace(res?.data?.data?.GatewayPageURL);
       }
     } else {
