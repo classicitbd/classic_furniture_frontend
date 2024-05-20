@@ -1,6 +1,4 @@
 import { useGetProductQuery } from "../../../redux/feature/product/productApi";
-import { Range, getTrackBackground } from "react-range";
-
 import { IoClose, IoFilterOutline } from "react-icons/io5";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "../../../shared/loader/Loader";
@@ -30,15 +28,14 @@ export default function AllProducts() {
   const handlePriceChange = ([min, max]) => {
     setMinPrice(min);
     setMaxPrice(max);
-    console.log(min);
 
     const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("min_price", minPrice);
+    queryParams.set("min_price", min);
+    queryParams.set("max_price", max);
 
     // Update the URL using navigate
     navigate(`/all?${queryParams.toString()}`);
   };
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -134,7 +131,6 @@ export default function AllProducts() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  console.log(minPrice, maxPrice);
   let gridCols = "grid-cols-1";
   if (windowWidth >= 440) gridCols = "grid-cols-2";
   if (windowWidth >= 768) gridCols = "md:grid-cols-3";
@@ -162,11 +158,11 @@ export default function AllProducts() {
                 >
                   <IoFilterOutline size={20} /> <span>Filter</span>
                 </span>
-                <p className="hidden sm:flex">Sort By: Price </p>
-                <select className="border border-primaryLightColor rounded-md px-2 py-1">
-                  <option value="Default">Default</option>
-                  <option value="Low to High">Low to High</option>
-                  <option value="High to Low">High to Low</option>
+                <p className="hidden sm:flex">Sort By </p>
+                <select className="border border-primaryLightColor rounded-md px-2 py-1 text-[12px]">
+                  <option value="Default">Price: Default</option>
+                  <option value="Low to High">Price: Low to High</option>
+                  <option value="High to Low">Price: High to Low</option>
                 </select>
               </div>
             </div>
@@ -178,41 +174,11 @@ export default function AllProducts() {
                 <h3 className="text-[16px] font-semibold py-2 text-gray-700">
                   Price Range
                 </h3>
-                <div className="price-range-slider">
-                  <Range
-                    values={values}
-                    step={1}
-                    min={minPrice}
-                    max={maxPrice}
-                    onChange={handleChange}
-                    renderTrack={({ props, children }) => (
-                      <div
-                        {...props}
-                        className="w-full h-2 bg-gray-200 rounded"
-                        style={{
-                          background: getTrackBackground({
-                            values,
-                            colors: ["#ccc", "#548BF4", "#ccc"],
-                            min: minPrice,
-                            max: maxPrice,
-                          }),
-                        }}
-                      >
-                        {children}
-                      </div>
-                    )}
-                    renderThumb={({ props }) => (
-                      <div
-                        {...props}
-                        className="w-4 h-4 bg-blue-500 rounded-full shadow"
-                      />
-                    )}
-                  />
-                  <div className="flex justify-between mt-2">
-                    <span>৳ {values[0]}</span>
-                    <span>৳ {values[1]}</span>
-                  </div>
-                </div>
+                <PriceRangeSlider
+                  minPrice={0}
+                  maxPrice={200000}
+                  onPriceChange={handlePriceChange}
+                />
               </div>
               <div className="mb-4">
                 <span
