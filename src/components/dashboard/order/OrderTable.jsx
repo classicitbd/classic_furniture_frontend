@@ -132,9 +132,9 @@ const OrderTable = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["/api/v1/order/totalOrder"],
+    queryKey: ["/api/v1/order/total_order"],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/order/totalOrder`);
+      const res = await fetch(`${BASE_URL}/order/total_order`);
       const data = await res.json();
       return data;
     },
@@ -163,10 +163,12 @@ const OrderTable = () => {
     return <BigSpinner />;
   }
 
+  console.log(products);
+
   return (
     <div>
       {/* Order info tabs */}
-      <div className="grid lg:grid-cols-4 grid-cols-2 mt-6 gap-3">
+      <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 mt-6 gap-3">
         <div className="bg-[#D4F3FB] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] bg-[#00B7E9] rounded-full">
@@ -203,11 +205,29 @@ const OrderTable = () => {
           </div>
         </div>
 
-        <div className="bg-[#EAE9FE] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+        <div className="bg-red-200 rounded-xl border border-red-300 flex items-center justify-between p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] bg-[#837DFB] rounded-full">
               <GrCompliance
                 size={18}
+                color="#FFFFFF"
+                className="relative left-1 top-2"
+              />
+            </p>
+          </div>
+          <div>
+            <p className="text-end">Cancel</p>
+            <h2 className="font-medium text-[24px]">
+              {totalOrderInfo?.data?.cancelOrder}
+            </h2>
+          </div>
+        </div>
+
+        <div className="bg-[#EAE9FE] rounded-xl border border-gray-300 flex items-center justify-between p-6 gap-4">
+          <div>
+            <p className="w-[30px] h-[30px] bg-teal-500 rounded-full">
+              <FaMoneyBillAlt
+                size={20}
                 color="#FFFFFF"
                 className="relative left-1 top-2"
               />
@@ -238,40 +258,9 @@ const OrderTable = () => {
             </h2>
           </div>
         </div>
+
       </div>
 
-      {/* Date and search field */}
-
-      {/* <div className="flex items-center justify-between gap-1">
-        <div ref={calendarRef}>
-          <input
-            type="text"
-            value={formattedDateRange}
-            className="border p-2 rounded-md"
-            onClick={toggleCalendar}
-          />
-          {calendarVisible && (
-            <div style={{ position: "absolute", zIndex: 1 }}>
-              <DateRangePicker
-                ranges={[selectionRange]}
-                onChange={handleSelect}
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center justify-end mb-4">
-          <div className="flex items-center gap-2 rounded-xl border border-[#E7E7E7] bg-gray-50 px-[5px] py-2 mt-[16px]">
-            <BiSearch className="text-[#717171]" size={20} />
-            <input
-              onKeyDown={(e) => handleSearch(e)}
-              type="text"
-              placeholder="Search..."
-              className="bg-gray-50 bg-none w-full outline-none text-[14px] font-semibold placeholder-[#717171]"
-            />
-          </div>
-        </div>
-      </div> */}
       <div className="flex items-center justify-between gap-1 mt-2">
         <div className="flex items-center gap-4">
           <div ref={calendarRef}>
@@ -356,27 +345,27 @@ const OrderTable = () => {
                 {products?.map((order) => (
                   <tr key={order?._id}>
                     <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                      {order?.orderId}
+                      {order?.order_id}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                      {order?.userInfo?.name}
+                      {order?.customer_id?.user_name}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                      {order?.phone}
+                      {order?.customer_phone}
                     </td>
                     <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                       {formatDate(order?.createdAt)}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                      {order?.transactionId || "N/A"}
+                      {order?.transaction_id || "N/A"}
                     </td>
 
                     <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
-                      {order?.status}
+                      {order?.order_type}
                     </td>
 
                     <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
-                      {order?.type}
+                      {order?.payment_type}
                     </td>
 
                     <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
@@ -385,7 +374,7 @@ const OrderTable = () => {
                         className="cursor-pointer text-gray-500 hover:text-gray-300"
                         size={25}
                       />
-                      {order?.status == "complete" && order?.type == "paid" ? (
+                      {order?.order_type == "success" && order?.payment_type == "paid" ? (
                         <button className="btn bg-green-500 hover:bg-green-400 border border-gray-300 rounded-md text-sm text-white p-2 btn-sm">
                           Completed
                         </button>

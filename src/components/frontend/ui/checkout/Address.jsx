@@ -22,7 +22,7 @@ const Address = ({
   settingData,
   selectedDeliveryLocation,
   setSelectedDeliveryLocation,
-  deliveryType,
+  // deliveryType,
   userData,
 }) => {
   const dispatch = useDispatch();
