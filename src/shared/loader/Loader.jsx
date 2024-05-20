@@ -13,7 +13,7 @@ export default function Loader({ lable }) {
         </div>
       </div> */}
 
-      <div className="bg-primaryDeepColor h-[100vh] flex gap-3 flex-col justify-center items-center">
+      <div className="bg-primaryDeepColor  h-[100vh] flex gap-3 flex-col justify-center items-center">
         {/* <ScaleLoader size={200} color="red" /> */}
         <PuffLoader
           color="#05ffe1"

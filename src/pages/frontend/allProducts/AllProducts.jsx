@@ -1,4 +1,6 @@
 import { useGetProductQuery } from "../../../redux/feature/product/productApi";
+import { Range, getTrackBackground } from "react-range";
+
 import { IoClose, IoFilterOutline } from "react-icons/io5";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "../../../shared/loader/Loader";
@@ -8,6 +10,9 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { useEffect, useState, useRef } from "react";
 import AllProductCard from "./AllProductCard";
 import { BASE_URL } from "../../../utils/baseURL";
+import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
+import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
+import PriceRangeSlider from "./PriceRangeSlider";
 
 export default function AllProducts() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -17,15 +22,31 @@ export default function AllProducts() {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSort, setSelectedSort] = useState(null);
   const [queryParameters] = useSearchParams();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(200000);
   const navigate = useNavigate();
+  const handlePriceChange = ([min, max]) => {
+    setMinPrice(min);
+    setMaxPrice(max);
+    console.log(min);
+
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("min_price", minPrice);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { data: products, isLoading } = useGetProductQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-    pollingInterval: 60000,
-  });
+  // const { data: products, isLoading } = useGetProductQuery(undefined, {
+  //   refetchOnMountOrArgChange: true,
+  //   pollingInterval: 60000,
+  // });
   const { data: categories } = useGetCategoryQuery(undefined);
   const { data: colors } = useGetColorQuery(undefined);
 
@@ -63,34 +84,36 @@ export default function AllProducts() {
     // Update the URL using navigate
     navigate(`/all?${queryParams.toString()}`);
   };
-  // useEffect(() => {
-  //   // Get all query parameters
-  //   const allQueryParams = {};
-  //   for (const [key, value] of queryParameters.entries()) {
-  //     allQueryParams[key] = value;
-  //   }
+  useEffect(() => {
+    // Get all query parameters
+    const allQueryParams = {};
+    for (const [key, value] of queryParameters.entries()) {
+      allQueryParams[key] = value;
+    }
 
-  //   const queryString = Object.keys(allQueryParams)
-  //     .filter((key) => allQueryParams[key] !== undefined)
-  //     .map((key) => `${key}=${allQueryParams[key]}`)
-  //     .join("&");
+    const queryString = Object.keys(allQueryParams)
+      .filter((key) => allQueryParams[key] !== undefined)
+      .map((key) => `${key}=${allQueryParams[key]}`)
+      .join("&");
+    // console.log(queryString);
+    setLoading(true);
+    fetch(
+      `${BASE_URL}/product${
+        queryString.length > 0
+          ? `/filter_product?${queryString}`
+          : "/filter_product"
+      }`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data?.data);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
 
-  //   setLoading(true);
-  //   fetch(
-  //     `${BASE_URL}/${queryString.length > 0 ? `all?${queryString}` : "all"}`
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setProducts(data?.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => console.error(error));
-
-  //   setFilterDropdownOpen(false);
-  //   setSortDropdownOpen(false);
-
-  //   // You can perform any other logic based on all query parameters here
-  // }, [queryParameters]);
+    setMobileFiltersOpen(false);
+    // You can perform any other logic based on all query parameters here
+  }, [queryParameters]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -111,13 +134,12 @@ export default function AllProducts() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  console.log(minPrice, maxPrice);
   let gridCols = "grid-cols-1";
   if (windowWidth >= 440) gridCols = "grid-cols-2";
   if (windowWidth >= 768) gridCols = "md:grid-cols-3";
   if (windowWidth >= 1024) gridCols = "lg:grid-cols-3";
   if (windowWidth >= 1440) gridCols = "2xl:grid-cols-4";
-  if (isLoading) return <Loader />;
 
   return (
     <div>
@@ -127,7 +149,7 @@ export default function AllProducts() {
             <div className="flex justify-between items-center">
               <div className="flex items-center justify-center">
                 <p className="sm:text-xl font-semibold text-primaryDeepColor hidden sm:flex">
-                  Products
+                  Products {products?.products?.length}
                 </p>
               </div>
               <div
@@ -152,6 +174,46 @@ export default function AllProducts() {
 
           <div className="grid grid-cols-12 gap-4">
             <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4 my-6 hidden lg:block">
+              <div className="my-4">
+                <h3 className="text-[16px] font-semibold py-2 text-gray-700">
+                  Price Range
+                </h3>
+                <div className="price-range-slider">
+                  <Range
+                    values={values}
+                    step={1}
+                    min={minPrice}
+                    max={maxPrice}
+                    onChange={handleChange}
+                    renderTrack={({ props, children }) => (
+                      <div
+                        {...props}
+                        className="w-full h-2 bg-gray-200 rounded"
+                        style={{
+                          background: getTrackBackground({
+                            values,
+                            colors: ["#ccc", "#548BF4", "#ccc"],
+                            min: minPrice,
+                            max: maxPrice,
+                          }),
+                        }}
+                      >
+                        {children}
+                      </div>
+                    )}
+                    renderThumb={({ props }) => (
+                      <div
+                        {...props}
+                        className="w-4 h-4 bg-blue-500 rounded-full shadow"
+                      />
+                    )}
+                  />
+                  <div className="flex justify-between mt-2">
+                    <span>৳ {values[0]}</span>
+                    <span>৳ {values[1]}</span>
+                  </div>
+                </div>
+              </div>
               <div className="mb-4">
                 <span
                   className="flex justify-between items-center cursor-pointer"
@@ -167,7 +229,7 @@ export default function AllProducts() {
                 {categoryShow && (
                   <ul
                     role="list"
-                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[360px] overflow-y-auto scrollbar-thin"
+                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[35vh] overflow-y-auto scrollbar-thin"
                   >
                     {categories?.data?.map((category) => (
                       <li key={category?.category_name}>
@@ -194,7 +256,7 @@ export default function AllProducts() {
               {/* Color */}
               <div className="my-4">
                 <span
-                  className="flex justify-between items-center cursor-pointer"
+                  className="flex justify-between items-center "
                   onClick={() => setColorShow(!colorShow)}
                 >
                   <h3 className="text-[16px] font-semibold py-2 text-gray-700 ">
@@ -207,7 +269,7 @@ export default function AllProducts() {
                 {colorShow && (
                   <ul
                     role="list"
-                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[360px] overflow-y-auto scrollbar-thin"
+                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[35vh] overflow-y-auto scrollbar-thin"
                   >
                     {colors?.data?.map((color) => (
                       <li key={color?.color_name}>
@@ -228,14 +290,29 @@ export default function AllProducts() {
                 )}
               </div>
             </div>
-            <div className="lg:col-span-9 col-span-12">
-              <div
-                className={`grid ${gridCols} gap-4 lg:px-0 px-6 pb-6 rounded`}
-              >
-                {products?.data?.map((product) => (
-                  <AllProductCard key={product?._id} product={product} />
-                ))}
-              </div>
+            <div className="lg:col-span-9 col-span-12 max-h-screen overflow-y-scroll scrollbar-hide pr-2">
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
+                  <ProductCardSkeleton />
+                  <ProductCardSkeleton />
+                  <ProductCardSkeleton />
+                  <ProductCardSkeleton />
+                </div>
+              ) : (
+                <div>
+                  {products?.products?.length > 0 ? (
+                    <div
+                      className={`grid ${gridCols} gap-4 lg:px-0 px-6 pb-6 rounded`}
+                    >
+                      {products?.products?.map((product) => (
+                        <AllProductCard key={product?._id} product={product} />
+                      ))}
+                    </div>
+                  ) : (
+                    <ProductNotFound />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -244,7 +321,7 @@ export default function AllProducts() {
           <>
             <div
               ref={sidebarRef}
-              className={`fixed inset-0 z-40 w-64 min-h-screen bg-white transform transition-transform duration-300 ease-in-out ${
+              className={`fixed inset-0 z-40 w-64 min-h-screen bg-white  transition-transform duration-500 transform ease-in-out ${
                 mobileFiltersOpen ? "translate-x-0" : "-translate-x-full"
               } lg:hidden`}
             >
