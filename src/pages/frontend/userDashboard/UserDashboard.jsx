@@ -95,7 +95,7 @@ const UserDashboard = () => {
         )}
 
         {active === "order" && (
-          <div className="w-full md:w-[1024px] mx-auto">
+          <div className="es_container">
             <OrderTab user={userData?.data} setActive={setActive} />
           </div>
         )}
