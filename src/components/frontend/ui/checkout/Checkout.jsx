@@ -34,11 +34,11 @@ export default function Checkout() {
   const [activeStep, setActiveStep] = useState(1);
 
   const [selectedDeliveryLocation, setSelectedDeliveryLocation] =
-  useState(deliveryType);
+    useState(deliveryType);
 
-  const handleStepClick = (step) => {
-    setActiveStep(step);
-  };
+  // const handleStepClick = (step) => {
+  //   setActiveStep(step);
+  // };
 
   const handleContinue = () => {
     if (activeStep < 3) {
@@ -64,58 +64,50 @@ export default function Checkout() {
             <div className="flex justify-center flex-wrap">
               {/* Step - 1 */}
               <p
-                className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center cursor-pointer  ${
-                  activeStep >= 1 ? "text-primaryDeepColor" : ""
-                }`}
-                onClick={() => handleStepClick(1)}
+                className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center  ${activeStep >= 1 ? "text-primaryDeepColor" : ""
+                  }`}
+              // onClick={() => handleStepClick(1)}
               >
                 <span
-                  className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${
-                    activeStep >= 1 ? "bg-primaryDeepColor" : "bg-gray-400 "
-                  } `}
+                  className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${activeStep >= 1 ? "bg-primaryDeepColor" : "bg-gray-400 "
+                    } `}
                 >
                   1
                 </span>{" "}
                 Bag <BsCart className="sm:text-xl " />
                 <div
-                  className={`md:w-12 w-4 h-[1px] sm:mr-4 mr-1.5  rounded-full ${
-                    activeStep >= 1 ? "bg-primaryDeepColor " : "bg-gray-500"
-                  }`}
+                  className={`md:w-12 w-4 h-[1px] sm:mr-4 mr-1.5  rounded-full ${activeStep >= 1 ? "bg-primaryDeepColor " : "bg-gray-500"
+                    }`}
                 ></div>
               </p>
 
               {/* Step - 2 */}
               <p
-                className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center cursor-pointer  ${
-                  activeStep >= 2 ? "text-primaryDeepColor" : "text-gray-700"
-                }`}
-                onClick={() => handleStepClick(2)}
+                className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center  ${activeStep >= 2 ? "text-primaryDeepColor" : "text-gray-700"
+                  }`}
+              // onClick={() => handleStepClick(2)}
               >
                 <span
-                  className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${
-                    activeStep >= 2 ? "bg-primaryDeepColor" : "bg-gray-400  "
-                  } `}
+                  className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${activeStep >= 2 ? "bg-primaryDeepColor" : "bg-gray-400  "
+                    } `}
                 >
                   2
                 </span>{" "}
                 Address <CiLocationOn className="sm:text-xl font-semibold " />
                 <div
-                  className={`md:w-12 sm:w-6 w-4 h-[1px] sm:mr-4 mr-1.5  rounded-full ${
-                    activeStep >= 2 ? "bg-primaryDeepColor " : "bg-gray-500"
-                  }`}
+                  className={`md:w-12 sm:w-6 w-4 h-[1px] sm:mr-4 mr-1.5  rounded-full ${activeStep >= 2 ? "bg-primaryDeepColor " : "bg-gray-500"
+                    }`}
                 ></div>
               </p>
               {/* Step - 3 */}
               <p
-                className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center  cursor-pointer ${
-                  activeStep >= 3 ? "text-primaryDeepColor" : "text-gray-700"
-                }`}
-                onClick={() => handleStepClick(3)}
+                className={`md:text-xl sm:text-lg font-semibold pb-2 flex gap-1 items-center ${activeStep >= 3 ? "text-primaryDeepColor" : "text-gray-700"
+                  }`}
+              // onClick={() => handleStepClick(3)}
               >
                 <span
-                  className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${
-                    activeStep >= 3 ? "bg-primaryDeepColor" : "bg-gray-400 "
-                  } `}
+                  className={`sm:w-6  sm:h-6 w-4 h-4 sm:text-[14px] text-[10px] flex items-center justify-center text-white rounded-full mr-1    ${activeStep >= 3 ? "bg-primaryDeepColor" : "bg-gray-400 "
+                    } `}
                 >
                   3
                 </span>{" "}

@@ -301,7 +301,7 @@ const Address = ({
               }`}
             onClick={() => handleLocationClick("shop")}
           >
-            Shop
+            Our Shop
           </button>
         </div>
         {selectedDeliveryLocation === "home" && (

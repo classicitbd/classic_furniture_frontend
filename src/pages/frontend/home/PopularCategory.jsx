@@ -49,7 +49,7 @@ const PopularCategory = () => {
               key={category?._id}
               className="bg-white shadow p-5 rounded-md hover:shadow-xl transition"
             >
-              <Link to={"/category"}>
+              <Link to={`/all?category=${category?.category_slug}`}>
                 <div className="text-center">
                   <img
                     className="w-full h-36 mx-auto"

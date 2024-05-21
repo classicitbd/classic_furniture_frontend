@@ -50,7 +50,7 @@ export default function TopHeader() {
                             <div className="email flex items-center">
                                 <Link
                                     to='/order-tracking'
-                                    className="ml-2 text-ftMuteColor text-[13px] font-light"
+                                    className="ml-2 text-ftMuteColor font-semibold underline"
                                 >
                                     Track Order
                                 </Link>
