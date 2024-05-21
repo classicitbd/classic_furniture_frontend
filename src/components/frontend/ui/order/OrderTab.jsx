@@ -58,7 +58,7 @@ const OrderTab = ({ user }) => {
   return (
     <div>
       {/* ------ Order info tabs ------ start */}
-      <div className="grid lg:grid-cols-5 grid-cols-2 mt-6 gap-3 py-6">
+      <div className="xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2  grid  mt-6 gap-3 py-6">
         <div className="bg-[#D4F3FB] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] flex items-center justify-center bg-[#00B7E9] rounded-full">
@@ -67,7 +67,7 @@ const OrderTab = ({ user }) => {
           </div>
           <div>
             <p className="text-end">Total</p>
-            <h2 className="font-medium text-[16px] md:text-[24px]">
+            <h2 className="font-medium text-[12px] sm:text-[16px] md:text-[24px]">
               {products?.length}
             </h2>
           </div>
@@ -81,7 +81,7 @@ const OrderTab = ({ user }) => {
           </div>
           <div>
             <p className="text-end">Pending</p>
-            <h2 className="font-medium text-[16px] md:text-[24px]">
+            <h2 className="font-medium text-[12px] sm:text-[16px] md:text-[24px]">
               {orderPending?.length}
             </h2>
           </div>
@@ -94,7 +94,7 @@ const OrderTab = ({ user }) => {
           </div>
           <div>
             <p className="text-end">Cancel</p>
-            <h2 className="font-medium text-[16px] md:text-[24px]">
+            <h2 className="font-medium text-[12px] sm:text-[16px] md:text-[24px]">
               {orderCancel?.length}
             </h2>
           </div>
@@ -108,7 +108,7 @@ const OrderTab = ({ user }) => {
           </div>
           <div>
             <p className="text-end">Success</p>
-            <h2 className="font-medium text-[16px] md:text-[24px]">
+            <h2 className="font-medium text-[12px] sm:text-[16px] md:text-[24px]">
               {orderSuccess?.length}
             </h2>
           </div>
@@ -122,8 +122,8 @@ const OrderTab = ({ user }) => {
           </div>
           <div>
             <p className="text-end">Order Price</p>
-            <h2 className="font-medium text-[16px] md:text-[24px]">
-              ৳ {totalPrice}.00
+            <h2 className="text-end font-medium text-[12px] sm:text-[16px] md:text-[20px]">
+              {totalPrice}.00 ৳
             </h2>
           </div>
         </div>

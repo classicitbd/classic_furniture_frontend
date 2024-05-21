@@ -77,7 +77,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {isViewData?.map((order, index) => (
+                    {isViewData?.order_products?.map((order, index) => (
                       <tr key={order?._id}>
                         <td className="whitespace-nowrap px-4 py-2 font-semibold">
                           {index + 1}
@@ -96,7 +96,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                         <td
                           className={`whitespace-nowrap px-4 py-2 font-semibold`}
                         >
-                          {order?.price}
+                          ৳ {order?.price}
                         </td>
                         <td className="whitespace-nowrap px-4 py-2 font-semibold">
                           {order?.quantity}
@@ -119,7 +119,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                 </table>
               </div>
               <h2 className="text-xl font-semibold text-sky-500 text-end mb-3">
-                Total Price : {isViewData?.total_amount}
+                Total Price : ৳ {isViewData?.total_amount}
               </h2>
             </div>
 
