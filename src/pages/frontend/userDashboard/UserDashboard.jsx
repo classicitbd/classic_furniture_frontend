@@ -9,7 +9,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import ChangePassword from "./ChangePassword";
 
 const UserDashboard = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   const {
     data: userData = [],
@@ -35,15 +35,15 @@ const UserDashboard = () => {
   //   }
   // }, []);
 
-  if (!user) {
-    return navigate("/sign-in");
-  }
-  if (isLoading) {
+  if (isLoading || loading) {
     return (
       <div>
         <Loader />
       </div>
     );
+  }
+  if (!user) {
+    return navigate("/sign-in");
   }
   return (
     <div className=" border-t mt-4">
