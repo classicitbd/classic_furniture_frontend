@@ -42,6 +42,10 @@ export default function RightSideAmount({
   };
 
   const handlePaymentAll = async () => {
+    if (!deliveryType){
+      toast.error("Please select delivery type")
+      return;
+    }
     setLoading(true)
     const total_product_price = calculateSubtotal(cart);
     const sendData = {

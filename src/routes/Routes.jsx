@@ -40,6 +40,7 @@ import ProductYoutubeVideoPage from "../pages/frontend/productYoutubeVideo/Produ
 import ProductDetailsPage from "../pages/frontend/details/ProductDetailsPage";
 import OrderTracking from "../pages/frontend/order_tracking/OrderTracking";
 import OrderTrackingDetails from "../pages/frontend/orderTrackingDetails/OrderTrackingDetails";
+import PaymentSuccess from "../pages/frontend/payment-success/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -68,12 +69,16 @@ const router = createBrowserRouter([
         element: <PrivateRoute><CheckoutPage /></PrivateRoute>,
       },
       {
-        path: "/payment-success/:tranId",
+        path: "/order-success/:tranId",
         element: <SuccessPage />,
       },
       {
         path: "/payment-fail/:tranId",
         element: <FailPage />,
+      },
+      {
+        path: "/payment-success/:tranId",
+        element: <PaymentSuccess />,
       },
       {
         path: "/user-profile",

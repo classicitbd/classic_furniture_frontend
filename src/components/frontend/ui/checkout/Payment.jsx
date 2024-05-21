@@ -48,6 +48,10 @@ const Payment = ({ userData }) => {
   const [order] = useOrderMutation();
 
   const handlePartialPayment = async () => {
+    if (!deliveryType) {
+      toast.error("Please select delivery type")
+      return;
+    }
     setParLoading(true)
     const total_product_price = calculateSubtotal(partialPayProducts);
     const partial_pay_amount = calculatePartialSubtotal(partialPayProducts);
@@ -79,6 +83,10 @@ const Payment = ({ userData }) => {
   }
 
   const handleCODPayment = async () => {
+    if (!deliveryType) {
+      toast.error("Please select delivery type")
+      return;
+    }
     setCodLoading(true)
     const total_product_price = calculateSubtotal(codProducts);
     const sendData = {
@@ -98,9 +106,9 @@ const Payment = ({ userData }) => {
     const res = await order(sendData);
 
     if (res?.data?.statusCode == 200 && res?.data?.success == true) {
-        navigate(`/payment-success/cash-on-delivery`);
-        localStorage.removeItem(cartKey);
-        window.location.reload();
+      navigate(`/order-success/cash-on-delivery`);
+      localStorage.removeItem(cartKey);
+      window.location.reload();
     } else {
       setCodLoading(false);
       toast.error(res?.error?.data?.message);
