@@ -17,9 +17,10 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { useQuery } from "@tanstack/react-query";
 import BigSpinner from "../../../shared/loader/BigSpinner";
 import { FaCartPlus, FaMoneyBillAlt } from "react-icons/fa";
-import OrderCompleteModal from "./OrderCompleteModal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useOrderStatusUpdateMutation, useOrderTypeUpdateMutation } from "../../../redux/feature/order/orderApi";
+import { toast } from "react-toastify";
 
 const OrderTable = () => {
   const [loading, setLoading] = useState(false);
@@ -31,9 +32,6 @@ const OrderTable = () => {
   const [isViewData, setIsViewData] = useState({});
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleteData, setIsDeleteData] = useState({});
-
-  const [isCompleteOpen, setIsCompleteOpen] = useState(false);
-  const [isCompleteData, setIsCompleteData] = useState("");
 
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
@@ -153,17 +151,56 @@ const OrderTable = () => {
     setIsDeleteOpen(true);
   };
 
-  // open complete modal
-  const handleOrderComplete = (data) => {
-    setIsCompleteData(data);
-    setIsCompleteOpen(true);
+  const [updateOrderStatus] = useOrderStatusUpdateMutation(); //Update Order Status
+  const [updateOrderType] = useOrderTypeUpdateMutation(); //Update Order Status
+
+  const handleOrderStatus = (status, _id) => {
+    const sendData = {
+      order_status: status,
+      _id,
+    };
+    updateOrderStatus(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Order status update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message);
+      }
+    });
+  };
+
+  const handleOrderType = (type, _id) => {
+    const sendData = {
+      order_type: type,
+      _id,
+    };
+    updateOrderType(sendData).then((result) => {
+      if (result?.data?.statusCode == 200 && result?.data?.success == true) {
+        toast.success(
+          result?.data?.message
+            ? result?.data?.message
+            : "Order type update successfully !",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+      } else {
+        toast.error(result?.error?.data?.message);
+      }
+    });
   };
 
   if (isLoading || loading) {
     return <BigSpinner />;
   }
-
-  console.log(products);
 
   return (
     <div>
@@ -310,7 +347,7 @@ const OrderTable = () => {
       {
         // orders?.data?.length > 0 ?
         products?.length > 0 ? (
-          <div className="mt-5 overflow-x-auto rounded bg-white">
+          <div className="mt-5 overflow-x-auto rounded bg-white scrollbar-thin pb-2">
             <table className="min-w-full divide-y-2 divide-gray-200 text-sm">
               <thead>
                 <tr>
@@ -330,10 +367,28 @@ const OrderTable = () => {
                     Transaction Id
                   </th>
                   <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                    Status
+                    Order Status
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                    Payment Type
                   </th>
                   <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                     Payment
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                    Payment Status
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                    Total Price
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                    Pay
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                    Due
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                    Delivery
                   </th>
                   <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
                     Action
@@ -360,12 +415,58 @@ const OrderTable = () => {
                       {order?.transaction_id || "N/A"}
                     </td>
 
-                    <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
-                      {order?.order_type}
+                    <td
+                      className={`whitespace-nowrap py-2 font-semibold capitalize`}
+                    >
+                      {/* {order?.order_status} */}
+                      <select
+                        onChange={(e) =>
+                          handleOrderStatus(e.target.value, order?._id)
+                        }
+                        id="order_status"
+                        className="block w-full px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                      >
+                        <option selected value={order?.order_status}>
+                          {order?.order_status}
+                        </option>
+                        {order?.order_status !== "pending" && (
+                          <option value="pending">Pending</option>
+                        )}
+                        {order?.order_status !== "processing" && (
+                          <option value="processing">Processing</option>
+                        )}
+                        {order?.order_status !== "complete" && (
+                          <option value="complete">Complete</option>
+                        )}
+                        {order?.order_status !== "delivered" && (
+                          <option value="delivered">Delivered</option>
+                        )}
+                      </select>
                     </td>
 
                     <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
                       {order?.payment_type}
+                    </td>
+
+                    <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
+                      {order?.payment_method}
+                    </td>
+                    <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
+                      {order?.payment_status}
+                    </td>
+
+                    <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
+                      {order?.total_amount}
+                    </td>
+                    <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
+                      {order?.pay_amount}
+                    </td>
+
+                    <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
+                      {order?.due_amount}
+                    </td>
+                    <td className={`whitespace-nowrap px-4 py-2 font-semibold`}>
+                      {order?.delivery_method}
                     </td>
 
                     <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
@@ -374,18 +475,26 @@ const OrderTable = () => {
                         className="cursor-pointer text-gray-500 hover:text-gray-300"
                         size={25}
                       />
-                      {order?.order_type == "success" && order?.payment_type == "paid" ? (
-                        <button className="btn bg-green-500 hover:bg-green-400 border border-gray-300 rounded-md text-sm text-white p-2 btn-sm">
-                          Completed
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleOrderComplete(order)}
-                          className="btn bg-blue-500 hover:bg-blue-400 border border-gray-300 rounded-md text-sm text-white p-2 btn-sm"
-                        >
-                          Complete?
-                        </button>
-                      )}
+                      <select
+                        onChange={(e) =>
+                          handleOrderType(e.target.value, order?._id)
+                        }
+                        id="order_type"
+                        className="px-2 py-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
+                      >
+                        <option selected value={order?.order_type}>
+                          {order?.order_type}
+                        </option>
+                        {order?.order_type !== "pending" && (
+                          <option value="pending">Pending</option>
+                        )}
+                        {order?.order_type !== "success" && (
+                          <option value="success">Success</option>
+                        )}
+                        {order?.order_type !== "cancel" && (
+                          <option value="cancel">Cancel</option>
+                        )}
+                      </select>
                       <MdDeleteForever
                         onClick={() => handleDelete(order)}
                         className="cursor-pointer text-red-500 hover:text-red-300"
@@ -416,15 +525,6 @@ const OrderTable = () => {
       {/* Handle open view modal */}
       {isViewOpen && (
         <OrderView setIsViewOpen={setIsViewOpen} isViewData={isViewData} />
-      )}
-
-      {/* Handle open Complete modal */}
-      {isCompleteOpen && (
-        <OrderCompleteModal
-          setIsCompleteOpen={setIsCompleteOpen}
-          isCompleteData={isCompleteData}
-          refetch={refetch}
-        />
       )}
 
       {/* Handle open delete modal */}

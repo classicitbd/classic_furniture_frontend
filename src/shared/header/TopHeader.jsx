@@ -34,7 +34,7 @@ export default function TopHeader() {
                         <div className="left flex items-center gap-4">
                             <div className="email flex items-center">
                                 <Link
-                                    to="mailto: develoer@dev.com"
+                                    to='/order-tracking'
                                     className="ml-2 text-ftMuteColor text-[13px] font-light"
                                 >
                                     Track Order

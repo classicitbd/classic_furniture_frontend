@@ -7,10 +7,7 @@ const OrderDeleteModal = ({ setIsDeleteOpen, isDeleteData, refetch }) => {
 
   const handleDelete = () => {
     const sendData = {
-      status: isDeleteData?.status,
-      type: isDeleteData?.type,
-      _id: isDeleteData?._id,
-      allData: isDeleteData,
+      _id: isDeleteData?._id
     };
     deleteOrder(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
