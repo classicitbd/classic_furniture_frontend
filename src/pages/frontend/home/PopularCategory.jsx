@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetCategoryQuery } from "../../../redux/feature/category/categoryApi";
-import MiniSpinner from "../../../shared/loader/MiniSpinner";
+import Loader from "../../../shared/loader/Loader";
 
 const PopularCategory = () => {
   const { data: categories, isLoading } = useGetCategoryQuery(undefined, {
@@ -30,9 +30,7 @@ const PopularCategory = () => {
 
   if (isLoading)
     return (
-      <div>
-        <MiniSpinner />
-      </div>
+        <Loader />
     );
   return (
     <div className="es_container mx-auto md:px-20 xl:px-0 px-5">

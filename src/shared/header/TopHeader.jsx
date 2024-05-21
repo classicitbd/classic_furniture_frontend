@@ -2,9 +2,26 @@ import { IoCallOutline } from 'react-icons/io5'
 import { CiMail } from 'react-icons/ci'
 import "./header.css"
 import { Link } from 'react-router-dom'
+import Loader from '../loader/Loader'
+import { BASE_URL } from '../../utils/baseURL'
+import { useQuery } from '@tanstack/react-query'
 
 
 export default function TopHeader() {
+
+    const { data: settings = [], isLoading } = useQuery({
+        queryKey: [`/api/v1/siteSetting`],
+        queryFn: async () => {
+            const res = await fetch(`${BASE_URL}/siteSetting`)
+            const data = await res.json();
+            return data?.data;
+        }
+    })
+
+    if (isLoading) {
+        return <Loader />
+    }
+
     return (
         <div className="bg-[#008140] text-white">
             <div className="es_container">
@@ -12,21 +29,19 @@ export default function TopHeader() {
                     <div className="left flex items-center gap-4">
                         <div className="number ms-20 xl:ms-0 flex items-center ">
                             <IoCallOutline className="text-ftPrimaryColor" />
-                            <Link
-                                to="tel:+91 98765433345"
+                            <p
                                 className=" text-ftMuteColor text-[13px] font-light"
                             >
-                                +91 9876543210
-                            </Link> <span className='ms-3'>|</span>
+                                {settings[0]?.emergency_contact}
+                            </p> <span className='ms-3'>|</span>
                         </div>
                         <div className="email flex items-center">
                             <CiMail className="text-ftPrimaryColor" />
-                            <Link
-                                to="mailto: develoer@dev.com"
+                            <p
                                 className=" text-ftMuteColor text-[13px] font-light"
                             >
-                                classicit@gmail.com
-                            </Link>
+                                {settings[0]?.email}
+                            </p>
                         </div>
 
                     </div>
@@ -38,15 +53,6 @@ export default function TopHeader() {
                                     className="ml-2 text-ftMuteColor text-[13px] font-light"
                                 >
                                     Track Order
-                                </Link> <span className='ms-3'>|</span>
-                            </div>
-
-                            <div className="email flex items-center">
-                                <Link
-                                    to="mailto: develoer@dev.com"
-                                    className=" text-ftMuteColor text-[13px] font-light"
-                                >
-                                    Help Center
                                 </Link>
                             </div>
                             {/* <div className="email flex items-center">

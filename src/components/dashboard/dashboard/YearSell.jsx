@@ -1,3 +1,4 @@
+"use client";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -39,18 +40,18 @@ const YearSell = ({ thisYearSellData }) => {
       {
         label: "Total Order Count",
         data: Array(12).fill(0),
-        backgroundColor: "#EFADF3",
+        backgroundColor: "#F27F21",
         borderRadius: 8,
         barThickness: 16,
-        hoverBackgroundColor: "#837DFB",
+        hoverBackgroundColor: "#3BB77E",
       },
       {
         label: "Total Sell Count",
         data: Array(12).fill(0),
-        backgroundColor: "#BB33FF",
+        backgroundColor: "#FEB60D",
         borderRadius: 8,
         barThickness: 16,
-        hoverBackgroundColor: "#837DFB",
+        hoverBackgroundColor: "#9771FF",
       },
     ],
   });
@@ -87,10 +88,10 @@ const YearSell = ({ thisYearSellData }) => {
     const monthlyOrderCountData = Array(12).fill(0);
 
     // Update the total sell count and total order count for each month
-    thisYearSellData.forEach((order) => {
-      const month = new Date(order.createdAt).getMonth();
+    thisYearSellData?.forEach((order) => {
+      const month = new Date(order?.createdAt).getMonth();
       monthlySellData[month] += 1; // Assuming each order contributes to the sell count
-      monthlyOrderCountData[month] += order.order.length;
+      monthlyOrderCountData[month] += order?.order_products?.length;
     });
 
     // Update the chart data only if it has changed

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useGetCategoryWiseProductQuery } from "../../../redux/feature/categoryWiseProduct/categoryWiseProductApi";
-import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { Link } from "react-router-dom";
+import Loader from "../../../shared/loader/Loader";
 const CategoryWiseProduct = () => {
   const { data: products, isLoading } = useGetCategoryWiseProductQuery(
     undefined,
@@ -37,9 +37,7 @@ const CategoryWiseProduct = () => {
 
   if (isLoading)
     return (
-      <div>
-        <MiniSpinner />
-      </div>
+        <Loader />
     );
   return (
     <div className="es_container mx-auto md:px-20 xl:px-0 px-5 py-10">

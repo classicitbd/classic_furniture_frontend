@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { BiSearch } from "react-icons/bi";
 import OrderDeleteModal from "./OrderDeleteModal";
-import OrderView from "./OrderView";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { BASE_URL } from "../../../utils/baseURL";
 import Pagination from "../../../shared/pagination/Pagination";
@@ -21,6 +20,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useOrderStatusUpdateMutation, useOrderTypeUpdateMutation } from "../../../redux/feature/order/orderApi";
 import { toast } from "react-toastify";
+import OrderView from "./orderView/OrderView";
 
 const OrderTable = () => {
   const [loading, setLoading] = useState(false);
