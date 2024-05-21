@@ -18,6 +18,8 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
   //   }, 10);
   // };
 
+  console.log(isViewData);
+
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 px-2">
@@ -65,9 +67,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                       <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                         Quantity
                       </th>
-                      <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                        Shipping Price
-                      </th>
+
                       <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                         Color
                       </th>
@@ -77,7 +77,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {isViewData?.order?.map((order, index) => (
+                    {isViewData?.map((order, index) => (
                       <tr key={order?._id}>
                         <td className="whitespace-nowrap px-4 py-2 font-semibold">
                           {index + 1}
@@ -85,13 +85,13 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                         <td className="whitespace-nowrap px-4 py-2 font-semibold">
                           <img
                             loading="lazy"
-                            src={order?.thumbnail_image}
+                            src={order?.product_thumbnail}
                             alt="image"
                             className="w-20 h-20"
                           />
                         </td>
                         <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                          {order?.title}
+                          {order?.product_name}
                         </td>
                         <td
                           className={`whitespace-nowrap px-4 py-2 font-semibold`}
@@ -100,9 +100,6 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                         </td>
                         <td className="whitespace-nowrap px-4 py-2 font-semibold">
                           {order?.quantity}
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                          {isViewData?.shipping_price}
                         </td>
 
                         <td
@@ -122,7 +119,7 @@ const OrderViewModal = ({ setIsViewOpen, isViewData }) => {
                 </table>
               </div>
               <h2 className="text-xl font-semibold text-sky-500 text-end mb-3">
-                Total Price : {isViewData?.totalPrice}
+                Total Price : {isViewData?.total_amount}
               </h2>
             </div>
 
