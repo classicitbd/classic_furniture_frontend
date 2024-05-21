@@ -54,18 +54,18 @@ const UserDashboard = () => {
         >
           <button
             onClick={() => setActive("profile")}
-            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-800 border-b hover:border-b-success-400 ${
+            className={`shrink-0 rounded-lg sm:px-2 py-2 px-1 text-[12px] sm:text-sm font-medium text-gray-600 hover:bg-[#DEF6EE]  duration-200 hover:text-gray-800 border-b hover:border-b-success-400 ${
               active === "profile" &&
-              "border-b-success-400 text-primaryDeepColor bg-gray-100"
+              "border-b-success-400 text-primaryDeepColor bg-[#DEF6EE]"
             }`}
           >
             My Profile
           </button>
           <button
             onClick={() => setActive("change-password")}
-            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 border-b hover:border-b-success-400 ${
+            className={`shrink-0 rounded-lg sm:px-2 py-2 pl-1 text-[12px] sm:text-sm font-medium text-gray-500 hover:bg-[#DEF6EE] duration-200 hover:text-gray-700 border-b hover:border-b-success-400 ${
               active === "change-password" &&
-              "border-b-success-400 text-primaryDeepColor bg-gray-100"
+              "border-b-success-400 text-primaryDeepColor bg-[#DEF6EE]"
             }`}
           >
             Change Password
@@ -73,9 +73,9 @@ const UserDashboard = () => {
 
           <button
             onClick={() => setActive("order")}
-            className={`shrink-0 rounded-lg p-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-800 border-b hover:border-b-success-400 ${
+            className={`shrink-0 rounded-lg sm:px-2 py-2 pl-1 text-[12px] sm:text-sm font-medium text-gray-600 hover:bg-[#DEF6EE] duration-200 hover:text-gray-800 border-b hover:border-b-success-400 ${
               active === "order" &&
-              "border-b-success-400 text-primaryDeepColor bg-gray-100"
+              "border-b-success-400 text-primaryDeepColor bg-[#DEF6EE]"
             }`}
           >
             My Order
