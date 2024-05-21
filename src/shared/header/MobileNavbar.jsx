@@ -62,7 +62,10 @@ export default function MobileNavbar({ quantity }) {
           onClick={toggleDropdown}
         />
         {showDropdown && (
-          <div className="absolute top-10 -right-3 bg-white shadow-lg rounded-lg py-2">
+          <div
+            className="absolute bottom-10 -right-3 bg-white shadow-lg rounded-lg py-2"
+            onClick={() => setShowDropdown(false)}
+          >
             {user?.user_phone ? (
               <>
                 <Link

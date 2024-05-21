@@ -7,6 +7,7 @@ import { FaCartPlus, FaMoneyBillAlt } from "react-icons/fa";
 import { GrCompliance } from "react-icons/gr";
 import { CgSandClock } from "react-icons/cg";
 import BigSpinner from "../../../../shared/loader/BigSpinner";
+import { MdOutlineCancel } from "react-icons/md";
 
 const OrderTab = ({ user }) => {
   const [products, setProducts] = useState([]);
@@ -16,11 +17,11 @@ const OrderTab = ({ user }) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${BASE_URL}/order/${user?.phone}`).then((response) => {
+    axios.get(`${BASE_URL}/order/${user?.user_phone}`).then((response) => {
       setProducts(response?.data?.data);
       setLoading(false);
     });
-  }, [user?.phone]);
+  }, [user?.user_phone]);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -37,14 +38,17 @@ const OrderTab = ({ user }) => {
   };
 
   const orderPending = products.filter(
-    (product) => product.status === "pending"
+    (product) => product.order_type === "pending"
   );
   const orderSuccess = products.filter(
-    (product) => product.status === "complete"
+    (product) => product.order_type === "success"
+  );
+  const orderCancel = products.filter(
+    (product) => product.order_type === "cancel"
   );
 
   const totalPrice = products.reduce((total, product) => {
-    return total + product.totalPrice;
+    return total + product.total_amount;
   }, 0);
 
   if (loading) {
@@ -54,7 +58,7 @@ const OrderTab = ({ user }) => {
   return (
     <div>
       {/* ------ Order info tabs ------ start */}
-      <div className="grid lg:grid-cols-4 grid-cols-2 mt-6 gap-3">
+      <div className="grid lg:grid-cols-5 grid-cols-2 mt-6 gap-3 py-6">
         <div className="bg-[#D4F3FB] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] flex items-center justify-center bg-[#00B7E9] rounded-full">
@@ -69,7 +73,7 @@ const OrderTab = ({ user }) => {
           </div>
         </div>
 
-        <div className="bg-[#DEF6EE] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
+        <div className=" bg-[#EAE9FE] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] flex items-center justify-center bg-[#3EC99E] rounded-full">
               <CgSandClock size={20} color="#FFFFFF" />
@@ -82,8 +86,21 @@ const OrderTab = ({ user }) => {
             </h2>
           </div>
         </div>
+        <div className="bg-red-50 rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
+          <div>
+            <p className="w-[30px] h-[30px] flex items-center justify-center bg-red-500 rounded-full">
+              <MdOutlineCancel size={20} color="#FFFFFF" />
+            </p>
+          </div>
+          <div>
+            <p className="text-end">Cancel</p>
+            <h2 className="font-medium text-[16px] md:text-[24px]">
+              {orderCancel?.length}
+            </h2>
+          </div>
+        </div>
 
-        <div className="bg-[#EAE9FE] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
+        <div className="bg-[#DEF6EE] rounded-xl border border-gray-300 flex items-center justify-between p-3 md:p-6 gap-4">
           <div>
             <p className="w-[30px] h-[30px] flex justify-center items-center bg-[#837DFB] rounded-full">
               <GrCompliance size={20} color="#FFFFFF" />
@@ -114,7 +131,7 @@ const OrderTab = ({ user }) => {
       {/* ------ Order info tabs ------ end */}
       {/* ------ order table ------ start */}
       {products?.length > 0 ? (
-        <div className="mt-5 overflow-x-auto rounded bg-white">
+        <div className="mt-5 overflow-x-auto scrollbar-thin rounded bg-white py-6">
           <table className="min-w-full divide-y-2 divide-gray-200 text-sm">
             <thead className="shadow">
               <tr>
@@ -124,17 +141,33 @@ const OrderTab = ({ user }) => {
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Order Time
                 </th>
+
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Method
+                  Payment Status
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Buying Type
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Total Amount
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Pay Amount
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Due Amount
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
                   Transaction Id
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Shipping Type
+                  Order Type
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                  Payment Type
+                  Order Status
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                  Delivery Method
                 </th>
                 <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
                   Action
@@ -145,50 +178,91 @@ const OrderTab = ({ user }) => {
             <tbody className="divide-y divide-gray-200">
               {products?.map((order) => (
                 <tr key={order?._id}>
+                  {/* Order id */}
                   <td className="whitespace-nowrap px-4 py-2 font-light text-black">
-                    {order?.orderId}
+                    {order?.order_id}
                   </td>
-
+                  {/* Order time */}
                   <td
                     className={`whitespace-nowrap px-4 py-2 font-light text-black`}
                   >
                     {formatDate(order?.createdAt)}
                   </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-light text-black">
-                    {order?.payment_type || "N/A"}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 font-light text-black">
-                    {order?.transactionId || "N/A"}
-                  </td>
 
+                  {/* Payment Status */}
                   <td
                     className={`whitespace-nowrap px-4 py-2 font-light text-black `}
                   >
                     <span
                       className={`px-2 ${
-                        order?.status === "pending"
+                        order?.payment_status === "pending"
                           ? "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
                           : "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                       }`}
                     >
-                      {order?.status === "pending" ? "processing" : "delivered"}
+                      {order?.payment_status}
                     </span>
                   </td>
+                  {/* Buying type */}
+                  <td className="whitespace-nowrap px-4 py-2 font-light text-black">
+                    {order?.buying_type || "N/A"}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 font-light text-black">
+                    {order?.total_amount} ৳
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 font-light text-black">
+                    {order?.pay_amount} ৳
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 font-light text-black">
+                    {order?.due_amount} ৳
+                  </td>
 
+                  {/* Transaction id */}
+                  <td className="whitespace-nowrap px-4 py-2 font-light text-black">
+                    {order?.transaction_id || "N/A"}
+                  </td>
+
+                  {/* Order type pending or success or cancel */}
                   <td
-                    className={`whitespace-nowrap px-4 py-2 font-light text-black`}
+                    className={`whitespace-nowrap px-4 py-2 font-light text-black `}
                   >
                     <span
                       className={`px-2 ${
-                        order?.type === "unpaid"
-                          ? "inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10"
+                        order?.order_type === "pending" &&
+                        "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
+                      } ${
+                        order?.order_type === "success" &&
+                        "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+                      } ${
+                        order?.order_type === "cancel" &&
+                        "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-600/20"
+                      }`}
+                    >
+                      {order?.order_type}
+                    </span>
+                  </td>
+                  {/* Order status delivered or pending or processing */}
+                  <td
+                    className={`whitespace-nowrap px-4 py-2 font-light text-black `}
+                  >
+                    <span
+                      className={`px-2 ${
+                        order?.order_status === "pending" ||
+                        order?.order_status === "processing"
+                          ? "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
                           : "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                       }`}
                     >
-                      {order?.type}
+                      {order?.order_status}
                     </span>
                   </td>
+                  {/* Delivery method "home" | "shop"; */}
 
+                  <td className="whitespace-nowrap px-4 py-2 font-light text-black">
+                    {order?.delivery_method}
+                  </td>
+
+                  {/* details button */}
                   <td
                     onClick={() => handleView(order)}
                     className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4"
