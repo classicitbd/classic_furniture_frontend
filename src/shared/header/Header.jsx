@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FaRegUser, FaShoppingCart, FaYoutube } from "react-icons/fa";
 import "./header.css";
 import MobileNavbar from "./MobileNavbar";
@@ -27,8 +27,24 @@ export default function Header() {
   const cart = useSelector((state) => state.furnitureCart.products);
   const quantity = useSelector((state) => state?.furnitureCart?.quantity);
   const subtotal = useSelector((state) => state?.furnitureCart?.subtotal);
+  const [value, setValue] = useState("");
+  const [queryParameters] = useSearchParams();
+  const navigate = useNavigate();
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
+  };
+  const handleSearch = (text) => {
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("keyword", text);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleSearch(value);
+    setValue("");
   };
 
   const handleLogout = () => {
@@ -64,7 +80,10 @@ export default function Header() {
               </span>
             </Link>
             <div className="search flex-1">
-              <form className="flex flex-1 justify-between lg:max-w-5xl items-center">
+              <form
+                className="flex flex-1 justify-between lg:max-w-5xl items-center"
+                onSubmit={handleSubmit}
+              >
                 <div className="relative flex items-center w-full">
                   <input
                     id="search"
@@ -72,7 +91,8 @@ export default function Header() {
                     placeholder="Search Here"
                     className="w-full px-3 py-2 focus:outline-none border border-gray-300 rounded-l-md text-gray-800"
                     name="search"
-                    defaultValue=""
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
                   />
                   <button
                     type="submit"

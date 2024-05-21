@@ -1,7 +1,7 @@
 import { useGetCategoryQuery } from "../../../redux/feature/category/categoryApi";
 import { useGetColorQuery } from "../../../redux/feature/color/colorApi";
 import { IoClose, IoFilterOutline } from "react-icons/io5";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "../../../shared/loader/Loader";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { useEffect, useState, useRef } from "react";
@@ -10,6 +10,7 @@ import { BASE_URL } from "../../../utils/baseURL";
 import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 import PriceRangeSlider from "./PriceRangeSlider";
+import { RxReload } from "react-icons/rx";
 
 export default function AllProducts() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -109,6 +110,15 @@ export default function AllProducts() {
     }
   };
 
+  const handleResetFilter = () => {
+    setSelectedCategory(null);
+    setSelectedColor(null);
+    setMaxPrice(200000);
+    setMinPrice(1);
+    setProducts(defaultProducts);
+    navigate("/all");
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -140,31 +150,57 @@ export default function AllProducts() {
       <main className="es_container mx-auto">
         <section className="py-6 mx-4">
           <div className="p-4 bg-white sm:px-6 rounded">
-            <div className="flex justify-between items-center">
+            <div className="flex sm:justify-between items-center">
               <div className="flex items-center justify-center">
                 <p className="sm:text-xl font-semibold text-primaryDeepColor hidden sm:flex">
                   Products {products?.length}
                 </p>
               </div>
               <div
-                className="flex items-center justify-center flex-wrap
+                className="flex items-center sm:w-auto w-full justify-between sm:justify-center flex-wrap
                gap-4"
               >
-                <span
-                  className="text-gray-800 mr-2 items-center gap-2 flex bg-gray-100 p-2 rounded lg:hidden"
-                  onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-                >
-                  <IoFilterOutline size={20} /> <span>Filter</span>
-                </span>
-                <p className="hidden sm:flex">Sort By </p>
-                <select
-                  className="border border-primaryLightColor rounded-md px-2 py-1 text-[12px]"
-                  onChange={(e) => sortedProducts(e.target.value)}
-                >
-                  <option value="Default">Price: Default</option>
-                  <option value="price-asc">Price: Low to High</option>
-                  <option value="price-desc">Price: High to Low</option>
-                </select>
+                <div className="flex gap-2 items-center ">
+                  <span
+                    className="text-gray-800 mr-2 items-center gap-2 flex bg-gray-100 p-2 rounded lg:hidden"
+                    onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+                  >
+                    <IoFilterOutline size={20} /> <span>Filter</span>
+                  </span>
+                  {queryParameters.size > 0 && (
+                    <li>
+                      <span
+                        className="hidden bg-gray-100  shadow p-1 rounded sm:block"
+                        onClick={handleResetFilter}
+                      >
+                        Reset Filter
+                      </span>
+                      <span
+                        onClick={handleResetFilter}
+                        className="block sm:hidden"
+                      >
+                        <RxReload />
+                      </span>
+                    </li>
+                  )}
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <p className="hidden sm:flex">Sort By </p>
+                  <select
+                    className="border  border-primaryLightColor rounded-md px-2 py-1 text-[12px]"
+                    onChange={(e) => sortedProducts(e.target.value)}
+                  >
+                    <option className="text-[12px]" value="Default">
+                      Price: Default
+                    </option>
+                    <option className="text-[12px]" value="price-asc">
+                      Price: Low to High
+                    </option>
+                    <option className="text-[12px]" value="price-desc">
+                      Price: High to Low
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
