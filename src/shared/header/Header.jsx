@@ -1,7 +1,6 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FaRegUser, FaShoppingCart, FaYoutube } from "react-icons/fa";
 import "./header.css";
-import logo from "../../assets/images/furniture-logo.png";
 import MobileNavbar from "./MobileNavbar";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthProvider";
@@ -9,7 +8,20 @@ import { eraseCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
 import { useSelector } from "react-redux";
 import { BsCart2 } from "react-icons/bs";
+import Loader from "../loader/Loader";
+import { BASE_URL } from "../../utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
 export default function Header() {
+
+  const { data: settings = [], isLoading } = useQuery({
+    queryKey: [`/api/v1/siteSetting`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/siteSetting`)
+      const data = await res.json();
+      return data?.data;
+    }
+  })
+
   const { user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
   const cart = useSelector((state) => state.furnitureCart.products);
@@ -52,6 +64,11 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+
+  if (isLoading){
+    return <Loader />
+  }
+
   return (
     <div className=" text-white shadow-sm">
       <div className="es_container">
@@ -59,13 +76,8 @@ export default function Header() {
           <div className=" items-center justify-between gap-2 py-2 hidden lg:flex">
             <Link className="cart flex items-center gap-2  md:ms-20  xl:ms-0">
               <span className="icon hidden lg:block">
-                <img className="w-16" src={logo} alt="" />
+                <img className="" src={settings[0]?.logo} alt="" />
               </span>
-              <div className="flex flex-col text-[#008140] ">
-                <span className="text-ftMuteColor text-[20px] font-bold hidden lg:block">
-                  Classic Furniture
-                </span>
-              </div>
             </Link>
             <div className="search flex-1">
               <form

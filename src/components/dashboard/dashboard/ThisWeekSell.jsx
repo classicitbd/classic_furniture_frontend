@@ -1,3 +1,5 @@
+"use client";
+
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -19,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-const WeekSell = ({ thisWeekSellData }) => {
+const ThisWeekSell = ({ thisWeekSellData }) => {
   const [chartData, setChartData] = useState({
     labels: [
       "Sunday",
@@ -34,18 +36,18 @@ const WeekSell = ({ thisWeekSellData }) => {
       {
         label: "Total Order Count",
         data: Array(7).fill(0),
-        backgroundColor: "#EFADF3",
+        backgroundColor: "#3BB77E",
         borderRadius: 8,
         barThickness: 16,
-        hoverBackgroundColor: "#837DFB",
+        hoverBackgroundColor: "#F27F21",
       },
       {
         label: "Total Sell Count",
         data: Array(7).fill(0),
-        backgroundColor: "#BB33FF",
+        backgroundColor: "#9771FF",
         borderRadius: 8,
         barThickness: 16,
-        hoverBackgroundColor: "#837DFB",
+        hoverBackgroundColor: "#FEB60D",
       },
     ],
   });
@@ -82,10 +84,10 @@ const WeekSell = ({ thisWeekSellData }) => {
     const dailyOrderCountData = Array(7).fill(0);
 
     // Update the total sell count and total order count for each day
-    thisWeekSellData.forEach((order) => {
+    thisWeekSellData?.forEach((order) => {
       const dayOfWeek = new Date(order?.createdAt).getDay();
       dailySellData[dayOfWeek] += 1; // Assuming each order contributes to the sell count
-      dailyOrderCountData[dayOfWeek] += order?.order.length;
+      dailyOrderCountData[dayOfWeek] += order?.order_products?.length;
     });
 
     // Update the chart data only if it has changed
@@ -130,4 +132,4 @@ const WeekSell = ({ thisWeekSellData }) => {
   );
 };
 
-export default WeekSell;
+export default ThisWeekSell;

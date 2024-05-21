@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useGetVideoQuery } from "../../../../redux/feature/video/videoApi";
-import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import Loader from "../../../../shared/loader/Loader";
 
 export default function ProductYoutubeVideo() {
   const { data: videos, isLoading } = useGetVideoQuery(undefined, {
@@ -11,9 +11,7 @@ export default function ProductYoutubeVideo() {
 
   if (isLoading)
     return (
-      <div>
-        <MiniSpinner />
-      </div>
+        <Loader />
     );
   // console.log(videos);
   return (

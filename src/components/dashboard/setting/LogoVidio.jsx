@@ -107,7 +107,7 @@ const LogoVidio = ({ refetch, initialData }) => {
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>
-          <div>
+          {/* <div>
             <label className="font-semibold" htmlFor="footer_logo">
               Footer Logo<span className="text-red-500"> if need</span>{" "}
             </label>
@@ -117,7 +117,7 @@ const LogoVidio = ({ refetch, initialData }) => {
               type="file"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
-          </div>
+          </div> */}
           <div>
             <label className="font-semibold" htmlFor="favicon">
               Favicon<span className="text-red-500"> if need</span>{" "}

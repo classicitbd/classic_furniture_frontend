@@ -19,7 +19,7 @@ import "swiper/css/bundle";
 // import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useGetBannerQuery } from "../../../../redux/feature/banner/bannerApi";
-import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import Loader from "../../../../shared/loader/Loader";
 // import PreLoader from "../../../../shared/loader/PreLoader";
 // import Header from "../../../../shared/header/Header";
 
@@ -29,9 +29,7 @@ const Slider = () => {
   });
   if (isLoading)
     return (
-      <div>
-        <MiniSpinner />
-      </div>
+        <Loader />
     );
   return (
     <>

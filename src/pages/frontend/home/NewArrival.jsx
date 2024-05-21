@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGetProductQuery } from "../../../redux/feature/product/productApi";
-import MiniSpinner from "../../../shared/loader/MiniSpinner";
 import { Link } from "react-router-dom";
+import Loader from "../../../shared/loader/Loader";
 
 export default function NewArrival() {
   const { data: products, isLoading } = useGetProductQuery(undefined, {
@@ -37,9 +37,7 @@ export default function NewArrival() {
 
   if (isLoading)
     return (
-      <div>
-        <MiniSpinner />
-      </div>
+        <Loader />
     );
   return (
     <>
