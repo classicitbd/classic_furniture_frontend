@@ -38,6 +38,8 @@ import AllProducts from "../pages/frontend/allProducts/AllProducts";
 import Youtube from "../pages/dashboard/youtube/Youtube";
 import ProductYoutubeVideoPage from "../pages/frontend/productYoutubeVideo/ProductYoutubeVideoPage";
 import ProductDetailsPage from "../pages/frontend/details/ProductDetailsPage";
+import OrderTracking from "../pages/frontend/order_tracking/OrderTracking";
+import OrderTrackingDetails from "../pages/frontend/orderTrackingDetails/OrderTrackingDetails";
 
 const router = createBrowserRouter([
   {
@@ -112,6 +114,14 @@ const router = createBrowserRouter([
       {
         path: "/return-policy",
         element: <ReturnExchangePage />,
+      },
+      {
+        path: "/order-tracking",
+        element: <OrderTracking />,
+      },
+      {
+        path: "/order-tracking-details",
+        element: <OrderTrackingDetails />,
       },
     ],
   },
