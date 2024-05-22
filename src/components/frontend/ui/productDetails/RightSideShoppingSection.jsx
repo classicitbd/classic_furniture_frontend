@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { FaRegHeart } from "react-icons/fa";
 import { HiMinus, HiOutlinePlus } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -81,18 +80,20 @@ const RightSideShoppingSection = ({
           price: selectedSizeData?.discount_price
             ? selectedSizeData?.discount_price
             : selectedSizeData?.price
-              ? selectedSizeData?.price
-              : product?.data?.product_discount_price
-                ? product?.data?.product_discount_price
-                : product?.data?.product_price,
+            ? selectedSizeData?.price
+            : product?.data?.product_discount_price
+            ? product?.data?.product_discount_price
+            : product?.data?.product_price,
           product_name: product?.data?.product_name,
           color: product?.data?.product_color_id?.color_name,
           color_id: product?.data?.product_color_id?._id,
           product_thumbnail: product?.data?.product_thumbnail,
           productId: product?.data?._id,
           product_partial_payment: product?.data?.product_partial_payment,
-          product_partial_payment_amount: product?.data?.product_partial_payment_amount,
-          product_partial_total_payment: product?.data?.product_partial_payment_amount * quantity,
+          product_partial_payment_amount:
+            product?.data?.product_partial_payment_amount,
+          product_partial_total_payment:
+            product?.data?.product_partial_payment_amount * quantity,
         })
       );
       toast.success("Added to cart", {
@@ -114,8 +115,10 @@ const RightSideShoppingSection = ({
         product_thumbnail: product?.data?.product_thumbnail,
         productId: product?.data?._id,
         product_partial_payment: product?.data?.product_partial_payment,
-        product_partial_payment_amount: product?.data?.product_partial_payment_amount,
-        product_partial_total_payment: product?.data?.product_partial_payment_amount * quantity,
+        product_partial_payment_amount:
+          product?.data?.product_partial_payment_amount,
+        product_partial_total_payment:
+          product?.data?.product_partial_payment_amount * quantity,
       })
     );
     toast.success("Added to cart", {
@@ -155,18 +158,20 @@ const RightSideShoppingSection = ({
           price: selectedSizeData?.discount_price
             ? selectedSizeData?.discount_price
             : selectedSizeData?.price
-              ? selectedSizeData?.price
-              : product?.data?.product_discount_price
-                ? product?.data?.product_discount_price
-                : product?.data?.product_price,
+            ? selectedSizeData?.price
+            : product?.data?.product_discount_price
+            ? product?.data?.product_discount_price
+            : product?.data?.product_price,
           product_name: product?.data?.product_name,
           color: product?.data?.product_color_id?.color_name,
           color_id: product?.data?.product_color_id?._id,
           product_thumbnail: product?.data?.product_thumbnail,
           productId: product?.data?._id,
           product_partial_payment: product?.data?.product_partial_payment,
-          product_partial_payment_amount: product?.data?.product_partial_payment_amount,
-          product_partial_total_payment: product?.data?.product_partial_payment_amount * quantity,
+          product_partial_payment_amount:
+            product?.data?.product_partial_payment_amount,
+          product_partial_total_payment:
+            product?.data?.product_partial_payment_amount * quantity,
         })
       );
       toast.success("Added to cart", {
@@ -187,8 +192,10 @@ const RightSideShoppingSection = ({
         product_thumbnail: product?.data?.product_thumbnail,
         productId: product?.data?._id,
         product_partial_payment: product?.data?.product_partial_payment,
-        product_partial_payment_amount: product?.data?.product_partial_payment_amount,
-        product_partial_total_payment: product?.data?.product_partial_payment_amount * quantity,
+        product_partial_payment_amount:
+          product?.data?.product_partial_payment_amount,
+        product_partial_total_payment:
+          product?.data?.product_partial_payment_amount * quantity,
       })
     );
     toast.success("Added to cart", {
@@ -200,46 +207,52 @@ const RightSideShoppingSection = ({
     <div>
       {outOfStockStock == false ? (
         <>
-          <p className="font-semibold text-[16px] text-gray-800 pb-2">
-            Select Size: {selectSize}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {product?.data?.product_size_variation.map((item) => (
-              <button
-                key={item?._id}
-                className={
-                  item && item?.quantity > 0
-                    ? `border rounded-lg cursor-pointer py-2 px-3.5 mr-2 hover:bg-primaryLightColor hover:text-white font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl ${selectSize === item?.size
-                      ? "bg-primaryLightColor text-white"
-                      : ""
-                    }`
-                    : "disabled border rounded-lg py-2 px-3.5 mr-2 font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl"
-                }
-                onClick={() => {
-                  item?.quantity && setSelectSize(item.size);
-                  setSelectedSizeData(item);
-                  setDescription(item?.description);
-                  setInQuantity(item?.quantity);
-                  setQuantity(1);
-                }}
-                disabled={item?.quantity === 0}
-              >
-                {item?.size}
-              </button>
-            ))}
-            <button
-              className="border rounded-lg cursor-pointer px-3 mr-2  hover:bg-red-600 hover:text-white text-[12px] font-semibold hover:shadow-xl duration-200 text-gray-700  bg-gray-200"
-              onClick={() => {
-                setSelectSize("");
-                setSelectedSizeData(null);
-                setDescription(null);
-                setInQuantity(product?.data?.product_quantity);
-                setQuantity(1);
-              }}
-            >
-              Remove
-            </button>
-          </div>
+          {product?.data?.product_size_variation?.length > 0 && (
+            <>
+              {" "}
+              <p className="font-semibold text-[16px] text-gray-800 pb-2">
+                Select Size: {selectSize}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {product?.data?.product_size_variation.map((item) => (
+                  <button
+                    key={item?._id}
+                    className={
+                      item && item?.quantity > 0
+                        ? `border rounded-lg cursor-pointer py-2 px-3.5 mr-2 hover:bg-primaryLightColor hover:text-white font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl ${
+                            selectSize === item?.size
+                              ? "bg-primaryLightColor text-white"
+                              : ""
+                          }`
+                        : "disabled border rounded-lg py-2 px-3.5 mr-2 font-semibold text-gray-700 transition duration-200 ease-in-out hover:shadow-xl"
+                    }
+                    onClick={() => {
+                      item?.quantity && setSelectSize(item.size);
+                      setSelectedSizeData(item);
+                      setDescription(item?.description);
+                      setInQuantity(item?.quantity);
+                      setQuantity(1);
+                    }}
+                    disabled={item?.quantity === 0}
+                  >
+                    {item?.size}
+                  </button>
+                ))}
+                <button
+                  className="border rounded-lg cursor-pointer px-3 mr-2  hover:bg-red-600 hover:text-white text-[12px] font-semibold hover:shadow-xl duration-200 text-gray-700  bg-gray-200"
+                  onClick={() => {
+                    setSelectSize("");
+                    setSelectedSizeData(null);
+                    setDescription(null);
+                    setInQuantity(product?.data?.product_quantity);
+                    setQuantity(1);
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            </>
+          )}
 
           <div>
             {" "}
@@ -283,15 +296,12 @@ const RightSideShoppingSection = ({
                     <HiOutlinePlus className="text-gray-700" />
                   </button>
                 </div>
-                <div className=" text-xs px-2.5 py-2  bg-primaryDeepColor text-white ">
-                  <FaRegHeart />
-                </div>
               </div>
             </div>
             {/* Add to cart button  */}
             <button
               onClick={() => handleBuyNow()}
-              className="w-full text-center bg-primaryDeepColor text-white font-semibold py-1.5 hover:bg-[#019C9F] duration-150 rounded-full my-2.5"
+              className="w-full text-center bg-primaryDeepColor text-white font-semibold py-1.5 hover:bg-primaryLightColor duration-150 rounded-full my-2.5"
             >
               Buy Now
             </button>

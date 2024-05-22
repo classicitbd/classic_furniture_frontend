@@ -35,10 +35,7 @@ export default function NewArrival() {
 
   // console.log("cartQuantity", cartQuantity);
 
-  if (isLoading)
-    return (
-        <Loader />
-    );
+  if (isLoading) return <Loader />;
   return (
     <>
       <div className="es_container mx-auto md:px-20 xl:px-0 px-5 pt-10">
@@ -73,7 +70,7 @@ export default function NewArrival() {
                     )}
                   </div>
                   {/* Product Details */}
-                  <div className="px-3 pt-3 pb-2">
+                  <div className="px-3 pt-3 pb-2 sm:h-[165px]">
                     {/* Product Prices */}
                     <div className="product_price_inner flex items-center gap-2 py-2">
                       <strong className="offer_price text-[#FF0000] text-[16px] font-bold">
@@ -121,19 +118,18 @@ export default function NewArrival() {
                     {/* Product Title */}
                     <div className="product_title py-4">
                       <p
-                        title={product?.product_name}
-                        className={` text-[17px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
+                        className={` text-[15px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
                           window.innerWidth < 640
-                            ? "max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis"
+                            ? "overflow-hidden whitespace-nowrap overflow-ellipsis"
                             : ""
                         }`}
                       >
                         {window.innerWidth >= 1024
-                          ? product.product_name.length > 30
-                            ? `${product.product_name.slice(0, 30)}...`
+                          ? product.product_name.length > 36
+                            ? `${product.product_name.slice(0, 36)}...`
                             : product.product_name
-                          : product.product_name.length > 23
-                          ? `${product.product_name.slice(0, 23)}...`
+                          : product.product_name.length > 20
+                          ? `${product.product_name.slice(0, 20)}...`
                           : product.product_name}
                       </p>
                     </div>
