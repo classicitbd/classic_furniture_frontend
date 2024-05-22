@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { FaRegHeart } from "react-icons/fa";
 import { HiMinus, HiOutlinePlus } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
