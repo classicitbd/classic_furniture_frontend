@@ -70,7 +70,7 @@ export default function NewArrival() {
                     )}
                   </div>
                   {/* Product Details */}
-                  <div className="px-3 pt-3 pb-2 sm:h-[165px]">
+                  <div className="px-3 pt-3 pb-2 sm:h-[144px]">
                     {/* Product Prices */}
                     <div className="product_price_inner flex items-center gap-2 py-2">
                       <strong className="offer_price text-[#FF0000] text-[16px] font-bold">
@@ -97,7 +97,7 @@ export default function NewArrival() {
 
                     {/* Product Color */}
 
-                    <p className="text-[14px] font-semibold text-gray-600 py-1.5">
+                    <p className="text-[14px] font-semibold text-gray-600 pt-1.5">
                       {product?.product_color_id?.color_name}
                     </p>
 
@@ -116,20 +116,24 @@ export default function NewArrival() {
                             )}
                           </div> */}
                     {/* Product Title */}
-                    <div className="product_title py-4">
+                    <div className="product_title pt-2.5">
                       <p
-                        className={` text-[15px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
-                          window.innerWidth < 640
-                            ? "overflow-hidden whitespace-nowrap overflow-ellipsis"
-                            : ""
-                        }`}
+                        className={` text-[15px] text-[#041826] font-medium group-hover:text-ftPrimaryColor duration-200 transition-all `}
                       >
-                        {window.innerWidth >= 1024
-                          ? product.product_name.length > 36
-                            ? `${product.product_name.slice(0, 36)}...`
+                        {window.innerWidth >= 1440
+                          ? product.product_name.length > 45
+                            ? `${product.product_name.slice(0, 45)}...`
                             : product.product_name
-                          : product.product_name.length > 20
-                          ? `${product.product_name.slice(0, 20)}...`
+                          : window.innerWidth >= 1024
+                          ? product.product_name.length > 42
+                            ? `${product.product_name.slice(0, 42)}...`
+                            : product.product_name
+                          : window.innerWidth >= 768
+                          ? product.product_name.length > 34
+                            ? `${product.product_name.slice(0, 34)}...`
+                            : product.product_name
+                          : product.product_name.length > 56
+                          ? `${product.product_name.slice(0, 56)}...`
                           : product.product_name}
                       </p>
                     </div>

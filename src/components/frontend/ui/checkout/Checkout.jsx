@@ -126,12 +126,12 @@ export default function Checkout() {
             <div className="lg:mx-10 md:mx-4 mx-2">
               <div className="flex flex-col md:flex-row gap-4 my-4  lg:gap-8  ">
                 {/* Left side condition aria */}
-                <div className="w-full md:w-[68%]">
+                <div className="w-full md:w-[64%]">
                   <div className="flex justify-between items-center p-4 ">
-                    <p className="md:text-xl  font-semibold   flex gap-2 items-center">
+                    <p className="md:text-xl  text-xs sm:text-sm  font-semibold   flex gap-2 items-center">
                       <BsCart size={26} /> Shopping Bag Item {totalQuantity}
                     </p>
-                    <p className="md:text-xl  font-semibold   flex gap-2 items-center">
+                    <p className="md:text-xl  text-xs sm:text-sm  font-semibold   flex gap-2 items-center">
                       Total: {subTotal}৳
                     </p>
                   </div>
@@ -159,19 +159,20 @@ export default function Checkout() {
                 </div>
 
                 {/* Right side  */}
-
-                <RightSideAmount
-                  subTotal={subTotal}
-                  totalQuantity={totalQuantity}
-                  handleContinue={handleContinue}
-                  activeStep={activeStep}
-                  handleBack={handleBack}
-                  settingData={settingData}
-                  delivery_charge={delivery_charge}
-                  deliveryType={deliveryType}
-                  selectedDeliveryLocation={selectedDeliveryLocation}
-                  userData={userData}
-                />
+                <div className="w-full md:w-[32%] md:pt-16   ">
+                  <RightSideAmount
+                    subTotal={subTotal}
+                    totalQuantity={totalQuantity}
+                    handleContinue={handleContinue}
+                    activeStep={activeStep}
+                    handleBack={handleBack}
+                    settingData={settingData}
+                    delivery_charge={delivery_charge}
+                    deliveryType={deliveryType}
+                    selectedDeliveryLocation={selectedDeliveryLocation}
+                    userData={userData}
+                  />
+                </div>
               </div>
             </div>
           </div>

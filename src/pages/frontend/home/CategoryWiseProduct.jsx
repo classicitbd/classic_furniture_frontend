@@ -35,10 +35,7 @@ const CategoryWiseProduct = () => {
 
   //   console.log("cartQuantity", cartQuantity);
 
-  if (isLoading)
-    return (
-        <Loader />
-    );
+  if (isLoading) return <Loader />;
   return (
     <div className="es_container mx-auto md:px-20 xl:px-0 px-5 py-10">
       {/* 1st map for title */}
@@ -79,7 +76,7 @@ const CategoryWiseProduct = () => {
                             )}
                           </div>
                           {/* Product Details */}
-                          <div className="px-3 pt-3 pb-2">
+                          <div className="px-3 pt-3 pb-2 sm:h-[146px]">
                             {/* Product Prices */}
                             <div className="product_price_inner flex items-center gap-2 py-2">
                               <strong className="offer_price text-[#FF0000] text-[16px] font-bold">
@@ -124,25 +121,27 @@ const CategoryWiseProduct = () => {
                             )}
                           </div> */}
                             {/* Product Title */}
-                            <div className="product_title py-4">
+                            <div className="product_title pt-2.5">
                               <p
-                                title={product?.product_name}
-                                className={`text-[17px] text-[#041826] leading-5 font-medium group-hover:text-ftPrimaryColor duration-200 transition-all ${
-                                  window.innerWidth < 640
-                                    ? "max-w-[10rem] overflow-hidden whitespace-nowrap overflow-ellipsis"
-                                    : ""
-                                }`}
+                                className={` text-[15px]  text-[#041826] font-medium group-hover:text-ftPrimaryColor duration-200 transition-all `}
                               >
-                                {window.innerWidth >= 1024
-                                  ? product.product_name.length > 30
-                                    ? `${product.product_name.slice(0, 30)}...`
+                                {window.innerWidth >= 1440
+                                  ? product.product_name.length > 45
+                                    ? `${product.product_name.slice(0, 45)}...`
                                     : product.product_name
-                                  : product.product_name.length > 23
-                                  ? `${product.product_name.slice(0, 23)}...`
+                                  : window.innerWidth >= 1024
+                                  ? product.product_name.length > 42
+                                    ? `${product.product_name.slice(0, 42)}...`
+                                    : product.product_name
+                                  : window.innerWidth >= 768
+                                  ? product.product_name.length > 34
+                                    ? `${product.product_name.slice(0, 34)}...`
+                                    : product.product_name
+                                  : product.product_name.length > 56
+                                  ? `${product.product_name.slice(0, 56)}...`
                                   : product.product_name}
                               </p>
                             </div>
-
                             {/* Buy Now Button
                           <div className="flex w-full items-center  gap-2 text-[#008140] cursor-pointer">
                             <FaShoppingCart
