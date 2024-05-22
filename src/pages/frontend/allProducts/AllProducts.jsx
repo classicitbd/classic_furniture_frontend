@@ -181,7 +181,7 @@ export default function AllProducts() {
                     {queryParameters.size > 0 && (
                       <>
                         <span
-                          className="hidden bg-gray-100  shadow p-1 rounded sm:block"
+                          className="hidden bg-gray-100  shadow p-1 rounded sm:block cursor-pointer"
                           onClick={handleResetFilter}
                         >
                           Reset Filter
@@ -298,7 +298,7 @@ export default function AllProducts() {
                     {colors?.data?.map((color) => (
                       <li key={color?.color_name}>
                         <button
-                          onClick={() => handleColorsClick(color?.color_name)}
+                          onClick={() => handleColorsClick(color?.color_slug)}
                           className={`${
                             selectedColor === color?.color_name
                               ? "text-primaryLightColor"
@@ -437,7 +437,7 @@ export default function AllProducts() {
                       <li key={color?.color_name}>
                         <button
                           onClick={() => {
-                            handleColorsClick(color?.color_name);
+                            handleColorsClick(color?.color_slug);
                           }}
                           className={`${
                             selectedColor === color?.color_name

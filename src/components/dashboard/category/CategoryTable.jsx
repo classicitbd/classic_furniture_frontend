@@ -197,7 +197,7 @@ const CategoryTable = ({ refetch, categoryTypes, setSearchTerm, rows, page, setP
                     <img
                       src={category?.category_logo}
                       alt={category.category_name}
-                      className="w-16 rounded-full"
+                      className="w-16 rounded-full h-16 object-cover"
                     />
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">

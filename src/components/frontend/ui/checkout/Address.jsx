@@ -116,7 +116,6 @@ const Address = ({
       data.user_district = user_district;
       data.user_division = user_division;
       const res = await updateUser(data);
-      console.log(res);
 
       if (res?.data?.success) {
         // setCookie(

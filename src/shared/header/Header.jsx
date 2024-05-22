@@ -65,7 +65,7 @@ export default function Header() {
     };
   }, [dropdownRef]);
 
-  if (isLoading){
+  if (isLoading) {
     return <Loader />
   }
 
@@ -74,7 +74,7 @@ export default function Header() {
       <div className="es_container">
         <div className="mr-6">
           <div className=" items-center justify-between gap-2 py-2 hidden lg:flex">
-            <Link className="cart flex items-center gap-2  md:ms-20  xl:ms-0">
+            <Link to='/' className="cart flex items-center gap-2  md:ms-20  xl:ms-0">
               <span className="icon hidden lg:block">
                 <img className="" src={settings[0]?.logo} alt="" />
               </span>

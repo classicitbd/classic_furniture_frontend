@@ -5,6 +5,9 @@ import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 import { toast } from "react-toastify";
 import { cartKey } from "../../../../constants/cartKey";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../../../utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../../../shared/loader/Loader";
 
 const Payment = ({ userData }) => {
   const navigate = useNavigate();
@@ -21,6 +24,18 @@ const Payment = ({ userData }) => {
 
   const [partialPayProducts, setPartialPayProducts] = useState([]);
   const [codProducts, setCodProducts] = useState([]);
+
+  const {
+    data: user = [],
+    isLoading: getDataLoading,
+  } = useQuery({
+    queryKey: [`/api/v1/getMe/${userData?.user_phone}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/getMe/${userData?.user_phone}`);
+      const data = await res.json();
+      return data.data;
+    },
+  });
 
   useEffect(() => {
     const partialPayAllProducts = cart?.filter(
@@ -60,12 +75,12 @@ const Payment = ({ userData }) => {
       customer_phone: userData?.user_phone,
       customer_name: userData?.user_name,
       total_amount: total_product_price,
-      pay_amount: partial_pay_amount,
+      pay_amount: 0,
       due_amount: total_product_price - partial_pay_amount,
       buying_type: "Partial Payment",
       payment_method: "partial",
-      division: userData?.user_division,
-      district: userData?.user_district,
+      division: user?.user_division,
+      district: user?.user_district,
       delivery_method: deliveryType,
       order_products: partialPayProducts,
     }
@@ -98,8 +113,8 @@ const Payment = ({ userData }) => {
       due_amount: total_product_price,
       buying_type: "Cash On Delivery",
       payment_method: "cod",
-      division: userData?.user_division,
-      district: userData?.user_district,
+      division: user?.user_division,
+      district: user?.user_district,
       delivery_method: deliveryType,
       order_products: codProducts,
     }
@@ -113,6 +128,10 @@ const Payment = ({ userData }) => {
       setCodLoading(false);
       toast.error(res?.error?.data?.message);
     }
+  }
+
+  if (getDataLoading) {
+    return <Loader />;
   }
 
   return (

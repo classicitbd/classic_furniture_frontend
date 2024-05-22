@@ -4,6 +4,8 @@ import { useState } from "react";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
 import { useSelector } from "react-redux";
 import { cartKey } from "../../../../constants/cartKey";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../../../utils/baseURL";
 
 export default function RightSideAmount({
   subTotal,
@@ -19,13 +21,25 @@ export default function RightSideAmount({
   const cart = useSelector((state) => state.furnitureCart.products);
   const [loading, setLoading] = useState(false);
 
+  const {
+    data: user = [],
+    isLoading: getDataLoading,
+  } = useQuery({
+    queryKey: [`/api/v1/getMe/${userData?.user_phone}`],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/getMe/${userData?.user_phone}`);
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
   const handleContinueCheck = () => {
     if (activeStep == 2) {
       if (!deliveryType) {
         toast.error("Please select delivery type")
         return;
       }
-      if (!userData?.user_phone) {
+      if (!userData?.user_phone || !user?.user_division || !user?.user_district) {
         toast.error("Please Fill Up User Information")
         return;
       }
@@ -42,7 +56,7 @@ export default function RightSideAmount({
   };
 
   const handlePaymentAll = async () => {
-    if (!deliveryType){
+    if (!deliveryType) {
       toast.error("Please select delivery type")
       return;
     }
@@ -53,12 +67,12 @@ export default function RightSideAmount({
       customer_phone: userData?.user_phone,
       customer_name: userData?.user_name,
       total_amount: total_product_price,
-      pay_amount: total_product_price,
+      pay_amount: 0,
       due_amount: 0,
       buying_type: "Online Payment",
       payment_method: "online",
-      division: userData?.user_division,
-      district: userData?.user_district,
+      division: user?.user_division,
+      district: user?.user_district,
       delivery_method: deliveryType,
       order_products: cart,
     }
@@ -74,6 +88,10 @@ export default function RightSideAmount({
       toast.error(res?.error?.data?.message);
     }
 
+  }
+
+  if (getDataLoading) {
+    return <MiniSpinner />;
   }
 
   return (

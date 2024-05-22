@@ -2,12 +2,23 @@ import { Link } from "react-router-dom";
 import { useGetVideoQuery } from "../../../../redux/feature/video/videoApi";
 import Loader from "../../../../shared/loader/Loader";
 import { MdOndemandVideo } from "react-icons/md";
+import { useEffect, useState } from "react";
+import FrontPagination from "../../../../pages/frontend/allProducts/FrontPagination";
 export default function ProductYoutubeVideo() {
-  const { data: videos, isLoading } = useGetVideoQuery(undefined, {
+  const [totalData, setTotalData] = useState(0);
+  const [rows, setRows] = useState(10);
+  const [page, setPage] = useState(1);
+
+  const { data: videos, isLoading } = useGetVideoQuery({ rows, page }, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 60000,
   });
-  //
+
+  useEffect(() => {
+    if (videos) {
+      setTotalData(videos?.data?.totalData);
+    }
+  }, [videos])
 
   if (isLoading) return <Loader />;
   // console.log(videos);
@@ -48,11 +59,10 @@ export default function ProductYoutubeVideo() {
 
                   <p className="my-3">
                     <span
-                      className={`pr-1 ${
-                        video?.product_id?.product_discount_price
-                          ? "line-through"
-                          : ""
-                      }`}
+                      className={`pr-1 ${video?.product_id?.product_discount_price
+                        ? "line-through"
+                        : ""
+                        }`}
                     >
                       {video?.product_id?.product_price}
                     </span>
@@ -103,6 +113,16 @@ export default function ProductYoutubeVideo() {
             </section>
           </>
         )}
+        {
+          videos?.data?.length > 0 &&
+          <FrontPagination
+            rows={rows}
+            page={page}
+            setPage={setPage}
+            setRows={setRows}
+            totalData={totalData}
+          />
+        }
       </div>
     </div>
   );

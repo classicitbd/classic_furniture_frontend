@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./header.css";
 import { Link, NavLink } from "react-router-dom";
-import MiniSpinner from "../loader/MiniSpinner";
 import { useGetMenuQuery } from "../../redux/feature/menu/menuApi";
+import Loader from "../loader/Loader";
 
 export default function BottomHeader2() {
   const { data: menuData, isLoading } = useGetMenuQuery(undefined, {
@@ -17,9 +17,7 @@ export default function BottomHeader2() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center">
-        <MiniSpinner />
-      </div>
+        <Loader />
     );
   }
 
@@ -135,7 +133,7 @@ export default function BottomHeader2() {
                                     setIsCategory("");
                                     setIsMenu("");
                                   }}
-                                  to={`/all?category=${isMenu}?sub_category=${subCategory?.sub_category_slug}`}
+                                  to={`/all?category=${isMenu}&sub_category=${subCategory?.sub_category_slug}`}
                                   key={subCategory?.sub_category_name}
                                 >
                                   <li>
