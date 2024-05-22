@@ -32,7 +32,7 @@ const Footer = () => {
       return data;
     },
   });
-  
+
   const handleEmailClick = () => {
     window.location.href = `mailto:masudranainfo99@gmail.com`;
   };
@@ -43,11 +43,11 @@ const Footer = () => {
 
   return (
     <section className="bg-primaryDeepColor text-textColor border-t-[2px] border-secondary ">
-      <div className=" es_container mx-auto md:px-20 xl:px-0 px-5 pt-6 lg:pb-0 md:pb-6  sm:pb-20 pb-20">
+      <div className=" es_container py-6">
         {/* footer top */}
-        <div className=" grid grid-cols-1 sm:grid-cols-2 px-6 gap-2 md:grid-cols-4 xl:grid-cols-6 py-6">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 px-6 gap-2 md:grid-cols-4 xl:grid-cols-12 py-6">
           {/* helpful links */}
-          <ul className="list-none ml-0 mb-0">
+          <ul className="list-none ml-0 mb-0 xl:col-span-2">
             <li className="leading-[30px] font-[500]">
               <h2
                 className="mb-3 lg:mb-6 text-secondary uppercase"
@@ -78,7 +78,7 @@ const Footer = () => {
           </ul>
 
           {/* company */}
-          <ul className="list-none ml-0 mb-0">
+          <ul className="list-none ml-0 mb-0 xl:col-span-2">
             <li className="leading-[30px] font-[500]">
               <h2
                 className="mb-3 lg:mb-6 text-secondary uppercase"
@@ -102,33 +102,61 @@ const Footer = () => {
               </li>
             ))}
           </ul>
-          {/* Goal */}
-          {/* <ul className="list-none ml-0 mb-0">
-            <li className="leading-[30px] font-[500]">
+          {/* Social Links */}
+          <ul className="list-none ml-0 mb-0 xl:col-span-2">
+            <li className="leading-[30px]">
               <h2
                 className="mb-3 lg:mb-6 text-secondary uppercase"
                 style={{ fontSize: "20px" }}
               >
-                The Goal
+                Find us on
               </h2>
             </li>
-            {quickLinks?.map((item, index) => (
-              <li
-                key={index}
-                className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1"
-              >
-                <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-                <Link
-                  to={item?.path}
-                  className="flex flex-col text-[15px] hover:decoration-primaryColor"
-                >
-                  {item?.label}
-                </Link>
-              </li>
-            ))}
-          </ul> */}
 
-          <div className=" ">
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.facebook}`}
+                target="_blank"
+                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
+              >
+                FaceBook
+              </Link>
+            </li>
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.instagram}`}
+                target="_blank"
+                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
+              >
+                Instagram
+              </Link>
+            </li>
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.watsapp}`}
+                target="_blank"
+                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
+              >
+                WhatsApp
+              </Link>
+            </li>
+
+            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
+              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
+              <Link
+                to={`${footerData?.data[0]?.you_tube}`}
+                target="_blank"
+                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
+              >
+                Youtube
+              </Link>
+            </li>
+          </ul>
+          {/* Address */}
+          <div className="list none ml-0 mb-0  xl:col-span-3">
             <h2
               className="mb-3 lg:mb-6 text-secondary uppercase"
               style={{ fontSize: "20px" }}
@@ -186,65 +214,10 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          {/* ------ social media link ------ start */}
-          <ul className="list-none ml-0 mb-0">
-            <li className="leading-[30px]">
-              <h2
-                className="mb-3 lg:mb-6 text-secondary uppercase"
-                style={{ fontSize: "20px" }}
-              >
-                Find us on
-              </h2>
-            </li>
-
-            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
-              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-              <Link
-                to={`${footerData?.data[0]?.facebook}`}
-                target="_blank"
-                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
-              >
-                FaceBook
-              </Link>
-            </li>
-            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
-              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-              <Link
-                to={`${footerData?.data[0]?.instagram}`}
-                target="_blank"
-                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
-              >
-                Instagram
-              </Link>
-            </li>
-            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
-              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-              <Link
-                to={`${footerData?.data[0]?.watsapp}`}
-                target="_blank"
-                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
-              >
-                WhatsApp
-              </Link>
-            </li>
-
-            <li className="flex items-center mt-3 transition-all duration-300 hover:text-[#ffffff] hover:translate-x-1">
-              <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-              <Link
-                to={`${footerData?.data[0]?.you_tube}`}
-                target="_blank"
-                className="flex flex-col  text-[15px] hover:decoration-primaryColor"
-              >
-                Youtube
-              </Link>
-            </li>
-          </ul>
-
-          {/* ------ social media link ------ end */}
 
           {/* payment gateway */}
 
-          <div className=" xl:col-span-2 lg:-col-span-1 md:col-span-4 sm:col-span-2 col-span-1 pt-6 ">
+          <div className=" xl:col-span-3 lg:-col-span-1 md:col-span-4 sm:col-span-2 col-span-1 pt-6 ">
             <img
               className="sm:h-[220px] lg:h-[260px] xl:h-auto w-full"
               // src="https://traack.com.bd/assets/SSLCommerz-Pay-With-logo-All-Size-05-IaTT5Yxn.png"
