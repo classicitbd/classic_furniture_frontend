@@ -181,7 +181,7 @@ const ProductListTable = () => {
                     <img
                       src={product?.product_thumbnail}
                       alt=""
-                      className="w-20"
+                      className="w-20 h-20"
                     />
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">

@@ -36,7 +36,7 @@ const AboutUs = ({ initialData, refetch }) => {
   const handleDataPost = async () => {
     toast.error("Please wait a moment");
     const sendData = {
-      aboutUs: aboutUs,
+      about_us: aboutUs,
       _id: initialData?._id,
     };
     postSiteSettng(sendData).then((result) => {

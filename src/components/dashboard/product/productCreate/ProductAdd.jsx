@@ -107,6 +107,7 @@ const ProductAdd = () => {
   }, [subCategories?.data, categoryIdForSubCategory]);
 
   // image upload start
+  const colorInputRefs = useRef([]);
   const fileInputRefs = useRef([]);
   const multiInputRefs = useRef([]);
   const [imageName, setImageName] = useState("");
@@ -321,6 +322,11 @@ const ProductAdd = () => {
         setMultiImage([]);
         refetch();
         setLoading(false)
+        setPartialPayment(false)
+        setDescription('');
+        colorInputRefs.current.forEach((inputRef) => {
+          inputRef.value = "";
+        });
       } else {
         toast.error(result?.error?.data?.message);
         setLoading(false)
@@ -376,6 +382,7 @@ const ProductAdd = () => {
                   getOptionLabel={(x) => x?.color_name}
                   getOptionValue={(x) => x?._id}
                   onChange={(selectedOption) => setColorIdValue(selectedOption)}
+                  ref={(ref) => (colorInputRefs.current[0] = ref)}
                 ></Select>
               </div>
             </div>
@@ -432,6 +439,7 @@ const ProductAdd = () => {
                   placeholder="0.000"
                   {...register("product_quantity")}
                   id="product_quantity"
+                  min={1}
                   type="number"
                   className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
                 />

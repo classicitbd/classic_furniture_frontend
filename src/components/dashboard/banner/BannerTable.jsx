@@ -111,7 +111,7 @@ const BannerTable = ({ banners, refetch, setRows, setPage, rows, page, setSearch
                                         <img
                                             src={banner?.banner_image}
                                             alt={banner.banner_title}
-                                            className="w-16 rounded-full"
+                                            className="w-28 h-20"
                                         />
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-2 font-semibold">

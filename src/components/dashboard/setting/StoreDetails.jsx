@@ -141,7 +141,7 @@ const StoreDetails = ({ refetch, initialData }) => {
               defaultValue={initialData?.location}
               {...register("location")}
               id="location"
-              type="text"
+              type="url"
               className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
           </div>

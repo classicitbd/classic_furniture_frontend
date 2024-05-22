@@ -8,8 +8,8 @@ export const videoApi = api.injectEndpoints({
   endpoints: (build) => ({
     // get Video
     getVideo: build.query({
-      query: () => ({
-        url: `/video_tab`,
+      query: ({ rows, page }) => ({
+        url: `/video_tab?page=${page}&limit=${rows}`,
         method: "GET",
       }),
       providesTags: ["video"],
