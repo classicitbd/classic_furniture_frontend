@@ -297,9 +297,6 @@ const RightSideShoppingSection = ({
                     <HiOutlinePlus className="text-gray-700" />
                   </button>
                 </div>
-                <div className=" text-xs px-2.5 py-2  bg-primaryDeepColor text-white ">
-                  <FaRegHeart />
-                </div>
               </div>
             </div>
             {/* Add to cart button  */}
