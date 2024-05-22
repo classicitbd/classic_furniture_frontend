@@ -25,12 +25,14 @@ export default function CartItems({ cart }) {
               <p className="md:text-xl text-sm font-semibold text-gray-600 ">
                 {product?.product_name}
               </p>
-              <p className="py-1">Color: {product?.color}</p>
-              <p className="py-1">Price: {product?.price}</p>
-              {product?.size && <p className="py-1">Size: {product?.size}</p>}
+              <p className="py-1 text-xs sm:text-sm">Color: {product?.color}</p>
+              <p className="py-1 text-xs sm:text-sm">Price: {product?.price}</p>
+              {product?.size && (
+                <p className="py-1 text-xs sm:text-sm">Size: {product?.size}</p>
+              )}
               {product?.product_partial_payment &&
                 product?.product_partial_payment == true && (
-                  <p className="py-1">
+                  <p className="py-1 text-xs sm:text-sm">
                     Partial Payment: {product?.product_partial_payment_amount}
                   </p>
                 )}
@@ -53,7 +55,9 @@ export default function CartItems({ cart }) {
             {/* quantity */}
             <div>
               <div>
-                <p className="font-semibold text-sm text-gray-800 flex justify-end">Quantity</p>
+                <p className="font-semibold  text-gray-800 flex justify-end  text-xs sm:text-sm">
+                  Quantity
+                </p>
                 <div className="flex items-center justify-end my-2  gap-2.5 flex-wrap ">
                   <div className="flex  ">
                     <button
@@ -65,7 +69,9 @@ export default function CartItems({ cart }) {
                             decrementQuantity({
                               productId: product?.productId,
                               size: product?.size,
-                              product_partial_total_payment: product?.product_partial_payment_amount * (product?.quantity - 1),
+                              product_partial_total_payment:
+                                product?.product_partial_payment_amount *
+                                (product?.quantity - 1),
                             })
                           );
                         }
@@ -89,26 +95,29 @@ export default function CartItems({ cart }) {
                           incrementQuantity({
                             productId: product?.productId,
                             size: product?.size,
-                            product_partial_total_payment: product?.product_partial_payment_amount * (product?.quantity + 1),
+                            product_partial_total_payment:
+                              product?.product_partial_payment_amount *
+                              (product?.quantity + 1),
                           })
                         );
                       }}
                       type="button"
                       className="px-2 py-1.5  hover:bg-gray-200 bg-[#F2F2F2]  border border-gray-200"
                     >
-                      <HiOutlinePlus
-                        className="text-gray-700"
-                      />
+                      <HiOutlinePlus className="text-gray-700" />
                     </button>
                   </div>
                 </div>
-                <p className="flex justify-end">Sub Total: {product?.quantity * product?.price}</p>
+                <p className="flex justify-end  text-xs sm:text-sm">
+                  Sub Total: {product?.quantity * product?.price}
+                </p>
                 {product?.product_partial_payment &&
-                product?.product_partial_payment == true && (
-                  <p className="py-1 flex justify-end">
-                    Total Partial Pay: {product?.product_partial_total_payment}
-                  </p>
-                )}
+                  product?.product_partial_payment == true && (
+                    <p className="py-1 flex justify-end  text-xs sm:text-sm">
+                      Total Partial Pay:{" "}
+                      {product?.product_partial_total_payment}
+                    </p>
+                  )}
               </div>
             </div>
           </dir>
