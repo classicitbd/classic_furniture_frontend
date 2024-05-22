@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <Link to={`/${product?.product_slug}`}>
         <div
           className="flex group"
@@ -73,7 +73,7 @@ const ProductCard = ({ product }) => {
                   {product?.product_discount_price}
                   <span className="ml-1">৳</span>
                 </span>
-                <span className="bg-red-600 text-xs  ml-2 rounded-tr-lg rounded-bl-lg text-white px-2 ">
+                <span className="bg-red-600 text-sm  ml-2 rounded-tr-lg rounded-bl-lg text-white px-2  absolute top-0 right-0">
                   Save{" "}
                   {product?.product_price - product?.product_discount_price} ৳
                 </span>
