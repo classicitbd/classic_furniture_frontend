@@ -167,7 +167,7 @@ const ProductHighlightSection = ({ product, selectedSizeData }) => {
         )}
 
         {
-          product?.data?.product_partial_payment_amount &&
+          product?.data?.product_partial_payment == true &&
           <div className="my-2">
             <strong className="offer_price text-[#FF0000]  font-semibold">
               <span className="text-md text-gray-600 mr-3 font-medium">
