@@ -5,13 +5,19 @@ import SubCategoryTable from "../../../components/dashboard/subCategory/SubCateg
 import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import BigSpinner from "../../../shared/loader/BigSpinner";
+import { getCookie } from "../../../utils/cookie-storage";
+import { authKey } from "../../../constants/storageKey";
 
 const SubCategory = () => {
-
+    const token = getCookie(authKey);
     const { data: subCategoryTypes = [], isLoading, refetch } = useQuery({
         queryKey: ['/api/v1/sub_category/dashboard'],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}/sub_category/dashboard`)
+            const res = await fetch(`${BASE_URL}/sub_category/dashboard`, {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            })
             const data = await res.json();
             return data;
         }

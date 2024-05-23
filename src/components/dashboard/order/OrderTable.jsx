@@ -21,6 +21,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useOrderStatusUpdateMutation, useOrderTypeUpdateMutation } from "../../../redux/feature/order/orderApi";
 import { toast } from "react-toastify";
 import OrderView from "./orderView/OrderView";
+import { authKey } from "../../../constants/storageKey";
+import { getCookie } from "../../../utils/cookie-storage";
 
 const OrderTable = () => {
   const [loading, setLoading] = useState(false);
@@ -43,11 +45,15 @@ const OrderTable = () => {
 
   const [calendarVisible, setCalendarVisible] = useState(false);
   const calendarRef = useRef(null);
-
+  const token = getCookie(authKey);
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${BASE_URL}/order?page=${page}&limit=${rows}&searchTerm=${searchTerm}`)
+      .get(`${BASE_URL}/order?page=${page}&limit=${rows}&searchTerm=${searchTerm}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setProducts(response?.data?.data);
         setAllProducts(response?.data?.data);
@@ -55,7 +61,7 @@ const OrderTable = () => {
         setTotalData(response?.data?.totalData);
         setLoading(false);
       });
-  }, [page, rows, searchTerm]);
+  }, [page, rows, searchTerm, token]);
 
   const toggleCalendar = () => {
     setCalendarVisible(!calendarVisible);
@@ -132,7 +138,11 @@ const OrderTable = () => {
   } = useQuery({
     queryKey: ["/api/v1/order/total_order"],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/order/total_order`);
+      const res = await fetch(`${BASE_URL}/order/total_order`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       return data;
     },

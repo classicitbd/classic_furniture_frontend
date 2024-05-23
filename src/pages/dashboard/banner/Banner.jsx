@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 import BannerImage from "../../../components/dashboard/banner/BannerImage";
 import BannerTable from "../../../components/dashboard/banner/BannerTable";
 import { useState } from "react";
+import { getCookie } from "../../../utils/cookie-storage";
+import { authKey } from "../../../constants/storageKey";
 
 const Banner = () => {
   const [rows, setRows] = useState(10);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const token = getCookie(authKey);
   const {
     data: banners = [],
     isLoading,
@@ -22,7 +24,11 @@ const Banner = () => {
     ],
     queryFn: async () => {
       const res = await fetch(
-        `${BASE_URL}/banner/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`
+        `${BASE_URL}/banner/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
       );
       const data = await res.json();
       return data;
