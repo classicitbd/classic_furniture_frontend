@@ -2,7 +2,6 @@
 import { PiHouseBold } from "react-icons/pi";
 import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
-import { getFromLocalStorage } from "../../../utils/local-storage";
 import { authKey } from "../../../constants/storageKey";
 import BigSpinner from "../../../shared/loader/BigSpinner";
 import DashboardTabs from "../../../components/dashboard/dashboard/DashboardTabs";
@@ -10,10 +9,11 @@ import YearSell from "../../../components/dashboard/dashboard/YearSell";
 import ThisWeekSell from "../../../components/dashboard/dashboard/ThisWeekSell";
 import MonthSell from "../../../components/dashboard/dashboard/MonthSell";
 import { Link } from "react-router-dom";
+import { getCookie } from "../../../utils/cookie-storage";
 
 const HomePage = () => {
     // get token from local storage
-    const token = getFromLocalStorage(authKey);
+    const token = getCookie(authKey);
 
     const { data: dashboardData = [], isLoading } = useQuery({
         queryKey: [`/api/v1/dashboard`],

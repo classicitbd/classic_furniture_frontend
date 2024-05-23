@@ -66,7 +66,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <PrivateRoute><CheckoutPage /></PrivateRoute>,
+        element: <CheckoutPage />,
       },
       {
         path: "/order-success/:tranId",

@@ -13,6 +13,8 @@ import ProductDelete from "./ProductDelete";
 import ProductUpdate from "./ProductUpdate";
 import { toast } from "react-toastify";
 import { useUpdateProductMutation } from "../../../../redux/feature/product/productApi";
+import { getCookie } from "../../../../utils/cookie-storage";
+import { authKey } from "../../../../constants/storageKey";
 
 const ProductListTable = () => {
 
@@ -32,7 +34,7 @@ const ProductListTable = () => {
       setSearchTerm(e.target.value);
     }
   };
-
+  const token = getCookie(authKey);
   const {
     data: allProductData = [],
     isLoading,
@@ -40,7 +42,11 @@ const ProductListTable = () => {
   } = useQuery({
     queryKey: [`/api/v1/product/dashboard_product?page=${page}&limit=${rows}&searchTerm=${searchTerm}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product/dashboard_product?page=${page}&limit=${rows}&searchTerm=${searchTerm}`);
+      const res = await fetch(`${BASE_URL}/product/dashboard_product?page=${page}&limit=${rows}&searchTerm=${searchTerm}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       setProducts(data?.data);
       return data;

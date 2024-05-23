@@ -63,6 +63,10 @@ const Payment = ({ userData }) => {
   const [order] = useOrderMutation();
 
   const handlePartialPayment = async () => {
+    if (!userData) {
+      toast.error("Must Need Login First");
+      return;
+    }
     if (!deliveryType) {
       toast.error("Please select delivery type")
       return;
@@ -99,6 +103,10 @@ const Payment = ({ userData }) => {
   }
 
   const handleCODPayment = async () => {
+    if (!userData) {
+      toast.error("Must Need Login First");
+      return;
+    }
     if (!deliveryType) {
       toast.error("Please select delivery type")
       return;

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { cartKey } from "../../../../constants/cartKey";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../../utils/baseURL";
+import { useNavigate } from "react-router-dom";
 
 export default function RightSideAmount({
   subTotal,
@@ -21,6 +22,8 @@ export default function RightSideAmount({
   const cart = useSelector((state) => state.furnitureCart.products);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const { data: user = [], isLoading: getDataLoading } = useQuery({
     queryKey: [`/api/v1/getMe/${userData?.user_phone}`],
     queryFn: async () => {
@@ -31,7 +34,17 @@ export default function RightSideAmount({
   });
 
   const handleContinueCheck = () => {
+    if (activeStep == 1) {
+      if (!userData?.user_phone) {
+        navigate('/sign-in');
+        return;
+      }
+    }
     if (activeStep == 2) {
+      if (!userData?.user_phone) {
+        navigate('/sign-in');
+        return;
+      }
       if (!deliveryType) {
         toast.error("Please select delivery type");
         return;
@@ -42,6 +55,12 @@ export default function RightSideAmount({
         !user?.user_district
       ) {
         toast.error("Please Fill Up User Information");
+        return;
+      }
+    }
+    if (activeStep == 3) {
+      if (!userData?.user_phone) {
+        navigate('/sign-in');
         return;
       }
     }
@@ -59,6 +78,10 @@ export default function RightSideAmount({
   const handlePaymentAll = async () => {
     if (!deliveryType) {
       toast.error("Please select delivery type");
+      return;
+    }
+    if (!userData) {
+      toast.error("Must Need Login First");
       return;
     }
     setLoading(true);

@@ -6,16 +6,22 @@ import BigSpinner from "../../../shared/loader/BigSpinner";
 import AddVideo from "../../../components/dashboard/youtube/AddVideo";
 import VideoTable from "../../../components/dashboard/youtube/VideoTable";
 import { useState } from "react";
+import { getCookie } from "../../../utils/cookie-storage";
+import { authKey } from "../../../constants/storageKey";
 
 const Youtube = () => {
-
+    const token = getCookie(authKey);
     const [rows, setRows] = useState(10);
     const [page, setPage] = useState(1);
 
     const { data: youtubeVideo = [], isLoading, refetch } = useQuery({
         queryKey: [`/api/v1/video_tab/dashboard?page=${page}&limit=${rows}`],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}/video_tab/dashboard?page=${page}&limit=${rows}`)
+            const res = await fetch(`${BASE_URL}/video_tab/dashboard?page=${page}&limit=${rows}`, {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            })
             const data = await res.json();
             return data;
         }
