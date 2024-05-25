@@ -12,15 +12,14 @@ import Loader from "../loader/Loader";
 import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 export default function Header() {
-
   const { data: settings = [], isLoading } = useQuery({
     queryKey: [`/api/v1/siteSetting`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/siteSetting`)
+      const res = await fetch(`${BASE_URL}/siteSetting`);
       const data = await res.json();
       return data?.data;
-    }
-  })
+    },
+  });
 
   const { user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -66,7 +65,7 @@ export default function Header() {
   }, [dropdownRef]);
 
   if (isLoading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -74,7 +73,10 @@ export default function Header() {
       <div className="es_container">
         <div className="mr-6">
           <div className=" items-center justify-between gap-2 py-2 hidden lg:flex">
-            <Link to='/' className="cart flex items-center gap-2  md:ms-20  xl:ms-0">
+            <Link
+              to="/"
+              className="cart flex items-center gap-2  md:ms-20  xl:ms-0"
+            >
               <span className="icon hidden lg:block">
                 <img className="" src={settings[0]?.logo} alt="" />
               </span>
@@ -89,7 +91,7 @@ export default function Header() {
                     id="search"
                     type="search"
                     placeholder="Search Here"
-                    className="w-full px-3 py-2 focus:outline-none border border-gray-300 rounded-l-md text-gray-800"
+                    className="w-full px-3 py-2 focus:outline-none border focus:ring-1 focus:ring-primaryDeepColor border-gray-300 rounded text-gray-800"
                     name="search"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}

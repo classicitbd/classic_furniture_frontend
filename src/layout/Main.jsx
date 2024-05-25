@@ -10,7 +10,7 @@ const Main = () => {
       <div className="hidden lg:block">
         <TopHeader />
       </div>
-      <div className="sticky top-0 z-50 bg-white">
+      <div className="sticky top-0 z-50 ">
         <div className="lg:pt-4 pt-0">
           <Header />
         </div>
@@ -18,7 +18,7 @@ const Main = () => {
           <BottomHeader />
         </div>
       </div>
-      <div className="min-h-screen bg-[#F2F4F8] scrollbar">
+      <div className="min-h-screen ">
         {" "}
         <Outlet />
       </div>
