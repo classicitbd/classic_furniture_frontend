@@ -70,7 +70,7 @@ export default function NewArrival() {
                     )}
                   </div>
                   {/* Product Details */}
-                  <div className="px-3 pt-3 pb-2 sm:h-[144px]">
+                  <div className="px-3 pt-3 pb-2 sm:h-[144px] bg-white">
                     {/* Product Prices */}
                     <div className="product_price_inner flex items-center gap-2 py-2">
                       <strong className="offer_price text-[#FF0000] text-[16px] font-bold">
