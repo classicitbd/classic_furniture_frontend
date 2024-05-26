@@ -195,7 +195,7 @@ export default function AllProducts() {
 
           <div className="grid grid-cols-12 gap-4">
             {/* Aside Sidebar */}
-            <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4 my-6 hidden lg:block">
+            <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4 mt-6 hidden lg:block">
               {/* Left Side Category And Color Section */}
               <LeftSideCategoryAndColorSection
                 categories={categories}
@@ -213,6 +213,7 @@ export default function AllProducts() {
             </div>
             {/* All Products Main Section */}
             <div className="lg:col-span-9 col-span-12">
+              {/* Small device product number */}
               <div className="col-span-12 sm:hidden  bg-white rounded p-3 my-3">
                 <p className="sm:text-xl font-semibold text-primaryDeepColor ">
                   Products {products?.length}
@@ -226,7 +227,7 @@ export default function AllProducts() {
                   <ProductCardSkeleton />
                 </div>
               ) : (
-                <div>
+                <div className="lg:min-h-[70vh] sm:min-h-[67vh] min-h-[60vh]">
                   {products?.length > 0 ? (
                     <div
                       className={`grid ${gridCols} gap-4 lg:px-0 sm:px-6 px-2 pb-6 rounded`}
@@ -240,9 +241,9 @@ export default function AllProducts() {
                   )}
                 </div>
               )}
+              {/* Pagination */}
               {totalData > 0 && (
-                <div className="flex justify-between flex-wrap-reverse items-center  bg-white sm:px-4 px-2 rounded-md">
-                  {/* Pagination */}
+                <div className="flex justify-between flex-wrap-reverse items-center bg-white sm:px-4 px-2 rounded-md">
                   <FrontPagination
                     rows={rows}
                     page={page}
@@ -266,7 +267,7 @@ export default function AllProducts() {
             </div>
           </div>
         </section>
-
+        {/* Mobile Filter Section */}
         {mobileFiltersOpen && (
           <>
             <div
