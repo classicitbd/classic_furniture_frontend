@@ -194,6 +194,7 @@ export default function AllProducts() {
           />
 
           <div className="grid grid-cols-12 gap-4">
+            {/* Aside Sidebar */}
             <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4 my-6 hidden lg:block">
               {/* Left Side Category And Color Section */}
               <LeftSideCategoryAndColorSection
@@ -210,6 +211,7 @@ export default function AllProducts() {
                 handlePriceChange={handlePriceChange}
               />
             </div>
+            {/* All Products Main Section */}
             <div className="lg:col-span-9 col-span-12">
               <div className="col-span-12 sm:hidden  bg-white rounded p-3 my-3">
                 <p className="sm:text-xl font-semibold text-primaryDeepColor ">
