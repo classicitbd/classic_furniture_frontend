@@ -11,14 +11,17 @@ const FrontPagination = ({ rows, page, setPage, setRows, totalData }) => {
   return (
     <div className="flex justify-end my-6">
       <div className="mr-5 flex items-center gap-2">
-        <label className="text-gray-500 font-semibold" htmlFor="rows_number">
+        <label
+          className="text-gray-500 font-semibold text-sm sm:text-md"
+          htmlFor="rows_number"
+        >
           Show:
         </label>
         <select
           onChange={handleRowsChange}
           value={rows}
           id="rows_number"
-          className="block w-full px-3 py-1 text-gray-700 bg-white border border-gray-200 rounded-md"
+          className="block w-full px-3 py-1 text-gray-700 bg-white border border-gray-200 rounded-md text-sm sm:text-md"
         >
           <option value="10">10</option>
           <option value="20">20</option>

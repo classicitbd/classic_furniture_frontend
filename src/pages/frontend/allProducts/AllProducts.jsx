@@ -1,8 +1,7 @@
 import { useGetCategoryQuery } from "../../../redux/feature/category/categoryApi";
 import { useGetColorQuery } from "../../../redux/feature/color/colorApi";
 import { IoClose, IoFilterOutline } from "react-icons/io5";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import Loader from "../../../shared/loader/Loader";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { useEffect, useState, useRef } from "react";
 import AllProductCard from "./AllProductCard";
@@ -12,7 +11,6 @@ import ProductNotFound from "../../../components/common/productNotFound/ProductN
 import PriceRangeSlider from "./PriceRangeSlider";
 import { RxReload } from "react-icons/rx";
 import FrontPagination from "./FrontPagination";
-import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 export default function AllProducts() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -26,6 +24,8 @@ export default function AllProducts() {
   const [loading, setLoading] = useState(false);
   const [minPrice, setMinPrice] = useState(1);
   const [maxPrice, setMaxPrice] = useState(200000);
+  const [value, setValue] = useState("");
+
   // const [maxPriceRange, setMaxPriceRange] = useState(200000);
   const [totalData, setTotalData] = useState(0);
   const [rows, setRows] = useState(20);
@@ -126,6 +126,20 @@ export default function AllProducts() {
     navigate("/all");
   };
 
+  const handleSearch = (text) => {
+    // Update the query parameters
+    const queryParams = new URLSearchParams(queryParameters);
+    queryParams.set("keyword", text);
+
+    // Update the URL using navigate
+    navigate(`/all?${queryParams.toString()}`);
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleSearch(value);
+    setValue("");
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -159,7 +173,57 @@ export default function AllProducts() {
     <div>
       <main className="es_container mx-auto">
         <section className="py-6 mx-4">
-          <div className="p-4 bg-white sm:px-6 rounded">
+          {/*  */}
+          {/* search */}
+          <div className="search flex-1">
+            <form
+              className="flex flex-1 justify-between lg:max-w-5xl items-center"
+              onSubmit={handleSubmit}
+            >
+              <div className="relative flex items-center w-full my-2 lg:hidden">
+                <input
+                  id="search"
+                  type="search"
+                  placeholder="Search Here"
+                  className="w-full px-3 py-2 focus:outline-none border focus:ring-1 focus:ring-primaryDeepColor border-gray-300 rounded-md text-gray-800"
+                  name="search"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                />
+                <button
+                  type="submit"
+                  className="absolute right-0 px-4 py-2 bg-gray-200  text-gray-800 rounded-r-md hover:bg-gray-300"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth={0}
+                    viewBox="0 0 512 512"
+                    className="w-6 h-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeMiterlimit={10}
+                      strokeWidth={32}
+                      d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeMiterlimit={10}
+                      strokeWidth={32}
+                      d="M338.29 338.29 448 448"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div className="sm:p-3 p-1 bg-white sm:px-6 rounded">
             <div className="flex sm:justify-between items-center">
               <div className="flex items-center justify-center">
                 <p className="sm:text-xl font-semibold text-primaryDeepColor hidden sm:flex">
@@ -172,7 +236,7 @@ export default function AllProducts() {
               >
                 <div className="flex gap-2 items-center justify-center ">
                   <span
-                    className="text-gray-800 mr-2 items-center gap-2 flex bg-gray-100 p-2 rounded lg:hidden"
+                    className="text-gray-800 sm:mr-2 mr-0 items-center gap-2 flex bg-gray-100 sm:p-2 p-1 rounded lg:hidden"
                     onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
                   >
                     <IoFilterOutline size={20} /> <span>Filter</span>
@@ -216,7 +280,6 @@ export default function AllProducts() {
               </div>
             </div>
           </div>
-          {/* <div className="p-4 bg-white sm:px-6 rounded my-2"></div> */}
 
           <div className="grid grid-cols-12 gap-4">
             <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4 my-6 hidden lg:block">
@@ -313,7 +376,12 @@ export default function AllProducts() {
                 )}
               </div>
             </div>
-            <div className="lg:col-span-9 col-span-12 pr-2">
+            <div className="lg:col-span-9 col-span-12">
+              <div className="col-span-12 sm:hidden  bg-white rounded p-3 my-3">
+                <p className="sm:text-xl font-semibold text-primaryDeepColor ">
+                  Products {products?.length}
+                </p>
+              </div>{" "}
               {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
                   <ProductCardSkeleton />
@@ -337,7 +405,7 @@ export default function AllProducts() {
                 </div>
               )}
               {totalData > 0 && (
-                <div className="flex justify-between items-center py-5">
+                <div className="flex justify-between flex-wrap-reverse items-center py-5">
                   {/* Pagination */}
                   <FrontPagination
                     rows={rows}

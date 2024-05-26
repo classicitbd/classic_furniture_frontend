@@ -5,18 +5,16 @@ import BottomHeader from "../shared/header/BottomHeader";
 import TopHeader from "../shared/header/TopHeader";
 
 const SecondMain = () => {
-
   const usePathname = useLocation();
   const pathname = usePathname?.pathname;
 
   return (
     <>
-      {
-        pathname == '/' &&
+      {pathname == "/" && (
         <div className="hidden lg:block">
           <TopHeader />
         </div>
-      }
+      )}
       <div className="sticky top-0 z-50 bg-white">
         <div className="lg:pt-4 pt-0">
           <Header />
@@ -25,7 +23,7 @@ const SecondMain = () => {
           <BottomHeader />
         </div>
       </div>
-      <div className="min-h-screen bg-[#F2F4F8] scrollbar-hide">
+      <div className="min-h-screen bg-[#E5E6EA] scrollbar-hide">
         {" "}
         <Outlet />
       </div>
