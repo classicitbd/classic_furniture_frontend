@@ -37,7 +37,7 @@ export default function MobileNavbar({ quantity }) {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg flex justify-around py-3 lg:hidden mb-2 rounded-lg mx-4 h-12">
+    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg flex justify-around py-3 lg:hidden  h-12">
       <Link to="/" className="text-black">
         <RiHome6Line size={24} />
       </Link>

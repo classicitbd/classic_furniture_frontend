@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const AllProductCard = ({ product }) => {
   return (
-    <div key={product?._id} className="group mt-6 bg-white ">
+    <div key={product?._id} className="group mt-6 bg-white  rounded-md ">
       <Link to={`/${product?.product_slug}`}>
         <div
           title="View Details"

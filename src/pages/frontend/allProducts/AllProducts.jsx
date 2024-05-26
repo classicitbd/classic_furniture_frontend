@@ -7,7 +7,6 @@ import AllProductCard from "./AllProductCard";
 import { BASE_URL } from "../../../utils/baseURL";
 import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
-import PriceRangeSlider from "./PriceRangeSlider";
 import FrontPagination from "./FrontPagination";
 import MobileSearchFiled from "./MobileSearchFiled";
 import FilterAndResetSection from "./FilterAndResetSection";
@@ -23,7 +22,9 @@ export default function AllProducts() {
   const [products, setProducts] = useState([]);
   const [defaultProducts, setDefaultProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [minPrice, setMinPrice] = useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [maxPrice, setMaxPrice] = useState(200000);
   const [value, setValue] = useState("");
 
@@ -175,7 +176,7 @@ export default function AllProducts() {
       <main className="es_container mx-auto">
         <section className="py-6 mx-4">
           {/*  */}
-          {/* search */}
+          {/* search filed only for less than large screen */}
           <MobileSearchFiled
             handleSubmit={handleSubmit}
             value={value}
@@ -194,26 +195,6 @@ export default function AllProducts() {
 
           <div className="grid grid-cols-12 gap-4">
             <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4 my-6 hidden lg:block">
-              <div className="my-4">
-                <h3 className="text-[16px] font-semibold py-2 text-gray-700">
-                  Price Range
-                </h3>
-                {/* {loading ? (
-                  <MiniSpinner />
-                ) : (
-                  <PriceRangeSlider
-                    maxPrice={maxPrice}
-                    minPrice={minPrice}
-                    onChange={handlePriceChange}
-                  />
-                )} */}
-
-                <PriceRangeSlider
-                  minPrice={1}
-                  maxPrice={200000}
-                  onPriceChange={handlePriceChange}
-                />
-              </div>
               {/* Left Side Category And Color Section */}
               <LeftSideCategoryAndColorSection
                 categories={categories}
@@ -226,6 +207,7 @@ export default function AllProducts() {
                 handleColorsClick={handleColorsClick}
                 selectedCategory={selectedCategory}
                 selectedColor={selectedColor}
+                handlePriceChange={handlePriceChange}
               />
             </div>
             <div className="lg:col-span-9 col-span-12">
@@ -287,11 +269,11 @@ export default function AllProducts() {
           <>
             <div
               ref={sidebarRef}
-              className={`fixed inset-0 z-50 w-64 min-h-screen bg-white transition-transform duration-500 transform ease-in-out overflow-y-auto scrollbar-thin px-4 ${
+              className={`fixed inset-0 z-50 w-64 h-[94vh] bg-white transition-transform duration-500 transform ease-in-out overflow-y-auto scrollbar-thin px-4 ${
                 mobileFiltersOpen ? "translate-x-0" : "-translate-x-full"
               } lg:hidden`}
             >
-              <span className="flex justify-end  py-4">
+              <span className="flex justify-end  pt-4">
                 <IoClose
                   size={24}
                   onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
@@ -309,10 +291,11 @@ export default function AllProducts() {
                 handleColorsClick={handleColorsClick}
                 selectedCategory={selectedCategory}
                 selectedColor={selectedColor}
+                handlePriceChange={handlePriceChange}
               />
             </div>
             <div
-              className="fixed inset-0 bg-black opacity-50 z-30"
+              className="fixed inset-0 bg-black opacity-25 z-30"
               onClick={() => setMobileFiltersOpen(false)}
             ></div>
           </>
