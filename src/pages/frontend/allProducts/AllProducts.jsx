@@ -227,7 +227,7 @@ export default function AllProducts() {
                 <div>
                   {products?.length > 0 ? (
                     <div
-                      className={`grid ${gridCols} gap-4 lg:px-0 px-6 pb-6 rounded`}
+                      className={`grid ${gridCols} gap-4 lg:px-0 sm:px-6 px-2 pb-6 rounded`}
                     >
                       {products?.map((product) => (
                         <AllProductCard key={product?._id} product={product} />
@@ -239,7 +239,7 @@ export default function AllProducts() {
                 </div>
               )}
               {totalData > 0 && (
-                <div className="flex justify-between flex-wrap-reverse items-center py-5">
+                <div className="flex justify-between flex-wrap-reverse items-center  bg-white sm:px-4 px-2 rounded-md">
                   {/* Pagination */}
                   <FrontPagination
                     rows={rows}
@@ -248,8 +248,8 @@ export default function AllProducts() {
                     setRows={setRows}
                     totalData={totalData}
                   />
-                  <div className="text-xs">
-                    <span className="mr-1 font-semibold text-primary">
+                  <div className="text-xs sm:pt-0 py-2">
+                    <span className="mr-1  font-semibold text-primary">
                       Showing
                     </span>
                     <span className="font-medium text-gray-700 text-xs mr-1">
