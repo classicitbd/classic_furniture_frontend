@@ -24,7 +24,7 @@ const SecondMain = () => {
         </div>
       </div>
       <div className="min-h-screen bg-[#E5E6EA] scrollbar-hide">
-        {" "}
+        {/* <div className="min-h-screen bg-[#F2F4F8] scrollbar-hide"> */}{" "}
         <Outlet />
       </div>
       <footer>

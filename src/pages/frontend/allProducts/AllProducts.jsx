@@ -1,16 +1,16 @@
 import { useGetCategoryQuery } from "../../../redux/feature/category/categoryApi";
 import { useGetColorQuery } from "../../../redux/feature/color/colorApi";
-import { IoClose, IoFilterOutline } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { useEffect, useState, useRef } from "react";
 import AllProductCard from "./AllProductCard";
 import { BASE_URL } from "../../../utils/baseURL";
 import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
-import PriceRangeSlider from "./PriceRangeSlider";
-import { RxReload } from "react-icons/rx";
 import FrontPagination from "./FrontPagination";
+import MobileSearchFiled from "./MobileSearchFiled";
+import FilterAndResetSection from "./FilterAndResetSection";
+import LeftSideCategoryAndColorSection from "./LeftSideCategoryAndColorSection";
 
 export default function AllProducts() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -22,7 +22,9 @@ export default function AllProducts() {
   const [products, setProducts] = useState([]);
   const [defaultProducts, setDefaultProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [minPrice, setMinPrice] = useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [maxPrice, setMaxPrice] = useState(200000);
   const [value, setValue] = useState("");
 
@@ -174,208 +176,42 @@ export default function AllProducts() {
       <main className="es_container mx-auto">
         <section className="py-6 mx-4">
           {/*  */}
-          {/* search */}
-          <div className="search flex-1">
-            <form
-              className="flex flex-1 justify-between lg:max-w-5xl items-center"
-              onSubmit={handleSubmit}
-            >
-              <div className="relative flex items-center w-full my-2 lg:hidden">
-                <input
-                  id="search"
-                  type="search"
-                  placeholder="Search Here"
-                  className="w-full px-3 py-2 focus:outline-none border focus:ring-1 focus:ring-primaryDeepColor border-gray-300 rounded-md text-gray-800"
-                  name="search"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-                />
-                <button
-                  type="submit"
-                  className="absolute right-0 px-4 py-2 bg-gray-200  text-gray-800 rounded-r-md hover:bg-gray-300"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth={0}
-                    viewBox="0 0 512 512"
-                    className="w-6 h-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeMiterlimit={10}
-                      strokeWidth={32}
-                      d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z"
-                    />
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeMiterlimit={10}
-                      strokeWidth={32}
-                      d="M338.29 338.29 448 448"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className="sm:p-3 p-1 bg-white sm:px-6 rounded">
-            <div className="flex sm:justify-between items-center">
-              <div className="flex items-center justify-center">
-                <p className="sm:text-xl font-semibold text-primaryDeepColor hidden sm:flex">
-                  Products {products?.length}
-                </p>
-              </div>
-              <div
-                className="flex items-center sm:w-auto w-full justify-between sm:justify-center flex-wrap
-               gap-4"
-              >
-                <div className="flex gap-2 items-center justify-center ">
-                  <span
-                    className="text-gray-800 sm:mr-2 mr-0 items-center gap-2 flex bg-gray-100 sm:p-2 p-1 rounded lg:hidden"
-                    onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-                  >
-                    <IoFilterOutline size={20} /> <span>Filter</span>
-                  </span>
-                  <span>
-                    {queryParameters.size > 0 && (
-                      <>
-                        <span
-                          className="hidden bg-gray-100  shadow p-1 rounded sm:block cursor-pointer"
-                          onClick={handleResetFilter}
-                        >
-                          Reset Filter
-                        </span>
-                        <span
-                          onClick={handleResetFilter}
-                          className="block sm:hidden"
-                        >
-                          <RxReload />
-                        </span>
-                      </>
-                    )}
-                  </span>
-                </div>
-                <div className="flex items-center justify-center gap-2">
-                  <p className="hidden sm:flex">Sort By </p>
-                  <select
-                    className="border  border-primaryLightColor rounded-md px-2 py-1 text-[12px]"
-                    onChange={(e) => sortedProducts(e.target.value)}
-                  >
-                    <option className="text-[12px]" value="Default">
-                      Price: Default
-                    </option>
-                    <option className="text-[12px]" value="price-asc">
-                      Price: Low to High
-                    </option>
-                    <option className="text-[12px]" value="price-desc">
-                      Price: High to Low
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* search filed only for less than large screen */}
+          <MobileSearchFiled
+            handleSubmit={handleSubmit}
+            value={value}
+            setValue={setValue}
+          />
+
+          {/* Filter Reset Button */}
+          <FilterAndResetSection
+            products={products}
+            mobileFiltersOpen={mobileFiltersOpen}
+            setMobileFiltersOpen={setMobileFiltersOpen}
+            handleResetFilter={handleResetFilter}
+            queryParameters={queryParameters}
+            sortedProducts={sortedProducts}
+          />
 
           <div className="grid grid-cols-12 gap-4">
+            {/* Aside Sidebar */}
             <div className="lg:col-span-3 bg-white rounded xl:mr-16 lg:mr-10 px-6 py-4 my-6 hidden lg:block">
-              <div className="my-4">
-                <h3 className="text-[16px] font-semibold py-2 text-gray-700">
-                  Price Range
-                </h3>
-                {/* {loading ? (
-                  <MiniSpinner />
-                ) : (
-                  <PriceRangeSlider
-                    maxPrice={maxPrice}
-                    minPrice={minPrice}
-                    onChange={handlePriceChange}
-                  />
-                )} */}
-
-                <PriceRangeSlider
-                  minPrice={1}
-                  maxPrice={200000}
-                  onPriceChange={handlePriceChange}
-                />
-              </div>
-              <div className="mb-4">
-                <span
-                  className="flex justify-between items-center cursor-pointer"
-                  onClick={() => setCategoryShow(!categoryShow)}
-                >
-                  <h3 className="text-[16px] font-semibold py-2 text-gray-700">
-                    Categories
-                  </h3>
-                  <span className="text-gray-700">
-                    {categoryShow ? <FaAngleDown /> : <FaAngleUp />}
-                  </span>
-                </span>
-                {categoryShow && (
-                  <ul
-                    role="list"
-                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[35vh] overflow-y-auto scrollbar-thin"
-                  >
-                    {categories?.data?.map((category) => (
-                      <li key={category?.category_name}>
-                        <button
-                          onClick={() =>
-                            handleCategoryClick(category?.category_slug)
-                          }
-                          className={`${
-                            selectedCategory === category?.category_slug
-                              ? "text-primaryLightColor"
-                              : " "
-                          } hover:text-primaryLightColor duration-200`}
-                        >
-                          {category?.category_name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <hr />
-
-              <div className="my-4">
-                <span
-                  className="flex justify-between items-center "
-                  onClick={() => setColorShow(!colorShow)}
-                >
-                  <h3 className="text-[16px] font-semibold py-2 text-gray-700 ">
-                    Color
-                  </h3>
-                  <span className="text-gray-700">
-                    {colorShow ? <FaAngleDown /> : <FaAngleUp />}
-                  </span>
-                </span>
-                {colorShow && (
-                  <ul
-                    role="list"
-                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[35vh] overflow-y-auto scrollbar-thin"
-                  >
-                    {colors?.data?.map((color) => (
-                      <li key={color?.color_name}>
-                        <button
-                          onClick={() => handleColorsClick(color?.color_slug)}
-                          className={`${
-                            selectedColor === color?.color_name
-                              ? "text-primaryLightColor"
-                              : " "
-                          } hover:text-primaryLightColor duration-200`}
-                        >
-                          {color?.color_name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              {/* Left Side Category And Color Section */}
+              <LeftSideCategoryAndColorSection
+                categories={categories}
+                categoryShow={categoryShow}
+                setCategoryShow={setCategoryShow}
+                colorShow={colorShow}
+                setColorShow={setColorShow}
+                colors={colors}
+                handleCategoryClick={handleCategoryClick}
+                handleColorsClick={handleColorsClick}
+                selectedCategory={selectedCategory}
+                selectedColor={selectedColor}
+                handlePriceChange={handlePriceChange}
+              />
             </div>
+            {/* All Products Main Section */}
             <div className="lg:col-span-9 col-span-12">
               <div className="col-span-12 sm:hidden  bg-white rounded p-3 my-3">
                 <p className="sm:text-xl font-semibold text-primaryDeepColor ">
@@ -393,7 +229,7 @@ export default function AllProducts() {
                 <div>
                   {products?.length > 0 ? (
                     <div
-                      className={`grid ${gridCols} gap-4 lg:px-0 px-6 pb-6 rounded`}
+                      className={`grid ${gridCols} gap-4 lg:px-0 sm:px-6 px-2 pb-6 rounded`}
                     >
                       {products?.map((product) => (
                         <AllProductCard key={product?._id} product={product} />
@@ -405,7 +241,7 @@ export default function AllProducts() {
                 </div>
               )}
               {totalData > 0 && (
-                <div className="flex justify-between flex-wrap-reverse items-center py-5">
+                <div className="flex justify-between flex-wrap-reverse items-center  bg-white sm:px-4 px-2 rounded-md">
                   {/* Pagination */}
                   <FrontPagination
                     rows={rows}
@@ -414,8 +250,8 @@ export default function AllProducts() {
                     setRows={setRows}
                     totalData={totalData}
                   />
-                  <div className="text-xs">
-                    <span className="mr-1 font-semibold text-primary">
+                  <div className="text-xs sm:pt-0 py-2">
+                    <span className="mr-1  font-semibold text-primary">
                       Showing
                     </span>
                     <span className="font-medium text-gray-700 text-xs mr-1">
@@ -435,94 +271,33 @@ export default function AllProducts() {
           <>
             <div
               ref={sidebarRef}
-              className={`fixed inset-0 z-50 w-64 min-h-screen bg-white transition-transform duration-500 transform ease-in-out overflow-y-auto scrollbar-thin px-4 ${
+              className={`fixed inset-0 z-50 w-64 h-[94vh] bg-white transition-transform duration-500 transform ease-in-out overflow-y-auto scrollbar-thin px-4 ${
                 mobileFiltersOpen ? "translate-x-0" : "-translate-x-full"
               } lg:hidden`}
             >
-              <span className="flex justify-end  py-4">
+              <span className="flex justify-end  pt-4">
                 <IoClose
                   size={24}
                   onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
                 />
               </span>
-
-              <div className="mb-4">
-                <span
-                  className="flex justify-between items-center cursor-pointer"
-                  onClick={() => setCategoryShow(!categoryShow)}
-                >
-                  <h3 className="text-[16px] font-semibold py-2 text-gray-700">
-                    Categories
-                  </h3>
-                  <span className="text-gray-700">
-                    {categoryShow ? <FaAngleDown /> : <FaAngleUp />}
-                  </span>
-                </span>
-                {categoryShow && (
-                  <ul
-                    role="list"
-                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 "
-                  >
-                    {categories?.data?.map((category) => (
-                      <li key={category?.category_name}>
-                        <button
-                          onClick={() =>
-                            handleCategoryClick(category?.category_slug)
-                          }
-                          className={`${
-                            selectedCategory === category?.category_slug
-                              ? "text-primaryLightColor"
-                              : " "
-                          } hover:text-primaryLightColor duration-200`}
-                        >
-                          {category?.category_name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <hr />
-
-              <div className="my-4">
-                <span
-                  className="flex justify-between items-center "
-                  onClick={() => setColorShow(!colorShow)}
-                >
-                  <h3 className="text-[16px] font-semibold py-2 text-gray-700 ">
-                    Color
-                  </h3>
-                  <span className="text-gray-700">
-                    {colorShow ? <FaAngleDown /> : <FaAngleUp />}
-                  </span>
-                </span>
-                {colorShow && (
-                  <ul
-                    role="list"
-                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600"
-                  >
-                    {colors?.data?.map((color) => (
-                      <li key={color?.color_name}>
-                        <button
-                          onClick={() => {
-                            handleColorsClick(color?.color_slug);
-                          }}
-                          className={`${
-                            selectedColor === color?.color_name
-                              ? "text-primaryLightColor"
-                              : " "
-                          } hover:text-primaryLightColor duration-200`}
-                        >
-                          {color?.color_name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              {/* Left Side category and color section for mobile */}
+              <LeftSideCategoryAndColorSection
+                categories={categories}
+                categoryShow={categoryShow}
+                setCategoryShow={setCategoryShow}
+                colorShow={colorShow}
+                setColorShow={setColorShow}
+                colors={colors}
+                handleCategoryClick={handleCategoryClick}
+                handleColorsClick={handleColorsClick}
+                selectedCategory={selectedCategory}
+                selectedColor={selectedColor}
+                handlePriceChange={handlePriceChange}
+              />
             </div>
             <div
-              className="fixed inset-0 bg-black opacity-50 z-30"
+              className="fixed inset-0 bg-black opacity-25 z-30"
               onClick={() => setMobileFiltersOpen(false)}
             ></div>
           </>

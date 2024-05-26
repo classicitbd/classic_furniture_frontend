@@ -9,8 +9,8 @@ const FrontPagination = ({ rows, page, setPage, setRows, totalData }) => {
   };
 
   return (
-    <div className="flex justify-end my-6">
-      <div className="mr-5 flex items-center gap-2">
+    <div className="flex sm:justify-end flex-wrap sm:my-4 my-2">
+      <div className="sm:mr-5 mr-2 flex items-center gap-2">
         <label
           className="text-gray-500 font-semibold text-sm sm:text-md"
           htmlFor="rows_number"
@@ -28,39 +28,41 @@ const FrontPagination = ({ rows, page, setPage, setRows, totalData }) => {
           <option value="30">30</option>
         </select>
       </div>
-      {page == 1 ? (
-        <button
-          type="button"
-          disabled
-          className="btn border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md cursor-not-allowed"
-        >
-          <FaChevronLeft />
-        </button>
-      ) : (
-        <button
-          type="button"
-          onClick={page > 1 ? () => setPage(page - 1) : 1}
-          className="btn border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white"
-        >
-          <FaChevronLeft />
-        </button>
-      )}
-      {lastArrow == page ? (
-        <button
-          type="button"
-          className="btn border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md cursor-not-allowed"
-        >
-          <FaChevronRight />
-        </button>
-      ) : (
-        <button
-          type="button"
-          onClick={lastArrow != page ? () => setPage(page + 1) : null}
-          className="btn border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white"
-        >
-          <FaChevronRight />
-        </button>
-      )}
+      <div className="flex">
+        {page == 1 ? (
+          <button
+            type="button"
+            disabled
+            className="btn border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md cursor-not-allowed"
+          >
+            <FaChevronLeft />
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={page > 1 ? () => setPage(page - 1) : 1}
+            className="btn border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white"
+          >
+            <FaChevronLeft />
+          </button>
+        )}
+        {lastArrow == page ? (
+          <button
+            type="button"
+            className="btn border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md cursor-not-allowed"
+          >
+            <FaChevronRight />
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={lastArrow != page ? () => setPage(page + 1) : null}
+            className="btn border flex items-center justify-center px-3 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md hover:bg-[#22CD5A] hover:text-white"
+          >
+            <FaChevronRight />
+          </button>
+        )}
+      </div>
     </div>
   );
 };
