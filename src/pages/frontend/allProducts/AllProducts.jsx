@@ -1,18 +1,17 @@
 import { useGetCategoryQuery } from "../../../redux/feature/category/categoryApi";
 import { useGetColorQuery } from "../../../redux/feature/color/colorApi";
-import { IoClose, IoFilterOutline } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { useEffect, useState, useRef } from "react";
 import AllProductCard from "./AllProductCard";
 import { BASE_URL } from "../../../utils/baseURL";
 import ProductCardSkeleton from "../../../shared/loader/ProductCardSkeleton";
 import ProductNotFound from "../../../components/common/productNotFound/ProductNotFound";
 import PriceRangeSlider from "./PriceRangeSlider";
-import { RxReload } from "react-icons/rx";
 import FrontPagination from "./FrontPagination";
 import MobileSearchFiled from "./MobileSearchFiled";
 import FilterAndResetSection from "./FilterAndResetSection";
+import LeftSideCategoryAndColorSection from "./LeftSideCategoryAndColorSection";
 
 export default function AllProducts() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -215,78 +214,19 @@ export default function AllProducts() {
                   onPriceChange={handlePriceChange}
                 />
               </div>
-              <div className="mb-4">
-                <span
-                  className="flex justify-between items-center cursor-pointer"
-                  onClick={() => setCategoryShow(!categoryShow)}
-                >
-                  <h3 className="text-[16px] font-semibold py-2 text-gray-700">
-                    Categories
-                  </h3>
-                  <span className="text-gray-700">
-                    {categoryShow ? <FaAngleDown /> : <FaAngleUp />}
-                  </span>
-                </span>
-                {categoryShow && (
-                  <ul
-                    role="list"
-                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[35vh] overflow-y-auto scrollbar-thin"
-                  >
-                    {categories?.data?.map((category) => (
-                      <li key={category?.category_name}>
-                        <button
-                          onClick={() =>
-                            handleCategoryClick(category?.category_slug)
-                          }
-                          className={`${
-                            selectedCategory === category?.category_slug
-                              ? "text-primaryLightColor"
-                              : " "
-                          } hover:text-primaryLightColor duration-200`}
-                        >
-                          {category?.category_name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <hr />
-
-              <div className="my-4">
-                <span
-                  className="flex justify-between items-center "
-                  onClick={() => setColorShow(!colorShow)}
-                >
-                  <h3 className="text-[16px] font-semibold py-2 text-gray-700 ">
-                    Color
-                  </h3>
-                  <span className="text-gray-700">
-                    {colorShow ? <FaAngleDown /> : <FaAngleUp />}
-                  </span>
-                </span>
-                {colorShow && (
-                  <ul
-                    role="list"
-                    className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[35vh] overflow-y-auto scrollbar-thin"
-                  >
-                    {colors?.data?.map((color) => (
-                      <li key={color?.color_name}>
-                        <button
-                          onClick={() => handleColorsClick(color?.color_slug)}
-                          className={`${
-                            selectedColor === color?.color_name
-                              ? "text-primaryLightColor"
-                              : " "
-                          } hover:text-primaryLightColor duration-200`}
-                        >
-                          {color?.color_name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              {/* Left Side Category And Color Section */}
+              <LeftSideCategoryAndColorSection
+                categories={categories}
+                categoryShow={categoryShow}
+                setCategoryShow={setCategoryShow}
+                colorShow={colorShow}
+                setColorShow={setColorShow}
+                colors={colors}
+                handleCategoryClick={handleCategoryClick}
+                handleColorsClick={handleColorsClick}
+                selectedCategory={selectedCategory}
+                selectedColor={selectedColor}
+              />
             </div>
             <div className="lg:col-span-9 col-span-12">
               <div className="col-span-12 sm:hidden  bg-white rounded p-3 my-3">
@@ -357,7 +297,7 @@ export default function AllProducts() {
                   onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
                 />
               </span>
-
+              {/* 
               <div className="mb-4">
                 <span
                   className="flex justify-between items-center cursor-pointer"
@@ -431,7 +371,20 @@ export default function AllProducts() {
                     ))}
                   </ul>
                 )}
-              </div>
+              </div> */}
+
+              <LeftSideCategoryAndColorSection
+                categories={categories}
+                categoryShow={categoryShow}
+                setCategoryShow={setCategoryShow}
+                colorShow={colorShow}
+                setColorShow={setColorShow}
+                colors={colors}
+                handleCategoryClick={handleCategoryClick}
+                handleColorsClick={handleColorsClick}
+                selectedCategory={selectedCategory}
+                selectedColor={selectedColor}
+              />
             </div>
             <div
               className="fixed inset-0 bg-black opacity-50 z-30"

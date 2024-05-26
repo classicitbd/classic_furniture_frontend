@@ -1,0 +1,91 @@
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+
+const LeftSideCategoryAndColorSection = ({
+  categories,
+  categoryShow,
+  setCategoryShow,
+  colorShow,
+  setColorShow,
+  colors,
+  handleCategoryClick,
+  handleColorsClick,
+  selectedCategory,
+  selectedColor,
+}) => {
+  return (
+    <div>
+      <div className="mb-4">
+        <span
+          className="flex justify-between items-center cursor-pointer"
+          onClick={() => setCategoryShow(!categoryShow)}
+        >
+          <h3 className="text-[16px] font-semibold py-2 text-gray-700">
+            Categories
+          </h3>
+          <span className="text-gray-700">
+            {categoryShow ? <FaAngleDown /> : <FaAngleUp />}
+          </span>
+        </span>
+        {categoryShow && (
+          <ul
+            role="list"
+            className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[35vh] overflow-y-auto scrollbar-thin"
+          >
+            {categories?.data?.map((category) => (
+              <li key={category?.category_name}>
+                <button
+                  onClick={() => handleCategoryClick(category?.category_slug)}
+                  className={`${
+                    selectedCategory === category?.category_slug
+                      ? "text-primaryLightColor"
+                      : " "
+                  } hover:text-primaryLightColor duration-200`}
+                >
+                  {category?.category_name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <hr />
+
+      <div className="my-4">
+        <span
+          className="flex justify-between items-center "
+          onClick={() => setColorShow(!colorShow)}
+        >
+          <h3 className="text-[16px] font-semibold py-2 text-gray-700 ">
+            Color
+          </h3>
+          <span className="text-gray-700">
+            {colorShow ? <FaAngleDown /> : <FaAngleUp />}
+          </span>
+        </span>
+        {colorShow && (
+          <ul
+            role="list"
+            className="space-y-4 pl-2 pb-6 text-sm font-medium text-gray-600 max-h-[35vh] overflow-y-auto scrollbar-thin"
+          >
+            {colors?.data?.map((color) => (
+              <li key={color?.color_name}>
+                <button
+                  onClick={() => handleColorsClick(color?.color_slug)}
+                  className={`${
+                    selectedColor === color?.color_name
+                      ? "text-primaryLightColor"
+                      : " "
+                  } hover:text-primaryLightColor duration-200`}
+                >
+                  {color?.color_name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default LeftSideCategoryAndColorSection;
