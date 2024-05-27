@@ -1,5 +1,5 @@
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import PriceRangeSlider from "./PriceRangeSlider";
+// import PriceRangeSlider from "./PriceRangeSlider";
 import { useState } from "react";
 
 const LeftSideCategoryAndColorSection = ({
@@ -13,7 +13,7 @@ const LeftSideCategoryAndColorSection = ({
   handleColorsClick,
   selectedCategory,
   selectedColor,
-  handlePriceChange,
+  //   handlePriceChange,
 }) => {
   // eslint-disable-next-line no-unused-vars
   const [minPrice, setMinPrice] = useState(1);
@@ -21,17 +21,6 @@ const LeftSideCategoryAndColorSection = ({
   const [maxPrice, setMaxPrice] = useState(200000);
   return (
     <div>
-      <div className="my-4">
-        <h3 className="text-[16px] font-semibold py-2 text-gray-700">
-          Price Range
-        </h3>
-
-        <PriceRangeSlider
-          minPrice={1}
-          maxPrice={200000}
-          onPriceChange={handlePriceChange}
-        />
-      </div>
       <div className="mb-4">
         <span
           className="flex justify-between items-center cursor-pointer"
