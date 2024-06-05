@@ -1,5 +1,8 @@
 import { toast } from "react-toastify";
-import { useDeleteCategoryMutation, useUpdateCategoryMutation } from "../../../redux/feature/category/categoryApi";
+import {
+  useDeleteCategoryMutation,
+  useUpdateCategoryMutation,
+} from "../../../redux/feature/category/categoryApi";
 import { MdDeleteForever } from "react-icons/md";
 import NoDataFound from "../../common/noDataFound/NoDataFound";
 import { useState } from "react";
@@ -8,7 +11,15 @@ import { FiEdit } from "react-icons/fi";
 import { BiSearch } from "react-icons/bi";
 import Pagination from "../../../shared/pagination/Pagination";
 
-const CategoryTable = ({ refetch, categoryTypes, setSearchTerm, rows, page, setPage, setRows }) => {
+const CategoryTable = ({
+  refetch,
+  categoryTypes,
+  setSearchTerm,
+  rows,
+  page,
+  setPage,
+  setRows,
+}) => {
   const [categoryUpdateModal, setCategoryUpdateModal] = useState(false);
   const [categoryUpdateModalValue, setCategoryUpdateModalValue] =
     useState(false);
@@ -34,14 +45,12 @@ const CategoryTable = ({ refetch, categoryTypes, setSearchTerm, rows, page, setP
 
   const [deleteCategoryType] = useDeleteCategoryMutation(); //delete Category type
 
-
   const updateCategoryModal = (category) => {
     setCategoryUpdateModal(true);
     setCategoryUpdateModalValue(category);
   };
 
-  const [updateCategoryStatusForMainPage] =
-    useUpdateCategoryMutation(); //Update Category status for explore
+  const [updateCategoryStatusForMainPage] = useUpdateCategoryMutation(); //Update Category status for explore
 
   const updateCategoryStatusForMainPageFalse = (_id, show_card) => {
     const sendData = {
