@@ -28,7 +28,6 @@ const PopularCategory = () => {
   if (windowWidth >= 1024) gridCols = "lg:grid-cols-4";
   if (windowWidth >= 1440) gridCols = "2xl:grid-cols-6";
 
-  const [loading, setLoading] = useState(true);
   // if (isLoading) return <Loader />;
 
   return (
@@ -41,7 +40,7 @@ const PopularCategory = () => {
         </div>
       </div>
       <div className={`grid gap-4 ${gridCols}`}>
-        {isLoading || loading ? (
+        {isLoading ? (
           <>
             {[...Array(5)].map((_, index) => (
               <div
