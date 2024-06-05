@@ -14,6 +14,7 @@ const Banner = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const token = getCookie(authKey);
+
   const {
     data: banners = [],
     isLoading,
@@ -24,11 +25,12 @@ const Banner = () => {
     ],
     queryFn: async () => {
       const res = await fetch(
-        `${BASE_URL}/banner/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
+        `${BASE_URL}/banner/dashboard?page=${page}&limit=${rows}&searchTerm=${searchTerm}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       const data = await res.json();
       return data;
