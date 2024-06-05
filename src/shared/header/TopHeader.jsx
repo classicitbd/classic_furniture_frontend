@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Loader from "../loader/Loader";
 import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function TopHeader() {
   const { data: settings = [], isLoading } = useQuery({
@@ -15,6 +16,7 @@ export default function TopHeader() {
       return data?.data;
     },
   });
+  const [loading, setLoaing] = useState(true);
 
   if (isLoading) {
     return <Loader />;
