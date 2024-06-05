@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetCategoryQuery } from "../../../redux/feature/category/categoryApi";
-import Loader from "../../../shared/loader/Loader";
 
 const PopularCategory = () => {
   const { data: categories, isLoading } = useGetCategoryQuery(undefined, {
