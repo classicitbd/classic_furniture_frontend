@@ -1,6 +1,5 @@
-import { IoFilterOutline } from "react-icons/io5";
 import { RxReload } from "react-icons/rx";
-
+import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 const FilterAndResetSection = ({
   products,
   setMobileFiltersOpen,
@@ -23,19 +22,22 @@ const FilterAndResetSection = ({
         >
           <div className="flex gap-2 items-center justify-center ">
             <span
-              className="text-gray-800 sm:mr-2 mr-0 items-center gap-2 flex bg-gray-100 sm:p-2 p-1 rounded lg:hidden"
+              className="text-gray-800 sm:mr-2 mr-0 items-center gap-1 flex bg-gray-100 hover:bg-gray-200 duration-200 text-sm  border px-2 p-1 rounded lg:hidden"
               onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
             >
-              <IoFilterOutline size={20} /> <span>Filter</span>
+              <MdFilterAlt /> <span>Filter</span>
             </span>
             <span>
               {queryParameters.size > 0 && (
                 <>
                   <span
-                    className="hidden bg-gray-100  shadow p-1 rounded sm:block cursor-pointer"
+                    className="hidden bg-gray-100 hover:bg-gray-200 duration-200  shadow px-2 p-1 rounded sm:block border text-sm  cursor-pointer "
                     onClick={handleResetFilter}
                   >
-                    Reset Filter
+                    <span className="flex items-center gap-1">
+                      {" "}
+                      <MdFilterAltOff /> Reset Filter
+                    </span>
                   </span>
                   <span onClick={handleResetFilter} className="block sm:hidden">
                     <RxReload />

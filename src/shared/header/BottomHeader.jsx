@@ -2,13 +2,13 @@ import { useState } from "react";
 import "./header.css";
 import { Link, NavLink } from "react-router-dom";
 import { useGetMenuQuery } from "../../redux/feature/menu/menuApi";
-import Loader from "../loader/Loader";
+
+import BottomHeaderSkeleton from "../loader/homeLoading/BottomHeaderSkeleton";
 
 export default function BottomHeader2() {
   const { data: menuData, isLoading } = useGetMenuQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
-
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMenu, setIsMenu] = useState("");
   const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
@@ -16,11 +16,8 @@ export default function BottomHeader2() {
   const [subCategories, setSubCategories] = useState([]);
 
   if (isLoading) {
-    return (
-        <Loader />
-    );
+    return <BottomHeaderSkeleton />;
   }
-
   return (
     <div className="text-[#008140] font-medium">
       <div className="es_container">
@@ -36,6 +33,7 @@ export default function BottomHeader2() {
                 All Products
               </NavLink>
             </nav>
+
             <div>
               <div
                 onMouseEnter={() => {

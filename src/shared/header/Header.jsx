@@ -8,9 +8,9 @@ import { eraseCookie } from "../../utils/cookie-storage";
 import { authKey } from "../../constants/storageKey";
 import { useSelector } from "react-redux";
 import { BsCart2 } from "react-icons/bs";
-import Loader from "../loader/Loader";
 import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
+import HeaderSkeleton from "../loader/homeLoading/HeaderSkeleton";
 export default function Header() {
   const { data: settings = [], isLoading } = useQuery({
     queryKey: [`/api/v1/siteSetting`],
@@ -63,9 +63,10 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+  // const [loading, setLoaing] = useState(true);
 
   if (isLoading) {
-    return <Loader />;
+    return <HeaderSkeleton />;
   }
 
   return (

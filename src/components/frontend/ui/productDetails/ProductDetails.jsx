@@ -9,6 +9,7 @@ import { BASE_URL } from "../../../../utils/baseURL";
 import RelatedProducts from "./RelatedProducts";
 import Loader from "../../../../shared/loader/Loader";
 import SuggestProduct from "./SuggestProduct";
+import ProductDetailsSkeleton from "../../../../shared/loader/homeLoading/ProductDetailsSkeleton";
 
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -24,9 +25,7 @@ const ProductDetails = () => {
       return data;
     },
   });
-  if (isLoading) {
-    return <Loader />;
-  }
+
   if (!product) {
     return (
       <section className="flex items-center h-full sm:p-16 bg-gray-50 text-gray-800">
@@ -73,90 +72,99 @@ const ProductDetails = () => {
 
   return (
     <section className="bg-[#F2F4F8] py-6 ">
-      <div className=" my-8 es_container bg-white p-4  ">
-        <div className="grid  grid-cols-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-7 gap-3 ">
-          <div className=" lg:col-span-2  sm:col-span-2  md:col-span-2  col-span-1 ">
-            <div className="">
-              <div className="border-2 border-gray-300">
-                <img
-                  className=" w-full lg:h-[310px] sm:h-[310px]  h-full "
-                  src={
-                    selectedImage
-                      ? selectedImage
-                      : product?.data?.product_thumbnail
-                  }
-                  alt="product"
-                />
-              </div>
-
-              <div className=" flex  overflow-x-auto  scrollbar-thin my-2 ">
-                <img
-                  src={product?.data?.product_thumbnail}
-                  alt={`image-${product?.data?.product_name}`}
-                  className={`md:h-20 md:w-20 h-16 w-16 border  p-1 mr-2 my-2 hover:border-primaryLightColor duration-200  cursor-pointer ${
-                    selectedImage === product?.data?.product_thumbnail
-                      ? "border-primaryLightColor"
-                      : "border-gray-200"
-                  }`}
-                  onClick={() =>
-                    setSelectedImage(product?.data?.product_thumbnail)
-                  }
-                />
-                {product?.data?.product_images &&
-                  product?.data?.product_images.map((image) => (
+      {isLoading ? (
+        <>
+          <ProductDetailsSkeleton />
+        </>
+      ) : (
+        <>
+          <div className=" my-8 es_container bg-white p-4  ">
+            <div className="grid  grid-cols-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-7 gap-3 ">
+              <div className=" lg:col-span-2  sm:col-span-2  md:col-span-2  col-span-1 ">
+                <div className="">
+                  <div className="border-2 border-gray-300">
                     <img
-                      src={image?.image}
-                      alt={`image-${image?._id}`}
-                      key={image?._id}
-                      className={`md:h-20 md:w-20 h-16 w-16 border hover:border-primaryLightColor duration-200   p-1 mr-2 my-2 cursor-pointer ${
-                        selectedImage === image?.image
+                      className=" w-full lg:h-[310px] sm:h-[310px]  h-full "
+                      src={
+                        selectedImage
+                          ? selectedImage
+                          : product?.data?.product_thumbnail
+                      }
+                      alt="product"
+                    />
+                  </div>
+
+                  <div className=" flex  overflow-x-auto  scrollbar-thin my-2 ">
+                    <img
+                      src={product?.data?.product_thumbnail}
+                      alt={`image-${product?.data?.product_name}`}
+                      className={`md:h-20 md:w-20 h-16 w-16 border  p-1 mr-2 my-2 hover:border-primaryLightColor duration-200  cursor-pointer ${
+                        selectedImage === product?.data?.product_thumbnail
                           ? "border-primaryLightColor"
                           : "border-gray-200"
                       }`}
-                      onClick={() => setSelectedImage(image?.image)}
+                      onClick={() =>
+                        setSelectedImage(product?.data?.product_thumbnail)
+                      }
                     />
-                  ))}
+                    {product?.data?.product_images &&
+                      product?.data?.product_images.map((image) => (
+                        <img
+                          src={image?.image}
+                          alt={`image-${image?._id}`}
+                          key={image?._id}
+                          className={`md:h-20 md:w-20 h-16 w-16 border hover:border-primaryLightColor duration-200   p-1 mr-2 my-2 cursor-pointer ${
+                            selectedImage === image?.image
+                              ? "border-primaryLightColor"
+                              : "border-gray-200"
+                          }`}
+                          onClick={() => setSelectedImage(image?.image)}
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Name price and buy add to cart section  */}
+              <div className="lg:col-span-3  sm:col-span-3 md:col-span-3 col-span-1 px-4  ">
+                {/* <div className=" md:col-span-8 sm:col-span-2 col-span-1 px-4 "> */}
+                <ProductHighlightSection
+                  product={product}
+                  selectSize={selectSize}
+                  setSelectSize={setSelectSize}
+                  setSelectedSizeData={setSelectedSizeData}
+                  selectedSizeData={selectedSizeData}
+                />
+              </div>
+
+              <div className="lg:col-span-2  sm:col-span-5 md:col-span-2 col-span-1 px-4 ">
+                <RightSideShoppingSection
+                  product={product}
+                  selectSize={selectSize}
+                  setSelectSize={setSelectSize}
+                  selectedSizeData={selectedSizeData}
+                  setSelectedSizeData={setSelectedSizeData}
+                  setDescription={setDescription}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col lg:flex-row gap-4 my-4   ">
+              <div className="w-full  lg:w-[72%]">
+                <ProductDescription
+                  product={product}
+                  description={description}
+                />
+              </div>
+
+              {/* <SuggestProduct /> */}
+              <div className="w-full lg:w-[28%] ">
+                <RelatedProducts product={product} />
               </div>
             </div>
           </div>
-
-          {/* Name price and buy add to cart section  */}
-          <div className="lg:col-span-3  sm:col-span-3 md:col-span-3 col-span-1 px-4  ">
-            {/* <div className=" md:col-span-8 sm:col-span-2 col-span-1 px-4 "> */}
-            <ProductHighlightSection
-              product={product}
-              selectSize={selectSize}
-              setSelectSize={setSelectSize}
-              setSelectedSizeData={setSelectedSizeData}
-              selectedSizeData={selectedSizeData}
-            />
-          </div>
-
-          <div className="lg:col-span-2  sm:col-span-5 md:col-span-2 col-span-1 px-4 ">
-            <RightSideShoppingSection
-              product={product}
-              selectSize={selectSize}
-              setSelectSize={setSelectSize}
-              selectedSizeData={selectedSizeData}
-              setSelectedSizeData={setSelectedSizeData}
-              setDescription={setDescription}
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-4 my-4   ">
-          <div className="w-full  lg:w-[72%]">
-            <ProductDescription product={product} description={description} />
-          </div>
-
-          {/* <SuggestProduct /> */}
-          <div className="w-full lg:w-[28%] ">
-            <RelatedProducts product={product} />
-          </div>
-        </div>
-      </div>
-
-      {/* Suggest  Product */}
+        </>
+      )}
 
       <div className="es_container">
         <div className=" my-12  bg-white    ">
