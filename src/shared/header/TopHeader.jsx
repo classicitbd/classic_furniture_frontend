@@ -2,10 +2,9 @@ import { IoCallOutline } from "react-icons/io5";
 import { CiMail } from "react-icons/ci";
 import "./header.css";
 import { Link } from "react-router-dom";
-import Loader from "../loader/Loader";
 import { BASE_URL } from "../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import TopHeaderSkeleton from "../loader/homeLoading/TopHeaderSkeletion";
 
 export default function TopHeader() {
   const { data: settings = [], isLoading } = useQuery({
@@ -16,10 +15,9 @@ export default function TopHeader() {
       return data?.data;
     },
   });
-  const [loading, setLoaing] = useState(true);
 
   if (isLoading) {
-    return <Loader />;
+    return <TopHeaderSkeleton />;
   }
 
   return (
@@ -51,14 +49,6 @@ export default function TopHeader() {
                   Track Order
                 </Link>
               </div>
-              {/* <div className="email flex items-center">
-                                <Link
-                                    to="mailto: develoer@dev.com"
-                                    className="text-ftMuteColor text-[13px] font-light"
-                                >
-                                    Wish List
-                                </Link>
-                            </div> */}
             </div>
           </div>
         </div>
