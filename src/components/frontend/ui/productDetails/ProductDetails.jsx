@@ -25,10 +25,7 @@ const ProductDetails = () => {
       return data;
     },
   });
-  const [loading, setLoading] = useState(true);
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+
   if (!product) {
     return (
       <section className="flex items-center h-full sm:p-16 bg-gray-50 text-gray-800">
@@ -75,7 +72,7 @@ const ProductDetails = () => {
 
   return (
     <section className="bg-[#F2F4F8] py-6 ">
-      {loading ? (
+      {isLoading ? (
         <>
           <ProductDetailsSkeleton />
         </>

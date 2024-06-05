@@ -62,7 +62,28 @@ const ProductDetailsSkeleton = () => {
 
       <div className="flex flex-col lg:flex-row gap-4 my-4   ">
         <div className="w-full  lg:w-[72%]">
-          <div></div>
+          <div className="mx-4 lg:mx-0 mt-10">
+            <div className="border rounded-lg my-4 max-h-[380px] overflow-y-auto scrollbar-thin ">
+              <div
+                className="bg-gray-100 px-3 flex items-center justify-between py-2 cursor-pointer "
+                // onClick={() => setDescriptionOpen(!descriptionOpen)}
+              >
+                <h1 className="animate-pulse required w-40 rounded h-4 bg-gray-300 my-3" />
+              </div>
+              <div className="p-6">
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-full rounded h-2 bg-gray-300 my-3" />
+                <h1 className="animate-pulse required w-7/12 rounded h-2 bg-gray-300 my-3" />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="w-full lg:w-[28%] ">
