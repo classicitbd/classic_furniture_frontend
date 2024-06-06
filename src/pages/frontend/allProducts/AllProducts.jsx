@@ -373,10 +373,9 @@ export default function AllProducts() {
 
     setLoading(true);
     fetch(
-      `${BASE_URL}/product${
-        queryString.length > 0
-          ? `/filter_product?${queryString}&page=${page}&limit=${rows}`
-          : `/filter_product?page=${page}&limit=${rows}`
+      `${BASE_URL}/product${queryString.length > 0
+        ? `/filter_product?${queryString}&page=${page}&limit=${rows}`
+        : `/filter_product?page=${page}&limit=${rows}`
       }`
     )
       .then((res) => res.json())
@@ -393,11 +392,13 @@ export default function AllProducts() {
   }, [queryParameters, page, rows]);
 
   const handlePriceChange = (values) => {
-    const queryParams = new URLSearchParams(queryParameters);
-    queryParams.set("min_price", values[0]);
-    queryParams.set("max_price", values[1]);
+    // const queryParams = new URLSearchParams(queryParameters);
+    // queryParams.set("min_price", values[0]);
+    // queryParams.set("max_price", values[1]);
 
-    navigate(`/all?${queryParams.toString()}`);
+    // navigate(`/all?${queryParams.toString()}`);
+    const defaultProductsFilter = defaultProducts?.filter((product) => product?.product_price >= values[0] && product?.product_price <= values[1]);
+    setProducts(defaultProductsFilter);
   };
 
   const handleCategoryClick = (category) => {
@@ -611,9 +612,8 @@ export default function AllProducts() {
           <>
             <div
               ref={sidebarRef}
-              className={`fixed inset-0 z-50 w-64 h-[94vh] bg-white transition-transform duration-500 transform ease-in-out overflow-y-auto scrollbar-thin px-4 ${
-                mobileFiltersOpen ? "translate-x-0" : "-translate-x-full"
-              } lg:hidden`}
+              className={`fixed inset-0 z-50 w-64 h-[94vh] bg-white transition-transform duration-500 transform ease-in-out overflow-y-auto scrollbar-thin px-4 ${mobileFiltersOpen ? "translate-x-0" : "-translate-x-full"
+                } lg:hidden`}
             >
               <span className="flex justify-end  pt-4">
                 <IoClose
