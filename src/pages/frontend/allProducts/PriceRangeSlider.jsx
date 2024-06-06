@@ -54,7 +54,6 @@ import { Range, getTrackBackground } from "react-range";
 import MiniSpinner from "../../../shared/loader/MiniSpinner";
 
 const PriceRangeSlider = ({ maxPrice, loading, onPriceChange }) => {
-  console.log(maxPrice);
   const [values, setValues] = useState([1, maxPrice ? maxPrice : 200000]);
 
   const handleChange = (values) => {
