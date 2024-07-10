@@ -12,6 +12,8 @@ import ReactQuill from "react-quill";
 // import { VideoValidate } from "../../../../utils/VideoValidation";
 import { ImageValidate } from "../../../../utils/ImageValidation";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import { getCookie } from "../../../../utils/cookie-storage";
+import { authKey } from "../../../../constants/storageKey";
 // import VideoUploaders from "../../setting/VideoUploaders";
 
 const ProductAdd = () => {
@@ -25,7 +27,7 @@ const ProductAdd = () => {
   const [description, setDescription] = useState("");
   const [categoryIdForSubCategory, setCategoryIdForSubCategory] = useState("");
   const [isOpenSubCategory, setIsOpenSubCategory] = useState(true);
-  const [partialPayment, setPartialPayment] = useState(false)
+  const [partialPayment, setPartialPayment] = useState(false);
 
   const {
     register,
@@ -36,7 +38,13 @@ const ProductAdd = () => {
   } = useForm({
     defaultValues: {
       product_size_variation: [
-        { size: "", quantity: "", price: "", discount_price: "", description: "" },
+        {
+          size: "",
+          quantity: "",
+          price: "",
+          discount_price: "",
+          description: "",
+        },
       ],
     },
   }); //get data in form
@@ -66,25 +74,29 @@ const ProductAdd = () => {
     setColorId(color?._id);
   };
 
+  const token = getCookie(authKey);
+
   const { data: categories = [] } = useQuery({
     queryKey: [`/api/v1/category/dashboard`],
     queryFn: async () => {
-      const res = await fetch(
-        `${BASE_URL}/category/dashboard`
-      );
+      const res = await fetch(`${BASE_URL}/category/dashboard`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
   }); // get Category type
 
   const { data: subCategories = [] } = useQuery({
-    queryKey: [
-      `/api/v1/sub_category/dashboard`,
-    ],
+    queryKey: [`/api/v1/sub_category/dashboard`],
     queryFn: async () => {
-      const res = await fetch(
-        `${BASE_URL}/sub_category/dashboard`
-      );
+      const res = await fetch(`${BASE_URL}/sub_category/dashboard`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -101,7 +113,8 @@ const ProductAdd = () => {
 
   useEffect(() => {
     const getSubCategoryData = subCategories?.data?.filter(
-      (sub_category) => sub_category?.category_id?._id === categoryIdForSubCategory
+      (sub_category) =>
+        sub_category?.category_id?._id === categoryIdForSubCategory
     );
     setSubCategoryData(getSubCategoryData);
   }, [subCategories?.data, categoryIdForSubCategory]);
@@ -212,15 +225,18 @@ const ProductAdd = () => {
 
   // data post in backend
   const handleDataPost = async (data) => {
-    setLoading(true)
-    if (data?.product_partial_payment == true && !data?.product_partial_payment_amount) {
+    setLoading(true);
+    if (
+      data?.product_partial_payment == true &&
+      !data?.product_partial_payment_amount
+    ) {
       toast.error("Error: Please fill in the product partial amount.");
-      setLoading(false)
+      setLoading(false);
       return;
     }
     if (!description) {
       toast.error("Error: Please fill in the product description box.");
-      setLoading(false)
+      setLoading(false);
       return;
     }
     if (data?.product_size_variation?.length > 0) {
@@ -237,7 +253,7 @@ const ProductAdd = () => {
         toast.error(
           "Error: Please fill in the size and quantity for all size variations."
         );
-        setLoading(false)
+        setLoading(false);
         return; // Stop the function
       }
     }
@@ -245,20 +261,20 @@ const ProductAdd = () => {
     if (data?.product_size_variation?.length === 0) {
       if (data?.product_quantity == 0) {
         toast.error("Error: Please fill in the product quantity.");
-        setLoading(false)
+        setLoading(false);
         return; // Stop the function
       }
     }
 
     if (!imageName) {
       toast.error("Error: Please fill the main image.");
-      setLoading(false)
+      setLoading(false);
       return; // Stop the function
     }
 
     if (!categoryIdForSubCategory) {
       toast.error("Error: Please fill the category.");
-      setLoading(false)
+      setLoading(false);
       return; // Stop the function
     }
 
@@ -266,7 +282,7 @@ const ProductAdd = () => {
       toast.error(
         "Error: Please fill atleast one image in another image field."
       );
-      setLoading(false)
+      setLoading(false);
       return; // Stop the function
     }
 
@@ -290,7 +306,7 @@ const ProductAdd = () => {
         quantity: item?.quantity,
         price: item?.price,
         discount_price: item?.discount_price,
-        description: item?.description
+        description: item?.description,
       })),
       product_thumbnail: imageName,
       product_images: allImage?.map((item) => ({
@@ -301,7 +317,7 @@ const ProductAdd = () => {
       sub_category_id: subcategory,
       product_quantity: data?.product_quantity ? data?.product_quantity : 0,
       product_partial_payment: data?.product_partial_payment,
-      product_partial_payment_amount: data?.product_partial_payment_amount
+      product_partial_payment_amount: data?.product_partial_payment_amount,
     };
 
     if (subcategory == "" || subcategory == undefined || subcategory == null) {
@@ -321,15 +337,15 @@ const ProductAdd = () => {
         setImageName("");
         setMultiImage([]);
         refetch();
-        setLoading(false)
-        setPartialPayment(false)
-        setDescription('');
+        setLoading(false);
+        setPartialPayment(false);
+        setDescription("");
         colorInputRefs.current.forEach((inputRef) => {
           inputRef.value = "";
         });
       } else {
         toast.error(result?.error?.data?.message);
-        setLoading(false)
+        setLoading(false);
       }
     });
   };
@@ -406,19 +422,26 @@ const ProductAdd = () => {
                 </label>
                 <input
                   placeholder="0.000"
-                  {...register("product_price", { required: "Price must be required" })}
+                  {...register("product_price", {
+                    required: "Price must be required",
+                  })}
                   id="product_price"
                   type="number"
                   min={1}
                   className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
                 />
                 {errors.product_price && (
-                  <p className="text-red-600">{errors.product_price?.message}</p>
+                  <p className="text-red-600">
+                    {errors.product_price?.message}
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="font-semibold" htmlFor="product_discount_price">
+                <label
+                  className="font-semibold"
+                  htmlFor="product_discount_price"
+                >
                   Discount Price
                 </label>
                 <input
@@ -465,7 +488,6 @@ const ProductAdd = () => {
                   }
                 ></Select>
               </div>
-
 
               {isOpenSubCategory && (
                 <div>
@@ -582,16 +604,12 @@ const ProductAdd = () => {
               </div>
             </div>
 
-
             <div className="mt-10 border p-5 border-gray-300 rounded-md">
               <label className="font-semibold" htmlFor="ads_topBadge">
                 Size Variations:{" "}
               </label>
               {fields.map((variation, index) => (
-                <div
-                  key={variation.id}
-
-                >
+                <div key={variation.id}>
                   <p className=" mt-4">Please fill up all required value:</p>
                   <div className="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 gap-2 mb-28">
                     <Controller
@@ -684,13 +702,19 @@ const ProductAdd = () => {
                   className="w-5 h-5"
                   onChange={() => setPartialPayment(!partialPayment)} // Call handlePCBuilderChange when the checkbox is clicked
                 />
-                <label htmlFor="product_partial_payment" className="font-medium text-xl">
+                <label
+                  htmlFor="product_partial_payment"
+                  className="font-medium text-xl"
+                >
                   Partial payment ?
                 </label>
               </div>
               {partialPayment == true && (
                 <div>
-                  <label className="font-semibold" htmlFor="product_partial_payment_amount">
+                  <label
+                    className="font-semibold"
+                    htmlFor="product_partial_payment_amount"
+                  >
                     Partial Payment Amount
                   </label>
                   <input
@@ -705,27 +729,25 @@ const ProductAdd = () => {
               )}
             </div>
 
-
-            {
-              loading ?
-                <div className="flex justify-end mt-6">
-                  <button
-                    type="button"
-                    className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
-                  >
-                    <MiniSpinner />
-                  </button>
-                </div>
-                :
-                <div className="flex justify-end mt-6">
-                  <button
-                    type="Submit"
-                    className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
-                  >
-                    Create
-                  </button>
-                </div>
-            }
+            {loading ? (
+              <div className="flex justify-end mt-6">
+                <button
+                  type="button"
+                  className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
+                >
+                  <MiniSpinner />
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-end mt-6">
+                <button
+                  type="Submit"
+                  className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
+                >
+                  Create
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>

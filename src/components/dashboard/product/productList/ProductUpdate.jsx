@@ -14,20 +14,30 @@ import ReactQuill from "react-quill";
 import { ImageValidate } from "../../../../utils/ImageValidation";
 // import { VideoValidate } from "../../../../utils/VideoValidation";
 import MiniSpinner from "../../../../shared/loader/MiniSpinner";
+import { getCookie } from "../../../../utils/cookie-storage";
+import { authKey } from "../../../../constants/storageKey";
 // import VideoUploaders from "../../setting/VideoUploaders";
 
 const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   const [loading, setLoading] = useState(false);
-  const [partialPayment, setPartialPayment] = useState(updateModalValue?.product_partial_payment == true ? true : false)
+  const [partialPayment, setPartialPayment] = useState(
+    updateModalValue?.product_partial_payment == true ? true : false
+  );
 
-  const [description, setDescription] = useState(updateModalValue?.product_description);
+  const [description, setDescription] = useState(
+    updateModalValue?.product_description
+  );
 
   const [oldVariation, setOldVariation] = useState(
     updateModalValue?.product_size_variation
   );
   // select field data
-  const [colorName, setColorName] = useState(updateModalValue?.product_color_id?.color_name);
-  const [colorId, setColorId] = useState(updateModalValue?.product_color_id?._id);
+  const [colorName, setColorName] = useState(
+    updateModalValue?.product_color_id?.color_name
+  );
+  const [colorId, setColorId] = useState(
+    updateModalValue?.product_color_id?._id
+  );
   const [subcategory, setSubCategory] = useState(
     updateModalValue?.sub_category_id?._id
   );
@@ -36,11 +46,9 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
     updateModalValue?.category_id?._id
   );
 
-  const colorNameValue =
-    updateModalValue?.product_color_id?.color_name;
+  const colorNameValue = updateModalValue?.product_color_id?.color_name;
   const colorNameId = updateModalValue?.product_color_id?._id;
-  let categoryNameValue =
-    updateModalValue?.category_id?.category_name;
+  let categoryNameValue = updateModalValue?.category_id?.category_name;
   let categoryNameId = updateModalValue?.category_id?._id;
   let subCategoryNameValue =
     updateModalValue?.sub_category_id?.sub_category_name;
@@ -56,7 +64,13 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   } = useForm({
     defaultValues: {
       product_size_variation: [
-        { size: "", quantity: "", price: "", discount_price: "", description: "" },
+        {
+          size: "",
+          quantity: "",
+          price: "",
+          discount_price: "",
+          description: "",
+        },
       ],
     },
   }); //get data in form
@@ -66,10 +80,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
     name: "product_size_variation",
   }); //variation data handle
 
-  const {
-    data: colors = [],
-    isLoading
-  } = useQuery({
+  const { data: colors = [], isLoading } = useQuery({
     queryKey: ["/api/v1/color"],
     queryFn: async () => {
       const res = await fetch(`${BASE_URL}/color`);
@@ -83,25 +94,29 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
     setColorId(color?._id);
   };
 
+  const token = getCookie(authKey);
+
   const { data: categories = [] } = useQuery({
     queryKey: [`/api/v1/category/dashboard`],
     queryFn: async () => {
-      const res = await fetch(
-        `${BASE_URL}/category/dashboard`
-      );
+      const res = await fetch(`${BASE_URL}/category/dashboard`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
   }); // get Category type
 
   const { data: subCategories = [] } = useQuery({
-    queryKey: [
-      `/api/v1/sub_category/dashboard`,
-    ],
+    queryKey: [`/api/v1/sub_category/dashboard`],
     queryFn: async () => {
-      const res = await fetch(
-        `${BASE_URL}/sub_category/dashboard`
-      );
+      const res = await fetch(`${BASE_URL}/sub_category/dashboard`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -118,7 +133,8 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
 
   useEffect(() => {
     const getSubCategoryData = subCategories?.data?.filter(
-      (sub_category) => sub_category?.category_id?._id === categoryIdForSubCategory
+      (sub_category) =>
+        sub_category?.category_id?._id === categoryIdForSubCategory
     );
     setSubCategoryData(getSubCategoryData);
   }, [subCategories?.data, categoryIdForSubCategory]);
@@ -132,8 +148,12 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   // image upload start
   const fileInputRefs = useRef([]);
   const multiInputRefs = useRef([]);
-  const [imageName, setImageName] = useState(updateModalValue?.product_thumbnail);
-  const [multiImage, setMultiImage] = useState(updateModalValue?.product_images);
+  const [imageName, setImageName] = useState(
+    updateModalValue?.product_thumbnail
+  );
+  const [multiImage, setMultiImage] = useState(
+    updateModalValue?.product_images
+  );
 
   const handleOnChange = async (fieldName) => {
     if (fieldName[0]) {
@@ -185,7 +205,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         });
         if (multiImage?.length == 0) {
           const image = await ImageUploader(fieldName[0]);
-          console.log(image)
+          console.log(image);
           if (image[1] == true) {
             const updatedImage = [...multiImage, image[0]];
             setMultiImage(updatedImage);
@@ -232,15 +252,15 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
   //image upload end
 
   const handlePartialPaymentChange = () => {
-    setPartialPayment(!partialPayment)
+    setPartialPayment(!partialPayment);
   };
 
   // data post in backend
   const handleDataPost = async (data) => {
-    setLoading(true)
+    setLoading(true);
     if (!description) {
       toast.error("Error: Please fill in the product description box.");
-      setLoading(false)
+      setLoading(false);
       return;
     }
     if (data?.product_size_variation?.length > 0) {
@@ -257,7 +277,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         toast.error(
           "Error: Please fill in the size and quantity for all size variations."
         );
-        setLoading(false)
+        setLoading(false);
         return; // Stop the function
       }
     }
@@ -265,20 +285,20 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
     if (data?.product_size_variation?.length === 0) {
       if (data?.product_quantity == 0) {
         toast.error("Error: Please fill in the product quantity.");
-        setLoading(false)
+        setLoading(false);
         return; // Stop the function
       }
     }
 
     if (!imageName) {
       toast.error("Error: Please fill the main image.");
-      setLoading(false)
+      setLoading(false);
       return; // Stop the function
     }
 
     if (!categoryIdForSubCategory) {
       toast.error("Error: Please fill the category.");
-      setLoading(false)
+      setLoading(false);
       return; // Stop the function
     }
 
@@ -286,10 +306,12 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       toast.error(
         "Error: Please fill atleast one image in another image field."
       );
-      setLoading(false)
+      setLoading(false);
       return; // Stop the function
     }
-    const combinedVariation = oldVariation.concat(data?.product_size_variation || []);
+    const combinedVariation = oldVariation.concat(
+      data?.product_size_variation || []
+    );
     const slug = colorName + " " + data?.product_name;
 
     const sendData = {
@@ -310,7 +332,7 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         quantity: item?.quantity,
         price: item?.price,
         discount_price: item?.discount_price,
-        description: item?.description
+        description: item?.description,
       })),
       product_thumbnail: imageName,
       product_images: multiImage?.map((item) => ({
@@ -322,10 +344,13 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
       sub_category_id: subcategory,
       product_quantity: data?.product_quantity ? data?.product_quantity : 0,
       product_partial_payment: partialPayment,
-      product_partial_payment_amount: data?.product_partial_payment == true ? data?.product_partial_payment_amount : 0
+      product_partial_payment_amount:
+        data?.product_partial_payment == true
+          ? data?.product_partial_payment_amount
+          : 0,
     };
     if (subcategory == "" || subcategory == undefined || subcategory == null) {
-      delete sendData.sub_category_id
+      delete sendData.sub_category_id;
     }
     updateProduct(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
@@ -341,15 +366,14 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
         setImageName("");
         setMultiImage([]);
         refetch();
-        setLoading(false)
+        setLoading(false);
         setIsUpdateModalOpen(false);
       } else {
         toast.error(result?.error?.data?.message);
-        setLoading(false)
+        setLoading(false);
       }
     });
   };
-
 
   if (isLoading) {
     <BigSpinner />;
@@ -391,7 +415,9 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                       className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
                     />
                     {errors.product_name && (
-                      <p className="text-red-600">{errors.product_name?.message}</p>
+                      <p className="text-red-600">
+                        {errors.product_name?.message}
+                      </p>
                     )}
                   </div>
 
@@ -412,7 +438,9 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                       options={colors?.data}
                       getOptionLabel={(x) => x?.color_name}
                       getOptionValue={(x) => x?._id}
-                      onChange={(selectedOption) => setColorIdValue(selectedOption)}
+                      onChange={(selectedOption) =>
+                        setColorIdValue(selectedOption)
+                      }
                     ></Select>
                   </div>
                 </div>
@@ -436,19 +464,26 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                     </label>
                     <input
                       defaultValue={updateModalValue?.product_price}
-                      {...register("product_price", { required: "Price must be required" })}
+                      {...register("product_price", {
+                        required: "Price must be required",
+                      })}
                       id="product_price"
                       type="number"
                       min={1}
                       className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
                     />
                     {errors.product_price && (
-                      <p className="text-red-600">{errors.product_price?.message}</p>
+                      <p className="text-red-600">
+                        {errors.product_price?.message}
+                      </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="font-semibold" htmlFor="product_discount_price">
+                    <label
+                      className="font-semibold"
+                      htmlFor="product_discount_price"
+                    >
                       Discount Price
                     </label>
                     <input
@@ -498,7 +533,6 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                       }
                     ></Select>
                   </div>
-
 
                   {isOpenSubCategory && (
                     <div>
@@ -619,82 +653,77 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                   </div>
                 </div>
 
-
                 <h1 className="font-semibold text-xl mt-4">
                   Product Variation:{" "}
                 </h1>
-                {
-                  oldVariation && (
-                    <>
-                      <table className="min-w-full divide-y-2 divide-gray-200 text-sm border border-gray-300 mt-4 rounded-xl">
-                        <thead>
-                          <tr>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                              Size
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                              Quantity
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                              Price
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
-                              Discount Price
-                            </th>
-                            <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
-                              Action
-                            </th>
+                {oldVariation && (
+                  <>
+                    <table className="min-w-full divide-y-2 divide-gray-200 text-sm border border-gray-300 mt-4 rounded-xl">
+                      <thead>
+                        <tr>
+                          <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                            Size
+                          </th>
+                          <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                            Quantity
+                          </th>
+                          <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                            Price
+                          </th>
+                          <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+                            Discount Price
+                          </th>
+                          <th className="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap">
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody className="divide-y divide-gray-200">
+                        {oldVariation?.map((variation) => (
+                          <tr key={variation?._id}>
+                            <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                              {variation?.size}
+                            </td>
+                            <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                              {variation?.quantity}
+                            </td>
+                            <td
+                              className={`whitespace-nowrap px-4 py-2 font-semibold`}
+                            >
+                              {variation?.price}
+                            </td>
+                            <td
+                              className={`whitespace-nowrap px-4 py-2 font-semibold`}
+                            >
+                              {variation?.discount_price}
+                            </td>
+
+                            <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
+                              <MdDeleteForever
+                                onClick={() =>
+                                  handleDeleteOldVariation(variation)
+                                }
+                                className="cursor-pointer text-red-500 hover:text-red-300"
+                                size={25}
+                              />
+                            </td>
                           </tr>
-                        </thead>
-
-                        <tbody className="divide-y divide-gray-200">
-                          {oldVariation?.map((variation) => (
-                            <tr key={variation?._id}>
-                              <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                                {variation?.size}
-                              </td>
-                              <td className="whitespace-nowrap px-4 py-2 font-semibold">
-                                {variation?.quantity}
-                              </td>
-                              <td
-                                className={`whitespace-nowrap px-4 py-2 font-semibold`}
-                              >
-                                {variation?.price}
-                              </td>
-                              <td
-                                className={`whitespace-nowrap px-4 py-2 font-semibold`}
-                              >
-                                {variation?.discount_price}
-                              </td>
-
-                              <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
-                                <MdDeleteForever
-                                  onClick={() =>
-                                    handleDeleteOldVariation(variation)
-                                  }
-                                  className="cursor-pointer text-red-500 hover:text-red-300"
-                                  size={25}
-                                />
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </>
-                  )
-                }
-
+                        ))}
+                      </tbody>
+                    </table>
+                  </>
+                )}
 
                 <div className="mt-10 border p-5 border-gray-300 rounded-md">
                   <label className="font-semibold" htmlFor="ads_topBadge">
                     Size Variations:{" "}
                   </label>
                   {fields.map((variation, index) => (
-                    <div
-                      key={variation.id}
-
-                    >
-                      <p className=" mt-4">Please fill up all required value:</p>
+                    <div key={variation.id}>
+                      <p className=" mt-4">
+                        Please fill up all required value:
+                      </p>
                       <div className="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 gap-2 mb-28">
                         <Controller
                           name={`product_size_variation[${index}].size`}
@@ -777,7 +806,6 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                   ))}
                 </div>
 
-
                 <div className="grid grid-cols-2 gap-4 mt-6">
                   <div className="mt-4 flex items-center gap-2">
                     <input
@@ -788,17 +816,25 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                       checked={partialPayment}
                       onChange={() => handlePartialPaymentChange()} // Call handlePCBuilderChange when the checkbox is clicked
                     />
-                    <label htmlFor="product_partial_payment" className="font-medium text-xl">
+                    <label
+                      htmlFor="product_partial_payment"
+                      className="font-medium text-xl"
+                    >
                       Partial payment ?
                     </label>
                   </div>
                   {partialPayment == true && (
                     <div>
-                      <label className="font-semibold" htmlFor="product_partial_payment_amount">
+                      <label
+                        className="font-semibold"
+                        htmlFor="product_partial_payment_amount"
+                      >
                         Partial Payment Amount
                       </label>
                       <input
-                        defaultValue={updateModalValue?.product_partial_payment_amount}
+                        defaultValue={
+                          updateModalValue?.product_partial_payment_amount
+                        }
                         {...register("product_partial_payment_amount")}
                         id="product_partial_payment_amount"
                         min={1}
@@ -809,27 +845,25 @@ const ProductUpdate = ({ setIsUpdateModalOpen, updateModalValue, refetch }) => {
                   )}
                 </div>
 
-
-                {
-                  loading ?
-                    <div className="flex justify-end mt-6">
-                      <button
-                        type="button"
-                        className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
-                      >
-                        <MiniSpinner />
-                      </button>
-                    </div>
-                    :
-                    <div className="flex justify-end mt-6">
-                      <button
-                        type="Submit"
-                        className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
-                      >
-                        Update
-                      </button>
-                    </div>
-                }
+                {loading ? (
+                  <div className="flex justify-end mt-6">
+                    <button
+                      type="button"
+                      className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
+                    >
+                      <MiniSpinner />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex justify-end mt-6">
+                    <button
+                      type="Submit"
+                      className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#00B7E9] rounded-xl hover:bg-[#00B7E9]"
+                    >
+                      Update
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
           </div>

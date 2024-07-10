@@ -8,6 +8,8 @@ import { BASE_URL } from "../../../utils/baseURL";
 import slugify from "slugify";
 import { useAddSub_CategoryMutation } from "../../../redux/feature/subCategory/subCategoryApi";
 import Select from "react-select";
+import { getCookie } from "../../../utils/cookie-storage";
+import { authKey } from "../../../constants/storageKey";
 
 const AddSubCategory = ({ refetch }) => {
   const [category_id, setcategory_id] = useState("");
@@ -20,10 +22,16 @@ const AddSubCategory = ({ refetch }) => {
   } = useForm();
   const [loading, setLoading] = useState(false);
 
+  const token = getCookie(authKey);
+
   const { data: categoryTypes = [], isLoading } = useQuery({
     queryKey: [`/api/v1/category/dashboard`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/category/dashboard`);
+      const res = await fetch(`${BASE_URL}/category/dashboard`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -43,8 +51,8 @@ const AddSubCategory = ({ refetch }) => {
       sub_category_name: data?.sub_category_name,
       sub_category_serial: data?.sub_category_serial,
       sub_category_status: data?.sub_category_status,
-      sub_category_slug: slug
-    }
+      sub_category_slug: slug,
+    };
     postSubCategoryType(sendData).then((result) => {
       if (result?.data?.statusCode == 200 && result?.data?.success == true) {
         setLoading(false);
@@ -94,7 +102,9 @@ const AddSubCategory = ({ refetch }) => {
                   className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
                 />
                 {errors.sub_category_name && (
-                  <p className="text-red-600">{errors.sub_category_name?.message}</p>
+                  <p className="text-red-600">
+                    {errors.sub_category_name?.message}
+                  </p>
                 )}
               </div>
 
@@ -109,7 +119,9 @@ const AddSubCategory = ({ refetch }) => {
                   className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
                 />
                 {errors.sub_category_serial && (
-                  <p className="text-red-600">{errors.sub_category_serial?.message}</p>
+                  <p className="text-red-600">
+                    {errors.sub_category_serial?.message}
+                  </p>
                 )}
               </div>
 
@@ -125,7 +137,9 @@ const AddSubCategory = ({ refetch }) => {
                   <option value="in-active">In-Active</option>
                 </select>
                 {errors.sub_category_status && (
-                  <p className="text-red-600">{errors.sub_category_status?.message}</p>
+                  <p className="text-red-600">
+                    {errors.sub_category_status?.message}
+                  </p>
                 )}
               </div>
 
@@ -144,22 +158,21 @@ const AddSubCategory = ({ refetch }) => {
                 ></Select>
               </div>
 
-              {
-                loading ?
-                  <button
-                    type="button"
-                    className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
-                  >
-                    <MiniSpinner />
-                  </button>
-                  :
-                  <button
-                    type="Submit"
-                    className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
-                  >
-                    Create
-                  </button>
-              }
+              {loading ? (
+                <button
+                  type="button"
+                  className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
+                >
+                  <MiniSpinner />
+                </button>
+              ) : (
+                <button
+                  type="Submit"
+                  className="px-6 py-2 mt-6 text-white transition-colors duration-300 transform bg-[#3EA2FA] rounded-xl hover:bg-[#3EA2FA]"
+                >
+                  Create
+                </button>
+              )}
             </form>
           </div>
         </div>

@@ -9,6 +9,8 @@ import { BASE_URL } from "../../../utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import BigSpinner from "../../../shared/loader/BigSpinner";
 import Select from "react-select";
+import { getCookie } from "../../../utils/cookie-storage";
+import { authKey } from "../../../constants/storageKey";
 
 const UpdateSubCategory = ({
   refetch,
@@ -23,15 +25,24 @@ const UpdateSubCategory = ({
     formState: { errors },
   } = useForm();
 
-  const [category_id, setCategoryId] = useState(subCategoryUpdateModalValue?.category_id?._id);
+  const [category_id, setCategoryId] = useState(
+    subCategoryUpdateModalValue?.category_id?._id
+  );
 
   const categoryIdValue = subCategoryUpdateModalValue?.category_id?._id;
-  const categoryNameValue = subCategoryUpdateModalValue?.category_id?.category_name;
+  const categoryNameValue =
+    subCategoryUpdateModalValue?.category_id?.category_name;
+
+  const token = getCookie(authKey);
 
   const { data: categoryTypes = [], isLoading } = useQuery({
     queryKey: [`/api/v1/category/dashboard`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/category/dashboard`);
+      const res = await fetch(`${BASE_URL}/category/dashboard`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -75,7 +86,7 @@ const UpdateSubCategory = ({
   };
 
   if (isLoading) {
-    return <BigSpinner />
+    return <BigSpinner />;
   }
 
   return (
@@ -112,7 +123,9 @@ const UpdateSubCategory = ({
               className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
             {errors.sub_category_name && (
-              <p className="text-red-600">{errors.sub_category_name?.message}</p>
+              <p className="text-red-600">
+                {errors.sub_category_name?.message}
+              </p>
             )}
           </div>
 
@@ -128,7 +141,9 @@ const UpdateSubCategory = ({
               className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl"
             />
             {errors.sub_category_serial && (
-              <p className="text-red-600">{errors.sub_category_serial?.message}</p>
+              <p className="text-red-600">
+                {errors.sub_category_serial?.message}
+              </p>
             )}
           </div>
 
@@ -144,7 +159,9 @@ const UpdateSubCategory = ({
               <option value="in-active">In-Active</option>
             </select>
             {errors.sub_category_status && (
-              <p className="text-red-600">{errors.sub_category_status?.message}</p>
+              <p className="text-red-600">
+                {errors.sub_category_status?.message}
+              </p>
             )}
           </div>
 
@@ -161,9 +178,7 @@ const UpdateSubCategory = ({
               options={categoryTypes?.data}
               getOptionLabel={(x) => x?.category_name}
               getOptionValue={(x) => x?._id}
-              onChange={(selectedOption) =>
-                setCategoryId(selectedOption?._id)
-              }
+              onChange={(selectedOption) => setCategoryId(selectedOption?._id)}
             ></Select>
           </div>
 
@@ -174,22 +189,21 @@ const UpdateSubCategory = ({
             >
               Cancel
             </button>
-            {
-              loading ?
-                <button
-                  type="button"
-                  className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
-                >
-                  <MiniSpinner />
-                </button>
-                :
-                <button
-                  type="Submit"
-                  className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
-                >
-                  Update
-                </button>
-            }
+            {loading ? (
+              <button
+                type="button"
+                className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
+              >
+                <MiniSpinner />
+              </button>
+            ) : (
+              <button
+                type="Submit"
+                className="px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]"
+              >
+                Update
+              </button>
+            )}
           </div>
         </form>
       </div>
